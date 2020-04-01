@@ -1,12 +1,15 @@
 import sys
 import argparse
 from PyQt5 import QtWidgets
+from PyQt5.QtGui import QIcon
 from psy_view import DatasetWidget
+from psyplot_gui.common import get_icon
 
 
 def start_app(ds):
     app = QtWidgets.QApplication(sys.argv)
     main = QtWidgets.QMainWindow()
+    main.setWindowIcon(QIcon(get_icon('logo.png')))
     ds_widget = DatasetWidget(ds)
     main.setCentralWidget(ds_widget)
     main.show()
