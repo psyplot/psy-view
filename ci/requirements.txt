@@ -1,0 +1,8 @@
+# requirements for testing psyplot
+dask[complete]
+psyplot >=1.2.0
+psyplot-gui
+netCDF4
+pyqt>5.7
+pytest
+pytest-cov

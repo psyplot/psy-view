@@ -1,0 +1,64 @@
+{% set data = load_setup_py_data() %}
+{% set name = "psy-view" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ data.get('version') }}
+
+source:
+  git_url: ../..
+
+build:
+  number: {{ environ.get('GIT_DESCRIBE_NUMBER', 0) }}
+  script: python -m pip install . --no-deps --ignore-installed -vvv
+  string: py{{ environ.get('CONDA_PY') }}_{{ environ.get('GIT_BUILD_STR', '') }}{% if environ.get('GIT_BRANCH') %}_{{ environ.get('GIT_BRANCH').replace('-', '') }}{% endif %}{% if environ.get("BUILD_STR_END") %}_{{ environ.get("BUILD_STR_END") }}{% endif %}
+  skip: true  # [py == 27]
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+    - psyplot-gui >=1.2.0
+    - psy-maps
+    - netcdf4
+
+test:
+  imports:
+    - psy_view
+    - psy_view.ds_widget
+
+  requires:
+    - pytest
+    - pytest-cov
+    - codecov
+    - dask
+    - netcdf4
+    - seaborn
+    - psy-maps
+  source_files:
+    - tests
+
+  commands:
+    - psy-view --help
+    - pytest -sv --cov=psy_view
+
+app:
+  entry: psy-view
+  icon: logo.png
+  summary: Quick-view for netCDF files
+  type: desk
+
+about:
+  home: https://github.com/psyplot/psy-view
+  license: GPL-3.0
+  license_family: GPL
+  license_file: LICENSE
+  summary: ncview-like interface to psyplot
+
+  description: |
+    This package provides a graphical user interface to quickly visualize the
+    contents of a netCDF file
+  doc_url: http://psyplot.readthedocs.io/projects/psy-view
+  dev_url: https://github.com/psyplot/psy-view
