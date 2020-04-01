@@ -1,0 +1,101 @@
+version: 2.1
+
+orbs:
+  win: circleci/windows@2.2.0
+
+commands:
+  configure_conda:
+    description: "Install conda on the sytem"
+    steps:
+      - run:
+          name: Configure
+          command: |
+            which conda || source $HOME/miniconda3/bin/activate base
+            conda config --set always_yes yes --set changeps1 no
+            conda config --add channels conda-forge
+            conda config --add channels psyplot
+            conda update -q conda
+            conda install conda-build anaconda-client conda-verify
+            if [[ $CIRCLE_TAG == "" ]]; then
+              conda config --add channels psyplot/label/master;
+              conda config --add channels psyplot/label/${CIRCLE_BRANCH};
+            fi
+      - run:
+          name: Environment info
+          command: |
+            which conda || source $HOME/miniconda3/bin/activate base
+            conda info -a
+            conda list
+      - run:
+          name: Setup append
+          command: |
+            which conda || source $HOME/miniconda3/bin/activate base
+            python ci/setup_append.py ci/conda-recipe pyqt=5
+  build_recipe:
+    description: "Build the conda recipe"
+    parameters:
+      python_version:
+        type: string
+        default: "3.8"
+    steps:
+      - run:
+          name: Build conda recipe
+          command: |
+            which conda || source $HOME/miniconda3/bin/activate base
+            conda build ci/conda-recipe --python << parameters.python_version >>
+
+
+jobs:
+  build_windows:
+    executor:
+      name: win/default
+      shell: bash.exe
+    parameters:
+      python_version:
+        type: string
+        default: "3.8"
+    working_directory: ~/test
+    steps:
+      - checkout
+      - configure_conda
+      - run:
+          name: Build recipe
+          shell: cmd.exe
+          command: conda activate & conda build ci/conda-recipe --python << parameters.python_version >>
+  build_linux:
+    parameters:
+      python_version:
+        type: string
+        default: "3.8"
+    working_directory: ~/test
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: install apt requirements
+          command: |
+            sudo apt-get update
+            sudo apt-get install libgl1-mesa-glx libegl1-mesa-dev
+      - run:
+          name: Install conda
+          command: |
+            echo ""
+            echo "Installing a fresh version of Miniconda."
+            MINICONDA_URL="https://repo.continuum.io/miniconda"
+            MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
+            curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
+            bash $MINICONDA_FILE -bp $HOME/miniconda3
+      - configure_conda
+      - build_recipe:
+          python_version: << parameters.python_version >>
+
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - build_linux
+      - build_linux:
+          python_version: "3.7"
+      - build_windows
+      - build_windows:
+          python_version: "3.7"
