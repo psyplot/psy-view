@@ -8,8 +8,9 @@ from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import xarray as xr
 import psy_view.utils as utils
-from psyplot_gui.compat.qtcompat import QWebEngineView
+from psyplot_gui.content_widget import DatasetTreeItem
 from psyplot_gui.common import DockMixin
+from psyplot.data import get_filename_ds
 from psy_view.rcsetup import rcParams
 
 from matplotlib.animation import FuncAnimation
@@ -50,6 +51,8 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     _ani = None
 
+    ds_attr_columns = ['long_name', 'dims', 'shape']
+
     def __init__(self, ds, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ds = ds
@@ -61,9 +64,18 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         self.addWidget(self.info_label)
 
         # second row: dataset representation
-        self.ds_page = QWebEngineView()
-        self.ds_page.setHtml(ds._repr_html_())
-        self.addWidget(self.ds_page)
+        self.ds_tree = tree = QtWidgets.QTreeWidget()
+        tree.setColumnCount(len(self.ds_attr_columns) + 1)
+        tree.setHeaderLabels([''] + self.ds_attr_columns)
+        ds_item = DatasetTreeItem(ds, self.ds_attr_columns, 0)
+        fname = get_filename_ds(ds, False)[0]
+        if fname is not None:
+            fname = osp.basename(fname)
+        else:
+            fname = ''
+        ds_item.setText(0, fname)
+        tree.addTopLevelItem(ds_item)
+        self.addWidget(tree)
 
         # third row, navigation
         self.navigation_box = QtWidgets.QHBoxLayout()
@@ -282,7 +294,10 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         select = False
         nmaps = len(rcParams['cmaps'])
         current = self.btn_cmap.text()
-        invert_cmap = self.plotter.cmap.value.endswith('_r')
+        if self.sp and 'cmap' in self.sp.plotters[0]:
+            invert_cmap = self.plotter.cmap.value.endswith('_r')
+        else:
+            invert_cmap = False
         for i, cmap in enumerate(cycle(rcParams['cmaps'])):
             if cmap == current:
                 select = True
