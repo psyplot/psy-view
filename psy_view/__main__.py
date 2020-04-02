@@ -45,7 +45,7 @@ def get_parser():
     parser = argparse.ArgumentParser('psy-view')
 
     parser.add_argument(
-        'input_file', help="The file to visualize")
+        'input_file', help="The file to visualize", nargs='?', default=None)
 
     parser.epilog = dedent("""
     psy-view  Copyright (C) 2020  Philipp S. Sommer
@@ -62,10 +62,13 @@ def main():
     parser = get_parser()
     args = parser.parse_known_args()[0]
 
-    try:
-        ds = psy.open_dataset(args.input_file)
-    except:
-        ds = psy.open_dataset(args.input_file, decode_times=False)
+    if args.input_file is not None:
+        try:
+            ds = psy.open_dataset(args.input_file)
+        except:
+            ds = psy.open_dataset(args.input_file, decode_times=False)
+    else:
+        ds = None
 
     start_app(ds)
 
