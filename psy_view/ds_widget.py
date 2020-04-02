@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-"""ncview-like GUI to the psyplot framework"""
+"""Dataset widget to display the contents of a dataset"""
 from itertools import cycle
 import os.path as osp
 import os
-
+import contextlib
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import psy_view.utils as utils
 from psyplot_gui.content_widget import DatasetTreeItem
 from psyplot_gui.common import DockMixin
-from psyplot.data import get_filename_ds
+import psyplot.data as psyd
 from psy_view.rcsetup import rcParams
 
 from matplotlib.animation import FuncAnimation
@@ -38,6 +38,18 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     def __init__(self, ds, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        if ds is None:
+            fname, ok = QtWidgets.QFileDialog.getOpenFileName(
+                self, 'Open dataset', os.getcwd(),
+                'NetCDF files (*.nc *.nc4);;'
+                'Shape files (*.shp);;'
+                'All files (*)'
+                )
+            if not ok:
+                self.close()
+                return
+            ds = psyd.open_dataset(fname)
         self.ds = ds
 
         self.setOrientation(Qt.Vertical)
@@ -51,7 +63,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
         tree.setHeaderLabels([''] + self.ds_attr_columns)
         ds_item = DatasetTreeItem(ds, self.ds_attr_columns, 0)
-        fname = get_filename_ds(ds, False)[0]
+        fname = psyd.get_filename_ds(ds, False)[0]
         if fname is not None:
             fname = osp.basename(fname)
         else:
@@ -103,54 +115,31 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         self.lbl_interval = QtWidgets.QLabel('500 ms')
         self.navigation_box.addWidget(self.lbl_interval)
 
-        self.addLayout(self.navigation_box)
-        self.disable_navigation()
-
-        # fourth row: plot interface
-        self.formatoptions_box = QtWidgets.QHBoxLayout()
-
-        self.btn_cmap = utils.add_pushbutton(
-            rcParams["cmaps"][0], self.choose_next_colormap,
-            "Select a different colormap", self.formatoptions_box)
-
-        self.btn_cmap_settings = utils.add_pushbutton(
-            get_icon('color_settings'), self.edit_color_settings,
-            "Edit color settings", self.formatoptions_box,
-            icon=True)
-        self.btn_cmap_settings.setEnabled(False)
-
-        self.btn_proj = utils.add_pushbutton(
-            rcParams["projections"][0], self.choose_next_projection,
-            "Change the basemap projection", self.formatoptions_box)
-
-        self.btn_proj_settings = utils.add_pushbutton(
-            get_icon('proj_settings'), self.edit_basemap_settings,
-            "Edit basemap settings", self.formatoptions_box,
-            icon=True)
-        self.btn_proj_settings.setEnabled(False)
-
-        self.btn_datagrid = utils.add_pushbutton(
-            "Cells", self.toggle_datagrid,
-            "Show the grid cell boundaries", self.formatoptions_box)
-        self.btn_datagrid.setCheckable(True)
-        self.btn_datagrid.setEnabled(False)
-
+        # -- Export button
         self.btn_export = QtWidgets.QToolButton()
         self.btn_export.setText('Export')
         self.btn_export.setMenu(self.setup_export_menu())
-        self.formatoptions_box.addWidget(self.btn_export)
+        self.navigation_box.addWidget(self.btn_export)
 
-        self.addLayout(self.formatoptions_box)
+        self.addLayout(self.navigation_box)
+
+        # fourth row: plot interface
+        self.plot_tabs = QtWidgets.QTabWidget()
+        self.setup_plot_tabs()
+        self.plot_tabs.currentChanged.connect(self.switch_tab)
+
+        self.addWidget(self.plot_tabs)
 
         # sixth row: variables
         self.variable_frame = QtWidgets.QGroupBox('Variables')
         ncols = 4
         self.variable_layout = QtWidgets.QGridLayout(self.variable_frame)
-        self.variable_buttons = []
+        self.variable_buttons = {}
         for i, v in enumerate(ds):
             btn = utils.add_pushbutton(
                 v, self._draw_variable(v), f"Visualize variable {v}")
-            self.variable_buttons.append(btn)
+            btn.setCheckable(True)
+            self.variable_buttons[v] = btn
             self.variable_layout.addWidget(btn, i // ncols, i % ncols)
         self.addWidget(self.variable_frame)
 
@@ -158,11 +147,14 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         self.dimension_table = QtWidgets.QTableWidget()
         self.addWidget(self.dimension_table)
 
+        self.disable_navigation()
+
     def clear_table(self):
         self.dimension_table.clear()
         self.dimension_table.setColumnCount(5)
         self.dimension_table.setHorizontalHeaderLabels(
             ['Type', 'First', 'Current', 'Last', 'Units'])
+        self.dimension_table.setRowCount(0)
 
     def addLayout(self, layout):
         widget = QtWidgets.QWidget()
@@ -200,6 +192,11 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             self.disable_navigation(self.btn_animate_forward)
             self.start_animation()
 
+    def setup_plot_tabs(self):
+        self.plot_tabs.addTab(MapPlotWidget(self.get_sp), 'mapplot')
+        self.plot_tabs.addTab(Plot2DWidget(self.get_sp), 'plot2d')
+        self.plot_tabs.addTab(LinePlotWidget(self.get_sp), 'lineplot')
+
     def disable_navigation(self, but=None):
         for item in map(self.navigation_box.itemAt,
                         range(self.navigation_box.count())):
@@ -214,46 +211,40 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             w.setEnabled(True)
 
     def disable_variables(self):
-        for btn in self.variable_buttons:
+        for btn in self.variable_buttons.values():
             btn.setEnabled(False)
 
     def enable_variables(self):
-        for btn in self.variable_buttons:
+        for btn in self.variable_buttons.values():
             btn.setEnabled(True)
-
-    def toggle_datagrid(self):
-        if self.btn_datagrid.isChecked():
-            self.sp.update(datagrid='k--')
-        else:
-            self.sp.update(datagrid=None)
 
     def start_animation(self):
         self._animating = True
         self.disable_variables()
-        if self._ani is None or self._ani.event_source is None:
-            self._ani = FuncAnimation(
+        if self.animation is None or self.animation.event_source is None:
+            self.animation = FuncAnimation(
                 self.fig, self.update_dims, frames=self.animation_frames(),
                 init_func=self.sp.draw, interval=self.sl_interval.value())
             # HACK: Make sure that the animation starts although the figure
             # is already shown
-            self._ani._draw_frame(next(self.animation_frames()))
+            self.animation._draw_frame(next(self.animation_frames()))
         else:
-            self._ani.event_source.start()
+            self.animation.event_source.start()
 
     def reset_timer_interval(self, value):
         self.lbl_interval.setText('%i ms' % value)
-        if self._ani is None or self._ani.event_source is None:
+        if self.animation is None or self.animation.event_source is None:
             pass
         else:
-            self._ani.event_source.stop()
-            self._ani._interval = value
-            self._ani.event_source.interval = value
-            self._ani.event_source.start()
+            self.animation.event_source.stop()
+            self.animation._interval = value
+            self.animation.event_source.interval = value
+            self.animation.event_source.start()
 
     def stop_animation(self):
         self._animating = False
         try:
-            self._ani.event_source.stop()
+            self.animation.event_source.stop()
         except AttributeError:
             pass
         self.enable_variables()
@@ -272,44 +263,6 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     def update_dims(self, dims):
         self.sp.update(dims=dims)
-
-    def choose_next_colormap(self):
-        select = False
-        nmaps = len(rcParams['cmaps'])
-        current = self.btn_cmap.text()
-        if self.sp and 'cmap' in self.sp.plotters[0]:
-            invert_cmap = self.plotter.cmap.value.endswith('_r')
-        else:
-            invert_cmap = False
-        for i, cmap in enumerate(cycle(rcParams['cmaps'])):
-            if cmap == current:
-                select = True
-            elif select or i == nmaps:
-                break
-        self.btn_cmap.setText(cmap)
-        if invert_cmap:
-            cmap = cmap + '_r'
-        if self.sp and 'cmap' in self.sp.plotters[0]:
-            self.update_project(cmap=cmap)
-
-    def edit_color_settings(self):
-        CmapDialog.update_plotter(self.plotter)
-
-    def choose_next_projection(self):
-        select = False
-        nprojections = len(rcParams['projections'])
-        current = self.btn_proj.text()
-        for i, proj in enumerate(cycle(rcParams['projections'])):
-            if proj == current:
-                select = True
-            elif select or i == nprojections:
-                break
-        self.btn_proj.setText(proj)
-        if self.sp and 'projection' in self.sp.plotters[0]:
-            self.update_project(projection=proj)
-
-    def edit_basemap_settings(self):
-        BasemapDialog.update_plotter(self.plotter)
 
     def setup_export_menu(self):
         self.export_menu = menu = QtWidgets.QMenu()
@@ -334,7 +287,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             "Movie (*.mp4 *.mov *.gif)")
         if ok:
             self.animate_forward()
-            self._ani.save(fname, **rcParams['animations.export_kws'],
+            self.animation.save(fname, **rcParams['animations.export_kws'],
                            fps=round(1000. / self.sl_interval.value()))
             self.animate_forward()
 
@@ -358,22 +311,40 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
     def _draw_variable(self, v):
         def func():
             """Visualize variable v"""
-            self.variable = v
-            self.make_plot()
-            if self.sp is not None:
-                self.refresh()
+            btn = self.variable_buttons[v]
+            if not btn.isChecked():
+                self.close_sp()
+            else:
+                with self.silence_variable_buttons():
+                    for var, btn in self.variable_buttons.items():
+                        if var != v:
+                            btn.setChecked(False)
+                self.make_plot()
+            self.refresh()
+
         return func
 
-    _variable = NOTSET
+    @contextlib.contextmanager
+    def silence_variable_buttons(self):
+        for btn in self.variable_buttons.values():
+            btn.blockSignals(True)
+        yield
+        for btn in self.variable_buttons.values():
+            btn.blockSignals(False)
 
     @property
     def variable(self):
         """The current variable"""
-        return self._variable
+        for v, btn in self.variable_buttons.items():
+            if btn.isChecked():
+                return v
+        return NOTSET
 
     @variable.setter
     def variable(self, value):
-        self._variable = value
+        with self.silence_variable_buttons():
+            for v, btn in self.variable_buttons.items():
+                btn.setChecked(v == value)
 
     @property
     def available_plotmethods(self):
@@ -382,7 +353,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             return []
         ret = []
         plot = self.ds.psy.plot
-        for plotmethod in ['mapplot', 'plot2d', 'lineplot']:
+        for plotmethod in self.plotmethods:
             if plotmethod in plot._plot_methods:
                 if getattr(plot, plotmethod).check_data(self.ds, v, {})[0]:
                     ret.append(plotmethod)
@@ -394,29 +365,60 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     @property
     def plot_options(self):
-        fmts = {}
-        available_fmts = list(self.plot._plotter_cls._get_formatoptions())
+        return self.plotmethod_widget.get_fmts(self.ds[self.variable])
 
-        if 'cmap' in available_fmts:
-            fmts['cmap'] = self.btn_cmap.text()
+    @property
+    def plotmethod(self):
+        return self.plot_tabs.tabText(self.plot_tabs.currentIndex())
 
-        var = self.ds[self.variable]
-        if 'time' in var.dims:
-            fmts['title'] = '%(time)s'
-        if 'clabel' in available_fmts:
-            if 'long_name' in var.attrs:
-                fmts['clabel'] = '%(long_name)s'
-            else:
-                fmts['clabel'] = '%(name)s'
-            if 'units' in var.attrs:
-                fmts['clabel'] += ' %(units)s'
+    @plotmethod.setter
+    def plotmethod(self, label):
+        i = next((i for i in range(self.plot_tabs.count())
+                  if self.plot_tabs.tabText(i) == label), None)
+        if i is not None:
+            self.plot_tabs.setCurrentIndex(i)
 
-        return fmts
+    @property
+    def plotmethods(self):
+        return list(map(self.plot_tabs.tabText, range(self.plot_tabs.count())))
 
+    @property
+    def plotmethod_widget(self):
+        label = self.plotmethod
+        i = next((i for i in range(self.plot_tabs.count())
+                  if self.plot_tabs.tabText(i) == label), None)
+        return self.plot_tabs.widget(i)
 
-    plotmethod = None
+    _sp = None
 
-    sp = None
+    def get_sp(self):
+        return self._sp
+
+    @property
+    def sp(self):
+        if self._sp is None:
+            return None
+        return getattr(self._sp, self.plotmethod) or None
+
+    @sp.setter
+    def sp(self, sp):
+        if sp is None and (self._sp is None or not not getattr(
+                self._sp, self.plotmethod)):
+            pass
+        else:
+            # first remove the current arrays
+            if self._sp and getattr(self._sp, self.plotmethod):
+                to_remove = [
+                    n for n in getattr(self._sp, self.plotmethod).arr_names]
+                for i in list(reversed(range(len(self._sp)))):
+                    if self._sp[i].psy.arr_name in to_remove:
+                        self._sp.pop(i)
+            # then add the new arrays
+            if sp:
+                if self._sp:
+                    self._sp.extend(list(sp), new_name=True)
+                else:
+                    self._sp = sp
 
     @property
     def data(self):
@@ -431,42 +433,88 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         if self.sp:
             return list(self.sp.figs)[0]
 
+    _animations = {}
+
+    @property
+    def animation(self):
+        return self._animations.get(self.plotmethod)
+
+    @animation.setter
+    def animation(self, ani):
+        if ani is None:
+            self._animations.pop(self.plotmethod, None)
+        else:
+            self._animations[self.plotmethod] = ani
+
     def make_plot(self):
         plotmethods = self.available_plotmethods
-        if not plotmethods:
-            QtWidgets.QMessageBox.critical(
-                self, "Visualization impossible",
-                f"Found no plotmethod for variable {self.variable}")
-            return
-        old_plotmethod = self.plotmethod
-        plotmethod, ok = QtWidgets.QInputDialog.getItem(
-            self, "Choose a plot method", "Plot method:", plotmethods)
-        if not ok:
-            return
-        else:
+        plotmethod = self.plotmethod
+        if plotmethod not in plotmethods:
+            if not plotmethods:
+                QtWidgets.QMessageBox.critical(
+                    self, "Visualization impossible",
+                    f"Found no plotmethod for variable {self.variable}")
+                return
+            plotmethod, ok = QtWidgets.QInputDialog.getItem(
+                self, "Choose a plot method", "Plot method:", plotmethods)
+            if not ok:
+                return
             self.plotmethod = plotmethod
-        if old_plotmethod != self.plotmethod and self.sp is not None:
-            self.sp.close(True, True, True)
-            self.sp = None
-
-        if self.sp is not None:
+        new_v = self.variable
+        if self.sp:
+            old_v = self.sp[0].name
+            if set(self.ds[old_v].dims) != set(self.ds[new_v].dims):
+                self.close_sp()
+        if self.sp:
             self.sp.update(name=self.variable, **self.plot_options)
             self.show_fig()
         else:
-            self._ani = None
-            self.sp = self.plot(name=self.variable, **self.plot_options)
+            self.ani = None
+            self.sp = self.plot(
+                name=self.variable, **self.plot_options)
             self.sp.show()
         self.enable_navigation()
+
+    def close_sp(self):
+        self.sp.close(True, True, True)
+        self.sp = None
 
     def show_fig(self):
         self.fig.canvas.window().show()
 
+    def switch_tab(self):
+        with self.silence_variable_buttons():
+            if self.sp:
+                name = self.data.name
+            else:
+                name = NOTSET
+            for v, btn in self.variable_buttons.items():
+                btn.setChecked(v == name)
+        self.refresh()
+
     def refresh(self):
+        self.clear_table()
+        variable = self.variable
+
+        # refresh variable buttons
+        with self.silence_variable_buttons():
+            for v, btn in self.variable_buttons.items():
+                if v != variable:
+                    btn.setChecked(False)
+
+        # refresh tabs
+        for i in range(self.plot_tabs.count()):
+            w = self.plot_tabs.widget(i)
+            w.refresh()
+        if self.variable is NOTSET or not self.sp:
+            return
         data = self.sp[0]
         ds_data = self.ds[self.variable]
 
+        with self.silence_variable_buttons():
+            self.variable_buttons[self.variable].setChecked(True)
+
         table = self.dimension_table
-        self.clear_table()
         dims = ds_data.dims
         table.setRowCount(ds_data.ndim)
         table.setVerticalHeaderLabels(ds_data.dims)
@@ -511,9 +559,6 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         idims = data.psy.idims
         dims_to_animate = [dim for dim in dims
                            if isinstance(idims[dim], int)]
-        self.btn_cmap_settings.setEnabled('cmap' in self.plotter)
-        self.btn_proj_settings.setEnabled('projection' in self.plotter)
-        self.btn_datagrid.setEnabled('datagrid' in self.plotter)
 
         current_dims_to_animate = list(map(
             self.dimension_checkbox.itemText,
@@ -526,10 +571,8 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         i = self.data.psy.idims[dim]
         imax = self.ds.dims[dim]
         btn = utils.QRightPushButton(label)
-        if i < imax - 1:
-            btn.clicked.connect(self.increase_dim(dim))
-        if i > 0:
-            btn.rightclicked.connect(self.increase_dim(dim, -1))
+        btn.clicked.connect(self.increase_dim(dim))
+        btn.rightclicked.connect(self.increase_dim(dim, -1))
         btn.setToolTip(f"Increase dimension {dim} with left-click, and "
                        "decrease with right-click.")
         return btn
@@ -541,9 +584,184 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
     def increase_dim(self, dim, increase=1):
         def update():
             i = self.data.psy.idims[dim]
-            self.update_project(dims={dim: i+increase})
+            self.update_project(dims={dim: (i+increase) % self.ds.dims[dim]})
         return update
 
+
+class PlotMethodWidget(QtWidgets.QWidget):
+
+    plotmethod = NOTSET
+
+    def __init__(self, get_sp):
+        super().__init__()
+        self._get_sp = get_sp
+
+        self.formatoptions_box = QtWidgets.QHBoxLayout()
+
+        self.setup_buttons()
+
+        self.setLayout(self.formatoptions_box)
+        self.refresh()
+
+    def setup_buttons(self):
+        pass
+
+    @property
+    def sp(self):
+        return getattr(self._get_sp(), self.plotmethod, None)
+
+    @property
+    def data(self):
+        return self.sp[0]
+
+    @property
+    def plotter(self):
+        try:
+            return self.data.psy.plotter
+        except (TypeError, AttributeError):
+            return None
+
+    def setup_color_buttons(self):
+        pass
+
+    def setup_projection_buttons(self):
+        pass
+
+    def get_fmts(self, var):
+        return {}
+
+    def refresh(self):
+        self.setEnabled(bool(self.sp))
+
+
+class MapPlotWidget(PlotMethodWidget):
+
+    plotmethod = 'mapplot'
+
+    def setup_buttons(self):
+        self.setup_color_buttons()
+        self.setup_projection_buttons()
+
+    def setup_color_buttons(self):
+        self.btn_cmap = utils.add_pushbutton(
+            rcParams["cmaps"][0], self.choose_next_colormap,
+            "Select a different colormap", self.formatoptions_box)
+
+        self.btn_cmap_settings = utils.add_pushbutton(
+            get_icon('color_settings'), self.edit_color_settings,
+            "Edit color settings", self.formatoptions_box,
+            icon=True)
+
+    def setup_projection_buttons(self):
+        self.btn_proj = utils.add_pushbutton(
+            rcParams["projections"][0], self.choose_next_projection,
+            "Change the basemap projection", self.formatoptions_box)
+
+        self.btn_proj_settings = utils.add_pushbutton(
+            get_icon('proj_settings'), self.edit_basemap_settings,
+            "Edit basemap settings", self.formatoptions_box,
+            icon=True)
+
+        self.btn_datagrid = utils.add_pushbutton(
+            "Cells", self.toggle_datagrid,
+            "Show the grid cell boundaries", self.formatoptions_box)
+        self.btn_datagrid.setCheckable(True)
+
+    def setEnabled(self, b):
+        self.btn_proj_settings.setEnabled(b)
+        self.btn_datagrid.setEnabled(b)
+        self.btn_cmap_settings.setEnabled(b)
+
+    def choose_next_colormap(self):
+        select = False
+        nmaps = len(rcParams['cmaps'])
+        current = self.btn_cmap.text()
+        if self.sp and 'cmap' in self.sp.plotters[0]:
+            invert_cmap = self.plotter.cmap.value.endswith('_r')
+        else:
+            invert_cmap = False
+        for i, cmap in enumerate(cycle(rcParams['cmaps'])):
+            if cmap == current:
+                select = True
+            elif select or i == nmaps:
+                break
+        self.btn_cmap.setText(cmap)
+        if invert_cmap:
+            cmap = cmap + '_r'
+        if self.sp and 'cmap' in self.sp.plotters[0]:
+            self.plotter.update(cmap=cmap)
+
+    def toggle_datagrid(self):
+        if self.btn_datagrid.isChecked():
+            self.plotter.update(datagrid='k--')
+        else:
+            self.plotter.update(datagrid=None)
+
+    def edit_color_settings(self):
+        CmapDialog.update_plotter(self.plotter)
+
+    def choose_next_projection(self):
+        select = False
+        nprojections = len(rcParams['projections'])
+        current = self.btn_proj.text()
+        for i, proj in enumerate(cycle(rcParams['projections'])):
+            if proj == current:
+                select = True
+            elif select or i == nprojections:
+                break
+        self.btn_proj.setText(proj)
+        if self.sp and 'projection' in self.sp.plotters[0]:
+            self.plotter.update(projection=proj)
+
+    def edit_basemap_settings(self):
+        BasemapDialog.update_plotter(self.plotter)
+
+    def get_fmts(self, var):
+        fmts = {}
+
+        fmts['cmap'] = self.btn_cmap.text()
+        if 'time' in var.dims:
+            fmts['title'] = '%(time)s'
+
+        if 'long_name' in var.attrs:
+            fmts['clabel'] = '%(long_name)s'
+        else:
+            fmts['clabel'] = '%(name)s'
+        if 'units' in var.attrs:
+            fmts['clabel'] += ' %(units)s'
+
+        return fmts
+
+    def refresh(self):
+        self.setEnabled(bool(self.sp))
+
+
+class Plot2DWidget(MapPlotWidget):
+
+    plotmethod = 'plot2d'
+
+    def setup_projection_buttons(self):
+        self.btn_datagrid = utils.add_pushbutton(
+            "Cells", self.toggle_datagrid,
+            "Show the grid cell boundaries", self.formatoptions_box)
+        self.btn_datagrid.setCheckable(True)
+
+    def setEnabled(self, b):
+        self.btn_datagrid.setEnabled(b)
+        self.btn_cmap_settings.setEnabled(b)
+
+
+class LinePlotWidget(PlotMethodWidget):
+
+    plotmethod = 'lineplot'
+
+    def get_fmts(self, var):
+        fmts = {}
+        fmts[var.dims[-1]] = slice(None)
+        for d in var.dims[:-1]:
+            fmts[d] = 0
+        fmts['prefer_list'] = False
+        return fmts
 
 class BasemapDialog(QtWidgets.QDialog):
     """A dialog to modify the basemap settings"""
