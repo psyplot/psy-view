@@ -3,7 +3,7 @@
 from itertools import cycle
 import os.path as osp
 import os
-
+import contextlib
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import psy_view.utils as utils
@@ -115,28 +115,20 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         self.lbl_interval = QtWidgets.QLabel('500 ms')
         self.navigation_box.addWidget(self.lbl_interval)
 
-        self.addLayout(self.navigation_box)
-
-        # fourth row: plot interface
-        self.plot_box = QtWidgets.QVBoxLayout()
-        self.plot_tabs = QtWidgets.QTabWidget()
-        self.setup_plot_tabs()
-        self.plot_tabs.currentChanged.connect(self.refresh)
-        self.plot_box.addWidget(self.plot_tabs)
-
-        self.plot_hbox = QtWidgets.QHBoxLayout()
-        self.btn_make_plot = utils.add_pushbutton(
-            "Make plot", self.make_plot,
-            "Make a plot with the selected plot method for the selected "
-            "variable", self.plot_hbox)
+        # -- Export button
         self.btn_export = QtWidgets.QToolButton()
         self.btn_export.setText('Export')
         self.btn_export.setMenu(self.setup_export_menu())
-        self.plot_hbox.addWidget(self.btn_export)
+        self.navigation_box.addWidget(self.btn_export)
 
-        self.plot_box.addLayout(self.plot_hbox)
+        self.addLayout(self.navigation_box)
 
-        self.addLayout(self.plot_box)
+        # fourth row: plot interface
+        self.plot_tabs = QtWidgets.QTabWidget()
+        self.setup_plot_tabs()
+        self.plot_tabs.currentChanged.connect(self.switch_tab)
+
+        self.addWidget(self.plot_tabs)
 
         # sixth row: variables
         self.variable_frame = QtWidgets.QGroupBox('Variables')
@@ -162,6 +154,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         self.dimension_table.setColumnCount(5)
         self.dimension_table.setHorizontalHeaderLabels(
             ['Type', 'First', 'Current', 'Last', 'Units'])
+        self.dimension_table.setRowCount(0)
 
     def addLayout(self, layout):
         widget = QtWidgets.QWidget()
@@ -201,6 +194,8 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     def setup_plot_tabs(self):
         self.plot_tabs.addTab(MapPlotWidget(self.get_sp), 'mapplot')
+        self.plot_tabs.addTab(Plot2DWidget(self.get_sp), 'plot2d')
+        self.plot_tabs.addTab(LinePlotWidget(self.get_sp), 'lineplot')
 
     def disable_navigation(self, but=None):
         for item in map(self.navigation_box.itemAt,
@@ -208,14 +203,12 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             w = item.widget()
             if w is not but and w is not self.sl_interval:
                 w.setEnabled(False)
-        self.plot_tabs.setEnabled(False)
 
     def enable_navigation(self):
         for item in map(self.navigation_box.itemAt,
                         range(self.navigation_box.count())):
             w = item.widget()
             w.setEnabled(True)
-        self.plot_tabs.setEnabled(True)
 
     def disable_variables(self):
         for btn in self.variable_buttons.values():
@@ -322,13 +315,22 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             if not btn.isChecked():
                 self.close_sp()
             else:
-                for var, btn in self.variable_buttons.items():
-                    if var != v:
-                        btn.setChecked(False)
+                with self.silence_variable_buttons():
+                    for var, btn in self.variable_buttons.items():
+                        if var != v:
+                            btn.setChecked(False)
                 self.make_plot()
-            if self.sp is not None:
-                self.refresh()
+            self.refresh()
+
         return func
+
+    @contextlib.contextmanager
+    def silence_variable_buttons(self):
+        for btn in self.variable_buttons.values():
+            btn.blockSignals(True)
+        yield
+        for btn in self.variable_buttons.values():
+            btn.blockSignals(False)
 
     @property
     def variable(self):
@@ -340,8 +342,9 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     @variable.setter
     def variable(self, value):
-        for v, btn in self.variable_buttons.items():
-            btn.setChecked(v == value)
+        with self.silence_variable_buttons():
+            for v, btn in self.variable_buttons.items():
+                btn.setChecked(v == value)
 
     @property
     def available_plotmethods(self):
@@ -350,7 +353,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             return []
         ret = []
         plot = self.ds.psy.plot
-        for plotmethod in ['mapplot', 'plot2d', 'lineplot']:
+        for plotmethod in self.plotmethods:
             if plotmethod in plot._plot_methods:
                 if getattr(plot, plotmethod).check_data(self.ds, v, {})[0]:
                     ret.append(plotmethod)
@@ -374,6 +377,10 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
                   if self.plot_tabs.tabText(i) == label), None)
         if i is not None:
             self.plot_tabs.setCurrentIndex(i)
+
+    @property
+    def plotmethods(self):
+        return list(map(self.plot_tabs.tabText, range(self.plot_tabs.count())))
 
     @property
     def plotmethod_widget(self):
@@ -463,12 +470,10 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             self.show_fig()
         else:
             self.ani = None
-            self.sp = self.plot(name=self.variable, **self.plot_options)
+            self.sp = self.plot(
+                name=self.variable, **self.plot_options)
             self.sp.show()
         self.enable_navigation()
-        for i in range(self.plot_tabs.count()):
-            w = self.plot_tabs.widget(i)
-            w.setEnabled(self.plot_tabs.tabText(i) == plotmethod)
 
     def close_sp(self):
         self.sp.close(True, True, True)
@@ -477,12 +482,39 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
     def show_fig(self):
         self.fig.canvas.window().show()
 
+    def switch_tab(self):
+        with self.silence_variable_buttons():
+            if self.sp:
+                name = self.data.name
+            else:
+                name = NOTSET
+            for v, btn in self.variable_buttons.items():
+                btn.setChecked(v == name)
+        self.refresh()
+
     def refresh(self):
+        self.clear_table()
+        variable = self.variable
+
+        # refresh variable buttons
+        with self.silence_variable_buttons():
+            for v, btn in self.variable_buttons.items():
+                if v != variable:
+                    btn.setChecked(False)
+
+        # refresh tabs
+        for i in range(self.plot_tabs.count()):
+            w = self.plot_tabs.widget(i)
+            w.refresh()
+        if self.variable is NOTSET or not self.sp:
+            return
         data = self.sp[0]
         ds_data = self.ds[self.variable]
 
+        with self.silence_variable_buttons():
+            self.variable_buttons[self.variable].setChecked(True)
+
         table = self.dimension_table
-        self.clear_table()
         dims = ds_data.dims
         table.setRowCount(ds_data.ndim)
         table.setVerticalHeaderLabels(ds_data.dims)
@@ -527,7 +559,6 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         idims = data.psy.idims
         dims_to_animate = [dim for dim in dims
                            if isinstance(idims[dim], int)]
-        self.plotmethod_widget.refresh()
 
         current_dims_to_animate = list(map(
             self.dimension_checkbox.itemText,
@@ -557,13 +588,27 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         return update
 
 
-class MapPlotWidget(QtWidgets.QWidget):
+class PlotMethodWidget(QtWidgets.QWidget):
 
-    plotmethod = 'mapplot'
+    plotmethod = NOTSET
+
+    def __init__(self, get_sp):
+        super().__init__()
+        self._get_sp = get_sp
+
+        self.formatoptions_box = QtWidgets.QHBoxLayout()
+
+        self.setup_buttons()
+
+        self.setLayout(self.formatoptions_box)
+        self.refresh()
+
+    def setup_buttons(self):
+        pass
 
     @property
     def sp(self):
-        return getattr(self._get_sp(), self.plotmethod)
+        return getattr(self._get_sp(), self.plotmethod, None)
 
     @property
     def data(self):
@@ -576,17 +621,26 @@ class MapPlotWidget(QtWidgets.QWidget):
         except (TypeError, AttributeError):
             return None
 
-    def __init__(self, get_sp):
-        super().__init__()
-        self._get_sp = get_sp
-        self.formatoptions_box = QtWidgets.QHBoxLayout()
+    def setup_color_buttons(self):
+        pass
 
+    def setup_projection_buttons(self):
+        pass
+
+    def get_fmts(self, var):
+        return {}
+
+    def refresh(self):
+        self.setEnabled(bool(self.sp))
+
+
+class MapPlotWidget(PlotMethodWidget):
+
+    plotmethod = 'mapplot'
+
+    def setup_buttons(self):
         self.setup_color_buttons()
         self.setup_projection_buttons()
-
-        self.setLayout(self.formatoptions_box)
-        self.setEnabled(self.plotter is not None and
-                        'projection' in self.plotter)
 
     def setup_color_buttons(self):
         self.btn_cmap = utils.add_pushbutton(
@@ -679,8 +733,35 @@ class MapPlotWidget(QtWidgets.QWidget):
         return fmts
 
     def refresh(self):
-        pass
+        self.setEnabled(bool(self.sp))
 
+
+class Plot2DWidget(MapPlotWidget):
+
+    plotmethod = 'plot2d'
+
+    def setup_projection_buttons(self):
+        self.btn_datagrid = utils.add_pushbutton(
+            "Cells", self.toggle_datagrid,
+            "Show the grid cell boundaries", self.formatoptions_box)
+        self.btn_datagrid.setCheckable(True)
+
+    def setEnabled(self, b):
+        self.btn_datagrid.setEnabled(b)
+        self.btn_cmap_settings.setEnabled(b)
+
+
+class LinePlotWidget(PlotMethodWidget):
+
+    plotmethod = 'lineplot'
+
+    def get_fmts(self, var):
+        fmts = {}
+        fmts[var.dims[-1]] = slice(None)
+        for d in var.dims[:-1]:
+            fmts[d] = 0
+        fmts['prefer_list'] = False
+        return fmts
 
 class BasemapDialog(QtWidgets.QDialog):
     """A dialog to modify the basemap settings"""
