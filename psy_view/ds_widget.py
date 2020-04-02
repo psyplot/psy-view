@@ -755,6 +755,10 @@ class LinePlotWidget(PlotMethodWidget):
 
     plotmethod = 'lineplot'
 
+    def setup_buttons(self):
+        # TODO: Implement a button to choose the dimension
+        pass
+
     def get_fmts(self, var):
         fmts = {}
         fmts[var.dims[-1]] = slice(None)
