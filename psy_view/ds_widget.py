@@ -4,12 +4,14 @@ from itertools import cycle
 import os.path as osp
 import os
 import contextlib
-from PyQt5 import QtWidgets, QtGui
+from itertools import chain
+from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt
 import psy_view.utils as utils
 from psyplot_gui.content_widget import DatasetTreeItem
-from psyplot_gui.common import DockMixin
+from psyplot_gui.common import DockMixin, get_icon as get_psy_icon
 import psyplot.data as psyd
+from psyplot.utils import unique_everseen
 from psy_view.rcsetup import rcParams
 
 from matplotlib.animation import FuncAnimation
@@ -195,7 +197,24 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
     def setup_plot_tabs(self):
         self.plot_tabs.addTab(MapPlotWidget(self.get_sp), 'mapplot')
         self.plot_tabs.addTab(Plot2DWidget(self.get_sp), 'plot2d')
-        self.plot_tabs.addTab(LinePlotWidget(self.get_sp), 'lineplot')
+        lineplot_widget = LinePlotWidget(self.get_sp)
+        self.plot_tabs.addTab(lineplot_widget, 'lineplot')
+
+        for w in map(self.plot_tabs.widget, range(self.plot_tabs.count())):
+            w.replot.connect(self.replot)
+            w.reset.connect(self.reset)
+            w.changed.connect(self.refresh)
+
+    def replot(self, plotmethod):
+        self.plotmethod = plotmethod
+        self.make_plot()
+        self.refresh()
+
+    def reset(self, plotmethod):
+        self.plotmethod = plotmethod
+        self.close_sp()
+        self.make_plot()
+        self.refresh()
 
     def disable_navigation(self, but=None):
         for item in map(self.navigation_box.itemAt,
@@ -365,7 +384,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     @property
     def plot_options(self):
-        return self.plotmethod_widget.get_fmts(self.ds[self.variable])
+        return self.plotmethod_widget.get_fmts(self.ds[self.variable], True)
 
     @property
     def plotmethod(self):
@@ -396,9 +415,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     @property
     def sp(self):
-        if self._sp is None:
-            return None
-        return getattr(self._sp, self.plotmethod) or None
+        return self.plotmethod_widget.sp or None
 
     @sp.setter
     def sp(self, sp):
@@ -422,11 +439,11 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     @property
     def data(self):
-        return self.sp[0]
+        return self.plotmethod_widget.data
 
     @property
     def plotter(self):
-        return self.data.psy.plotter
+        return self.plotmethod_widget.plotter
 
     @property
     def fig(self):
@@ -461,12 +478,23 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
                 return
             self.plotmethod = plotmethod
         new_v = self.variable
+        fmts = {}
         if self.sp:
-            old_v = self.sp[0].name
-            if set(self.ds[old_v].dims) != set(self.ds[new_v].dims):
+            old_v = self.data.name
+            if not set(self.data.dims) <= set(self.ds[new_v].dims):
                 self.close_sp()
+            else:
+                for dim in set(self.ds[new_v].dims) - set(self.data.psy.idims):
+                    fmts[dim] = 0
+                for dim in set(self.data.psy.idims) - set(self.ds[new_v].dims):
+                    del self.data.psy.idims[dim]
         if self.sp:
-            self.sp.update(name=self.variable, **self.plot_options)
+            if self.data.psy.plotter is None:
+                self.data.psy.update(name=self.variable)
+                self.data.psy.update(**fmts)
+                self.sp.update(replot=True)
+            else:
+                self.sp.update(name=self.variable, **fmts)
             self.show_fig()
         else:
             self.ani = None
@@ -494,21 +522,31 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     def refresh(self):
         self.clear_table()
-        variable = self.variable
+        if self.sp:
+            variable = self.data.name
+        else:
+            variable = self.variable
 
         # refresh variable buttons
         with self.silence_variable_buttons():
             for v, btn in self.variable_buttons.items():
-                if v != variable:
-                    btn.setChecked(False)
+                btn.setChecked(v == variable)
 
         # refresh tabs
         for i in range(self.plot_tabs.count()):
             w = self.plot_tabs.widget(i)
             w.refresh()
-        if self.variable is NOTSET or not self.sp:
+        if variable is NOTSET or not self.sp:
             return
-        data = self.sp[0]
+        elif self.plotmethod == 'lineplot' and len(self.sp[0]) > 1:
+            current_dim = self.plotmethod_widget.combo_dims.currentText()
+            for v, btn in self.variable_buttons.items():
+                btn.setEnabled(current_dim in self.ds[v].dims)
+        else:
+            for v, btn in self.variable_buttons.items():
+                btn.setEnabled(True)
+
+        data = self.data
         ds_data = self.ds[self.variable]
 
         with self.silence_variable_buttons():
@@ -558,7 +596,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         # update animation checkbox
         idims = data.psy.idims
         dims_to_animate = [dim for dim in dims
-                           if isinstance(idims[dim], int)]
+                           if isinstance(idims.get(dim), int)]
 
         current_dims_to_animate = list(map(
             self.dimension_checkbox.itemText,
@@ -568,8 +606,6 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             self.dimension_checkbox.addItems(dims_to_animate)
 
     def new_dimension_button(self, dim, label):
-        i = self.data.psy.idims[dim]
-        imax = self.ds.dims[dim]
         btn = utils.QRightPushButton(label)
         btn.clicked.connect(self.increase_dim(dim))
         btn.rightclicked.connect(self.increase_dim(dim, -1))
@@ -584,13 +620,30 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
     def increase_dim(self, dim, increase=1):
         def update():
             i = self.data.psy.idims[dim]
-            self.update_project(dims={dim: (i+increase) % self.ds.dims[dim]})
+            self.data.psy.update(dims={dim: (i+increase) % self.ds.dims[dim]})
+            if self.data.psy.plotter is None:
+                self.sp.update(replot=True)
+            self.refresh()
         return update
 
 
 class PlotMethodWidget(QtWidgets.QWidget):
 
     plotmethod = NOTSET
+
+    #: trigger a replot of this widget. This can be emitted with the
+    #: :meth:`trigger_replot` method
+    replot = QtCore.pyqtSignal(str)
+
+    #: trigger a replot of this widget. This can be emitted with the
+    #: :meth:`trigger_reset` method
+    reset = QtCore.pyqtSignal(str)
+
+    #: signalize that the widget has been changed but not plot changes are
+    #: needed
+    changed = QtCore.pyqtSignal(str)
+
+    array_info = None
 
     def __init__(self, get_sp):
         super().__init__()
@@ -617,21 +670,29 @@ class PlotMethodWidget(QtWidgets.QWidget):
     @property
     def plotter(self):
         try:
-            return self.data.psy.plotter
-        except (TypeError, AttributeError):
+            return self.sp.plotters[0]
+        except (IndexError, AttributeError):
             return None
 
-    def setup_color_buttons(self):
-        pass
+    def get_fmts(self, var, init=False):
+        ret = {}
+        if init:
+            ret.update(self.init_dims(var))
+        return ret
 
-    def setup_projection_buttons(self):
-        pass
-
-    def get_fmts(self, var):
+    def init_dims(self, var):
         return {}
 
     def refresh(self):
         self.setEnabled(bool(self.sp))
+
+    def trigger_replot(self):
+        self.replot.emit(self.plotmethod)
+
+    def trigger_reset(self):
+        self.array_info = self.sp.array_info(
+            standardize_dims=False)[self.sp[0].psy.arr_name]
+        self.reset.emit(self.plotmethod)
 
 
 class MapPlotWidget(PlotMethodWidget):
@@ -716,7 +777,7 @@ class MapPlotWidget(PlotMethodWidget):
     def edit_basemap_settings(self):
         BasemapDialog.update_plotter(self.plotter)
 
-    def get_fmts(self, var):
+    def get_fmts(self, var, init=False):
         fmts = {}
 
         fmts['cmap'] = self.btn_cmap.text()
@@ -757,15 +818,124 @@ class LinePlotWidget(PlotMethodWidget):
 
     def setup_buttons(self):
         # TODO: Implement a button to choose the dimension
-        pass
+        self.formatoptions_box.addWidget(QtWidgets.QLabel('x-Dimension'))
+        self.combo_dims = QtWidgets.QComboBox()
+        self.combo_dims.setEditable(False)
+        self.combo_dims.currentIndexChanged.connect(self.trigger_reset)
+        self.formatoptions_box.addWidget(self.combo_dims)
 
-    def get_fmts(self, var):
-        fmts = {}
-        fmts[var.dims[-1]] = slice(None)
-        for d in var.dims[:-1]:
-            fmts[d] = 0
-        fmts['prefer_list'] = False
-        return fmts
+        self.combo_lines = QtWidgets.QComboBox()
+        self.combo_lines.setEditable(False)
+        self.formatoptions_box.addWidget(self.combo_lines)
+
+        self.btn_add = utils.add_pushbutton(
+            QtGui.QIcon(get_psy_icon('plus')), lambda: self.add_line(),
+            "Add a line to the plot", self.formatoptions_box, icon=True)
+        self.btn_del = utils.add_pushbutton(
+            QtGui.QIcon(get_psy_icon('minus')), self.remove_line,
+            "Add a line to the plot", self.formatoptions_box, icon=True)
+
+    @property
+    def data(self):
+        data = super().data
+        if len(data) - 1 < self.combo_lines.currentIndex():
+            return data[0]
+        else:
+            return data[self.combo_lines.currentIndex()]
+
+    def add_line(self, name=None):
+        ds = self.data.psy.base
+        xdim = self.combo_dims.currentText()
+        if name is None:
+            name, ok = QtWidgets.QInputDialog.getItem(
+                self, 'New line', 'Select a variable',
+                [key for key, var in ds.items()
+                 if xdim in var.dims])
+            if not ok:
+                return
+        arr = ds.psy[name]
+        sl = {key: val for key, val in self.data.psy.idims.items()
+              if key in arr.dims}
+        for dim in arr.dims:
+            if dim != xdim:
+                sl.setdefault(dim, 0)
+        self.sp[0].append(arr.psy[sl], new_name=True)
+        item = self.item_texts[-1]
+        self.sp.update(replot=True)
+        self.combo_lines.addItem(item)
+        self.combo_lines.setCurrentText(item)
+        self.changed.emit(self.plotmethod)
+
+    def remove_line(self):
+        i = self.combo_lines.currentIndex()
+        self.sp[0].pop(i)
+        self.sp.update(replot=True)
+        self.combo_lines.setCurrentText(self.item_texts[i - 1 if i else 0])
+        self.changed.emit(self.plotmethod)
+
+    @property
+    def item_texts(self):
+        return [f'Line {i}: {arr.psy._short_info()}'
+                for i, arr in enumerate(self.sp[0])]
+
+    def init_dims(self, var):
+        ret = {}
+        xdim = self.combo_dims.currentText() or var.dims[0]
+        if self.array_info:
+            arr_names = {}
+            for arrname, d in self.array_info.items():
+                if arrname != 'attrs':
+                    dims = d['dims'].copy()
+                    if xdim in dims:
+                        for dim, sl in dims.items():
+                            if not isinstance(sl, int):
+                                dims[dim] = 0
+                        dims[xdim] = slice(None)
+                    dims['name'] = d['name']
+                    arr_names[arrname] = dims
+            ret['arr_names'] = arr_names
+            del self.array_info
+        else:
+            if xdim not in var.dims:
+                xdim = var.dims[0]
+            ret[xdim] = slice(None)
+            for d in var.dims:
+                if d != xdim:
+                    ret[d] = 0
+        return ret
+
+    @contextlib.contextmanager
+    def block_combo(self):
+        self.combo_dims.blockSignals(True)
+        self.combo_lines.blockSignals(True)
+        yield
+        self.combo_dims.blockSignals(False)
+        self.combo_lines.blockSignals(False)
+
+    def refresh(self):
+        if self.sp:
+            with self.block_combo():
+                self.combo_dims.clear()
+                all_dims = [arr.psy.base[arr.name].dims for arr in self.sp[0]]
+                intersection = set(all_dims[0])
+                for dims in all_dims[1:]:
+                    intersection.intersection_update(dims)
+                new_dims = list(
+                    filter(lambda d: d in intersection,
+                           unique_everseen(chain.from_iterable(all_dims))))
+
+                self.combo_dims.addItems(new_dims)
+                self.combo_dims.setCurrentIndex(
+                    new_dims.index(self.data.dims[-1]))
+
+                # fill lines combo
+                current = self.combo_lines.currentIndex()
+                self.combo_lines.clear()
+                descriptions = self.item_texts
+                self.combo_lines.addItems(descriptions)
+                if current < len(descriptions):
+                    self.combo_lines.setCurrentText(descriptions[current])
+
 
 class BasemapDialog(QtWidgets.QDialog):
     """A dialog to modify the basemap settings"""
