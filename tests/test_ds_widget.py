@@ -3,5 +3,5 @@
 
 def test_variables(ds_widget, test_ds):
     for v in test_ds:
-        assert any(button.text() == v for button in ds_widget.variable_buttons)
-
+        assert v in ds_widget.variable_buttons
+        assert ds_widget.variable_buttons[v].text() == v
