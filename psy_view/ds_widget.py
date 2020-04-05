@@ -935,6 +935,8 @@ class LinePlotWidget(PlotMethodWidget):
                 self.combo_lines.addItems(descriptions)
                 if current < len(descriptions):
                     self.combo_lines.setCurrentText(descriptions[current])
+        self.btn_add.setEnabled(bool(self.sp))
+        self.btn_del.setEnabled(bool(self.sp) and len(self.sp[0]) > 1)
 
 
 class BasemapDialog(QtWidgets.QDialog):
