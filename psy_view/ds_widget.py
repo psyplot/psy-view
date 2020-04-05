@@ -4,6 +4,7 @@ from itertools import cycle
 import os.path as osp
 import os
 import contextlib
+import yaml
 from itertools import chain
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt
@@ -703,6 +704,10 @@ class MapPlotWidget(PlotMethodWidget):
         self.setup_color_buttons()
         self.setup_projection_buttons()
 
+        self.btn_labels = utils.add_pushbutton(
+            "Labels", self.edit_labels, "Edit title, colorbar labels, etc.",
+            self.formatoptions_box)
+
     def setup_color_buttons(self):
         self.btn_cmap = utils.add_pushbutton(
             rcParams["cmaps"][0], self.choose_next_colormap,
@@ -732,6 +737,7 @@ class MapPlotWidget(PlotMethodWidget):
         self.btn_proj_settings.setEnabled(b)
         self.btn_datagrid.setEnabled(b)
         self.btn_cmap_settings.setEnabled(b)
+        self.btn_labels.setEnabled(b)
 
     def choose_next_colormap(self):
         select = False
@@ -757,6 +763,9 @@ class MapPlotWidget(PlotMethodWidget):
             self.plotter.update(datagrid='k--')
         else:
             self.plotter.update(datagrid=None)
+
+    def edit_labels(self):
+        LabelDialog.update_project(self.sp, 'figtitle', 'title', 'clabel')
 
     def edit_color_settings(self):
         CmapDialog.update_plotter(self.plotter)
@@ -810,6 +819,11 @@ class Plot2DWidget(MapPlotWidget):
     def setEnabled(self, b):
         self.btn_datagrid.setEnabled(b)
         self.btn_cmap_settings.setEnabled(b)
+        self.btn_labels.setEnabled(b)
+
+    def edit_labels(self):
+        LabelDialog.update_project(
+            self.sp, 'figtitle', 'title', 'clabel', 'xlabel', 'ylabel')
 
 
 class LinePlotWidget(PlotMethodWidget):
@@ -834,6 +848,10 @@ class LinePlotWidget(PlotMethodWidget):
         self.btn_del = utils.add_pushbutton(
             QtGui.QIcon(get_psy_icon('minus')), self.remove_line,
             "Add a line to the plot", self.formatoptions_box, icon=True)
+
+        self.btn_labels = utils.add_pushbutton(
+            "Labels", self.edit_labels,
+            "Edit title, x-label, legendlabels, etc.", self.formatoptions_box)
 
     @property
     def data(self):
@@ -903,6 +921,10 @@ class LinePlotWidget(PlotMethodWidget):
                 if d != xdim:
                     ret[d] = 0
         return ret
+
+    def edit_labels(self):
+        LabelDialog.update_project(
+            self.sp, 'figtitle', 'title', 'xlabel', 'ylabel', 'legendlabels')
 
     @contextlib.contextmanager
     def block_combo(self):
@@ -1352,3 +1374,155 @@ class BoundaryWidget(QtWidgets.QWidget):
             self.txt_max_pctl.setText(str(max_pctl))
 
         self.cb_symmetric.setChecked(value[0].endswith('sym'))
+
+
+class FormatoptionsEditor(QtWidgets.QWidget):
+    """A widget to update a formatoption"""
+
+    def __init__(self, fmto, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        layout = QtWidgets.QHBoxLayout()
+
+        self.line_edit = QtWidgets.QLineEdit()
+        layout.addWidget(self.line_edit)
+        self.text_edit = QtWidgets.QTextEdit()
+        self.text_edit.setVisible(False)
+        layout.addWidget(self.text_edit)
+
+        self.btn_multiline = QtWidgets.QToolButton()
+        self.btn_multiline.setText('⌵')
+        self.btn_multiline.setCheckable(True)
+        self.btn_multiline.setToolTip("Toggle multiline editor")
+        self.btn_multiline.clicked.connect(self.toggle_multiline)
+        layout.addWidget(self.btn_multiline)
+
+        self.insert_obj(fmto.value)
+        self.initial_value = self.line_edit.text()
+        self.setLayout(layout)
+
+    def changed(self):
+        return self.text != self.initial_value
+
+    def toggle_multiline(self):
+        multiline = self.multiline
+        self.text_edit.setVisible(multiline)
+        self.line_edit.setVisible(not multiline)
+        if multiline:
+            self.text_edit.setPlainText(self.line_edit.text())
+        else:
+            self.line_edit.setText(self.text_edit.toPlainText())
+
+    @property
+    def multiline(self):
+        return self.btn_multiline.isChecked()
+
+    @property
+    def text(self):
+        return (self.text_edit.toPlainText() if self.multiline else
+                self.line_edit.text())
+
+    @property
+    def value(self):
+        text = self.text
+        return yaml.load(text, Loader=yaml.Loader)
+
+    def clear_text(self):
+        if self.multiline:
+            self.text_edit.clear()
+        else:
+            self.line_edit.clear()
+
+    def insert_obj(self, obj):
+        """Add a string to the formatoption widget"""
+        current = self.text
+        use_line_edit = not self.multiline
+        # strings are treated separately such that we consider quotation marks
+        # at the borders
+        if isinstance(obj, str) and current:
+            if use_line_edit:
+                pos = self.line_edit.cursorPosition()
+            else:
+                pos = self.text_edit.textCursor().position()
+            if pos not in [0, len(current)]:
+                s = obj
+            else:
+                if current[0] in ['"', "'"]:
+                    current = current[1:-1]
+                self.clear_text()
+                if pos == 0:
+                    s = '"' + obj + current + '"'
+                else:
+                    s = '"' + current + obj + '"'
+                current = ''
+        elif isinstance(obj, str):  # add quotation marks
+            s = '"' + obj + '"'
+        else:
+            s = yaml.dump(obj, default_flow_style=True).strip()
+            if s.endswith('\n...'):
+                s = s[:-4]
+        if use_line_edit:
+            self.line_edit.insert(s)
+        else:
+            self.text_edit.insertPlainText(s)
+
+
+class LabelWidgetLine(QtWidgets.QGroupBox):
+    """A widget to change the labels"""
+
+    def __init__(self, fmto, project, *args, **kwargs):
+        from psy_simple.widgets.texts import LabelWidget
+        super().__init__(f'{fmto.name} ({fmto.key})', *args, **kwargs)
+        self.editor = FormatoptionsEditor(fmto)
+        vbox = QtWidgets.QVBoxLayout()
+        vbox.addWidget(LabelWidget(self.editor, fmto, project,
+                                   properties=False))
+        vbox.addWidget(self.editor)
+        self.setLayout(vbox)
+
+class LabelDialog(QtWidgets.QDialog):
+    """A widget to change labels"""
+
+    def __init__(self, project, *fmts):
+        super().__init__()
+        self.project = project
+        layout = QtWidgets.QVBoxLayout()
+        plotter = project.plotters[0]
+        self.fmt_widgets = {}
+        for fmt in fmts:
+            fmto = getattr(plotter, fmt)
+            fmt_widget = LabelWidgetLine(fmto, project)
+            self.fmt_widgets[fmt] = fmt_widget
+            layout.addWidget(fmt_widget)
+
+        self.button_box = QtWidgets.QDialogButtonBox(
+            QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
+            self)
+        self.button_box.accepted.connect(self.accept)
+        self.button_box.rejected.connect(self.reject)
+        layout.addWidget(self.button_box)
+        self.setLayout(layout)
+
+    @property
+    def fmts(self):
+        ret = {}
+        for fmt, widget in self.fmt_widgets.items():
+            if widget.editor.changed:
+                try:
+                    value = widget.editor.value
+                except:
+                    raise IOError(f"{fmt}-value {widget.editor.text} could "
+                                  "not be parsed to python!")
+                else:
+                    ret[fmt] = value
+        return ret
+
+    @classmethod
+    def update_project(cls, project, *fmts):
+        dialog = cls(project, *fmts)
+        dialog.show()
+        dialog.raise_()
+        dialog.activateWindow()
+        dialog.exec_()
+        if dialog.result() == QtWidgets.QDialog.Accepted:
+            project.update(
+                **dialog.fmts)
