@@ -90,8 +90,8 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             "Go to previous time step", self.navigation_box)
 
         # -- dimension menu for animation
-        self.dimension_checkbox = QtWidgets.QComboBox()
-        self.navigation_box.addWidget(self.dimension_checkbox)
+        self.combo_dims = QtWidgets.QComboBox()
+        self.navigation_box.addWidget(self.combo_dims)
 
         # -- go to next button
         self.btn_next = utils.add_pushbutton(
@@ -168,11 +168,11 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         return widget
 
     def go_to_previous_step(self):
-        dim = self.dimension_checkbox.currentText()
+        dim = self.combo_dims.currentText()
         self.increase_dim(dim, -1)()
 
     def go_to_next_step(self):
-        dim = self.dimension_checkbox.currentText()
+        dim = self.combo_dims.currentText()
         self.increase_dim(dim)()
 
     def animate_backward(self):
@@ -274,7 +274,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     def animation_frames(self):
         while self._animating:
-            dim = self.dimension_checkbox.currentText()
+            dim = self.combo_dims.currentText()
             i = self.data.psy.idims[dim]
             imax = self.ds.dims[dim] - 1
             if self._animate_forward:
@@ -532,7 +532,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             linewidget = self.plotmethod_widget
             xdim = linewidget.xdim
             if xdim is None:
-                xdim = self.dimension_checkbox.currentText()
+                xdim = self.combo_dims.currentText()
 
             if not linewidget.sp or (linewidget.xdim and
                                      linewidget.xdim not in raw_data.dims):
@@ -642,11 +642,11 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
                            if isinstance(idims.get(dim), int)]
 
         current_dims_to_animate = list(map(
-            self.dimension_checkbox.itemText,
-            range(self.dimension_checkbox.count())))
+            self.combo_dims.itemText,
+            range(self.combo_dims.count())))
         if dims_to_animate != current_dims_to_animate:
-            self.dimension_checkbox.clear()
-            self.dimension_checkbox.addItems(dims_to_animate)
+            self.combo_dims.clear()
+            self.combo_dims.addItems(dims_to_animate)
 
     def new_dimension_button(self, dim, label):
         btn = utils.QRightPushButton(label)
