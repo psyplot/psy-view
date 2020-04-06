@@ -24,6 +24,13 @@ def get_icon(name, ending='.png'):
     return osp.join(osp.dirname(__file__), 'icons', name + ending)
 
 
+def get_dims_to_iterate(arr):
+    base_var = next(arr.psy.iter_base_variables)
+    return [dim for dim, size in zip(base_var.dims, base_var.shape)
+            if size > 1 and arr[dim].ndim == 0]
+
+
+
 class DatasetWidget(QtWidgets.QSplitter, DockMixin):
     """A widget to control the visualization of the variables in a dataset"""
 
@@ -387,7 +394,8 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     @property
     def plot_options(self):
-        return self.plotmethod_widget.get_fmts(self.ds[self.variable], True)
+        return self.plotmethod_widget.get_fmts(
+            self.ds.psy[self.variable], True)
 
     @property
     def plotmethod(self):
@@ -637,9 +645,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         table.resizeColumnsToContents()
 
         # update animation checkbox
-        idims = data.psy.idims
-        dims_to_animate = [dim for dim in dims
-                           if isinstance(idims.get(dim), int)]
+        dims_to_animate = get_dims_to_iterate(data)
 
         current_dims_to_animate = list(map(
             self.combo_dims.itemText,
@@ -992,7 +998,8 @@ class LinePlotWidget(PlotMethodWidget):
 
     def init_dims(self, var):
         ret = {}
-        xdim = self.xdim or var.dims[0]
+        xdim = self.xdim or next((d for d in var.dims if var[d].size > 1),
+                                 None)
         if self.array_info:
             arr_names = {}
             for arrname, d in self.array_info.items():
@@ -1009,7 +1016,11 @@ class LinePlotWidget(PlotMethodWidget):
             del self.array_info
         else:
             if xdim not in var.dims:
-                xdim = var.dims[0]
+                xdim = next((d for d in var.dims if var[d].size > 1), None)
+            if xdim is None:
+                raise ValueError(
+                    f"Cannot plot variable {var.name} with size smaller than "
+                    "2")
             ret[xdim] = slice(None)
             for d in var.dims:
                 if d != xdim:
@@ -1032,7 +1043,10 @@ class LinePlotWidget(PlotMethodWidget):
         if self.sp:
             with self.block_combo():
                 self.combo_dims.clear()
-                all_dims = [arr.psy.base[arr.name].dims for arr in self.sp[0]]
+                all_dims = list(chain.from_iterable(
+                    [[d for i, d in enumerate(a.dims) if a.shape[i] > 1]
+                     for a in arr.psy.iter_base_variables]
+                    for arr in self.sp[0]))
                 intersection = set(all_dims[0])
                 for dims in all_dims[1:]:
                     intersection.intersection_update(dims)
