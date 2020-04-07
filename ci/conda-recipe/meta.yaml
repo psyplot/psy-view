@@ -33,6 +33,7 @@ test:
   requires:
     - pytest
     - pytest-cov
+    - pytest-qt
     - codecov
     - dask
     - netcdf4

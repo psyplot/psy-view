@@ -78,7 +78,7 @@ setup(name='psy-view',
           osp.join('psy_view', 'icons', '*.png'),
           ]},
       include_package_data=True,
-      tests_require=['pytest'],
+      tests_require=['pytest', 'pytest-qt'],
       cmdclass={'test': PyTest},
       entry_points={
           'console_scripts': ['psy-view=psy_view.__main__:main'],

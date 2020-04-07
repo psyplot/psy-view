@@ -1,27 +1,13 @@
 import os.path as osp
 import pytest
+import psyplot_gui.compat.qtcompat
 
 
 test_dir = osp.dirname(__file__)
 
 
-@pytest.fixture(scope='session')
-def app():
-    # to make sure, QtWebEngineWidgets are imported prior to app creation we
-    # import qtcompat here
-    from psyplot_gui.compat import qtcompat
-    from PyQt5 import QtWidgets
-    app = QtWidgets.QApplication.instance()
-    if app is None:
-        app = QtWidgets.QApplication([])
-        app.setQuitOnLastWindowClosed(False)
-        yield app
-        app.quit()
-    else:
-        yield app
-
-
-@pytest.fixture(params=["test-t2m-u-v.nc", "icon_test.nc"])
+@pytest.fixture(params=["regular-test.nc", "regional-icon-test.nc",
+                        "rotated-pole-test.nc", "icon-test.nc"])
 def test_ds(request):
     import psyplot.data as psyd
     with psyd.open_dataset(osp.join(test_dir, request.param)) as ds:
@@ -29,9 +15,13 @@ def test_ds(request):
 
 
 @pytest.fixture
-def ds_widget(app, test_ds):
+def ds_widget(qtbot, test_ds):
+    import psyplot.project as psy
+    import matplotlib.pyplot as plt
     from psy_view.ds_widget import DatasetWidget
     w = DatasetWidget(test_ds)
+    qtbot.addWidget(w)
     yield w
-    w.close()
-
+    w._sp = None
+    psy.close('all')
+    plt.close('all')
