@@ -9,7 +9,7 @@ from itertools import chain
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt
 import psy_view.utils as utils
-from psyplot_gui.content_widget import DatasetTreeItem
+from psyplot_gui.content_widget import DatasetTreeItem, escape_html
 from psyplot_gui.common import DockMixin, get_icon as get_psy_icon
 import psyplot.data as psyd
 from psyplot.utils import unique_everseen
@@ -80,6 +80,19 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             fname = ''
         ds_item.setText(0, fname)
         tree.addTopLevelItem(ds_item)
+        tree.expandItem(ds_item)
+
+        if len(self.ds) <= 10:
+            tree.expandItem(ds_item.child(0))
+        if len(self.ds.coords) <= 10:
+            tree.expandItem(ds_item.child(1))
+        if len(self.ds.attrs) <= 10:
+            tree.expandItem(ds_item.attrs)
+
+        tree.resizeColumnToContents(0)
+
+        self.ds_tree.itemExpanded.connect(self.load_variable_desc)
+
         self.addWidget(tree)
 
         # third row, navigation
@@ -160,6 +173,38 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         self.disable_navigation()
 
         self.cids = {}
+
+    def expand_current_variable(self):
+        tree = self.ds_tree
+        top = tree.topLevelItem(0)
+        tree.expandItem(top)
+        tree.expandItem(top.child(0))
+        for var_item in map(top.child(0).child,
+                            range(top.child(0).childCount())):
+            if var_item.text(0) == self.variable:
+                tree.expandItem(var_item)
+            else:
+                tree.collapseItem(var_item)
+
+    def load_variable_desc(self, item):
+        # if we are not at the lowest level or the item has already label, pass
+        if item.child(0).childCount() or self.ds_tree.itemWidget(
+                item.child(0), 0):
+            return
+
+        top = item
+        while top.parent() and top.parent() is not self.ds_tree:
+            top = top.parent()
+        ds = top.ds()
+        if ds is None:
+            return
+        widget = QtWidgets.QScrollArea()
+        label = QtWidgets.QLabel(
+            '<pre>' + escape_html(str(ds.variables[item.text(0)])) + '</pre>')
+        label.setTextFormat(Qt.RichText)
+        widget.setWidget(label)
+        self.ds_tree.setItemWidget(item.child(0), 0, widget)
+        item.child(0).setFirstColumnSpanned(True)
 
     def clear_table(self):
         self.dimension_table.clear()
@@ -519,6 +564,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
                 'button_press_event', self.display_line)
             self.cids[self.plotmethod] = cid
             self.sp.show()
+        self.expand_current_variable()
         self.enable_navigation()
 
     def display_line(self, event):
