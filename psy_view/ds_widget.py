@@ -605,7 +605,11 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         self.sp = None
 
     def show_fig(self):
-        self.fig.canvas.window().show()
+        try:
+            self.fig.canvas.window().show()
+        except AttributeError:
+            import matplotlib.pyplot as plt
+            plt.show(block=False)
 
     def switch_tab(self):
         with self.silence_variable_buttons():
