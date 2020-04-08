@@ -178,7 +178,7 @@ def test_animate(qtbot, ds_widget, plotmethod, direction):
     # start animation
     qtbot.mouseClick(btn, Qt.LeftButton)
     assert ds_widget._animating
-    qtbot.waitUntil(animation_finished, timeout=10000)
+    qtbot.waitUntil(animation_finished, timeout=30000)
 
     # stop animation
     qtbot.mouseClick(btn, Qt.LeftButton)
