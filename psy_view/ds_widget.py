@@ -748,14 +748,11 @@ class PlotMethodWidget(QtWidgets.QWidget):
         super().__init__()
         self._get_sp = get_sp
 
-        self.formatoptions_box = QtWidgets.QHBoxLayout()
+        self.setup()
 
-        self.setup_buttons()
-
-        self.setLayout(self.formatoptions_box)
         self.refresh()
 
-    def setup_buttons(self):
+    def setup(self):
         pass
 
     @property
@@ -801,13 +798,17 @@ class MapPlotWidget(PlotMethodWidget):
 
     plotmethod = 'mapplot'
 
-    def setup_buttons(self):
+    def setup(self):
+        self.formatoptions_box = QtWidgets.QHBoxLayout()
+
         self.setup_color_buttons()
         self.setup_projection_buttons()
 
         self.btn_labels = utils.add_pushbutton(
             "Labels", self.edit_labels, "Edit title, colorbar labels, etc.",
             self.formatoptions_box)
+
+        self.setLayout(self.formatoptions_box)
 
     def setup_color_buttons(self):
         self.btn_cmap = utils.add_pushbutton(
@@ -970,7 +971,9 @@ class LinePlotWidget(PlotMethodWidget):
 
     plotmethod = 'lineplot'
 
-    def setup_buttons(self):
+    def setup(self):
+        self.formatoptions_box = QtWidgets.QHBoxLayout()
+
         # TODO: Implement a button to choose the dimension
         self.formatoptions_box.addWidget(QtWidgets.QLabel('x-Dimension:'))
         self.combo_dims = QtWidgets.QComboBox()
@@ -994,6 +997,8 @@ class LinePlotWidget(PlotMethodWidget):
         self.btn_labels = utils.add_pushbutton(
             "Labels", self.edit_labels,
             "Edit title, x-label, legendlabels, etc.", self.formatoptions_box)
+
+        self.setLayout(self.formatoptions_box)
 
     @property
     def xdim(self):
