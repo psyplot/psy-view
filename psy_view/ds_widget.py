@@ -972,7 +972,7 @@ class LinePlotWidget(PlotMethodWidget):
 
     def setup_buttons(self):
         # TODO: Implement a button to choose the dimension
-        self.formatoptions_box.addWidget(QtWidgets.QLabel('x-Dimension'))
+        self.formatoptions_box.addWidget(QtWidgets.QLabel('x-Dimension:'))
         self.combo_dims = QtWidgets.QComboBox()
         self.combo_dims.setEditable(False)
         self.combo_dims.currentIndexChanged.connect(self.trigger_reset)
@@ -981,6 +981,8 @@ class LinePlotWidget(PlotMethodWidget):
         self.combo_lines = QtWidgets.QComboBox()
         self.combo_lines.setEditable(False)
         self.formatoptions_box.addWidget(self.combo_lines)
+        self.combo_lines.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
+        self.formatoptions_box.addStretch(0)
 
         self.btn_add = utils.add_pushbutton(
             QtGui.QIcon(get_psy_icon('plus')), lambda: self.add_line(),
@@ -1115,6 +1117,10 @@ class LinePlotWidget(PlotMethodWidget):
                 self.combo_lines.addItems(descriptions)
                 if current < len(descriptions):
                     self.combo_lines.setCurrentText(descriptions[current])
+        else:
+            with self.block_combo():
+                self.combo_dims.clear()
+                self.combo_lines.clear()
         self.btn_add.setEnabled(bool(self.sp))
         self.btn_del.setEnabled(bool(self.sp) and len(self.sp[0]) > 1)
 
