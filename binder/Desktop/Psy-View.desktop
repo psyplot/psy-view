@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Psy-View 0.x
+Exec=python -m psy-view
+# FIXME: Don't hardcode Path?
+Icon=/home/jovyan/icon/psy-view.svg
+Path=/home/jovyan/Desktop
