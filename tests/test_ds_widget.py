@@ -1,4 +1,5 @@
 """Test the main functionality of the psy-view package, namely the widget"""
+import os.path as osp
 from PyQt5.QtCore import Qt
 from PyQt5 import QtWidgets
 import pytest
@@ -53,6 +54,77 @@ def test_plot2d_switch(qtbot, ds_widget):
     assert ds_widget.data.name == 'v'
     qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
     assert not ds_widget.sp
+
+
+def test_plot2d_dim_switch(qtbot, ds_widget, test_ds):
+    arr = test_ds['t2m']
+
+    ds_widget.plotmethod = 'plot2d'
+
+    pm_widget = ds_widget.plotmethod_widget
+
+    pm_widget.combo_xdim.setCurrentText(arr.dims[0])
+    pm_widget.combo_ydim.setCurrentText(arr.dims[1])
+
+    assert pm_widget.combo_xcoord.currentText() == arr.dims[0]
+    assert pm_widget.combo_ycoord.currentText() == arr.dims[1]
+
+    fmts = pm_widget.init_dims(arr)
+
+    assert fmts['transpose']
+
+    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+
+    assert not pm_widget.combo_xdim.isEnabled()
+
+    assert ds_widget.sp
+    assert ds_widget.plotter.plot_data.dims == arr.dims[:2]
+
+
+@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d'])
+def test_plot2d_coord(qtbot, ds_widget, test_ds, test_file, plotmethod):
+    arr = test_ds.psy['t2m']
+
+    if osp.basename(test_file) != "rotated-pole-test.nc":
+        return pytest.skip("Testing rotated coords only")
+
+    ydim, xdim = arr.dims[-2:]
+
+    test_ds[xdim].attrs.pop('axis', None)
+    test_ds[ydim].attrs.pop('axis', None)
+
+    assert 'coordinates' in arr.encoding
+
+    ds_widget.plotmethod = plotmethod
+
+    pm_widget = ds_widget.plotmethod_widget
+
+    assert pm_widget.combo_xcoord.isEnabled()
+
+    # make the plot with default setting
+    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+
+    assert not pm_widget.combo_xcoord.isEnabled()
+
+    assert pm_widget.data.psy.get_coord('x').name != xdim
+    assert pm_widget.data.psy.get_coord('y').name != ydim
+
+    # remove the plot
+    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+
+    assert pm_widget.combo_xcoord.isEnabled()
+
+    # tell to use the dimensions
+    pm_widget.combo_xcoord.setCurrentText(xdim)
+    pm_widget.combo_ycoord.setCurrentText(ydim)
+
+    # make the plot with the changed settings
+    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+
+    assert not pm_widget.combo_xcoord.isEnabled()
+
+    assert pm_widget.data.psy.get_coord('x').name == xdim
+    assert pm_widget.data.psy.get_coord('y').name == ydim
 
 
 def test_lineplot(qtbot, ds_widget):

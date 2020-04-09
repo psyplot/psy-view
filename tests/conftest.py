@@ -6,11 +6,18 @@ import psyplot_gui.compat.qtcompat
 test_dir = osp.dirname(__file__)
 
 
+
+
 @pytest.fixture(params=["regular-test.nc", "regional-icon-test.nc",
                         "rotated-pole-test.nc", "icon-test.nc"])
-def test_ds(request):
+def test_file(request):
+    return osp.join(test_dir, request.param)
+
+
+@pytest.fixture
+def test_ds(test_file):
     import psyplot.data as psyd
-    with psyd.open_dataset(osp.join(test_dir, request.param)) as ds:
+    with psyd.open_dataset(test_file) as ds:
         yield ds
 
 

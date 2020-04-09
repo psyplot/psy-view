@@ -250,9 +250,9 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             self.start_animation()
 
     def setup_plot_tabs(self):
-        self.plot_tabs.addTab(MapPlotWidget(self.get_sp), 'mapplot')
-        self.plot_tabs.addTab(Plot2DWidget(self.get_sp), 'plot2d')
-        lineplot_widget = LinePlotWidget(self.get_sp)
+        self.plot_tabs.addTab(MapPlotWidget(self.get_sp, self.ds), 'mapplot')
+        self.plot_tabs.addTab(Plot2DWidget(self.get_sp, self.ds), 'plot2d')
+        lineplot_widget = LinePlotWidget(self.get_sp, self.ds)
         self.plot_tabs.addTab(lineplot_widget, 'lineplot')
 
         for w in map(self.plot_tabs.widget, range(self.plot_tabs.count())):
@@ -636,16 +636,12 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         # refresh tabs
         for i in range(self.plot_tabs.count()):
             w = self.plot_tabs.widget(i)
-            w.refresh()
+            w.refresh(self.ds)
+        valid_variables = self.plotmethod_widget.valid_variables(self.ds)
+        for v, btn in self.variable_buttons.items():
+            btn.setEnabled(v in valid_variables)
         if variable is NOTSET or not self.sp:
             return
-        elif self.plotmethod == 'lineplot' and len(self.sp[0]) > 1:
-            current_dim = self.plotmethod_widget.combo_dims.currentText()
-            for v, btn in self.variable_buttons.items():
-                btn.setEnabled(current_dim in self.ds[v].dims)
-        else:
-            for v, btn in self.variable_buttons.items():
-                btn.setEnabled(True)
 
         data = self.data
         ds_data = self.ds[self.variable]
@@ -744,13 +740,18 @@ class PlotMethodWidget(QtWidgets.QWidget):
 
     array_info = None
 
-    def __init__(self, get_sp):
+    layout = None
+
+    def __init__(self, get_sp, ds):
         super().__init__()
         self._get_sp = get_sp
 
         self.setup()
 
-        self.refresh()
+        if self.layout is not None:
+            self.setLayout(self.layout)
+
+        self.refresh(ds)
 
     def setup(self):
         pass
@@ -779,7 +780,7 @@ class PlotMethodWidget(QtWidgets.QWidget):
     def init_dims(self, var):
         return {}
 
-    def refresh(self):
+    def refresh(self, ds):
         self.setEnabled(bool(self.sp))
 
     def trigger_replot(self):
@@ -790,8 +791,14 @@ class PlotMethodWidget(QtWidgets.QWidget):
             standardize_dims=False)[self.sp[0].psy.arr_name]
         self.reset.emit(self.plotmethod)
 
+    def trigger_refresh(self):
+        self.changed.emit(self.plotmethod)
+
     def get_slice(self, x, y):
         return None
+
+    def valid_variables(self, ds):
+        return list(ds)
 
 
 class MapPlotWidget(PlotMethodWidget):
@@ -799,16 +806,21 @@ class MapPlotWidget(PlotMethodWidget):
     plotmethod = 'mapplot'
 
     def setup(self):
-        self.formatoptions_box = QtWidgets.QHBoxLayout()
+        self.layout = vbox = QtWidgets.QVBoxLayout()
 
+        self.formatoptions_box = QtWidgets.QHBoxLayout()
         self.setup_color_buttons()
         self.setup_projection_buttons()
-
         self.btn_labels = utils.add_pushbutton(
             "Labels", self.edit_labels, "Edit title, colorbar labels, etc.",
             self.formatoptions_box)
 
-        self.setLayout(self.formatoptions_box)
+        vbox.addLayout(self.formatoptions_box)
+
+        self.dimension_box = QtWidgets.QGridLayout()
+        self.setup_dimension_box()
+
+        vbox.addLayout(self.dimension_box)
 
     def setup_color_buttons(self):
         self.btn_cmap = utils.add_pushbutton(
@@ -834,6 +846,118 @@ class MapPlotWidget(PlotMethodWidget):
             "Cells", self.toggle_datagrid,
             "Show the grid cell boundaries", self.formatoptions_box)
         self.btn_datagrid.setCheckable(True)
+
+    def setup_dimension_box(self):
+        self.dimension_box = QtWidgets.QGridLayout()
+
+        self.dimension_box.addWidget(QtWidgets.QLabel('x-Dimension:'), 0, 0)
+        self.combo_xdim = QtWidgets.QComboBox()
+        self.dimension_box.addWidget(self.combo_xdim, 0, 1)
+
+        self.dimension_box.addWidget(QtWidgets.QLabel('y-Dimension:'), 0, 2)
+        self.combo_ydim = QtWidgets.QComboBox()
+        self.dimension_box.addWidget(self.combo_ydim, 0, 3)
+
+        self.dimension_box.addWidget(QtWidgets.QLabel('x-Coordinate:'), 1, 0)
+        self.combo_xcoord = QtWidgets.QComboBox()
+        self.dimension_box.addWidget(self.combo_xcoord, 1, 1)
+
+        self.dimension_box.addWidget(QtWidgets.QLabel('y-Coordinate:'), 1, 2)
+        self.combo_ycoord = QtWidgets.QComboBox()
+        self.dimension_box.addWidget(self.combo_ycoord, 1, 3)
+
+        self.combo_xdim.currentTextChanged.connect(self.set_xcoord)
+        self.combo_ydim.currentTextChanged.connect(self.set_ycoord)
+
+        for combo in self.coord_combos:
+            combo.currentIndexChanged.connect(self.trigger_refresh)
+
+    def set_xcoord(self, text):
+        self.set_combo_text(self.combo_xcoord, text)
+
+    def set_ycoord(self, text):
+        self.set_combo_text(self.combo_ycoord, text)
+
+    def set_combo_text(self, combo, text):
+        items = list(map(combo.itemText, range(combo.count())))
+        if text in items:
+            combo.setCurrentIndex(items.index(text))
+
+    def init_dims(self, var):
+        ret = super().init_dims(var)
+
+        dims = {}
+        xdim = ydim = None
+
+        if self.combo_xdim.currentIndex():
+            xdim = self.combo_xdim.currentText()
+            if xdim in var.dims:
+                dims[xdim] = slice(None)
+
+        if self.combo_ydim.currentIndex():
+            ydim = self.combo_ydim.currentText()
+            if ydim in var.dims:
+                dims[ydim] = slice(None)
+
+        if dims:
+            missing = [dim for dim in var.dims if dim not in dims]
+            for dim in missing:
+                dims[dim] = 0
+            if len(dims) == 1:
+                if xdim is None:
+                    xdim = missing[-1]
+                else:
+                    ydim = missing[-1]
+                dims[missing[-1]] = slice(None)  # keep the last dimension
+            ret['dims'] = dims
+
+
+        if self.combo_xcoord.currentIndex():
+            xcoord = self.combo_xcoord.currentText()
+            ret['decoder'] = {'x': {xcoord}}
+        if self.combo_ycoord.currentIndex():
+            ycoord = self.combo_ycoord.currentText()
+            ret.setdefault('decoder', {})
+            ret['decoder']['y'] = {ycoord}
+
+        if xdim is not None:
+            ret['transpose'] = var.dims.index(xdim) < var.dims.index(ydim)
+
+        return ret
+
+    def valid_variables(self, ds):
+        valid = super().valid_variables(ds)
+        if (not any(combo.count() for combo in self.coord_combos) or
+                not any(combo.currentIndex() for combo in self.coord_combos)):
+            return valid
+        if self.combo_xdim.currentIndex():
+            xdim = self.combo_xdim.currentText()
+            valid = [v for v in valid if xdim in ds[v].dims]
+        if self.combo_ydim.currentIndex():
+            ydim = self.combo_xdim.currentText()
+            valid = [v for v in valid if ydim in ds[v].dims]
+        if self.combo_xcoord.currentIndex():
+            xc_dims = set(ds[self.combo_xcoord.currentText()].dims)
+            valid = [v for v in valid
+                     if xc_dims.intersection(ds[v].dims)]
+        if self.combo_ycoord.currentIndex():
+            yc_dims = set(ds[self.combo_ycoord.currentText()].dims)
+            valid = [v for v in valid
+                     if yc_dims.intersection(ds[v].dims)]
+        return valid
+
+    @property
+    def coord_combos(self):
+        return [self.combo_xdim, self.combo_ydim, self.combo_xcoord,
+                self.combo_ycoord]
+
+    @contextlib.contextmanager
+    def block_combos(self):
+        for combo in self.coord_combos:
+            combo.blockSignals(True)
+        yield
+        for combo in self.coord_combos:
+            combo.blockSignals(False)
 
     def setEnabled(self, b):
         self.btn_proj_settings.setEnabled(b)
@@ -902,10 +1026,63 @@ class MapPlotWidget(PlotMethodWidget):
         if 'units' in var.attrs:
             fmts['clabel'] += ' %(units)s'
 
+        if init:
+            fmts.update(self.init_dims(var))
+
         return fmts
 
-    def refresh(self):
+    def refresh(self, ds):
         self.setEnabled(bool(self.sp))
+
+        auto = 'Set automatically'
+
+        with self.block_combos():
+
+            current_dims = set(map(
+                self.combo_xdim.itemText, range(1, self.combo_xdim.count())))
+            ds_dims = list(dim for dim, n in ds.dims.items() if n > 1)
+            if current_dims != set(ds_dims):
+                self.combo_xdim.clear()
+                self.combo_ydim.clear()
+                self.combo_xdim.addItems([auto] + ds_dims)
+                self.combo_ydim.addItems([auto] + ds_dims)
+
+            current_coords = set(map(
+                self.combo_xcoord.itemText, range(1, self.combo_xcoord.count())))
+            ds_coords = list(c for c, arr in ds.coords.items() if arr.ndim)
+            if current_coords != set(ds_coords):
+                self.combo_xcoord.clear()
+                self.combo_ycoord.clear()
+                self.combo_xcoord.addItems([auto] + ds_coords)
+                self.combo_ycoord.addItems([auto] + ds_coords)
+
+            enable_combos = not bool(self.sp)
+
+            if not enable_combos and self.combo_xdim.isEnabled():
+                self.reset_combos = [combo.currentIndex() == 0
+                                    for combo in self.coord_combos]
+            elif enable_combos and not self.combo_xdim.isEnabled():
+                for reset, combo in zip(self.reset_combos, self.coord_combos):
+                    if reset:
+                        combo.setCurrentIndex(0)
+                self.reset_combos = [False] * len(self.coord_combos)
+
+            for combo in self.coord_combos:
+                combo.setEnabled(enable_combos)
+
+            if not enable_combos:
+                data = self.data
+                xdim = str(data.psy.get_dim('x'))
+                ydim = str(data.psy.get_dim('y'))
+                self.combo_xdim.setCurrentText(xdim)
+                self.combo_ydim.setCurrentText(ydim)
+                xcoord = data.psy.get_coord('x')
+                xcoord = xcoord.name if xcoord is not None else xdim
+                ycoord = data.psy.get_coord('y')
+                ycoord = ycoord.name if ycoord is not None else ydim
+
+                self.combo_xcoord.setCurrentText(xcoord)
+                self.combo_ycoord.setCurrentText(ycoord)
 
     def transform(self, x, y):
         import cartopy.crs as ccrs
@@ -972,7 +1149,7 @@ class LinePlotWidget(PlotMethodWidget):
     plotmethod = 'lineplot'
 
     def setup(self):
-        self.formatoptions_box = QtWidgets.QHBoxLayout()
+        self.layout = self.formatoptions_box = QtWidgets.QHBoxLayout()
 
         # TODO: Implement a button to choose the dimension
         self.formatoptions_box.addWidget(QtWidgets.QLabel('x-Dimension:'))
@@ -997,8 +1174,6 @@ class LinePlotWidget(PlotMethodWidget):
         self.btn_labels = utils.add_pushbutton(
             "Labels", self.edit_labels,
             "Edit title, x-label, legendlabels, etc.", self.formatoptions_box)
-
-        self.setLayout(self.formatoptions_box)
 
     @property
     def xdim(self):
@@ -1039,7 +1214,7 @@ class LinePlotWidget(PlotMethodWidget):
         self.sp.update(replot=True)
         self.combo_lines.addItem(item)
         self.combo_lines.setCurrentText(item)
-        self.changed.emit(self.plotmethod)
+        self.trigger_refresh()
 
     def remove_line(self):
         i = self.combo_lines.currentIndex()
@@ -1089,16 +1264,24 @@ class LinePlotWidget(PlotMethodWidget):
             self.sp, 'figtitle', 'title', 'xlabel', 'ylabel', 'legendlabels')
 
     @contextlib.contextmanager
-    def block_combo(self):
+    def block_combos(self):
         self.combo_dims.blockSignals(True)
         self.combo_lines.blockSignals(True)
         yield
         self.combo_dims.blockSignals(False)
         self.combo_lines.blockSignals(False)
 
-    def refresh(self):
+    def valid_variables(self, ds):
+        valid = super().valid_variables(ds)
+        if not self.sp or len(self.sp[0]) < 2:
+            return valid
+        else:
+            current_dim = self.combo_dims.currentText()
+            return [v for v in valid if current_dim in ds[v].dims]
+
+    def refresh(self, ds):
         if self.sp:
-            with self.block_combo():
+            with self.block_combos():
                 self.combo_dims.clear()
                 all_dims = list(chain.from_iterable(
                     [[d for i, d in enumerate(a.dims) if a.shape[i] > 1]
@@ -1123,7 +1306,7 @@ class LinePlotWidget(PlotMethodWidget):
                 if current < len(descriptions):
                     self.combo_lines.setCurrentText(descriptions[current])
         else:
-            with self.block_combo():
+            with self.block_combos():
                 self.combo_dims.clear()
                 self.combo_lines.clear()
         self.btn_add.setEnabled(bool(self.sp))
