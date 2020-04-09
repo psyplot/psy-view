@@ -11,3 +11,4 @@ dependencies:
 - websockify
 - pip:
     - jupyter-desktop-server
+    - .
