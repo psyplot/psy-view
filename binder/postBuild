@@ -2,7 +2,26 @@
 
 set -euo pipefail
 
-pip install ./
+mkdir -p $HOME/Desktop
 
-cp -r binder/Desktop ${HOME}/Desktop
+cat > $HOME/Desktop/Psy-View.desktop << EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Psy-View 0.x
+Exec=python -m psy_view
+Icon=$HOME/icon/psy-view.svg
+Path=$HOME/Desktop
+EOF
+
+cat > $HOME/Desktop/Psyplot.desktop << EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Psy-View 0.x
+Exec=python -m psyplot
+Icon=$HOME/icon/psyplot.svg
+Path=$HOME/Desktop
+EOF
+
 cp -r tests/*.nc $HOME/Desktop
