@@ -1,0 +1,14 @@
+channels:
+- psyplot/label/master
+- manics # Used by jupyter-desktop-server
+- conda-forge
+dependencies:
+- psy-maps
+- psyplot-gui
+- netcdf4
+- pip
+
+# Required for jupyter-desktop-server
+- websockify
+- pip:
+    - jupyter-desktop-server
