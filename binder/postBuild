@@ -24,6 +24,8 @@ Icon=$HOME/icon/psyplot.svg
 Path=$HOME/Desktop
 EOF
 
+chmod u+x $HOME/Desktop/Psyplot.desktop $HOME/Desktop/Psy-View.desktop
+
 cp -r tests/*.nc $HOME/Desktop
 
 python -m pip install ./
