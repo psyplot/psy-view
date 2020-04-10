@@ -20,13 +20,19 @@ def test_mapplot(qtbot, ds_widget):
     qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
     assert not ds_widget.sp
 
-
-def test_mapplot_switch(qtbot, ds_widget):
+@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d'])
+def test_variable_switch(qtbot, ds_widget, plotmethod):
     """Test switching of variables"""
-    ds_widget.plotmethod = 'mapplot'
+    ds_widget.plotmethod = plotmethod
     qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
     assert len(ds_widget.sp) == 1
     assert ds_widget.data.name == 't2m'
+    qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
+    assert len(ds_widget.sp) == 1
+    assert ds_widget.data.name == 'v'
+    qtbot.mouseClick(ds_widget.variable_buttons['v_2d'], Qt.LeftButton)
+    assert len(ds_widget.sp) == 1
+    assert ds_widget.data.name == 'v_2d'
     qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
     assert len(ds_widget.sp) == 1
     assert ds_widget.data.name == 'v'
@@ -40,19 +46,6 @@ def test_plot2d(qtbot, ds_widget):
     qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
     assert ds_widget.sp
     qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
-    assert not ds_widget.sp
-
-
-def test_plot2d_switch(qtbot, ds_widget):
-    """Test switching of variables"""
-    ds_widget.plotmethod = 'plot2d'
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
-    assert len(ds_widget.sp) == 1
-    assert ds_widget.data.name == 't2m'
-    qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
-    assert len(ds_widget.sp) == 1
-    assert ds_widget.data.name == 'v'
-    qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
     assert not ds_widget.sp
 
 

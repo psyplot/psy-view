@@ -540,21 +540,22 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             self.plotmethod = plotmethod
         new_v = self.variable
         fmts = {}
+        dims = {}
         if self.sp:
             if not set(self.data.dims) <= set(self.ds[new_v].dims):
                 self.close_sp()
             else:
                 for dim in set(self.ds[new_v].dims) - set(self.data.psy.idims):
-                    fmts[dim] = 0
+                    dims[dim] = 0
                 for dim in set(self.data.psy.idims) - set(self.ds[new_v].dims):
                     del self.data.psy.idims[dim]
         if self.sp:
             if self.data.psy.plotter is None:
                 self.data.psy.update(name=self.variable)
-                self.data.psy.update(**fmts)
+                self.data.psy.update(dims=dims, **fmts)
                 self.sp.update(replot=True)
             else:
-                self.sp.update(name=self.variable, **fmts)
+                self.sp.update(name=self.variable, dims=dims, **fmts)
             self.show_fig()
         else:
             self.ani = None
