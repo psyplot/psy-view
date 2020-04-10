@@ -31,6 +31,7 @@ EOF
 chmod u+x $HOME/Desktop/Psyplot.desktop $HOME/Desktop/Psy-View.desktop
 
 # associate default applications
+mkdir -p $HOME/.local/share/applications/
 ln -s $HOME/Desktop/Psyplot.desktop $HOME/.local/share/applications/
 ln -s $HOME/Desktop/Psy-View.desktop $HOME/.local/share/applications/
 
