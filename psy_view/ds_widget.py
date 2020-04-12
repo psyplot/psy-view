@@ -64,10 +64,6 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
         self.setOrientation(Qt.Vertical)
 
-        # first row: info label
-        self.info_label = QtWidgets.QLabel("Select a variable to start")
-        self.addWidget(self.info_label)
-
         # second row: dataset representation
         self.ds_tree = tree = QtWidgets.QTreeWidget()
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
