@@ -21,8 +21,9 @@ requirements:
     - pip
   run:
     - python
-    - psyplot-gui >=1.2.0
-    - psy-maps
+    - psyplot-gui >=1.2.4
+    - psyplot >1.2.1
+    - psy-maps >1.2.0
     - netcdf4
 
 test:

@@ -31,8 +31,9 @@ with open(osp.join('psy_view', 'version.py')) as f:
 
 
 dependencies = [
-    'psyplot-gui>=1.2.3',
-    'psyplot>=1.2.0',
+    'psyplot-gui>1.2.4',
+    'psyplot>1.2.1',
+    'psy-maps>1.2.0',
     'netCDF4',
 ]
 
