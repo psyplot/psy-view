@@ -12,7 +12,7 @@ defaultParams = {
               validate_stringlist,
               "The names of available colormaps"],
     "projections": [
-        ["cyl", "robin", "ortho", "moll"], validate_stringlist,
+        ["cf", "cyl", "robin", "ortho", "moll"], validate_stringlist,
         "The names of available projections"],
     "savefig_kws": [
         dict(dpi=250), validate_dict,
