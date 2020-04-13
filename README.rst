@@ -2,10 +2,88 @@
 psy-view: An ncview-like GUI with psyplot
 =========================================
 
-More about to come...
+.. start-badges
 
-Run it headless in you browser by clicking |mybinder|
+.. list-table::
+    :stub-columns: 1
+    :widths: 10 90
+
+    * - examples
+      - |mybinder|
+    * - tests
+      - |travis| |appveyor| |codecov|
+    * - package
+      - |conda| |github|
 
 .. |mybinder| image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop
    :alt: mybinder.org
+
+.. |travis| image:: https://travis-ci.org/psyplot/psy-view.svg?branch=master
+    :alt: Travis
+    :target: https://travis-ci.org/psyplot/psy-view
+
+.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/a7qxvvwt0e41j32h/branch/master?svg=true
+    :alt: AppVeyor
+    :target: https://ci.appveyor.com/project/psyplot/psy-view/branch/master
+
+.. |codecov| image:: https://codecov.io/gh/psyplot/psy-view/branch/master/graph/badge.svg
+    :alt: Coverage
+    :target: https://codecov.io/gh/psyplot/psy-view
+
+.. |conda| image:: https://anaconda.org/psyplot/psy-view/badges/version.svg
+    :alt: conda
+    :target: https://anaconda.org/conda-forge/psyplot
+
+.. |github| image:: https://img.shields.io/github/release/psyplot/psy-view.svg
+    :target: https://github.com/psyplot/psy-view/releases/latest
+    :alt: Latest github release
+
+.. end-badges
+
+This package defines a viewer application for netCDF files, that is highly
+motivated by the ncview_ package but entirely built upon the psyplot framework.
+It supports strucutured and unstructured grids and provides an intuitive
+graphical user interface to quickly dive into the data inside a netCDF file.
+
+.. _ncview: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
+
+**This package is currently under development and we highly appreciate your
+feedback! Please try it out yourself and, if you would like to see more features,
+find bugs or want to say anything else, please leave your comments and
+experiences at https://github.com/psyplot/psy-view/issues or send a mail at
+psyplot@hzg.de.**
+
+
+Test it without installation
+----------------------------
+You can try the functionalities with some selected example files headless in
+your browser by clicking on |mybinder|. Note that it might take a bit to load
+and that the speed depends on your WiFi-connection.
+
+
+Installation
+------------
+To install the current work-in-progress, please
+
+1. download Miniconda_
+2. create a new environment via::
+
+      conda create -n psy-view -c psyplot/label/master -c conda-forge psy-view
+
+3. activate this environment via::
+
+      conda activate psy-view
+
+4. open the application via::
+
+      psy-view
+
+  or::
+
+      psy-view <path-to-your-netcdf-file.nc>
+
+  See ``psy-view --help`` for more options
+
+.. _Miniconda: https://conda.io/en/latest/miniconda.html
+Run it headless in you browser by clicking |mybinder|
