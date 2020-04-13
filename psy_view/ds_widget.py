@@ -9,8 +9,10 @@ from itertools import chain
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt
 import psy_view.utils as utils
-from psyplot_gui.content_widget import DatasetTreeItem, escape_html
+from psyplot_gui.content_widget import (
+    DatasetTree, DatasetTreeItem, escape_html)
 from psyplot_gui.common import DockMixin, get_icon as get_psy_icon
+import xarray as xr
 import psyplot.data as psyd
 from psyplot.utils import unique_everseen
 from psy_view.rcsetup import rcParams
@@ -31,7 +33,7 @@ def get_dims_to_iterate(arr):
 
 
 
-class DatasetWidget(QtWidgets.QSplitter, DockMixin):
+class DatasetWidget(QtWidgets.QSplitter):
     """A widget to control the visualization of the variables in a dataset"""
 
     #: The title of the widget
@@ -44,52 +46,38 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     _ani = None
 
+    variable_frame = None
+
     ds_attr_columns = ['long_name', 'dims', 'shape']
 
-    def __init__(self, ds, *args, **kwargs):
+    def __init__(self, ds=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        if ds is None:
-            fname, ok = QtWidgets.QFileDialog.getOpenFileName(
-                self, 'Open dataset', os.getcwd(),
-                'NetCDF files (*.nc *.nc4);;'
-                'Shape files (*.shp);;'
-                'All files (*)'
-                )
-            if not ok:
-                self.close()
-                return
-            ds = psyd.open_dataset(fname)
         self.ds = ds
 
         self.setOrientation(Qt.Vertical)
 
+        # first row: dataset name
+        self.open_box = QtWidgets.QHBoxLayout()
+        self.lbl_ds = QtWidgets.QLineEdit()
+        self.open_box.addWidget(self.lbl_ds)
+        self.btn_open = utils.add_pushbutton(
+            get_psy_icon('run_arrow.png'), lambda: self.set_dataset(),
+            "Select and open a netCDF dataset", self.open_box, icon=True)
+        self.open_widget = QtWidgets.QWidget()
+        self.open_widget.setLayout(self.open_box)
+        self.addWidget(self.open_widget)
+
+
         # second row: dataset representation
-        self.ds_tree = tree = QtWidgets.QTreeWidget()
-        tree.setColumnCount(len(self.ds_attr_columns) + 1)
-        tree.setHeaderLabels([''] + self.ds_attr_columns)
-        ds_item = DatasetTreeItem(ds, self.ds_attr_columns, 0)
-        fname = psyd.get_filename_ds(ds, False)[0]
-        if fname is not None:
-            fname = osp.basename(fname)
-        else:
-            fname = ''
-        ds_item.setText(0, fname)
-        tree.addTopLevelItem(ds_item)
-        tree.expandItem(ds_item)
+        self.setup_ds_tree()
+        if ds is not None:
+            self.add_ds_item()
 
-        if len(self.ds) <= 10:
-            tree.expandItem(ds_item.child(0))
-        if len(self.ds.coords) <= 10:
-            tree.expandItem(ds_item.child(1))
-        if len(self.ds.attrs) <= 10:
-            tree.expandItem(ds_item.attrs)
-
-        tree.resizeColumnToContents(0)
-
+        self.ds_tree.itemExpanded.connect(self.change_ds)
         self.ds_tree.itemExpanded.connect(self.load_variable_desc)
 
-        self.addWidget(tree)
+        self.addWidget(self.ds_tree)
 
         # third row, navigation
         self.navigation_box = QtWidgets.QHBoxLayout()
@@ -150,16 +138,7 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
         self.addWidget(self.plot_tabs)
 
         # sixth row: variables
-        self.variable_frame = QtWidgets.QGroupBox('Variables')
-        ncols = 4
-        self.variable_layout = QtWidgets.QGridLayout(self.variable_frame)
-        self.variable_buttons = {}
-        for i, v in enumerate(ds):
-            btn = utils.add_pushbutton(
-                v, self._draw_variable(v), f"Visualize variable {v}")
-            btn.setCheckable(True)
-            self.variable_buttons[v] = btn
-            self.variable_layout.addWidget(btn, i // ncols, i % ncols)
+        self.setup_variable_buttons()
         self.addWidget(self.variable_frame)
 
         # seventh row: dimensions
@@ -170,9 +149,101 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
         self.cids = {}
 
+    def setup_ds_tree(self):
+        self.ds_tree = tree = QtWidgets.QTreeWidget()
+        tree.setColumnCount(len(self.ds_attr_columns) + 1)
+        tree.setHeaderLabels([''] + self.ds_attr_columns)
+
+    def change_ds(self, ds_item):
+        ds_items = self.ds_items
+        if ds_item in ds_items:
+            with self.block_tree():
+                self.ds = ds_item.ds()
+                self.expand_ds_item(ds_item)
+                self.setup_variable_buttons()
+                self.refresh()
+
+    def expand_ds_item(self, ds_item):
+        tree = self.ds_tree
+
+        tree.collapseAll()
+
+        tree.expandItem(ds_item)
+
+        ds = ds_item.ds()
+        if len(ds) <= 10:
+            tree.expandItem(ds_item.child(0))
+        if len(ds.coords) <= 10:
+            tree.expandItem(ds_item.child(1))
+        if len(ds.attrs) <= 10:
+            tree.expandItem(ds_item.attrs)
+
+    def _open_dataset(self):
+        current = self.lbl_ds.text()
+        if not current or not osp.exists(current):
+            current = os.getcwd()
+        fname, ok = QtWidgets.QFileDialog.getOpenFileName(
+            self, 'Open dataset', current,
+            'NetCDF files (*.nc *.nc4);;'
+            'Shape files (*.shp);;'
+            'All files (*)'
+            )
+        if not ok:
+            return
+        ds = psyd.open_dataset(fname)
+        return ds
+
+    @contextlib.contextmanager
+    def block_tree(self):
+        self.ds_tree.blockSignals(True)
+        yield
+        self.ds_tree.blockSignals(False)
+
+    def set_dataset(self, ds=None):
+        """Ask for a file name and open the dataset."""
+        if ds is None:
+            ds = self._open_dataset()
+        if ds is None:
+            return
+        self.ds = ds
+        with self.block_tree():
+            self.add_ds_item()
+            self.setup_variable_buttons()
+
+    def add_ds_item(self):
+        ds = self.ds
+        tree = self.ds_tree
+        ds_item = DatasetTreeItem(ds, self.ds_attr_columns, 0)
+        fname = psyd.get_filename_ds(ds, False)[0]
+        if fname is not None:
+            self.lbl_ds.setText(fname)
+            fname = osp.basename(fname)
+        else:
+            self.lbl_ds.setText('')
+            fname = ''
+        ds_item.setText(0, fname)
+        tree.addTopLevelItem(ds_item)
+
+        self.expand_ds_item(ds_item)
+
+        tree.resizeColumnToContents(0)
+
+    @property
+    def ds_items(self):
+        tree = self.ds_tree
+        return list(map(tree.topLevelItem, range(tree.topLevelItemCount())))
+
+    @property
+    def ds_item(self):
+        tree = self.ds_tree
+        ds = self.ds
+        for item in self.ds_items:
+            if item.ds() is ds:
+                return item
+
     def expand_current_variable(self):
         tree = self.ds_tree
-        top = tree.topLevelItem(0)
+        top = self.ds_item
         tree.expandItem(top)
         tree.expandItem(top.child(0))
         for var_item in map(top.child(0).child,
@@ -181,6 +252,27 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
                 tree.expandItem(var_item)
             else:
                 tree.collapseItem(var_item)
+
+    def setup_variable_buttons(self, ncols=4):
+        variable_frame = QtWidgets.QGroupBox('Variables')
+
+        if self.variable_frame is not None:
+            self.replaceWidget(self.indexOf(self.variable_frame),
+                               variable_frame)
+        self.variable_frame = variable_frame
+        self.variable_layout = QtWidgets.QGridLayout(self.variable_frame)
+        self.variable_buttons = {}
+
+        ds = self.ds
+
+        if ds is not None:
+
+            for i, v in enumerate(ds):
+                btn = utils.add_pushbutton(
+                    v, self._draw_variable(v), f"Visualize variable {v}")
+                btn.setCheckable(True)
+                self.variable_buttons[v] = btn
+                self.variable_layout.addWidget(btn, i // ncols, i % ncols)
 
     def load_variable_desc(self, item):
         # if we are not at the lowest level or the item has already label, pass
@@ -468,7 +560,21 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
     _sp = None
 
     def get_sp(self):
-        return self._sp
+        if self._sp is None:
+            return self._sp
+        return self.filter_sp(self._sp)
+
+    def filter_sp(self, sp):
+        """Filter the psyplot project to only include the arrays of :attr:`ds`
+        """
+        if self.ds is None:
+            return sp
+        num = self.ds.psy.num
+        ret = sp[:0]
+        for i in range(len(sp)):
+            if list(sp[i:i+1].datasets) == [num]:
+                ret += sp[i:i+1]
+        return ret
 
     @property
     def sp(self):
@@ -476,14 +582,13 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
     @sp.setter
     def sp(self, sp):
-        if sp is None and (self._sp is None or not not getattr(
+        if sp is None and (not self._sp or not not getattr(
                 self._sp, self.plotmethod)):
             pass
         else:
             # first remove the current arrays
             if self._sp and getattr(self._sp, self.plotmethod):
-                to_remove = [
-                    n for n in getattr(self._sp, self.plotmethod).arr_names]
+                to_remove = getattr(self.get_sp(), self.plotmethod).arr_names
                 for i in list(reversed(range(len(self._sp)))):
                     if self._sp[i].psy.arr_name in to_remove:
                         self._sp.pop(i)
@@ -555,12 +660,11 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
             self.show_fig()
         else:
             self.ani = None
-            self.sp = self.plot(
-                name=self.variable, **self.plot_options)
-            cid = self.plotter.ax.figure.canvas.mpl_connect(
+            self.sp = sp = self.plot(name=self.variable, **self.plot_options)
+            cid = sp.plotters[0].ax.figure.canvas.mpl_connect(
                 'button_press_event', self.display_line)
             self.cids[self.plotmethod] = cid
-            self.sp.show()
+            self.show_fig()
         self.expand_current_variable()
         self.enable_navigation()
 
@@ -598,15 +702,14 @@ class DatasetWidget(QtWidgets.QSplitter, DockMixin):
 
 
     def close_sp(self):
-        self.sp.close(True, True, True)
+        self.sp.close(figs=True, data=True, ds=False)
         self.sp = None
 
     def show_fig(self):
         try:
             self.fig.canvas.window().show()
         except AttributeError:
-            import matplotlib.pyplot as plt
-            plt.show(block=False)
+            self.sp.show()
 
     def switch_tab(self):
         with self.silence_variable_buttons():
@@ -917,7 +1020,7 @@ class MapPlotWidget(PlotMethodWidget):
             ret.setdefault('decoder', {})
             ret['decoder']['y'] = {ycoord}
 
-        if xdim is not None:
+        if xdim is not None and xdim in var.dims:
             ret['transpose'] = var.dims.index(xdim) < var.dims.index(ydim)
 
         return ret
@@ -1033,7 +1136,12 @@ class MapPlotWidget(PlotMethodWidget):
 
         auto = 'Set automatically'
 
+        self.refresh_from_sp()
+
         with self.block_combos():
+
+            if ds is None:
+                ds = xr.Dataset()
 
             current_dims = set(map(
                 self.combo_xdim.itemText, range(1, self.combo_xdim.count())))
@@ -1081,6 +1189,14 @@ class MapPlotWidget(PlotMethodWidget):
                 self.combo_xcoord.setCurrentText(xcoord)
                 self.combo_ycoord.setCurrentText(ycoord)
 
+    def refresh_from_sp(self):
+        if self.sp:
+            plotter = self.plotter
+            if isinstance(plotter.projection.value, str):
+                self.btn_proj.setText(plotter.projection.value)
+            if isinstance(plotter.cmap.value, str):
+                self.btn_cmap.setText(plotter.cmap.value)
+
     def transform(self, x, y):
         import cartopy.crs as ccrs
         x, y = self.plotter.transform.projection.transform_point(
@@ -1118,6 +1234,63 @@ class MapPlotWidget(PlotMethodWidget):
             return dict(zip(data.dims[-2:], [y, x]))
 
 
+class DatasetWidgetPlugin(DatasetWidget, DockMixin):
+
+    #: The title of the widget
+    title = 'psy-view Dataset viewer'
+
+    #: Display the dock widget at the right side of the GUI
+    dock_position = Qt.RightDockWidgetArea
+
+    @property
+    def _sp(self):
+        import psyplot.project as psy
+        return psy.gcp()
+
+    @_sp.setter
+    def _sp(self, value):
+        pass
+
+    @property
+    def sp(self):
+        return self.plotmethod_widget.sp or None
+
+    @sp.setter
+    def sp(self, sp):
+        current = self.get_sp()
+        if sp is None:
+            return
+        if getattr(current, self.plotmethod):
+
+            if len(current) == 1 and len(sp) == 1:
+                pass
+            # first remove the current arrays
+            if current and getattr(current, self.plotmethod):
+                to_remove = getattr(self.get_sp(), self.plotmethod).arr_names
+                for i in list(reversed(range(len(current)))):
+                    if current[i].psy.arr_name in to_remove:
+                        current.pop(i)
+            # then add the new arrays
+            if sp:
+                if current:
+                    current.extend(list(sp), new_name=True)
+                else:
+                    current = sp
+            current.oncpchange.emit(current)
+
+    def setup_ds_tree(self):
+        self.ds_tree = tree = DatasetTree()
+        tree.setColumnCount(len(self.ds_attr_columns) + 1)
+        tree.setHeaderLabels([''] + self.ds_attr_columns)
+
+    def position_dock(self, main, *args, **kwargs):
+        height = main.help_explorer.dock.size().height()
+        main.splitDockWidget(main.help_explorer.dock, self.dock, Qt.Vertical)
+        if hasattr(main, 'resizeDocks'):  # qt >= 5.6
+            main.resizeDocks([main.help_explorer.dock, self.dock],
+                             [height // 2, height // 2], Qt.Vertical)
+
+
 class Plot2DWidget(MapPlotWidget):
 
     plotmethod = 'plot2d'
@@ -1139,6 +1312,12 @@ class Plot2DWidget(MapPlotWidget):
 
     def transform(self, x, y):
         return x, y
+
+    def refresh_from_sp(self):
+        if self.sp:
+            plotter = self.plotter
+            if isinstance(plotter.cmap.value, str):
+                self.btn_cmap.setText(plotter.cmap.value)
 
 
 class LinePlotWidget(PlotMethodWidget):

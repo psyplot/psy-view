@@ -68,7 +68,7 @@ setup(name='psy-view',
       ],
       keywords=('visualization earth-sciences paleo climate paleoclimate '
                 'pollen diagram digitization database'),
-      url='https://github.com/Chilipp/psy-view',
+      url='https://github.com/psyplot/psy-view',
       author='Philipp S. Sommer',
       author_email='philipp.sommer@hzg.de',
       license="GPLv3",
@@ -82,6 +82,6 @@ setup(name='psy-view',
       cmdclass={'test': PyTest},
       entry_points={
           'console_scripts': ['psy-view=psy_view.__main__:main'],
-          # 'psyplot_gui': ['psy-view=psy_view.plugin:PsyViewPlugin'],
+          'psyplot_gui': ['psy-view=psy_view.ds_widget:DatasetWidgetPlugin'],
           },
       zip_safe=False)
