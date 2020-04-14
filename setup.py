@@ -22,7 +22,10 @@ class PyTest(TestCommand):
 
 def readme():
     with open('README.rst') as f:
-        return f.read()
+        return f.read().replace(
+            'img/screenshot.png',
+            'https://raw.githubusercontent.com/psyplot/psyplot/master/'
+            'img/screenshot.png')
 
 
 # read the version from version.py
