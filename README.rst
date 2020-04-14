@@ -54,6 +54,22 @@ find bugs or want to say anything else, please leave your comments and
 experiences at https://github.com/psyplot/psy-view/issues or send a mail at
 psyplot@hzg.de.**
 
+.. image:: img/screenshot.png
+    :alt: Screenshot
+    :target: https://github.com/psyplot/psy-view
+
+Features
+--------
+Some of the most important features offered by psy-view are:
+
+- intuitive GUI to select variables, dimensions, slices, etc. and change the
+  plot
+- automatically decodes CF-conventions and supports unstructured grid, such as
+  ICON or UGRID
+- animation interface
+- different projections
+- implemented in psyplot-gui_ for full flexibility (if desired)
+
 
 Test it without installation
 ----------------------------
