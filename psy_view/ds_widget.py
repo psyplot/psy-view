@@ -957,6 +957,7 @@ class MapPlotWidget(PlotMethodWidget):
         max_width = max(map(self.btn_proj.fontMetrics().width,
                             rcParams['projections'])) * 2
         self.btn_proj.setMinimumWidth(max_width)
+        self.btn_proj.setPopupMode(QtWidgets.QToolButton.MenuButtonPopup)
 
         self.btn_proj_settings = utils.add_pushbutton(
             get_icon('proj_settings'), self.edit_basemap_settings,
