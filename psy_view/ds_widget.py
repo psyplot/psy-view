@@ -5,6 +5,7 @@ import os.path as osp
 import os
 import contextlib
 import yaml
+from functools import partial
 from itertools import chain
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtCore import Qt
@@ -871,6 +872,14 @@ class PlotMethodWidget(QtWidgets.QWidget):
         except (IndexError, AttributeError):
             return None
 
+    @property
+    def formatoptions(self):
+        if self.plotter is not None:
+            return list(self.plotter)
+        else:
+            import psyplot.project as psy
+            return list(getattr(psy.plot, self.plotmethod).plotter_cls())
+
     def get_fmts(self, var, init=False):
         ret = {}
         if init:
@@ -932,10 +941,22 @@ class MapPlotWidget(PlotMethodWidget):
             "Edit color settings", self.formatoptions_box,
             icon=True)
 
+    def setup_projection_menu(self):
+        menu = QtWidgets.QMenu()
+        for projection in rcParams['projections']:
+            menu.addAction(
+                projection, partial(self.set_projection, projection))
+        return menu
+
     def setup_projection_buttons(self):
         self.btn_proj = utils.add_pushbutton(
             rcParams["projections"][0], self.choose_next_projection,
-            "Change the basemap projection", self.formatoptions_box)
+            "Change the basemap projection", self.formatoptions_box,
+            toolbutton=True)
+        self.btn_proj.setMenu(self.setup_projection_menu())
+        max_width = max(map(self.btn_proj.fontMetrics().width,
+                            rcParams['projections'])) * 2
+        self.btn_proj.setMinimumWidth(max_width)
 
         self.btn_proj_settings = utils.add_pushbutton(
             get_icon('proj_settings'), self.edit_basemap_settings,
@@ -1105,6 +1126,9 @@ class MapPlotWidget(PlotMethodWidget):
                 select = True
             elif select or i == nprojections:
                 break
+        self.set_projection(proj)
+
+    def set_projection(self, proj):
         self.btn_proj.setText(proj)
         if self.sp and 'projection' in self.sp.plotters[0]:
             self.plotter.update(projection=proj)
@@ -1116,6 +1140,10 @@ class MapPlotWidget(PlotMethodWidget):
         fmts = {}
 
         fmts['cmap'] = self.btn_cmap.text()
+
+        if 'projection' in self.formatoptions:
+            fmts['projection'] = self.btn_proj.text()
+
         if 'time' in var.dims:
             fmts['title'] = '%(time)s'
 

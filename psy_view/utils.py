@@ -2,10 +2,13 @@ from PyQt5 import QtWidgets, QtCore, QtGui
 
 
 def add_pushbutton(label, connections=None, tooltip=None, layout=None,
-                   icon=False, *args, **kwargs):
-    if icon:
+                   icon=False, toolbutton=None, *args, **kwargs):
+    if icon or toolbutton:
         btn = QtWidgets.QToolButton(*args, **kwargs)
-        btn.setIcon(QtGui.QIcon(label))
+        if icon:
+            btn.setIcon(QtGui.QIcon(label))
+        else:
+            btn.setText(label)
     else:
         btn = QtWidgets.QPushButton(label, *args, **kwargs)
     if tooltip is not None:
