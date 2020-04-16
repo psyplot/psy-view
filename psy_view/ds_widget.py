@@ -946,6 +946,10 @@ class MapPlotWidget(PlotMethodWidget):
         for projection in rcParams['projections']:
             menu.addAction(
                 projection, partial(self.set_projection, projection))
+        menu.addSeparator()
+        self.proj_settings_action = menu.addAction(
+            QtGui.QIcon(get_icon('proj_settings')), "Customize basemap...",
+            self.edit_basemap_settings)
         return menu
 
     def setup_projection_buttons(self):
@@ -1083,6 +1087,7 @@ class MapPlotWidget(PlotMethodWidget):
 
     def setEnabled(self, b):
         self.btn_proj_settings.setEnabled(b)
+        self.proj_settings_action.setEnabled(b)
         self.btn_datagrid.setEnabled(b)
         self.btn_cmap_settings.setEnabled(b)
         self.btn_labels.setEnabled(b)
