@@ -384,6 +384,7 @@ class DatasetWidget(QtWidgets.QSplitter):
     def start_animation(self):
         self._animating = True
         self.disable_variables()
+        self.plot_tabs.setEnabled(False)
         if self.animation is None or self.animation.event_source is None:
             self.animation = FuncAnimation(
                 self.fig, self.update_dims, frames=self.animation_frames(),
@@ -410,6 +411,7 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.animation.event_source.stop()
         except AttributeError:
             pass
+        self.plot_tabs.setEnabled(True)
         self.enable_variables()
         self.refresh()
 
