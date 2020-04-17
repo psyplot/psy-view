@@ -12,7 +12,8 @@ from PyQt5.QtCore import Qt
 import psy_view.utils as utils
 from psyplot_gui.content_widget import (
     DatasetTree, DatasetTreeItem, escape_html)
-from psyplot_gui.common import DockMixin, get_icon as get_psy_icon
+from psyplot_gui.common import (
+    DockMixin, get_icon as get_psy_icon, PyErrorMessage)
 import xarray as xr
 import psyplot.data as psyd
 from psyplot.utils import unique_everseen
@@ -57,6 +58,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.ds = ds
 
         self.setOrientation(Qt.Vertical)
+
+        self.error_msg = PyErrorMessage(self)
 
         # first row: dataset name
         self.open_box = QtWidgets.QHBoxLayout()
@@ -154,6 +157,10 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.ds_tree = tree = QtWidgets.QTreeWidget()
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
         tree.setHeaderLabels([''] + self.ds_attr_columns)
+
+    def excepthook(self, type, value, traceback):
+        """A method to replace the sys.excepthook"""
+        self.error_msg.excepthook(type, value, traceback)
 
     def change_ds(self, ds_item):
         ds_items = self.ds_items

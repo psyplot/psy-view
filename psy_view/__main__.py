@@ -38,6 +38,7 @@ def start_app(ds):
     ds_widget = DatasetWidget(ds)
     main.setCentralWidget(ds_widget)
     main.show()
+    sys.excepthook = ds_widget.excepthook
     sys.exit(app.exec_())
 
 
