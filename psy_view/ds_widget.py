@@ -1325,6 +1325,12 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
                     current = sp
             current.oncpchange.emit(current)
 
+    def close_sp(self):
+        ds = self.ds
+        super().close_sp()
+        if ds.psy.num not in self._sp.main.datasets:
+            self.set_dataset(ds)
+
     def setup_ds_tree(self):
         self.ds_tree = tree = DatasetTree()
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
