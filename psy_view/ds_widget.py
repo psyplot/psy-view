@@ -1235,6 +1235,7 @@ class MapPlotWidget(PlotMethodWidget):
 
     def transform(self, x, y):
         import cartopy.crs as ccrs
+        import numpy as np
         x, y = self.plotter.transform.projection.transform_point(
             x, y, self.plotter.ax.projection)
         # shift if necessary
@@ -1244,6 +1245,9 @@ class MapPlotWidget(PlotMethodWidget):
                 x -= 360
             elif coord.max() <= 180 and x > 180:
                 x -= 360
+            if 'rad' in coord.attrs.get('units', '').lower():
+                x = np.deg2rad(x)
+                y = np.deg2rad(y)
         return x, y
 
     def get_slice(self, x, y):
