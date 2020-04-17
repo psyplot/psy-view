@@ -691,7 +691,8 @@ class DatasetWidget(QtWidgets.QSplitter):
             variable = widget.data.name
             raw_data = widget.data.psy.base.psy[variable]
             if (sl is None or widget.plotmethod not in ['mapplot', 'plot2d'] or
-                raw_data.ndim == 2):
+                raw_data.ndim == 2 or
+                widget.plotter.ax.figure.canvas.manager.toolbar.mode != ''):
                 return
             self.plotmethod = 'lineplot'
             linewidget = self.plotmethod_widget
