@@ -179,6 +179,9 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         self.disable_navigation()
 
+        if self.ds is not None:
+            self.refresh()
+
         self.cids = {}
 
     def setup_ds_tree(self):
@@ -427,8 +430,9 @@ class DatasetWidget(QtWidgets.QSplitter):
             btn.setEnabled(False)
 
     def enable_variables(self):
-        for btn in self.variable_buttons.values():
-            btn.setEnabled(True)
+        valid_variables = self.plotmethod_widget.valid_variables(self.ds)
+        for v, btn in self.variable_buttons.items():
+            btn.setEnabled(v in valid_variables)
 
     def start_animation(self):
         self._animating = True
@@ -1036,7 +1040,15 @@ class PlotMethodWidget(QtWidgets.QWidget):
         return None
 
     def valid_variables(self, ds):
-        return list(ds)
+        ret = []
+        plotmethod = getattr(ds.psy.plot, self.plotmethod)
+        for v in list(ds):
+            init_kws = self.init_dims(ds[v])
+            dims = init_kws.get('dims', {})
+            decoder = init_kws.get('decoder')
+            if plotmethod.check_data(ds, v, dims, decoder)[0][0]:
+                ret.append(v)
+        return ret
 
 
 class MapPlotWidget(PlotMethodWidget):
@@ -1158,7 +1170,7 @@ class MapPlotWidget(PlotMethodWidget):
             missing = [dim for dim in var.dims if dim not in dims]
             for dim in missing:
                 dims[dim] = 0
-            if len(dims) == 1:
+            if len(dims) == 1 and xdim != ydim:
                 if xdim is None:
                     xdim = missing[-1]
                 else:
@@ -1175,7 +1187,8 @@ class MapPlotWidget(PlotMethodWidget):
             ret.setdefault('decoder', {})
             ret['decoder']['y'] = {ycoord}
 
-        if xdim is not None and xdim in var.dims:
+        if (xdim is not None and xdim in var.dims and
+                ydim is not None and ydim in var.dims):
             ret['transpose'] = var.dims.index(xdim) < var.dims.index(ydim)
 
         return ret
@@ -1648,7 +1661,7 @@ class LinePlotWidget(PlotMethodWidget):
         self.combo_lines.blockSignals(False)
 
     def valid_variables(self, ds):
-        valid = super().valid_variables(ds)
+        valid = list(ds)
         if not self.sp or len(self.sp[0]) < 2:
             return valid
         else:
