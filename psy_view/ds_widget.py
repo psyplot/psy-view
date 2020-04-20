@@ -34,6 +34,7 @@ def get_dims_to_iterate(arr):
             if size > 1 and arr[dim].ndim == 0]
 
 
+
 class DatasetWidget(QtWidgets.QSplitter):
     """A widget to control the visualization of the variables in a dataset"""
 
@@ -48,6 +49,8 @@ class DatasetWidget(QtWidgets.QSplitter):
     _ani = None
 
     variable_frame = None
+
+    _new_plot = False
 
     ds_attr_columns = ['long_name', 'dims', 'shape']
 
@@ -128,12 +131,38 @@ class DatasetWidget(QtWidgets.QSplitter):
         # -- Export button
         self.btn_export = QtWidgets.QToolButton()
         self.btn_export.setText('Export')
+        self.btn_export.setPopupMode(QtWidgets.QToolButton.MenuButtonPopup)
         self.btn_export.setMenu(self.setup_export_menu())
         self.navigation_box.addWidget(self.btn_export)
 
         self.addLayout(self.navigation_box)
 
-        # fourth row: plot interface
+        # fourth row: array selector
+
+        self.array_frame = QtWidgets.QGroupBox('Current plot')
+        hbox = QtWidgets.QHBoxLayout()
+
+        self.combo_array = QtWidgets.QComboBox()
+        self.combo_array.setEditable(False)
+        self.combo_array.currentIndexChanged.connect(self.refresh)
+        self.combo_array.currentIndexChanged.connect(self.show_current_figure)
+        hbox.addWidget(self.combo_array)
+
+        self.btn_add = utils.add_pushbutton(
+            QtGui.QIcon(get_psy_icon('plus')), self.new_plot,
+            "Create a new plot", hbox, icon=True)
+        self.btn_add.setEnabled(ds is not None)
+        self.btn_del = utils.add_pushbutton(
+            QtGui.QIcon(get_psy_icon('minus')), self.close_current_plot,
+            "Remove the current plot", hbox, icon=True)
+        self.btn_del.setEnabled(False)
+
+        hbox.addWidget(self.btn_add)
+        hbox.addWidget(self.btn_del)
+        self.array_frame.setLayout(hbox)
+        self.addWidget(self.array_frame)
+
+        # fifth row: plot interface
         self.plot_tabs = QtWidgets.QTabWidget()
         self.setup_plot_tabs()
         self.plot_tabs.currentChanged.connect(self.switch_tab)
@@ -149,8 +178,6 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.addWidget(self.dimension_table)
 
         self.disable_navigation()
-        if self.ds is not None:
-            self.refresh()
 
         self.cids = {}
 
@@ -159,9 +186,19 @@ class DatasetWidget(QtWidgets.QSplitter):
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
         tree.setHeaderLabels([''] + self.ds_attr_columns)
 
+    def close_current_plot(self):
+        self.variable_buttons[self.variable].click()
+
     def excepthook(self, type, value, traceback):
         """A method to replace the sys.excepthook"""
         self.error_msg.excepthook(type, value, traceback)
+
+    @property
+    def arr_name(self):
+        if not self.combo_array.count():
+            return None
+        else:
+            return self.combo_array.currentText().split(':')[0]
 
     def change_ds(self, ds_item):
         ds_items = self.ds_items
@@ -218,6 +255,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         with self.block_tree():
             self.add_ds_item()
             self.setup_variable_buttons()
+            self.btn_add.setEnabled(True)
+            self.btn_del.setEnabled(True)
 
     def add_ds_item(self):
         ds = self.ds
@@ -250,14 +289,16 @@ class DatasetWidget(QtWidgets.QSplitter):
             if item.ds() is ds:
                 return item
 
-    def expand_current_variable(self):
+    def expand_current_variable(self, variable=None):
         tree = self.ds_tree
         top = self.ds_item
         tree.expandItem(top)
         tree.expandItem(top.child(0))
+        if variable is None:
+            variable = self.variable
         for var_item in map(top.child(0).child,
                             range(top.child(0).childCount())):
-            if var_item.text(0) == self.variable:
+            if var_item.text(0) == variable:
                 tree.expandItem(var_item)
             else:
                 tree.collapseItem(var_item)
@@ -386,9 +427,8 @@ class DatasetWidget(QtWidgets.QSplitter):
             btn.setEnabled(False)
 
     def enable_variables(self):
-        valid_variables = self.plotmethod_widget.valid_variables(self.ds)
-        for v, btn in self.variable_buttons.items():
-            btn.setEnabled(v in valid_variables)
+        for btn in self.variable_buttons.values():
+            btn.setEnabled(True)
 
     def start_animation(self):
         self._animating = True
@@ -488,23 +528,27 @@ class DatasetWidget(QtWidgets.QSplitter):
             btn = self.variable_buttons[v]
             if not btn.isChecked():
                 self.close_sp()
+                if self.combo_array.count() > 1:
+                    with self.block_widgets(self.combo_array):
+                        current = self.combo_array.currentIndex()
+                        self.combo_array.setCurrentIndex(current - 1)
+                else:
+                    self.btn_del.setEnabled(False)
+
             else:
                 with self.silence_variable_buttons():
                     for var, btn in self.variable_buttons.items():
                         if var != v:
                             btn.setChecked(False)
                 self.make_plot()
+                self.btn_del.setEnabled(True)
             self.refresh()
 
         return func
 
     @contextlib.contextmanager
     def silence_variable_buttons(self):
-        for btn in self.variable_buttons.values():
-            btn.blockSignals(True)
-        yield
-        for btn in self.variable_buttons.values():
-            btn.blockSignals(False)
+        yield self.block_widgets(*self.variable_buttons.values())
 
     @property
     def variable(self):
@@ -572,13 +616,16 @@ class DatasetWidget(QtWidgets.QSplitter):
     _sp = None
 
     def get_sp(self):
-        if self._sp is None:
-            return self._sp
-        return self.filter_sp(self._sp)
+        sp = self._sp
+        if sp is None:
+            return sp
+        return self.filter_sp(sp)
 
     def filter_sp(self, sp):
         """Filter the psyplot project to only include the arrays of :attr:`ds`
         """
+        if self._new_plot:
+            return None
         if self.ds is None:
             return sp
         num = self.ds.psy.num
@@ -586,7 +633,30 @@ class DatasetWidget(QtWidgets.QSplitter):
         for i in range(len(sp)):
             if list(sp[i:i+1].datasets) == [num]:
                 ret += sp[i:i+1]
-        return ret
+        arr_name = self.arr_name
+        if arr_name is None:
+            return ret
+        return ret(arr_name=arr_name)
+
+    def new_plot(self):
+        name, ok = QtWidgets.QInputDialog.getItem(
+            self, 'New plot', 'Select a variable',
+            self.plotmethod_widget.valid_variables(self.ds))
+        if not ok:
+            return
+        with self.silence_variable_buttons():
+            for v, btn in self.variable_buttons.items():
+                btn.setChecked(v == name)
+        with self.creating_new_plot():
+            self.make_plot()
+        self.btn_del.setEnabled(True)
+        self.refresh()
+
+    @contextlib.contextmanager
+    def creating_new_plot(self):
+        self._new_plot = True
+        yield
+        self._new_plot = False
 
     @property
     def sp(self):
@@ -599,7 +669,7 @@ class DatasetWidget(QtWidgets.QSplitter):
             pass
         else:
             # first remove the current arrays
-            if self._sp and getattr(self._sp, self.plotmethod):
+            if self.get_sp() and getattr(self.get_sp(), self.plotmethod):
                 to_remove = getattr(self.get_sp(), self.plotmethod).arr_names
                 for i in list(reversed(range(len(self._sp)))):
                     if self._sp[i].psy.arr_name in to_remove:
@@ -668,17 +738,29 @@ class DatasetWidget(QtWidgets.QSplitter):
                 self.data.psy.update(dims=dims, **fmts)
                 self.sp.update(replot=True)
             else:
-                self.sp.update(name=self.variable, dims=dims, **fmts)
-            self.show_fig()
+                self.data.psy.update(name=self.variable, dims=dims, **fmts)
+            self.show_fig(self.sp)
         else:
             self.ani = None
             self.sp = sp = self.plot(name=self.variable, **self.plot_options)
             cid = sp.plotters[0].ax.figure.canvas.mpl_connect(
                 'button_press_event', self.display_line)
             self.cids[self.plotmethod] = cid
-            self.show_fig()
+            self.show_fig(sp)
+            descr = sp[0].psy._short_info()
+            with self.block_widgets(self.combo_array):
+                self.combo_array.addItem(descr)
+                self.combo_array.setCurrentText(descr)
         self.expand_current_variable()
         self.enable_navigation()
+
+    @contextlib.contextmanager
+    def block_widgets(self, *widgets):
+        for w in widgets:
+            w.blockSignals(True)
+        yield
+        for w in widgets:
+            w.blockSignals(False)
 
     def display_line(self, event):
         if not event.inaxes:
@@ -718,15 +800,21 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.sp.close(figs=True, data=True, ds=False)
         self.sp = None
 
-    def show_fig(self):
-        try:
-            self.fig.canvas.window().show()
-        except AttributeError:
-            self.sp.show()
+    def show_current_figure(self):
+        if self.sp is not None:
+            self.show_fig(self.sp)
+
+    def show_fig(self, sp):
+        if len(sp):
+            try:
+                fig = sp.plotters[0].ax.figure
+                fig.canvas.window().show()
+                fig.canvas.window().raise_()
+            except AttributeError:
+                sp.show()
 
     def switch_tab(self):
         with self.silence_variable_buttons():
-            ds = self.ds
             if self.sp:
                 name = self.data.name
             else:
@@ -735,8 +823,35 @@ class DatasetWidget(QtWidgets.QSplitter):
                 btn.setChecked(v == name)
         self.refresh()
 
+    def reset_combo_array(self):
+        curr_arr_name = self.arr_name
+        with self.block_widgets(self.combo_array):
+            self.combo_array.clear()
+            if self._sp:
+                all_arrays = getattr(self._sp, self.plotmethod)
+                current_ds = self.ds
+                if all_arrays:
+                    for arr in all_arrays:
+                        self.combo_array.addItem(arr.psy._short_info())
+                    if curr_arr_name in all_arrays.arr_names:
+                        idx_arr = all_arrays.arr_names.index(curr_arr_name)
+                        self.combo_array.setCurrentIndex(idx_arr)
+                    else:
+                        idx_arr = 0
+                    self.ds = list(
+                        all_arrays[idx_arr:idx_arr+1].datasets.values())[0]
+                    if self.ds is not current_ds:
+                        with self.block_tree():
+                            self.expand_ds_item(self.ds_item)
+                            self.expand_current_variable(self.data.name)
+
+
     def refresh(self):
+
         self.clear_table()
+
+        self.reset_combo_array()
+
         if self.sp:
             variable = self.data.name
         else:
@@ -751,10 +866,11 @@ class DatasetWidget(QtWidgets.QSplitter):
         for i in range(self.plot_tabs.count()):
             w = self.plot_tabs.widget(i)
             w.refresh(self.ds)
-        valid_variables = self.plotmethod_widget.valid_variables(self.ds)
-        for v, btn in self.variable_buttons.items():
-            btn.setEnabled(v in valid_variables)
-        if variable is NOTSET or not self.sp:
+        if self.variable_buttons:
+            valid_variables = self.plotmethod_widget.valid_variables(self.ds)
+            for v, btn in self.variable_buttons.items():
+                btn.setEnabled(v in valid_variables)
+        if self.ds is None or variable is NOTSET or not self.sp:
             return
 
         data = self.data
@@ -920,15 +1036,7 @@ class PlotMethodWidget(QtWidgets.QWidget):
         return None
 
     def valid_variables(self, ds):
-        ret = []
-        plotmethod = getattr(ds.psy.plot, self.plotmethod)
-        for v in list(ds):
-            init_kws = self.init_dims(ds[v])
-            dims = init_kws.get('dims', {})
-            decoder = init_kws.get('decoder')
-            if plotmethod.check_data(ds, v, dims, decoder)[0][0]:
-                ret.append(v)
-        return ret
+        return list(ds)
 
 
 class MapPlotWidget(PlotMethodWidget):
@@ -1050,7 +1158,7 @@ class MapPlotWidget(PlotMethodWidget):
             missing = [dim for dim in var.dims if dim not in dims]
             for dim in missing:
                 dims[dim] = 0
-            if len(dims) == 1 and xdim != ydim:
+            if len(dims) == 1:
                 if xdim is None:
                     xdim = missing[-1]
                 else:
@@ -1067,8 +1175,7 @@ class MapPlotWidget(PlotMethodWidget):
             ret.setdefault('decoder', {})
             ret['decoder']['y'] = {ycoord}
 
-        if (xdim is not None and xdim in var.dims and
-                ydim is not None and ydim in var.dims):
+        if xdim is not None and xdim in var.dims:
             ret['transpose'] = var.dims.index(xdim) < var.dims.index(ydim)
 
         return ret
@@ -1302,10 +1409,15 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
     #: Display the dock widget at the right side of the GUI
     dock_position = Qt.RightDockWidgetArea
 
+    def __init__(self, *args, **kwargs):
+        import psyplot.project as psy
+        super().__init__(*args, **kwargs)
+        psy.Project.oncpchange.connect(self.oncpchange)
+
     @property
     def _sp(self):
         import psyplot.project as psy
-        return psy.gcp()
+        return psy.gcp(True)
 
     @_sp.setter
     def _sp(self, value):
@@ -1320,7 +1432,7 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
         current = self.get_sp()
         if sp is None:
             return
-        if getattr(current, self.plotmethod):
+        if getattr(current, self.plotmethod, []):
 
             if len(current) == 1 and len(sp) == 1:
                 pass
@@ -1341,8 +1453,30 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
     def close_sp(self):
         ds = self.ds
         super().close_sp()
-        if ds.psy.num not in self._sp.main.datasets:
+        if ds.psy.num not in self._sp.datasets:
             self.set_dataset(ds)
+
+    def oncpchange(self, sp):
+        self.reset_combo_array()
+        if self.ds is not None and self.ds.psy.num not in self._sp.datasets:
+            self.ds = None
+            self.disable_navigation()
+            self.setup_variable_buttons()
+            self.btn_add.setEnabled(False)
+            self.btn_del.setEnabled(False)
+        elif self.ds is None and self._sp:
+            self.set_dataset(next(iter(self._sp.datasets.values())))
+
+    def show_fig(self, sp):
+        from psyplot_gui.main import mainwindow
+        super().show_fig(sp)
+        if mainwindow.figures and sp:
+            try:
+                dock = sp.plotters[0].ax.figure.canvas.manager.window
+                dock.widget().show_plugin()
+                dock.raise_()
+            except AttributeError:
+                pass
 
     def setup_ds_tree(self):
         self.ds_tree = tree = DatasetTree()
@@ -1514,7 +1648,7 @@ class LinePlotWidget(PlotMethodWidget):
         self.combo_lines.blockSignals(False)
 
     def valid_variables(self, ds):
-        valid = list(ds)
+        valid = super().valid_variables(ds)
         if not self.sp or len(self.sp[0]) < 2:
             return valid
         else:
