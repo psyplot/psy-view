@@ -131,7 +131,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         # -- Export button
         self.btn_export = QtWidgets.QToolButton()
         self.btn_export.setText('Export')
-        self.btn_export.setPopupMode(QtWidgets.QToolButton.MenuButtonPopup)
+        self.btn_export.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         self.btn_export.setMenu(self.setup_export_menu())
         self.navigation_box.addWidget(self.btn_export)
 
@@ -485,6 +485,7 @@ class DatasetWidget(QtWidgets.QSplitter):
     def setup_export_menu(self):
         self.export_menu = menu = QtWidgets.QMenu()
         menu.addAction('image (PDF, PNG, etc.)', self.export_image)
+        menu.addAction('all images (PDF, PNG, etc.)', self.export_all_images)
         menu.addAction('animation (GIF, MP4, etc.', self.export_animation)
         menu.addAction('psyplot project (.pkl file)', self.export_project)
         menu.addAction('psyplot project with data',
@@ -498,6 +499,13 @@ class DatasetWidget(QtWidgets.QSplitter):
             "Images (*.png *.pdf *.jpg *.svg)")
         if ok:
             self.sp.export(fname, rcParams['savefig_kws'])
+
+    def export_all_images(self):
+        fname, ok = QtWidgets.QFileDialog.getSaveFileName(
+            self, "Export image", os.getcwd(),
+            "Images (*.png *.pdf *.jpg *.svg)")
+        if ok:
+            self._sp.export(fname, rcParams['savefig_kws'])
 
     def export_animation(self):
         fname, ok = QtWidgets.QFileDialog.getSaveFileName(
