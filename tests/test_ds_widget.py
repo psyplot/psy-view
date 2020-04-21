@@ -49,7 +49,7 @@ def test_plot2d(qtbot, ds_widget):
     assert not ds_widget.sp
 
 
-def test_plot2d_dim_switch(qtbot, ds_widget, test_ds):
+def test_plot2d_dim_switch(qtbot, ds_widget, test_ds, test_file):
     arr = test_ds['t2m']
 
     ds_widget.plotmethod = 'plot2d'
@@ -258,3 +258,26 @@ def test_animate(qtbot, ds_widget, plotmethod, direction):
     # stop animation
     qtbot.mouseClick(btn, Qt.LeftButton)
     assert not ds_widget._animating
+
+
+def test_enable_disable_variables(test_ds, qtbot):
+    from psy_view.ds_widget import DatasetWidget
+    import numpy as np
+    test_ds['line'] = ('xtest', np.zeros(7))
+    test_ds['xtest'] = ('xtest', np.arange(7))
+
+    ds_widget = DatasetWidget(test_ds)
+    qtbot.addWidget(ds_widget)
+
+    assert ds_widget.variable_buttons['t2m'].isEnabled()
+    assert not ds_widget.variable_buttons['line'].isEnabled()
+
+    ds_widget.plotmethod = 'lineplot'
+
+    assert ds_widget.variable_buttons['t2m'].isEnabled()
+    assert ds_widget.variable_buttons['line'].isEnabled()
+
+    ds_widget.plotmethod = 'plot2d'
+
+    assert ds_widget.variable_buttons['t2m'].isEnabled()
+    assert not ds_widget.variable_buttons['line'].isEnabled()
