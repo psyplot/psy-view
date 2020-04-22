@@ -669,7 +669,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     @sp.setter
     def sp(self, sp):
-        if sp is None and (not self._sp or not not getattr(
+        if sp is None and (not self._sp or not getattr(
                 self._sp, self.plotmethod)):
             pass
         else:
@@ -802,8 +802,9 @@ class DatasetWidget(QtWidgets.QSplitter):
 
 
     def close_sp(self):
-        self.sp.close(figs=True, data=True, ds=False)
+        sp = self.sp
         self.sp = None
+        sp.close(figs=True, data=True, ds=False)
 
     def show_current_figure(self):
         if self.sp is not None:
