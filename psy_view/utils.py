@@ -1,4 +1,10 @@
+"""Utility functions for psy-view."""
+import os.path as osp
 from PyQt5 import QtWidgets, QtCore, QtGui
+
+
+def get_icon(name, ending='.png'):
+    return osp.join(osp.dirname(__file__), 'icons', name + ending)
 
 
 def add_pushbutton(label, connections=None, tooltip=None, layout=None,
