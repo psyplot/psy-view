@@ -1,37 +1,46 @@
 # -*- coding: utf-8 -*-
 """Dataset widget to display the contents of a dataset"""
-from itertools import cycle
 import os.path as osp
 import os
 import contextlib
-import yaml
-from functools import partial
-from itertools import chain
-from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import psy_view.utils as utils
 from psyplot_gui.content_widget import (
     DatasetTree, DatasetTreeItem, escape_html)
 from psyplot_gui.common import (
     DockMixin, get_icon as get_psy_icon, PyErrorMessage)
-import xarray as xr
 import psyplot.data as psyd
-from psyplot.utils import unique_everseen
 from psy_view.rcsetup import rcParams
+import psy_view.plotmethods as plotmethods
 
 from matplotlib.animation import FuncAnimation
 
 NOTSET = object
 
 
-def get_icon(name, ending='.png'):
-    return osp.join(osp.dirname(__file__), 'icons', name + ending)
-
-
 def get_dims_to_iterate(arr):
     base_var = next(arr.psy.iter_base_variables)
     return [dim for dim, size in zip(base_var.dims, base_var.shape)
             if size > 1 and arr[dim].ndim == 0]
+
+TOO_MANY_FIGURES_WARNING = """
+Multiple figures are open but you specified only {} filenames: {}.<br>
+
+Saving the figures will cause that not all images are saved! We recommend to
+export to a single PDF (that then includes multiple pages), or modify your
+filename with strings like
+
+<ul>
+<li> <code>%i</code> for a continuous counter of the images</li>
+<li><code>%(name)s</code> for variable names</li>
+<li>or other netCDF attributes (see the
+  <a href="https://psyplot.readthedocs.io/en/latest/api/psyplot.project.html#psyplot.project.Project.export">
+  examples of exporting psyplot projects</a>)</li>
+</ul>
+
+Shall I continue anyway and save the figures?
+"""
 
 
 class DatasetWidget(QtWidgets.QSplitter):
@@ -48,6 +57,8 @@ class DatasetWidget(QtWidgets.QSplitter):
     _ani = None
 
     variable_frame = None
+
+    _new_plot = False
 
     ds_attr_columns = ['long_name', 'dims', 'shape']
 
@@ -128,12 +139,38 @@ class DatasetWidget(QtWidgets.QSplitter):
         # -- Export button
         self.btn_export = QtWidgets.QToolButton()
         self.btn_export.setText('Export')
+        self.btn_export.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         self.btn_export.setMenu(self.setup_export_menu())
         self.navigation_box.addWidget(self.btn_export)
 
         self.addLayout(self.navigation_box)
 
-        # fourth row: plot interface
+        # fourth row: array selector
+
+        self.array_frame = QtWidgets.QGroupBox('Current plot')
+        hbox = QtWidgets.QHBoxLayout()
+
+        self.combo_array = QtWidgets.QComboBox()
+        self.combo_array.setEditable(False)
+        self.combo_array.currentIndexChanged.connect(self.refresh)
+        self.combo_array.currentIndexChanged.connect(self.show_current_figure)
+        hbox.addWidget(self.combo_array)
+
+        self.btn_add = utils.add_pushbutton(
+            QtGui.QIcon(get_psy_icon('plus')), self.new_plot,
+            "Create a new plot", hbox, icon=True)
+        self.btn_add.setEnabled(ds is not None)
+        self.btn_del = utils.add_pushbutton(
+            QtGui.QIcon(get_psy_icon('minus')), self.close_current_plot,
+            "Remove the current plot", hbox, icon=True)
+        self.btn_del.setEnabled(False)
+
+        hbox.addWidget(self.btn_add)
+        hbox.addWidget(self.btn_del)
+        self.array_frame.setLayout(hbox)
+        self.addWidget(self.array_frame)
+
+        # fifth row: plot interface
         self.plot_tabs = QtWidgets.QTabWidget()
         self.setup_plot_tabs()
         self.plot_tabs.currentChanged.connect(self.switch_tab)
@@ -149,6 +186,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.addWidget(self.dimension_table)
 
         self.disable_navigation()
+
         if self.ds is not None:
             self.refresh()
 
@@ -159,9 +197,19 @@ class DatasetWidget(QtWidgets.QSplitter):
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
         tree.setHeaderLabels([''] + self.ds_attr_columns)
 
+    def close_current_plot(self):
+        self.variable_buttons[self.variable].click()
+
     def excepthook(self, type, value, traceback):
         """A method to replace the sys.excepthook"""
         self.error_msg.excepthook(type, value, traceback)
+
+    @property
+    def arr_name(self):
+        if not self.combo_array.count():
+            return None
+        else:
+            return self.combo_array.currentText().split(':')[0]
 
     def change_ds(self, ds_item):
         ds_items = self.ds_items
@@ -218,6 +266,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         with self.block_tree():
             self.add_ds_item()
             self.setup_variable_buttons()
+            self.btn_add.setEnabled(True)
+            self.btn_del.setEnabled(True)
 
     def add_ds_item(self):
         ds = self.ds
@@ -250,14 +300,16 @@ class DatasetWidget(QtWidgets.QSplitter):
             if item.ds() is ds:
                 return item
 
-    def expand_current_variable(self):
+    def expand_current_variable(self, variable=None):
         tree = self.ds_tree
         top = self.ds_item
         tree.expandItem(top)
         tree.expandItem(top.child(0))
+        if variable is None:
+            variable = self.variable
         for var_item in map(top.child(0).child,
                             range(top.child(0).childCount())):
-            if var_item.text(0) == self.variable:
+            if var_item.text(0) == variable:
                 tree.expandItem(var_item)
             else:
                 tree.collapseItem(var_item)
@@ -347,9 +399,11 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.start_animation()
 
     def setup_plot_tabs(self):
-        self.plot_tabs.addTab(MapPlotWidget(self.get_sp, self.ds), 'mapplot')
-        self.plot_tabs.addTab(Plot2DWidget(self.get_sp, self.ds), 'plot2d')
-        lineplot_widget = LinePlotWidget(self.get_sp, self.ds)
+        self.plot_tabs.addTab(plotmethods.MapPlotWidget(self.get_sp, self.ds),
+                              'mapplot')
+        self.plot_tabs.addTab(plotmethods.Plot2DWidget(self.get_sp, self.ds),
+                              'plot2d')
+        lineplot_widget = plotmethods.LinePlotWidget(self.get_sp, self.ds)
         self.plot_tabs.addTab(lineplot_widget, 'lineplot')
 
         for w in map(self.plot_tabs.widget, range(self.plot_tabs.count())):
@@ -441,6 +495,7 @@ class DatasetWidget(QtWidgets.QSplitter):
     def setup_export_menu(self):
         self.export_menu = menu = QtWidgets.QMenu()
         menu.addAction('image (PDF, PNG, etc.)', self.export_image)
+        menu.addAction('all images (PDF, PNG, etc.)', self.export_all_images)
         menu.addAction('animation (GIF, MP4, etc.', self.export_animation)
         menu.addAction('psyplot project (.pkl file)', self.export_project)
         menu.addAction('psyplot project with data',
@@ -454,6 +509,25 @@ class DatasetWidget(QtWidgets.QSplitter):
             "Images (*.png *.pdf *.jpg *.svg)")
         if ok:
             self.sp.export(fname, rcParams['savefig_kws'])
+
+    def export_all_images(self):
+        fname, ok = QtWidgets.QFileDialog.getSaveFileName(
+            self, "Export image", os.getcwd(),
+            "Images (*.png *.pdf *.jpg *.svg)")
+        if ok:
+            # test filenames
+            if not osp.splitext(fname)[-1].lower() == '.pdf':
+                fnames = [
+                    sp.format_string(fname, False, i)
+                    for i, sp in enumerate(self._sp.figs.values())]
+                if len(fnames) != len(set(fnames)):
+                    answer = QtWidgets.QMessageBox.question(
+                        self, "Too many figures",
+                        TOO_MANY_FIGURES_WARNING.format(
+                            len(set(fnames)), ', '.join(set(fnames))))
+                    if answer == QtWidgets.QMessageBox.No:
+                        return
+            self._sp.export(fname, rcParams['savefig_kws'])
 
     def export_animation(self):
         fname, ok = QtWidgets.QFileDialog.getSaveFileName(
@@ -488,23 +562,27 @@ class DatasetWidget(QtWidgets.QSplitter):
             btn = self.variable_buttons[v]
             if not btn.isChecked():
                 self.close_sp()
+                if self.combo_array.count() > 1:
+                    with self.block_widgets(self.combo_array):
+                        current = self.combo_array.currentIndex()
+                        self.combo_array.setCurrentIndex(current - 1)
+                else:
+                    self.btn_del.setEnabled(False)
+
             else:
                 with self.silence_variable_buttons():
                     for var, btn in self.variable_buttons.items():
                         if var != v:
                             btn.setChecked(False)
                 self.make_plot()
+                self.btn_del.setEnabled(True)
             self.refresh()
 
         return func
 
     @contextlib.contextmanager
     def silence_variable_buttons(self):
-        for btn in self.variable_buttons.values():
-            btn.blockSignals(True)
-        yield
-        for btn in self.variable_buttons.values():
-            btn.blockSignals(False)
+        yield self.block_widgets(*self.variable_buttons.values())
 
     @property
     def variable(self):
@@ -572,13 +650,16 @@ class DatasetWidget(QtWidgets.QSplitter):
     _sp = None
 
     def get_sp(self):
-        if self._sp is None:
-            return self._sp
-        return self.filter_sp(self._sp)
+        sp = self._sp
+        if sp is None:
+            return sp
+        return self.filter_sp(sp)
 
     def filter_sp(self, sp):
         """Filter the psyplot project to only include the arrays of :attr:`ds`
         """
+        if self._new_plot:
+            return None
         if self.ds is None:
             return sp
         num = self.ds.psy.num
@@ -586,7 +667,30 @@ class DatasetWidget(QtWidgets.QSplitter):
         for i in range(len(sp)):
             if list(sp[i:i+1].datasets) == [num]:
                 ret += sp[i:i+1]
-        return ret
+        arr_name = self.arr_name
+        if arr_name is None:
+            return ret
+        return ret(arr_name=arr_name)
+
+    def new_plot(self):
+        name, ok = QtWidgets.QInputDialog.getItem(
+            self, 'New plot', 'Select a variable',
+            self.plotmethod_widget.valid_variables(self.ds))
+        if not ok:
+            return
+        with self.silence_variable_buttons():
+            for v, btn in self.variable_buttons.items():
+                btn.setChecked(v == name)
+        with self.creating_new_plot():
+            self.make_plot()
+        self.btn_del.setEnabled(True)
+        self.refresh()
+
+    @contextlib.contextmanager
+    def creating_new_plot(self):
+        self._new_plot = True
+        yield
+        self._new_plot = False
 
     @property
     def sp(self):
@@ -594,12 +698,12 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     @sp.setter
     def sp(self, sp):
-        if sp is None and (not self._sp or not not getattr(
+        if sp is None and (not self._sp or not getattr(
                 self._sp, self.plotmethod)):
             pass
         else:
             # first remove the current arrays
-            if self._sp and getattr(self._sp, self.plotmethod):
+            if self.get_sp() and getattr(self.get_sp(), self.plotmethod):
                 to_remove = getattr(self.get_sp(), self.plotmethod).arr_names
                 for i in list(reversed(range(len(self._sp)))):
                     if self._sp[i].psy.arr_name in to_remove:
@@ -668,17 +772,29 @@ class DatasetWidget(QtWidgets.QSplitter):
                 self.data.psy.update(dims=dims, **fmts)
                 self.sp.update(replot=True)
             else:
-                self.sp.update(name=self.variable, dims=dims, **fmts)
-            self.show_fig()
+                self.data.psy.update(name=self.variable, dims=dims, **fmts)
+            self.show_fig(self.sp)
         else:
             self.ani = None
             self.sp = sp = self.plot(name=self.variable, **self.plot_options)
             cid = sp.plotters[0].ax.figure.canvas.mpl_connect(
                 'button_press_event', self.display_line)
             self.cids[self.plotmethod] = cid
-            self.show_fig()
+            self.show_fig(sp)
+            descr = sp[0].psy._short_info()
+            with self.block_widgets(self.combo_array):
+                self.combo_array.addItem(descr)
+                self.combo_array.setCurrentText(descr)
         self.expand_current_variable()
         self.enable_navigation()
+
+    @contextlib.contextmanager
+    def block_widgets(self, *widgets):
+        for w in widgets:
+            w.blockSignals(True)
+        yield
+        for w in widgets:
+            w.blockSignals(False)
 
     def display_line(self, event):
         if not event.inaxes:
@@ -715,18 +831,25 @@ class DatasetWidget(QtWidgets.QSplitter):
 
 
     def close_sp(self):
-        self.sp.close(figs=True, data=True, ds=False)
+        sp = self.sp
         self.sp = None
+        sp.close(figs=True, data=True, ds=False)
 
-    def show_fig(self):
-        try:
-            self.fig.canvas.window().show()
-        except AttributeError:
-            self.sp.show()
+    def show_current_figure(self):
+        if self.sp is not None:
+            self.show_fig(self.sp)
+
+    def show_fig(self, sp):
+        if len(sp):
+            try:
+                fig = sp.plotters[0].ax.figure
+                fig.canvas.window().show()
+                fig.canvas.window().raise_()
+            except AttributeError:
+                sp.show()
 
     def switch_tab(self):
         with self.silence_variable_buttons():
-            ds = self.ds
             if self.sp:
                 name = self.data.name
             else:
@@ -735,8 +858,35 @@ class DatasetWidget(QtWidgets.QSplitter):
                 btn.setChecked(v == name)
         self.refresh()
 
+    def reset_combo_array(self):
+        curr_arr_name = self.arr_name
+        with self.block_widgets(self.combo_array):
+            self.combo_array.clear()
+            if self._sp:
+                all_arrays = getattr(self._sp, self.plotmethod)
+                current_ds = self.ds
+                if all_arrays:
+                    for arr in all_arrays:
+                        self.combo_array.addItem(arr.psy._short_info())
+                    if curr_arr_name in all_arrays.arr_names:
+                        idx_arr = all_arrays.arr_names.index(curr_arr_name)
+                        self.combo_array.setCurrentIndex(idx_arr)
+                    else:
+                        idx_arr = 0
+                    self.ds = list(
+                        all_arrays[idx_arr:idx_arr+1].datasets.values())[0]
+                    if self.ds is not current_ds:
+                        with self.block_tree():
+                            self.expand_ds_item(self.ds_item)
+                            self.expand_current_variable(self.data.name)
+
+
     def refresh(self):
+
         self.clear_table()
+
+        self.reset_combo_array()
+
         if self.sp:
             variable = self.data.name
         else:
@@ -751,10 +901,11 @@ class DatasetWidget(QtWidgets.QSplitter):
         for i in range(self.plot_tabs.count()):
             w = self.plot_tabs.widget(i)
             w.refresh(self.ds)
-        valid_variables = self.plotmethod_widget.valid_variables(self.ds)
-        for v, btn in self.variable_buttons.items():
-            btn.setEnabled(v in valid_variables)
-        if variable is NOTSET or not self.sp:
+        if self.variable_buttons:
+            valid_variables = self.plotmethod_widget.valid_variables(self.ds)
+            for v, btn in self.variable_buttons.items():
+                btn.setEnabled(v in valid_variables)
+        if self.ds is None or variable is NOTSET or not self.sp:
             return
 
         data = self.data
@@ -836,464 +987,6 @@ class DatasetWidget(QtWidgets.QSplitter):
         return update
 
 
-class PlotMethodWidget(QtWidgets.QWidget):
-
-    plotmethod = NOTSET
-
-    #: trigger a replot of this widget. This can be emitted with the
-    #: :meth:`trigger_replot` method
-    replot = QtCore.pyqtSignal(str)
-
-    #: trigger a replot of this widget. This can be emitted with the
-    #: :meth:`trigger_reset` method
-    reset = QtCore.pyqtSignal(str)
-
-    #: signalize that the widget has been changed but not plot changes are
-    #: needed
-    changed = QtCore.pyqtSignal(str)
-
-    array_info = None
-
-    layout = None
-
-    def __init__(self, get_sp, ds):
-        super().__init__()
-        self._get_sp = get_sp
-
-        self.setup()
-
-        if self.layout is not None:
-            self.setLayout(self.layout)
-
-        self.refresh(ds)
-
-    def setup(self):
-        pass
-
-    @property
-    def sp(self):
-        return getattr(self._get_sp(), self.plotmethod, None)
-
-    @property
-    def data(self):
-        return self.sp[0]
-
-    @property
-    def plotter(self):
-        try:
-            return self.sp.plotters[0]
-        except (IndexError, AttributeError):
-            return None
-
-    @property
-    def formatoptions(self):
-        if self.plotter is not None:
-            return list(self.plotter)
-        else:
-            import psyplot.project as psy
-            return list(getattr(psy.plot, self.plotmethod).plotter_cls())
-
-    def get_fmts(self, var, init=False):
-        ret = {}
-        if init:
-            ret.update(self.init_dims(var))
-        return ret
-
-    def init_dims(self, var):
-        return {}
-
-    def refresh(self, ds):
-        self.setEnabled(bool(self.sp))
-
-    def trigger_replot(self):
-        self.replot.emit(self.plotmethod)
-
-    def trigger_reset(self):
-        self.array_info = self.sp.array_info(
-            standardize_dims=False)[self.sp[0].psy.arr_name]
-        self.reset.emit(self.plotmethod)
-
-    def trigger_refresh(self):
-        self.changed.emit(self.plotmethod)
-
-    def get_slice(self, x, y):
-        return None
-
-    def valid_variables(self, ds):
-        ret = []
-        plotmethod = getattr(ds.psy.plot, self.plotmethod)
-        for v in list(ds):
-            init_kws = self.init_dims(ds[v])
-            dims = init_kws.get('dims', {})
-            decoder = init_kws.get('decoder')
-            if plotmethod.check_data(ds, v, dims, decoder)[0][0]:
-                ret.append(v)
-        return ret
-
-
-class MapPlotWidget(PlotMethodWidget):
-
-    plotmethod = 'mapplot'
-
-    def setup(self):
-        self.layout = vbox = QtWidgets.QVBoxLayout()
-
-        self.formatoptions_box = QtWidgets.QHBoxLayout()
-        self.setup_color_buttons()
-        self.setup_projection_buttons()
-        self.btn_labels = utils.add_pushbutton(
-            "Labels", self.edit_labels, "Edit title, colorbar labels, etc.",
-            self.formatoptions_box)
-
-        vbox.addLayout(self.formatoptions_box)
-
-        self.dimension_box = QtWidgets.QGridLayout()
-        self.setup_dimension_box()
-
-        vbox.addLayout(self.dimension_box)
-
-    def setup_color_buttons(self):
-        self.btn_cmap = utils.add_pushbutton(
-            rcParams["cmaps"][0], self.choose_next_colormap,
-            "Select a different colormap", self.formatoptions_box)
-
-        self.btn_cmap_settings = utils.add_pushbutton(
-            get_icon('color_settings'), self.edit_color_settings,
-            "Edit color settings", self.formatoptions_box,
-            icon=True)
-
-    def setup_projection_menu(self):
-        menu = QtWidgets.QMenu()
-        for projection in rcParams['projections']:
-            menu.addAction(
-                projection, partial(self.set_projection, projection))
-        menu.addSeparator()
-        self.proj_settings_action = menu.addAction(
-            QtGui.QIcon(get_icon('proj_settings')), "Customize basemap...",
-            self.edit_basemap_settings)
-        return menu
-
-    def setup_projection_buttons(self):
-        self.btn_proj = utils.add_pushbutton(
-            rcParams["projections"][0], self.choose_next_projection,
-            "Change the basemap projection", self.formatoptions_box,
-            toolbutton=True)
-        self.btn_proj.setMenu(self.setup_projection_menu())
-        max_width = max(map(self.btn_proj.fontMetrics().width,
-                            rcParams['projections'])) * 2
-        self.btn_proj.setMinimumWidth(max_width)
-        self.btn_proj.setPopupMode(QtWidgets.QToolButton.MenuButtonPopup)
-
-        self.btn_proj_settings = utils.add_pushbutton(
-            get_icon('proj_settings'), self.edit_basemap_settings,
-            "Edit basemap settings", self.formatoptions_box,
-            icon=True)
-
-        self.btn_datagrid = utils.add_pushbutton(
-            "Cells", self.toggle_datagrid,
-            "Show the grid cell boundaries", self.formatoptions_box)
-        self.btn_datagrid.setCheckable(True)
-
-    def setup_dimension_box(self):
-        self.dimension_box = QtWidgets.QGridLayout()
-
-        self.dimension_box.addWidget(QtWidgets.QLabel('x-Dimension:'), 0, 0)
-        self.combo_xdim = QtWidgets.QComboBox()
-        self.dimension_box.addWidget(self.combo_xdim, 0, 1)
-
-        self.dimension_box.addWidget(QtWidgets.QLabel('y-Dimension:'), 0, 2)
-        self.combo_ydim = QtWidgets.QComboBox()
-        self.dimension_box.addWidget(self.combo_ydim, 0, 3)
-
-        self.dimension_box.addWidget(QtWidgets.QLabel('x-Coordinate:'), 1, 0)
-        self.combo_xcoord = QtWidgets.QComboBox()
-        self.dimension_box.addWidget(self.combo_xcoord, 1, 1)
-
-        self.dimension_box.addWidget(QtWidgets.QLabel('y-Coordinate:'), 1, 2)
-        self.combo_ycoord = QtWidgets.QComboBox()
-        self.dimension_box.addWidget(self.combo_ycoord, 1, 3)
-
-        self.combo_xdim.currentTextChanged.connect(self.set_xcoord)
-        self.combo_ydim.currentTextChanged.connect(self.set_ycoord)
-
-        for combo in self.coord_combos:
-            combo.currentIndexChanged.connect(self.trigger_refresh)
-
-    def set_xcoord(self, text):
-        self.set_combo_text(self.combo_xcoord, text)
-
-    def set_ycoord(self, text):
-        self.set_combo_text(self.combo_ycoord, text)
-
-    def set_combo_text(self, combo, text):
-        items = list(map(combo.itemText, range(combo.count())))
-        if text in items:
-            combo.setCurrentIndex(items.index(text))
-
-    def init_dims(self, var):
-        ret = super().init_dims(var)
-
-        dims = {}
-        xdim = ydim = None
-
-        if self.combo_xdim.currentIndex():
-            xdim = self.combo_xdim.currentText()
-            if xdim in var.dims:
-                dims[xdim] = slice(None)
-
-        if self.combo_ydim.currentIndex():
-            ydim = self.combo_ydim.currentText()
-            if ydim in var.dims:
-                dims[ydim] = slice(None)
-
-        if dims:
-            missing = [dim for dim in var.dims if dim not in dims]
-            for dim in missing:
-                dims[dim] = 0
-            if len(dims) == 1 and xdim != ydim:
-                if xdim is None:
-                    xdim = missing[-1]
-                else:
-                    ydim = missing[-1]
-                dims[missing[-1]] = slice(None)  # keep the last dimension
-            ret['dims'] = dims
-
-
-        if self.combo_xcoord.currentIndex():
-            xcoord = self.combo_xcoord.currentText()
-            ret['decoder'] = {'x': {xcoord}}
-        if self.combo_ycoord.currentIndex():
-            ycoord = self.combo_ycoord.currentText()
-            ret.setdefault('decoder', {})
-            ret['decoder']['y'] = {ycoord}
-
-        if (xdim is not None and xdim in var.dims and
-                ydim is not None and ydim in var.dims):
-            ret['transpose'] = var.dims.index(xdim) < var.dims.index(ydim)
-
-        return ret
-
-    def valid_variables(self, ds):
-        valid = super().valid_variables(ds)
-        if (not any(combo.count() for combo in self.coord_combos) or
-                not any(combo.currentIndex() for combo in self.coord_combos)):
-            return valid
-        if self.combo_xdim.currentIndex():
-            xdim = self.combo_xdim.currentText()
-            valid = [v for v in valid if xdim in ds[v].dims]
-        if self.combo_ydim.currentIndex():
-            ydim = self.combo_xdim.currentText()
-            valid = [v for v in valid if ydim in ds[v].dims]
-        if self.combo_xcoord.currentIndex():
-            xc_dims = set(ds[self.combo_xcoord.currentText()].dims)
-            valid = [v for v in valid
-                     if xc_dims.intersection(ds[v].dims)]
-        if self.combo_ycoord.currentIndex():
-            yc_dims = set(ds[self.combo_ycoord.currentText()].dims)
-            valid = [v for v in valid
-                     if yc_dims.intersection(ds[v].dims)]
-        return valid
-
-    @property
-    def coord_combos(self):
-        return [self.combo_xdim, self.combo_ydim, self.combo_xcoord,
-                self.combo_ycoord]
-
-    @contextlib.contextmanager
-    def block_combos(self):
-        for combo in self.coord_combos:
-            combo.blockSignals(True)
-        yield
-        for combo in self.coord_combos:
-            combo.blockSignals(False)
-
-    def setEnabled(self, b):
-        self.btn_proj_settings.setEnabled(b)
-        self.proj_settings_action.setEnabled(b)
-        self.btn_datagrid.setEnabled(b)
-        self.btn_cmap_settings.setEnabled(b)
-        self.btn_labels.setEnabled(b)
-
-    def choose_next_colormap(self):
-        select = False
-        nmaps = len(rcParams['cmaps'])
-        current = self.btn_cmap.text()
-        if self.sp and 'cmap' in self.sp.plotters[0]:
-            invert_cmap = self.plotter.cmap.value.endswith('_r')
-        else:
-            invert_cmap = False
-        for i, cmap in enumerate(cycle(rcParams['cmaps'])):
-            if cmap == current:
-                select = True
-            elif select or i == nmaps:
-                break
-        self.btn_cmap.setText(cmap)
-        if invert_cmap:
-            cmap = cmap + '_r'
-        if self.sp and 'cmap' in self.sp.plotters[0]:
-            self.plotter.update(cmap=cmap)
-
-    def toggle_datagrid(self):
-        if self.btn_datagrid.isChecked():
-            self.plotter.update(datagrid='k--')
-        else:
-            self.plotter.update(datagrid=None)
-
-    def edit_labels(self):
-        LabelDialog.update_project(self.sp, 'figtitle', 'title', 'clabel')
-
-    def edit_color_settings(self):
-        CmapDialog.update_plotter(self.plotter)
-
-    def choose_next_projection(self):
-        select = False
-        nprojections = len(rcParams['projections'])
-        current = self.btn_proj.text()
-        for i, proj in enumerate(cycle(rcParams['projections'])):
-            if proj == current:
-                select = True
-            elif select or i == nprojections:
-                break
-        self.set_projection(proj)
-
-    def set_projection(self, proj):
-        self.btn_proj.setText(proj)
-        if self.sp and 'projection' in self.sp.plotters[0]:
-            self.plotter.update(projection=proj)
-
-    def edit_basemap_settings(self):
-        BasemapDialog.update_plotter(self.plotter)
-
-    def get_fmts(self, var, init=False):
-        fmts = {}
-
-        fmts['cmap'] = self.btn_cmap.text()
-
-        if 'projection' in self.formatoptions:
-            fmts['projection'] = self.btn_proj.text()
-
-        if 'time' in var.dims:
-            fmts['title'] = '%(time)s'
-
-        if 'long_name' in var.attrs:
-            fmts['clabel'] = '%(long_name)s'
-        else:
-            fmts['clabel'] = '%(name)s'
-        if 'units' in var.attrs:
-            fmts['clabel'] += ' %(units)s'
-
-        if init:
-            fmts.update(self.init_dims(var))
-
-        return fmts
-
-    def refresh(self, ds):
-        self.setEnabled(bool(self.sp))
-
-        auto = 'Set automatically'
-
-        self.refresh_from_sp()
-
-        with self.block_combos():
-
-            if ds is None:
-                ds = xr.Dataset()
-
-            current_dims = set(map(
-                self.combo_xdim.itemText, range(1, self.combo_xdim.count())))
-            ds_dims = list(dim for dim, n in ds.dims.items() if n > 1)
-            if current_dims != set(ds_dims):
-                self.combo_xdim.clear()
-                self.combo_ydim.clear()
-                self.combo_xdim.addItems([auto] + ds_dims)
-                self.combo_ydim.addItems([auto] + ds_dims)
-
-            current_coords = set(map(
-                self.combo_xcoord.itemText, range(1, self.combo_xcoord.count())))
-            ds_coords = list(c for c, arr in ds.coords.items() if arr.ndim)
-            if current_coords != set(ds_coords):
-                self.combo_xcoord.clear()
-                self.combo_ycoord.clear()
-                self.combo_xcoord.addItems([auto] + ds_coords)
-                self.combo_ycoord.addItems([auto] + ds_coords)
-
-            enable_combos = not bool(self.sp)
-
-            if not enable_combos and self.combo_xdim.isEnabled():
-                self.reset_combos = [combo.currentIndex() == 0
-                                    for combo in self.coord_combos]
-            elif enable_combos and not self.combo_xdim.isEnabled():
-                for reset, combo in zip(self.reset_combos, self.coord_combos):
-                    if reset:
-                        combo.setCurrentIndex(0)
-                self.reset_combos = [False] * len(self.coord_combos)
-
-            for combo in self.coord_combos:
-                combo.setEnabled(enable_combos)
-
-            if not enable_combos:
-                data = self.data
-                xdim = str(data.psy.get_dim('x'))
-                ydim = str(data.psy.get_dim('y'))
-                self.combo_xdim.setCurrentText(xdim)
-                self.combo_ydim.setCurrentText(ydim)
-                xcoord = data.psy.get_coord('x')
-                xcoord = xcoord.name if xcoord is not None else xdim
-                ycoord = data.psy.get_coord('y')
-                ycoord = ycoord.name if ycoord is not None else ydim
-
-                self.combo_xcoord.setCurrentText(xcoord)
-                self.combo_ycoord.setCurrentText(ycoord)
-
-    def refresh_from_sp(self):
-        if self.sp:
-            plotter = self.plotter
-            if isinstance(plotter.projection.value, str):
-                self.btn_proj.setText(plotter.projection.value)
-            if isinstance(plotter.cmap.value, str):
-                self.btn_cmap.setText(plotter.cmap.value)
-
-    def transform(self, x, y):
-        import cartopy.crs as ccrs
-        import numpy as np
-        x, y = self.plotter.transform.projection.transform_point(
-            x, y, self.plotter.ax.projection)
-        # shift if necessary
-        if isinstance(self.plotter.transform.projection, ccrs.PlateCarree):
-            coord = self.plotter.plot.xcoord
-            if coord.min() >= 0 and x < 0:
-                x -= 360
-            elif coord.max() <= 180 and x > 180:
-                x -= 360
-            if 'rad' in coord.attrs.get('units', '').lower():
-                x = np.deg2rad(x)
-                y = np.deg2rad(y)
-        return x, y
-
-    def get_slice(self, x, y):
-        import numpy as np
-        data = self.data.psy.base.psy[self.data.name]
-        x, y =  self.transform(x, y)
-        fmto = self.plotter.plot
-
-        xcoord = fmto.xcoord
-        ycoord = fmto.ycoord
-        if fmto.decoder.is_unstructured(fmto.raw_data) or xcoord.ndim == 2:
-            xy = xcoord.values.ravel() + 1j * ycoord.values.ravel()
-            dist = np.abs(xy - (x + 1j * y))
-            imin = np.nanargmin(dist)
-            if xcoord.ndim == 2:
-                ncols = data.shape[-2]
-                return dict(zip(data.dims[-2:],
-                                [imin // ncols, imin % ncols]))
-            else:
-                return {data.dims[-1]: imin}
-        else:
-            x = xcoord.indexes[xcoord.name].get_loc(x, method='nearest')
-            y = ycoord.indexes[ycoord.name].get_loc(y, method='nearest')
-            return dict(zip(data.dims[-2:], [y, x]))
-
-
 class DatasetWidgetPlugin(DatasetWidget, DockMixin):
 
     #: The title of the widget
@@ -1302,10 +995,15 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
     #: Display the dock widget at the right side of the GUI
     dock_position = Qt.RightDockWidgetArea
 
+    def __init__(self, *args, **kwargs):
+        import psyplot.project as psy
+        super().__init__(*args, **kwargs)
+        psy.Project.oncpchange.connect(self.oncpchange)
+
     @property
     def _sp(self):
         import psyplot.project as psy
-        return psy.gcp()
+        return psy.gcp(True)
 
     @_sp.setter
     def _sp(self, value):
@@ -1320,7 +1018,7 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
         current = self.get_sp()
         if sp is None:
             return
-        if getattr(current, self.plotmethod):
+        if getattr(current, self.plotmethod, []):
 
             if len(current) == 1 and len(sp) == 1:
                 pass
@@ -1341,8 +1039,30 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
     def close_sp(self):
         ds = self.ds
         super().close_sp()
-        if ds.psy.num not in self._sp.main.datasets:
+        if ds.psy.num not in self._sp.datasets:
             self.set_dataset(ds)
+
+    def oncpchange(self, sp):
+        self.reset_combo_array()
+        if self.ds is not None and self.ds.psy.num not in self._sp.datasets:
+            self.ds = None
+            self.disable_navigation()
+            self.setup_variable_buttons()
+            self.btn_add.setEnabled(False)
+            self.btn_del.setEnabled(False)
+        elif self.ds is None and self._sp:
+            self.set_dataset(next(iter(self._sp.datasets.values())))
+
+    def show_fig(self, sp):
+        from psyplot_gui.main import mainwindow
+        super().show_fig(sp)
+        if mainwindow.figures and sp:
+            try:
+                dock = sp.plotters[0].ax.figure.canvas.manager.window
+                dock.widget().show_plugin()
+                dock.raise_()
+            except AttributeError:
+                pass
 
     def setup_ds_tree(self):
         self.ds_tree = tree = DatasetTree()
@@ -1355,768 +1075,3 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
         if hasattr(main, 'resizeDocks'):  # qt >= 5.6
             main.resizeDocks([main.help_explorer.dock, self.dock],
                              [height // 2, height // 2], Qt.Vertical)
-
-
-class Plot2DWidget(MapPlotWidget):
-
-    plotmethod = 'plot2d'
-
-    def setup_projection_buttons(self):
-        self.btn_datagrid = utils.add_pushbutton(
-            "Cells", self.toggle_datagrid,
-            "Show the grid cell boundaries", self.formatoptions_box)
-        self.btn_datagrid.setCheckable(True)
-
-    def setEnabled(self, b):
-        self.btn_datagrid.setEnabled(b)
-        self.btn_cmap_settings.setEnabled(b)
-        self.btn_labels.setEnabled(b)
-
-    def edit_labels(self):
-        LabelDialog.update_project(
-            self.sp, 'figtitle', 'title', 'clabel', 'xlabel', 'ylabel')
-
-    def transform(self, x, y):
-        return x, y
-
-    def refresh_from_sp(self):
-        if self.sp:
-            plotter = self.plotter
-            if isinstance(plotter.cmap.value, str):
-                self.btn_cmap.setText(plotter.cmap.value)
-
-
-class LinePlotWidget(PlotMethodWidget):
-
-    plotmethod = 'lineplot'
-
-    def setup(self):
-        self.layout = self.formatoptions_box = QtWidgets.QHBoxLayout()
-
-        # TODO: Implement a button to choose the dimension
-        self.formatoptions_box.addWidget(QtWidgets.QLabel('x-Dimension:'))
-        self.combo_dims = QtWidgets.QComboBox()
-        self.combo_dims.setEditable(False)
-        self.combo_dims.currentIndexChanged.connect(self.trigger_reset)
-        self.formatoptions_box.addWidget(self.combo_dims)
-
-        self.combo_lines = QtWidgets.QComboBox()
-        self.combo_lines.setEditable(False)
-        self.formatoptions_box.addWidget(self.combo_lines)
-        self.combo_lines.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
-        self.formatoptions_box.addStretch(0)
-
-        self.btn_add = utils.add_pushbutton(
-            QtGui.QIcon(get_psy_icon('plus')), lambda: self.add_line(),
-            "Add a line to the plot", self.formatoptions_box, icon=True)
-        self.btn_del = utils.add_pushbutton(
-            QtGui.QIcon(get_psy_icon('minus')), self.remove_line,
-            "Add a line to the plot", self.formatoptions_box, icon=True)
-
-        self.btn_labels = utils.add_pushbutton(
-            "Labels", self.edit_labels,
-            "Edit title, x-label, legendlabels, etc.", self.formatoptions_box)
-
-    @property
-    def xdim(self):
-        return self.combo_dims.currentText()
-
-    @xdim.setter
-    def xdim(self, xdim):
-        if xdim != self.combo_dims.currentText():
-            self.combo_dims.setCurrentText(xdim)
-
-    @property
-    def data(self):
-        data = super().data
-        if len(data) - 1 < self.combo_lines.currentIndex():
-            return data[0]
-        else:
-            return data[self.combo_lines.currentIndex()]
-
-    def add_line(self, name=None, **sl):
-        ds = self.data.psy.base
-        xdim = self.xdim
-        if name is None:
-            name, ok = QtWidgets.QInputDialog.getItem(
-                self, 'New line', 'Select a variable',
-                [key for key, var in ds.items()
-                 if xdim in var.dims])
-            if not ok:
-                return
-        arr = ds.psy[name]
-        for key, val in self.data.psy.idims.items():
-            if key in arr.dims:
-                sl.setdefault(key, val)
-        for dim in arr.dims:
-            if dim != xdim:
-                sl.setdefault(dim, 0)
-        self.sp[0].append(arr.psy[sl], new_name=True)
-        item = self.item_texts[-1]
-        self.sp.update(replot=True)
-        self.combo_lines.addItem(item)
-        self.combo_lines.setCurrentText(item)
-        self.trigger_refresh()
-
-    def remove_line(self):
-        i = self.combo_lines.currentIndex()
-        self.sp[0].pop(i)
-        self.sp.update(replot=True)
-        self.combo_lines.setCurrentText(self.item_texts[i - 1 if i else 0])
-        self.changed.emit(self.plotmethod)
-
-    @property
-    def item_texts(self):
-        return [f'Line {i}: {arr.psy._short_info()}'
-                for i, arr in enumerate(self.sp[0])]
-
-    def init_dims(self, var):
-        ret = {}
-        xdim = self.xdim or next((d for d in var.dims if var[d].size > 1),
-                                 None)
-        if self.array_info:
-            arr_names = {}
-            for arrname, d in self.array_info.items():
-                if arrname != 'attrs':
-                    dims = d['dims'].copy()
-                    if xdim in dims:
-                        for dim, sl in dims.items():
-                            if not isinstance(sl, int):
-                                dims[dim] = 0
-                        dims[xdim] = slice(None)
-                    dims['name'] = d['name']
-                    arr_names[arrname] = dims
-            ret['arr_names'] = arr_names
-            del self.array_info
-        else:
-            if xdim not in var.dims:
-                xdim = next((d for d in var.dims if var[d].size > 1), None)
-            if xdim is None:
-                raise ValueError(
-                    f"Cannot plot variable {var.name} with size smaller than "
-                    "2")
-            ret[xdim] = slice(None)
-            for d in var.dims:
-                if d != xdim:
-                    ret[d] = 0
-        return ret
-
-    def edit_labels(self):
-        LabelDialog.update_project(
-            self.sp, 'figtitle', 'title', 'xlabel', 'ylabel', 'legendlabels')
-
-    @contextlib.contextmanager
-    def block_combos(self):
-        self.combo_dims.blockSignals(True)
-        self.combo_lines.blockSignals(True)
-        yield
-        self.combo_dims.blockSignals(False)
-        self.combo_lines.blockSignals(False)
-
-    def valid_variables(self, ds):
-        valid = list(ds)
-        if not self.sp or len(self.sp[0]) < 2:
-            return valid
-        else:
-            current_dim = self.combo_dims.currentText()
-            return [v for v in valid if current_dim in ds[v].dims]
-
-    def refresh(self, ds):
-        if self.sp:
-            with self.block_combos():
-                self.combo_dims.clear()
-                all_dims = list(chain.from_iterable(
-                    [[d for i, d in enumerate(a.dims) if a.shape[i] > 1]
-                     for a in arr.psy.iter_base_variables]
-                    for arr in self.sp[0]))
-                intersection = set(all_dims[0])
-                for dims in all_dims[1:]:
-                    intersection.intersection_update(dims)
-                new_dims = list(
-                    filter(lambda d: d in intersection,
-                           unique_everseen(chain.from_iterable(all_dims))))
-
-                self.combo_dims.addItems(new_dims)
-                self.combo_dims.setCurrentIndex(
-                    new_dims.index(self.data.dims[-1]))
-
-                # fill lines combo
-                current = self.combo_lines.currentIndex()
-                self.combo_lines.clear()
-                descriptions = self.item_texts
-                self.combo_lines.addItems(descriptions)
-                if current < len(descriptions):
-                    self.combo_lines.setCurrentText(descriptions[current])
-        else:
-            with self.block_combos():
-                self.combo_dims.clear()
-                self.combo_lines.clear()
-        self.btn_add.setEnabled(bool(self.sp))
-        self.btn_del.setEnabled(bool(self.sp) and len(self.sp[0]) > 1)
-
-
-class BasemapDialog(QtWidgets.QDialog):
-    """A dialog to modify the basemap settings"""
-
-    def __init__(self, plotter, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.button_box = QtWidgets.QDialogButtonBox(
-            QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
-            self)
-        vbox = QtWidgets.QVBoxLayout(self)
-
-        self.button_box.accepted.connect(self.accept)
-        self.button_box.rejected.connect(self.reject)
-
-        proj_box = QtWidgets.QGroupBox("Projection settings")
-        layout = QtWidgets.QFormLayout(proj_box)
-
-        self.txt_clon = QtWidgets.QLineEdit()
-        self.txt_clon.setPlaceholderText('auto')
-        self.txt_clon.setToolTip('Central longitude in degrees East')
-        self.txt_clon.setValidator(QtGui.QDoubleValidator(-360, 360, 7))
-        layout.addRow('Central longitude: ', self.txt_clon)
-
-        self.txt_clat = QtWidgets.QLineEdit()
-        self.txt_clat.setPlaceholderText('auto')
-        self.txt_clat.setToolTip('Central latitude in degrees North')
-        self.txt_clat.setValidator(QtGui.QDoubleValidator(-90, 90, 7))
-        layout.addRow('Central latitude: ', self.txt_clat)
-
-        vbox.addWidget(proj_box)
-
-        self.lsm_box = QtWidgets.QGroupBox('Coastlines')
-        self.lsm_box.setCheckable(True)
-        hbox = QtWidgets.QHBoxLayout(self.lsm_box)
-        hbox.addWidget(QtWidgets.QLabel("Resolution:"))
-        self.opt_110 = QtWidgets.QRadioButton("110m")
-        self.opt_50 = QtWidgets.QRadioButton("50m")
-        self.opt_10 = QtWidgets.QRadioButton("10m")
-        hbox.addWidget(self.opt_110)
-        hbox.addWidget(self.opt_50)
-        hbox.addWidget(self.opt_10)
-
-        vbox.addWidget(self.lsm_box)
-
-        self.meridionals_box = QtWidgets.QGroupBox('Meridionals')
-        self.meridionals_box.setCheckable(True)
-        self.opt_meri_auto = QtWidgets.QRadioButton("auto")
-
-        self.opt_meri_at = QtWidgets.QRadioButton("At:")
-        self.txt_meri_at = QtWidgets.QLineEdit()
-        self.txt_meri_at.setPlaceholderText("30, 60, 90, 120, ... °E")
-        # TODO: Add validator
-
-        self.opt_meri_every = QtWidgets.QRadioButton("Every:")
-        self.txt_meri_every = QtWidgets.QLineEdit()
-        self.txt_meri_every.setPlaceholderText("30 °E")
-        self.txt_meri_every.setValidator(QtGui.QDoubleValidator(-360, 360, 7))
-
-        self.opt_meri_num = QtWidgets.QRadioButton("Number:")
-        self.txt_meri_num = QtWidgets.QLineEdit()
-        self.txt_meri_num.setPlaceholderText("5")
-        self.txt_meri_num.setValidator(QtGui.QIntValidator(1, 360))
-
-        form = QtWidgets.QFormLayout(self.meridionals_box)
-        form.addRow(self.opt_meri_auto)
-        form.addRow(self.opt_meri_at, self.txt_meri_at)
-        form.addRow(self.opt_meri_every, self.txt_meri_every)
-        form.addRow(self.opt_meri_num, self.txt_meri_num)
-
-        vbox.addWidget(self.meridionals_box)
-
-        self.parallels_box = QtWidgets.QGroupBox('Parallels')
-        self.parallels_box.setCheckable(True)
-        self.opt_para_auto = QtWidgets.QRadioButton("auto")
-
-        self.opt_para_at = QtWidgets.QRadioButton("At:")
-        self.txt_para_at = QtWidgets.QLineEdit()
-        self.txt_para_at.setPlaceholderText("-60, -30, 0, 30, ... °N")
-        # TODO: Add validator
-
-        self.opt_para_every = QtWidgets.QRadioButton("Every:")
-        self.txt_para_every = QtWidgets.QLineEdit()
-        self.txt_para_every.setPlaceholderText("30 °N")
-        self.txt_para_every.setValidator(QtGui.QDoubleValidator(-90, 90, 7))
-
-        self.opt_para_num = QtWidgets.QRadioButton("Number:")
-        self.txt_para_num = QtWidgets.QLineEdit()
-        self.txt_para_num.setPlaceholderText("5")
-        self.txt_para_num.setValidator(QtGui.QIntValidator(1, 180))
-
-        form = QtWidgets.QFormLayout(self.parallels_box)
-        form.addRow(self.opt_para_auto)
-        form.addRow(self.opt_para_at, self.txt_para_at)
-        form.addRow(self.opt_para_every, self.txt_para_every)
-        form.addRow(self.opt_para_num, self.txt_para_num)
-
-        vbox.addWidget(self.parallels_box)
-
-        vbox.addWidget(self.button_box)
-
-        self.fill_from_plotter(plotter)
-
-        for button in [self.opt_meri_at, self.opt_meri_auto, self.opt_meri_num,
-                       self.opt_meri_every, self.opt_para_at,
-                       self.opt_para_auto, self.opt_para_num,
-                       self.opt_para_every]:
-            button.clicked.connect(self.update_forms)
-
-    def fill_from_plotter(self, plotter):
-        if plotter.clon.value is not None:
-            self.txt_clon.setText(str(plotter.clon.value))
-        if plotter.clat.value is not None:
-            self.txt_clat.setText(str(plotter.clat.value))
-
-        if not plotter.lsm.value[0]:
-            self.lsm_box.setChecked(False)
-        else:
-            try:
-                res = plotter.lsm.value[0][:-1]
-            except TypeError:
-                res = '110'
-            getattr(self, 'opt_' + res).setChecked(True)
-
-        self.xgrid_value = None
-        value = plotter.xgrid.value
-        if not value:
-            self.meridionals_box.setChecked(False)
-        elif value is True:
-            self.opt_meri_auto.setChecked(True)
-        elif isinstance(value[0], str):
-            self.xgrid_value = value[0]
-            self.opt_meri_num.setChecked(True)
-            self.txt_meri_num.setText(str(value[1]))
-        elif isinstance(value, tuple):
-            self.xgrid_value = value[:2]
-            self.opt_meri_num.setChecked(True)
-            steps = 11 if len(value) == 2 else value[3]
-            self.txt_meri_num.setText(str(steps))
-        else:
-            self.opt_meri_at.setChecked(True)
-            self.txt_meri_at.setText(', '.join(map(str, value)))
-
-        self.ygrid_value = None
-        value = plotter.ygrid.value
-        if not value:
-            self.parallels_box.setChecked(False)
-        elif value is True:
-            self.opt_para_auto.setChecked(True)
-        elif isinstance(value[0], str):
-            self.opt_para_num.setChecked(True)
-            self.txt_para_num.setText(str(value[1]))
-            self.ygrid_value = value[0]
-        elif isinstance(value, tuple):
-            self.ygrid_value = value[:2]
-            self.opt_para_num.setChecked(True)
-            steps = 11 if len(value) == 2 else value[3]
-            self.txt_para_num.setText(str(steps))
-        else:
-            self.opt_para_at.setChecked(True)
-            self.txt_para_at.setText(', '.join(map(str, value)))
-
-    def update_forms(self):
-        if self.meridionals_box.isChecked():
-            self.txt_meri_at.setEnabled(self.opt_meri_at.isChecked())
-            self.txt_meri_every.setEnabled(self.opt_meri_every.isChecked())
-            self.txt_meri_num.setEnabled(self.opt_meri_num.isChecked())
-        if self.parallels_box.isChecked():
-            self.txt_para_at.setEnabled(self.opt_para_at.isChecked())
-            self.txt_para_every.setEnabled(self.opt_para_every.isChecked())
-            self.txt_para_num.setEnabled(self.opt_para_num.isChecked())
-
-    @property
-    def value(self):
-        import numpy as np
-        ret = {}
-        ret['clon'] = None if not self.txt_clon.text().strip() else float(
-            self.txt_clon.text().strip())
-        ret['clat'] = None if not self.txt_clat.text().strip() else float(
-            self.txt_clat.text().strip())
-
-        if self.lsm_box.isChecked():
-            if self.opt_110.isChecked():
-                ret['lsm'] = '110m'
-            elif self.opt_50.isChecked():
-                ret['lsm'] = '50m'
-            elif self.opt_10.isChecked():
-                ret['lsm'] = '10m'
-        else:
-            ret['lsm'] = False
-
-        if not self.meridionals_box.isChecked():
-            ret['xgrid'] = False
-        elif self.opt_meri_auto.isChecked():
-            ret['xgrid'] = True
-        elif self.opt_meri_every.isChecked():
-            ret['xgrid'] = np.arange(
-                -180, 180, float(self.txt_meri_every.text().strip() or 30))
-        elif self.opt_meri_at.isChecked():
-            ret['xgrid'] = list(map(
-                float, self.txt_meri_at.text().split(','))) or False
-        elif self.opt_meri_num.isChecked():
-            if self.xgrid_value is None:
-                ret['xgrid'] = ['rounded', int(self.txt_meri_num.text() or 5)]
-            elif isinstance(self.xgrid_value, str):
-                ret['xgrid'] = [self.xgrid_value,
-                                int(self.txt_meri_num.text() or 5)]
-            else:
-                ret['xgrid'] = tuple(self.xgrid_value) + (
-                    int(self.txt_meri_num.text() or 5), )
-
-        if not self.parallels_box.isChecked():
-            ret['ygrid'] = False
-        elif self.opt_para_auto.isChecked():
-            ret['ygrid'] = True
-        elif self.opt_para_every.isChecked():
-            ret['ygrid'] = np.arange(
-                -180, 180, float(self.txt_para_every.text().strip() or 30))
-        elif self.opt_para_at.isChecked():
-            ret['ygrid'] = list(map(
-                float, self.txt_para_at.text().split(','))) or False
-        elif self.opt_para_num.isChecked():
-            if self.ygrid_value is None:
-                ret['ygrid'] = ['rounded', int(self.txt_para_num.text() or 5)]
-            elif isinstance(self.ygrid_value, str):
-                ret['ygrid'] = [self.ygrid_value,
-                                int(self.txt_para_num.text() or 5)]
-            else:
-                ret['ygrid'] = tuple(self.ygrid_value) + (
-                    int(self.txt_para_num.text() or 5), )
-        return ret
-
-    @classmethod
-    def update_plotter(cls, plotter):
-        dialog = cls(plotter)
-        dialog.show()
-        dialog.raise_()
-        dialog.activateWindow()
-        dialog.exec_()
-        if dialog.result() == QtWidgets.QDialog.Accepted:
-            plotter.update(
-                **dialog.value)
-
-
-class CmapDialog(QtWidgets.QDialog):
-    """A dialog to modify color bounds"""
-
-    def __init__(self, plotter, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.button_box = QtWidgets.QDialogButtonBox(
-            QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
-            self)
-        self.button_box.accepted.connect(self.accept)
-        self.button_box.rejected.connect(self.reject)
-        self.tabs = QtWidgets.QTabWidget()
-        self.bounds_widget = BoundaryWidget(
-            plotter.cmap.value, plotter.bounds.value)
-        self.tabs.addTab(self.bounds_widget, "Colormap boundaries")
-
-        vbox = QtWidgets.QVBoxLayout(self)
-        vbox.addWidget(self.tabs)
-        vbox.addWidget(self.button_box)
-
-    @classmethod
-    def update_plotter(cls, plotter):
-        dialog = cls(plotter)
-        dialog.show()
-        dialog.raise_()
-        dialog.activateWindow()
-        dialog.exec_()
-        if dialog.result() == QtWidgets.QDialog.Accepted:
-            plotter.update(
-                **dialog.bounds_widget.value)
-
-
-class BoundaryWidget(QtWidgets.QWidget):
-    """A widget to select colormap boundaries"""
-
-    def __init__(self, cmap_value, init_value, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        layout = QtWidgets.QGridLayout(self)
-
-        self.type_box = QtWidgets.QGroupBox()
-        vbox = QtWidgets.QVBoxLayout(self.type_box)
-        self.opt_rounded = QtWidgets.QRadioButton("Rounded")
-        self.opt_minmax = QtWidgets.QRadioButton("Exact")
-        self.opt_custom = QtWidgets.QRadioButton("Custom")
-        vbox.addWidget(self.opt_rounded)
-        vbox.addWidget(self.opt_minmax)
-        vbox.addWidget(self.opt_custom)
-
-        layout.addWidget(self.type_box, 0, 0, 3, 1)
-
-        self.min_box = QtWidgets.QGroupBox()
-        hbox = QtWidgets.QHBoxLayout(self.min_box)
-        self.opt_min = QtWidgets.QRadioButton("Minimum")
-        self.opt_min_pctl = QtWidgets.QRadioButton("Percentile")
-        self.txt_min_pctl = QtWidgets.QLineEdit()
-        self.txt_min_pctl.setValidator(QtGui.QDoubleValidator(0., 100., 5))
-        hbox.addWidget(self.opt_min)
-        hbox.addWidget(self.opt_min_pctl)
-        hbox.addWidget(self.txt_min_pctl)
-
-        layout.addWidget(self.min_box, 0, 1, 1, 2)
-
-        self.max_box = QtWidgets.QGroupBox()
-        hbox = QtWidgets.QHBoxLayout(self.max_box)
-        self.opt_max = QtWidgets.QRadioButton("Maximum")
-        self.opt_max_pctl = QtWidgets.QRadioButton("Percentile")
-        self.txt_max_pctl = QtWidgets.QLineEdit()
-        self.txt_max_pctl.setValidator(QtGui.QDoubleValidator(0., 100., 5))
-        hbox.addWidget(self.opt_max)
-        hbox.addWidget(self.opt_max_pctl)
-        hbox.addWidget(self.txt_max_pctl)
-
-        layout.addWidget(self.max_box, 1, 1, 1, 2)
-
-        self.txt_custom = QtWidgets.QLineEdit()
-        self.txt_custom.setPlaceholderText('1, 2, 3, 4, 5, ...')
-        # TODO: Add validator
-        layout.addWidget(self.txt_custom, 2, 1, 1, 2)
-
-        self.cb_symmetric = QtWidgets.QCheckBox("symmetric")
-        layout.addWidget(self.cb_symmetric, 3, 0)
-
-        self.cb_inverted = QtWidgets.QCheckBox("inverted")
-        layout.addWidget(self.cb_inverted, 3, 1)
-        self.cb_inverted.setChecked(cmap_value.endswith('_r'))
-        self.init_cmap = cmap_value
-
-        self.txt_levels = QtWidgets.QLineEdit()
-        self.txt_levels.setInputMask(r"\B\o\u\n\d\s\: 900")
-        self.txt_levels.setMaxLength(len('Bounds: 256'))
-        layout.addWidget(self.txt_levels)
-
-        self.fill_form(init_value)
-
-        for button in [self.opt_minmax, self.opt_rounded, self.opt_custom,
-                       self.opt_min, self.opt_max,
-                       self.opt_min_pctl, self.opt_max_pctl]:
-            button.clicked.connect(self.update_type)
-
-    def update_type(self):
-        custom = self.opt_custom.isChecked()
-        self.txt_custom.setEnabled(custom)
-        self.opt_min.setEnabled(not custom)
-        self.opt_max.setEnabled(not custom)
-        self.opt_min_pctl.setEnabled(not custom)
-        self.opt_max_pctl.setEnabled(not custom)
-        self.txt_min_pctl.setEnabled(self.opt_min_pctl.isChecked())
-        self.txt_max_pctl.setEnabled(self.opt_max_pctl.isChecked())
-
-    @property
-    def value(self):
-        cmap = self.init_cmap
-        if self.cb_inverted.isChecked() and not cmap.endswith('_r'):
-            cmap = cmap + '_r'
-        elif not self.cb_inverted.isChecked() and cmap.endswith('_r'):
-            cmap = cmap[:-2]
-        if self.opt_custom.isChecked():
-            bounds = list(map(float, self.txt_custom.text().split(',')))
-            if not bounds:
-                bounds = ['rounded', None]
-        else:
-            if self.opt_minmax.isChecked():
-                val = 'minmax' if not self.cb_symmetric.isChecked() else 'sym'
-            else:
-                val = ('rounded' if not self.cb_symmetric.isChecked() else
-                       'roundedsym')
-            bounds = [val]
-            levels = self.txt_levels.text()[len('Bounds: '):]
-            bounds.append(int(levels) if levels.strip() else None)
-            bounds.append(0 if self.opt_min.isChecked() else
-                          float(self.txt_min_pctl.text().strip() or 0))
-            bounds.append(100 if self.opt_max.isChecked() else
-                          float(self.txt_max_pctl.text().strip() or 100))
-
-        return {'bounds': bounds, 'cmap': cmap}
-
-
-
-    def fill_form(self, value):
-
-        if value[0] == 'rounded' or value[0] == 'roundedsym':
-            self.opt_rounded.setChecked(True)
-        elif value[0] == 'minmax' or value[0] == 'sym':
-            self.opt_minmax.setChecked(True)
-        else:
-            self.opt_custom.setChecked(True)
-            self.txt_custom.setText(', '.join(map(str, value)))
-            self.txt_levels.setText('Bounds: %i' % len(value))
-            return
-        self.txt_levels.setText('Bounds: %s' % (value[1] or ''))
-        self.txt_custom.setEnabled(False)
-
-        min_pctl = 0 if len(value) <= 2 else value[2]
-        if min_pctl == 0:
-            self.opt_min.setChecked(True)
-            self.txt_min_pctl.setText('0')
-            self.txt_min_pctl.setEnabled(False)
-        else:
-            self.opt_min_pctl.setChecked(True)
-            self.txt_min_pctl.setText(str(min_pctl))
-
-        max_pctl = 100 if len(value) <= 3 else value[3]
-        if max_pctl == 100:
-            self.opt_max.setChecked(True)
-            self.txt_max_pctl.setText('100')
-            self.txt_max_pctl.setEnabled(False)
-        else:
-            self.opt_max_pctl.setChecked(True)
-            self.txt_max_pctl.setText(str(max_pctl))
-
-        self.cb_symmetric.setChecked(value[0].endswith('sym'))
-
-
-class FormatoptionsEditor(QtWidgets.QWidget):
-    """A widget to update a formatoption"""
-
-    def __init__(self, fmto, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        layout = QtWidgets.QHBoxLayout()
-
-        self.line_edit = QtWidgets.QLineEdit()
-        layout.addWidget(self.line_edit)
-        self.text_edit = QtWidgets.QTextEdit()
-        self.text_edit.setVisible(False)
-        layout.addWidget(self.text_edit)
-
-        self.btn_multiline = QtWidgets.QToolButton()
-        self.btn_multiline.setText('⌵')
-        self.btn_multiline.setCheckable(True)
-        self.btn_multiline.setToolTip("Toggle multiline editor")
-        self.btn_multiline.clicked.connect(self.toggle_multiline)
-        layout.addWidget(self.btn_multiline)
-
-        self.insert_obj(fmto.value)
-        self.initial_value = self.line_edit.text()
-        self.setLayout(layout)
-
-    def changed(self):
-        return self.text != self.initial_value
-
-    def toggle_multiline(self):
-        multiline = self.multiline
-        self.text_edit.setVisible(multiline)
-        self.line_edit.setVisible(not multiline)
-        if multiline:
-            self.text_edit.setPlainText(self.line_edit.text())
-        else:
-            self.line_edit.setText(self.text_edit.toPlainText())
-
-    @property
-    def multiline(self):
-        return self.btn_multiline.isChecked()
-
-    @property
-    def text(self):
-        return (self.text_edit.toPlainText() if self.multiline else
-                self.line_edit.text())
-
-    @property
-    def value(self):
-        text = self.text
-        return yaml.load(text, Loader=yaml.Loader)
-
-    def clear_text(self):
-        if self.multiline:
-            self.text_edit.clear()
-        else:
-            self.line_edit.clear()
-
-    def insert_obj(self, obj):
-        """Add a string to the formatoption widget"""
-        current = self.text
-        use_line_edit = not self.multiline
-        # strings are treated separately such that we consider quotation marks
-        # at the borders
-        if isinstance(obj, str) and current:
-            if use_line_edit:
-                pos = self.line_edit.cursorPosition()
-            else:
-                pos = self.text_edit.textCursor().position()
-            if pos not in [0, len(current)]:
-                s = obj
-            else:
-                if current[0] in ['"', "'"]:
-                    current = current[1:-1]
-                self.clear_text()
-                if pos == 0:
-                    s = '"' + obj + current + '"'
-                else:
-                    s = '"' + current + obj + '"'
-                current = ''
-        elif isinstance(obj, str):  # add quotation marks
-            s = '"' + obj + '"'
-        else:
-            s = yaml.dump(obj, default_flow_style=True).strip()
-            if s.endswith('\n...'):
-                s = s[:-4]
-        if use_line_edit:
-            self.line_edit.insert(s)
-        else:
-            self.text_edit.insertPlainText(s)
-
-
-class LabelWidgetLine(QtWidgets.QGroupBox):
-    """A widget to change the labels"""
-
-    def __init__(self, fmto, project, *args, **kwargs):
-        from psy_simple.widgets.texts import LabelWidget
-        super().__init__(f'{fmto.name} ({fmto.key})', *args, **kwargs)
-        self.editor = FormatoptionsEditor(fmto)
-        vbox = QtWidgets.QVBoxLayout()
-        vbox.addWidget(LabelWidget(self.editor, fmto, project,
-                                   properties=False))
-        vbox.addWidget(self.editor)
-        self.setLayout(vbox)
-
-class LabelDialog(QtWidgets.QDialog):
-    """A widget to change labels"""
-
-    def __init__(self, project, *fmts):
-        super().__init__()
-        self.project = project
-        layout = QtWidgets.QVBoxLayout()
-        plotter = project.plotters[0]
-        self.fmt_widgets = {}
-        for fmt in fmts:
-            fmto = getattr(plotter, fmt)
-            fmt_widget = LabelWidgetLine(fmto, project)
-            self.fmt_widgets[fmt] = fmt_widget
-            layout.addWidget(fmt_widget)
-
-        self.button_box = QtWidgets.QDialogButtonBox(
-            QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
-            self)
-        self.button_box.accepted.connect(self.accept)
-        self.button_box.rejected.connect(self.reject)
-        layout.addWidget(self.button_box)
-        self.setLayout(layout)
-
-    @property
-    def fmts(self):
-        ret = {}
-        for fmt, widget in self.fmt_widgets.items():
-            if widget.editor.changed:
-                try:
-                    value = widget.editor.value
-                except:
-                    raise IOError(f"{fmt}-value {widget.editor.text} could "
-                                  "not be parsed to python!")
-                else:
-                    ret[fmt] = value
-        return ret
-
-    @classmethod
-    def update_project(cls, project, *fmts):
-        dialog = cls(project, *fmts)
-        dialog.show()
-        dialog.raise_()
-        dialog.activateWindow()
-        dialog.exec_()
-        if dialog.result() == QtWidgets.QDialog.Accepted:
-            project.update(
-                **dialog.fmts)

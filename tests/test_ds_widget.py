@@ -281,3 +281,109 @@ def test_enable_disable_variables(test_ds, qtbot):
 
     assert ds_widget.variable_buttons['t2m'].isEnabled()
     assert not ds_widget.variable_buttons['line'].isEnabled()
+
+
+@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
+def test_open_and_close_plots(
+        ds_widget, qtbot, monkeypatch, plotmethod):
+    """Create multiple plots and export them all"""
+    ds_widget.plotmethod = plotmethod
+
+    monkeypatch.setattr(
+        QtWidgets.QInputDialog, "getItem",
+        lambda *args: ('t2m', True))
+
+    qtbot.mouseClick(ds_widget.btn_add, Qt.LeftButton)
+    assert ds_widget.sp
+    assert len(ds_widget.sp) == 1
+    assert ds_widget.variable_buttons['t2m'].isChecked()
+
+    monkeypatch.setattr(
+        QtWidgets.QInputDialog, "getItem",
+        lambda *args: ('u', True))
+
+    # create a second plot
+    qtbot.mouseClick(ds_widget.btn_add, Qt.LeftButton)
+
+    assert ds_widget.sp
+    assert len(ds_widget.sp) == 1
+    assert len(ds_widget._sp) == 2
+    assert ds_widget.combo_array.count() == 2
+    assert ds_widget.combo_array.currentIndex() == 1
+    assert ds_widget.variable_buttons['u'].isChecked()
+
+    # switch to the first variable
+    ds_widget.combo_array.setCurrentIndex(0)
+    assert len(ds_widget.sp) == 1
+    assert len(ds_widget._sp) == 2
+    assert ds_widget.data.name == 't2m'
+    assert ds_widget.variable_buttons['t2m'].isChecked()
+
+    # close the plot
+    qtbot.mouseClick(ds_widget.btn_del, Qt.LeftButton)
+    assert len(ds_widget.sp) == 1
+    assert len(ds_widget._sp) == 1
+    assert ds_widget.data.name == 'u'
+    assert ds_widget.variable_buttons['u'].isChecked()
+
+    # close the second plot
+    qtbot.mouseClick(ds_widget.btn_del, Qt.LeftButton)
+    assert not bool(ds_widget.sp)
+    assert not bool(ds_widget._sp)
+    assert not any(btn.isChecked() for name, btn in
+                   ds_widget.variable_buttons.items())
+
+
+
+
+
+@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
+def test_multi_export(ds_widget, qtbot, monkeypatch, tmpdir, plotmethod):
+    """Create multiple plots and export them all"""
+    ds_widget.plotmethod = plotmethod
+
+    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    assert ds_widget.sp
+    assert len(ds_widget.sp) == 1
+
+    monkeypatch.setattr(
+        QtWidgets.QInputDialog, "getItem",
+        lambda *args: ('u', True))
+
+    # create a second plot
+    qtbot.mouseClick(ds_widget.btn_add, Qt.LeftButton)
+
+    assert ds_widget.sp
+    assert len(ds_widget.sp) == 1
+    assert len(ds_widget._sp) == 2
+    assert ds_widget.combo_array.count() == 2
+    assert ds_widget.combo_array.currentIndex() == 1
+
+    # export the plots
+
+    monkeypatch.setattr(
+        QtWidgets.QFileDialog, "getSaveFileName",
+        lambda *args: (osp.join(tmpdir, "test.pdf"), True))
+
+    ds_widget.export_all_images()
+
+    # Test if warning is triggered when exporting only one image
+
+    monkeypatch.setattr(
+        QtWidgets.QFileDialog, "getSaveFileName",
+        lambda *args: (osp.join(tmpdir, "test.png"), True))
+
+    question_asked = []
+
+    def dont_save(*args):
+        question_asked.append(True)
+        return QtWidgets.QMessageBox.No
+
+    monkeypatch.setattr(
+        QtWidgets.QMessageBox, "question", dont_save)
+
+    ds_widget.export_all_images()
+
+    assert question_asked == [True]
+
+    assert not osp.exists(osp.join(tmpdir, "test.png"))

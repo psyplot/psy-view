@@ -16,6 +16,7 @@ Name=Psy-View
 Exec=$(which psy-view) %f
 Icon=$HOME/icon/psy-view.svg
 Path=$HOME/Desktop
+MimeType=application/x-netcdf;
 EOF
 
 cat > $HOME/Desktop/Psyplot.desktop << EOF
@@ -26,6 +27,7 @@ Name=Psyplot
 Exec=$(which psyplot) %f
 Icon=$HOME/icon/psyplot.svg
 Path=$HOME/Desktop
+MimeType=application/x-netcdf;
 EOF
 
 chmod u+x $HOME/Desktop/Psyplot.desktop $HOME/Desktop/Psy-View.desktop
