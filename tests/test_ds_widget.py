@@ -367,4 +367,23 @@ def test_multi_export(ds_widget, qtbot, monkeypatch, tmpdir, plotmethod):
 
     ds_widget.export_all_images()
 
-    assert osp.exists(osp.join(tmpdir, "test.pdf"))
+    # Test if warning is triggered when exporting only one image
+
+    monkeypatch.setattr(
+        QtWidgets.QFileDialog, "getSaveFileName",
+        lambda *args: (osp.join(tmpdir, "test.png"), True))
+
+    question_asked = []
+
+    def dont_save(*args):
+        question_asked.append(True)
+        return QtWidgets.QMessageBox.No
+
+    monkeypatch.setattr(
+        QtWidgets.QMessageBox, "question", dont_save)
+
+    ds_widget.export_all_images()
+
+    assert question_asked == [True]
+
+    assert not osp.exists(osp.join(tmpdir, "test.png"))

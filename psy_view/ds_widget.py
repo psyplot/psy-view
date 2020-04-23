@@ -24,6 +24,23 @@ def get_dims_to_iterate(arr):
     return [dim for dim, size in zip(base_var.dims, base_var.shape)
             if size > 1 and arr[dim].ndim == 0]
 
+TOO_MANY_FIGURES_WARNING = """
+Multiple figures are open but you specified only {} filenames: {}.<br>
+
+Saving the figures will cause that not all images are saved! We recommend to
+export to a single PDF (that then includes multiple pages), or modify your
+filename with strings like
+
+<ul>
+<li> <code>%i</code> for a continuous counter of the images</li>
+<li><code>%(name)s</code> for variable names</li>
+<li>or other netCDF attributes (see the
+  <a href="https://psyplot.readthedocs.io/en/latest/api/psyplot.project.html#psyplot.project.Project.export">
+  examples of exporting psyplot projects</a>)</li>
+</ul>
+
+Shall I continue anyway and save the figures?
+"""
 
 
 class DatasetWidget(QtWidgets.QSplitter):
@@ -498,6 +515,18 @@ class DatasetWidget(QtWidgets.QSplitter):
             self, "Export image", os.getcwd(),
             "Images (*.png *.pdf *.jpg *.svg)")
         if ok:
+            # test filenames
+            if not osp.splitext(fname)[-1].lower() == '.pdf':
+                fnames = [
+                    sp.format_string(fname, False, i)
+                    for i, sp in enumerate(self._sp.figs.values())]
+                if len(fnames) != len(set(fnames)):
+                    answer = QtWidgets.QMessageBox.question(
+                        self, "Too many figures",
+                        TOO_MANY_FIGURES_WARNING.format(
+                            len(set(fnames)), ', '.join(set(fnames))))
+                    if answer == QtWidgets.QMessageBox.No:
+                        return
             self._sp.export(fname, rcParams['savefig_kws'])
 
     def export_animation(self):
