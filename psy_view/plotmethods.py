@@ -324,7 +324,7 @@ class MapPlotWidget(PlotMethodWidget):
             self.sp, 'figtitle', 'title', 'clabel')
 
     def edit_color_settings(self):
-        dialogs.CmapDialog.update_plotter(self.plotter)
+        dialogs.CmapDialog.update_project(self.sp)
 
     def choose_next_projection(self):
         select = False
