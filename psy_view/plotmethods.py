@@ -2,6 +2,7 @@
 
 This module defines the widgets to interface with the mapplot, plot2d and
 lineplot plotmethods"""
+import os.path as osp
 from functools import partial
 from itertools import chain, cycle
 import contextlib
@@ -14,6 +15,8 @@ import psy_view.utils as utils
 from psy_view.rcsetup import rcParams
 
 from psyplot_gui.common import get_icon as get_psy_icon
+import psy_simple.widgets.colors as pswc
+import matplotlib.colors as mcol
 
 
 class PlotMethodWidget(QtWidgets.QWidget):
@@ -133,14 +136,37 @@ class MapPlotWidget(PlotMethodWidget):
         vbox.addLayout(self.dimension_box)
 
     def setup_color_buttons(self):
-        self.btn_cmap = utils.add_pushbutton(
-            rcParams["cmaps"][0], self.choose_next_colormap,
-            "Select a different colormap", self.formatoptions_box)
+        self.btn_cmap = pswc.CmapButton()
+        self.btn_cmap.setToolTip("Select a different colormap")
+        self.formatoptions_box.addWidget(self.btn_cmap)
+        self.btn_cmap.colormap_changed.connect(self.set_cmap)
+        self.btn_cmap.colormap_changed[mcol.Colormap].connect(self.set_cmap)
+        self.setup_cmap_menu()
 
         self.btn_cmap_settings = utils.add_pushbutton(
             utils.get_icon('color_settings'), self.edit_color_settings,
             "Edit color settings", self.formatoptions_box,
             icon=True)
+
+    def setup_cmap_menu(self):
+        menu = self.btn_cmap.cmap_menu
+
+        menu.addSeparator()
+        self.select_cmap_action = menu.addAction(
+            'More colormaps', self.open_cmap_dialog)
+
+        self.color_settings_action = menu.addAction(
+            QtGui.QIcon(utils.get_icon('color_settings')), 'More options',
+            self.edit_color_settings)
+
+        return menu
+
+    def open_cmap_dialog(self, N=10):
+        if self.sp:
+            N = self.plotter.plot.mappable.get_cmap().N
+        else:
+            N = 10
+        self.btn_cmap.open_cmap_dialog(N)
 
     def setup_projection_menu(self):
         menu = QtWidgets.QMenu()
@@ -291,25 +317,11 @@ class MapPlotWidget(PlotMethodWidget):
         self.btn_proj_settings.setEnabled(b)
         self.proj_settings_action.setEnabled(b)
         self.btn_datagrid.setEnabled(b)
+        self.color_settings_action.setEnabled(b)
         self.btn_cmap_settings.setEnabled(b)
         self.btn_labels.setEnabled(b)
 
-    def choose_next_colormap(self):
-        select = False
-        nmaps = len(rcParams['cmaps'])
-        current = self.btn_cmap.text()
-        if self.sp and 'cmap' in self.sp.plotters[0]:
-            invert_cmap = self.plotter.cmap.value.endswith('_r')
-        else:
-            invert_cmap = False
-        for i, cmap in enumerate(cycle(rcParams['cmaps'])):
-            if cmap == current:
-                select = True
-            elif select or i == nmaps:
-                break
-        self.btn_cmap.setText(cmap)
-        if invert_cmap:
-            cmap = cmap + '_r'
+    def set_cmap(self, cmap):
         if self.sp and 'cmap' in self.sp.plotters[0]:
             self.plotter.update(cmap=cmap)
 

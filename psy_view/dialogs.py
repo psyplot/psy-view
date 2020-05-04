@@ -1,7 +1,10 @@
 """Dialogs for manipulating formatoptions."""
 import yaml
-
-from PyQt5 import QtWidgets, QtGui
+import os.path as osp
+from psy_view.rcsetup import rcParams
+from psy_view import utils
+from functools import partial
+from PyQt5 import QtWidgets, QtGui, QtCore
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg as FigureCanvas)
 from matplotlib.figure import Figure
@@ -253,7 +256,7 @@ class CmapDialog(QtWidgets.QDialog):
     """A dialog to modify color bounds"""
 
     def __init__(self, project, *args, **kwargs):
-        from psy_simple.widgets.colors import BoundsFmtWidget
+        import psy_simple.widgets.colors as pswc
         super().__init__(*args, **kwargs)
         self.button_box = QtWidgets.QDialogButtonBox(
             QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
@@ -262,31 +265,55 @@ class CmapDialog(QtWidgets.QDialog):
         self.button_box.rejected.connect(self.reject)
 
         self.fmt_widgets = {}
+        plotter = project(fmts=['cmap', 'bounds']).plotters[0]
+
+        self.cmap_widget = self.fmt_widgets['cmap'] = LabelWidgetLine(
+            plotter.cmap, project, pswc.CMapFmtWidget,
+            widget_kws=dict(properties=False))
+        self.cmap_widget.editor.setVisible(False)
+        self.cmap_widget.editor.line_edit.textChanged.connect(
+            self.update_preview)
 
         self.tabs = QtWidgets.QTabWidget()
-        plotter = project(fmts=['cmap', 'bounds']).plotters[0]
+
         self.bounds_widget = self.fmt_widgets['bounds'] = LabelWidgetLine(
-            plotter.bounds, project, BoundsFmtWidget,
+            plotter.bounds, project, pswc.BoundsFmtWidget,
             widget_kws=dict(properties=False))
         self.bounds_widget.editor.line_edit.textChanged.connect(
-            self.update_preview_from_bounds)
+            self.update_preview)
         self.tabs.addTab(self.bounds_widget, "Colormap boundaries")
+
+        self.cticks_widget = self.fmt_widgets['cticks'] = LabelWidgetLine(
+            plotter.cticks, project, pswc.CTicksFmtWidget,
+            widget_kws=dict(properties=False))
+        self.cticks_widget.editor.line_edit.textChanged.connect(
+            self.update_preview)
+        self.tabs.addTab(self.cticks_widget, "Colorbar ticks")
 
         self.cbar_preview = ColorbarPreview(plotter)
         self.cbar_preview.setMaximumHeight(self.tabs.sizeHint().height() // 3)
 
         vbox = QtWidgets.QVBoxLayout(self)
+        vbox.addWidget(self.cmap_widget)
         vbox.addWidget(self.tabs)
         vbox.addWidget(self.cbar_preview)
         vbox.addWidget(self.button_box)
 
-    def update_preview_from_bounds(self):
+    def update_preview(self):
         try:
             bounds = self.bounds_widget.editor.value
         except Exception:
-            return
-        if bounds is not None:
-            self.cbar_preview.update_colorbar(bounds=bounds)
+            bounds = self.plotter.bounds.value
+        try:
+            cticks = self.cticks_widget.editor.value
+        except Exception:
+            cticks = self.plotter.cticks.value
+        try:
+            cmap = self.cmap_widget.editor.value
+        except Exception:
+            cmap = self.plotter.cmap.value
+        self.cbar_preview.update_colorbar(
+            bounds=bounds, cticks=cticks, cmap=cmap)
 
     @property
     def fmts(self):
@@ -359,14 +386,21 @@ class ColorbarPreview(FigureCanvas):
         class FakePlotter(Plotter):
             bounds = self.plotter.bounds.__class__('bounds')
             cmap = self.plotter.cmap.__class__('cmap')
+            cticks = self.plotter.cticks.__class__('cticks')
+            cbar = self.plotter.cbar.__class__('cbar')
 
             _rcparams_string = self.plotter._get_rc_strings()
 
         ref = self.plotter
+        fig = Figure()
+        ax = fig.add_subplot()
 
         plotter = FakePlotter(
             ref.data.copy(), make_plot=False, bounds=ref['bounds'],
-            cmap=ref['cmap'])
+            cmap=ref['cmap'], cticks=ref['cticks'], cbar='', ax=ax)
+
+        plotter.cticks._colorbar = self.cbar
+
         plotter.plot_data = ref.plot_data
         return plotter
 
@@ -379,10 +413,11 @@ class ColorbarPreview(FigureCanvas):
         except (ValueError, TypeError):
             return
 
-        plotter.initialize_plot()
+        plotter.initialize_plot(ax=plotter.ax)
 
         current_norm = self.mappable.norm
         current_cmap = self.mappable.get_cmap()
+        current_locator = self.cbar.locator
 
 
         try:
@@ -397,11 +432,17 @@ class ColorbarPreview(FigureCanvas):
             self.mappable.set_norm(plotter.bounds.norm)
             self.mappable.set_cmap(plotter.cmap.get_cmap(
                 self.plotter.plot.array))
+            plotter.cticks.colorbar = self.cbar
+            plotter.cticks.default_locator = \
+                self.plotter.cticks.default_locator
+            plotter.cticks.update_axis(plotter.cticks.value)
             self.draw()
 
         except Exception:
             self.mappable.set_norm(current_norm)
             self.mappable.set_cmap(current_cmap)
+            self.cbar.locator = current_locator
+            self.cbar.update_ticks()
 
 
 class FormatoptionsEditor(QtWidgets.QWidget):
@@ -465,6 +506,9 @@ class FormatoptionsEditor(QtWidgets.QWidget):
     def set_obj(self, obj):
         self.clear_text()
         self.insert_obj(obj)
+
+    def get_obj(self):
+        return self.value
 
     def insert_obj(self, obj):
         """Add a string to the formatoption widget"""
