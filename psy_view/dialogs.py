@@ -330,15 +330,14 @@ class CmapDialog(QtWidgets.QDialog):
         return ret
 
     @classmethod
-    def update_project(cls, project, *fmts):
-        dialog = cls(project, *fmts)
+    def update_project(cls, project):
+        dialog = cls(project)
         dialog.show()
         dialog.raise_()
         dialog.activateWindow()
         dialog.exec_()
         if dialog.result() == QtWidgets.QDialog.Accepted:
-            project.update(
-                **dialog.fmts)
+            project.update(**dialog.fmts)
 
 
 class ColorbarPreview(FigureCanvas):
@@ -471,8 +470,9 @@ class FormatoptionsEditor(QtWidgets.QWidget):
         self.initial_value = self.line_edit.text()
         self.setLayout(layout)
 
+    @property
     def changed(self):
-        return self.text != self.initial_value
+        return self.fmto.diff(self.fmto.validate(self.get_obj()))
 
     def toggle_multiline(self):
         multiline = self.multiline
