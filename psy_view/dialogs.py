@@ -61,12 +61,12 @@ class BasemapDialog(QtWidgets.QDialog):
         self.opt_meri_every = QtWidgets.QRadioButton("Every:")
         self.txt_meri_every = QtWidgets.QLineEdit()
         self.txt_meri_every.setPlaceholderText("30 °E")
-        self.txt_meri_every.setValidator(QtGui.QDoubleValidator(-360, 360, 7))
+        self.txt_meri_every.setValidator(QtGui.QDoubleValidator(0, 360, 7))
 
         self.opt_meri_num = QtWidgets.QRadioButton("Number:")
         self.txt_meri_num = QtWidgets.QLineEdit()
         self.txt_meri_num.setPlaceholderText("5")
-        self.txt_meri_num.setValidator(QtGui.QIntValidator(1, 360))
+        self.txt_meri_num.setValidator(QtGui.QIntValidator(1, 720))
 
         form = QtWidgets.QFormLayout(self.meridionals_box)
         form.addRow(self.opt_meri_auto)
@@ -88,12 +88,12 @@ class BasemapDialog(QtWidgets.QDialog):
         self.opt_para_every = QtWidgets.QRadioButton("Every:")
         self.txt_para_every = QtWidgets.QLineEdit()
         self.txt_para_every.setPlaceholderText("30 °N")
-        self.txt_para_every.setValidator(QtGui.QDoubleValidator(-90, 90, 7))
+        self.txt_para_every.setValidator(QtGui.QDoubleValidator(0, 90, 7))
 
         self.opt_para_num = QtWidgets.QRadioButton("Number:")
         self.txt_para_num = QtWidgets.QLineEdit()
         self.txt_para_num.setPlaceholderText("5")
-        self.txt_para_num.setValidator(QtGui.QIntValidator(1, 180))
+        self.txt_para_num.setValidator(QtGui.QIntValidator(1, 360))
 
         form = QtWidgets.QFormLayout(self.parallels_box)
         form.addRow(self.opt_para_auto)
