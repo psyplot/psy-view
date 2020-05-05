@@ -1,5 +1,4 @@
 channels:
-- psyplot/label/bounds-dialog
 - psyplot/label/master
 - manics # Used by jupyter-desktop-server
 - conda-forge
