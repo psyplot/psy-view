@@ -492,6 +492,14 @@ class FormatoptionsEditor(QtWidgets.QWidget):
         return (self.text_edit.toPlainText() if self.multiline else
                 self.line_edit.text())
 
+    @text.setter
+    def text(self, s):
+        self.clear_text()
+        if self.multiline:
+            self.text_edit.insertPlainText(s)
+        else:
+            self.line_edit.insert(s)
+
     @property
     def value(self):
         text = self.text
