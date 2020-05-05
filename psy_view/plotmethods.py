@@ -337,6 +337,10 @@ class MapPlotWidget(PlotMethodWidget):
 
     def edit_color_settings(self):
         dialogs.CmapDialog.update_project(self.sp)
+        if isinstance(self.plotter.cmap.value, str):
+            self.btn_cmap.setText(self.plotter.cmap.value)
+        else:
+            self.btn_cmap.setText('Custom')
 
     def choose_next_projection(self):
         select = False
