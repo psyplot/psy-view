@@ -299,6 +299,10 @@ class CmapDialog(QtWidgets.QDialog):
         vbox.addWidget(self.cbar_preview)
         vbox.addWidget(self.button_box)
 
+    @property
+    def plotter(self):
+        return self.bounds_widget.editor.fmto.plotter
+
     def update_preview(self):
         try:
             bounds = self.bounds_widget.editor.value
