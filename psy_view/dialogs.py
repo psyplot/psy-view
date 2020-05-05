@@ -1,10 +1,6 @@
 """Dialogs for manipulating formatoptions."""
 import yaml
-import os.path as osp
-from psy_view.rcsetup import rcParams
-from psy_view import utils
-from functools import partial
-from PyQt5 import QtWidgets, QtGui, QtCore
+from PyQt5 import QtWidgets, QtGui
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg as FigureCanvas)
 from matplotlib.figure import Figure
