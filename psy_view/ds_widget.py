@@ -812,6 +812,7 @@ class DatasetWidget(QtWidgets.QSplitter):
                 raw_data.ndim == 2 or
                 widget.plotter.ax.figure.canvas.manager.toolbar.mode != ''):
                 return
+            current_pm = self.plotmethod
             self.plotmethod = 'lineplot'
             linewidget = self.plotmethod_widget
             xdim = linewidget.xdim
@@ -828,6 +829,7 @@ class DatasetWidget(QtWidgets.QSplitter):
             else:
                 linewidget.xdim = xdim
                 linewidget.add_line(variable, **sl)
+            self.plotmethod = current_pm
 
 
     def close_sp(self):
