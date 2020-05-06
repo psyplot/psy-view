@@ -148,7 +148,7 @@ def test_cmap(qtbot, ds_widget, plotmethod):
     qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
     cmap = ds_widget.plotter.cmap.value
     assert ds_widget.plotter.plot.mappable.get_cmap().name == cmap
-    qtbot.mouseClick(ds_widget.plotmethod_widget.btn_cmap, Qt.LeftButton)
+    ds_widget.plotmethod_widget.btn_cmap.menu().actions()[5].trigger()
     assert ds_widget.plotter.cmap.value != cmap
     assert ds_widget.plotter.plot.mappable.get_cmap().name != cmap
     qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
