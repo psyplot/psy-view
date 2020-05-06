@@ -5,12 +5,6 @@ from psyplot.config.rcsetup import validate_dict
 
 
 defaultParams = {
-    "cmaps": [["viridis", "Reds", "Blues", "Greens", "binary",
-               "RdBu", "coolwarm", "red_white_blue", "winter",
-               "jet", "white_blue_red", "gist_ncar",
-               "gist_earth", "Paired", "gnuplot", "gnuplot2"],
-              validate_stringlist,
-              "The names of available colormaps"],
     "projections": [
         ["cf", "cyl", "robin", "ortho", "moll"], validate_stringlist,
         "The names of available projections"],
