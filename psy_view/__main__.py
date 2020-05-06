@@ -20,6 +20,7 @@ along with this program. If not, see <https://www.gnu.org/licenses/>."""
 import sys
 import argparse
 from textwrap import dedent
+import psy_view
 
 
 def start_app(ds):
@@ -47,6 +48,9 @@ def get_parser():
 
     parser.add_argument(
         'input_file', help="The file to visualize", nargs='?', default=None)
+
+    parser.add_argument(
+        '-V', '--version', action='version', version=psy_view.__version__)
 
     parser.epilog = dedent("""
     psy-view  Copyright (C) 2020  Philipp S. Sommer
