@@ -70,6 +70,8 @@ Some of the most important features offered by psy-view are:
 - different projections
 - implemented in psyplot-gui_ for full flexibility (if desired)
 
+.. _psyplot-gui: https://psyplot.readthedocs.io/projects/psyplot-gui
+
 
 Test it without installation
 ----------------------------
