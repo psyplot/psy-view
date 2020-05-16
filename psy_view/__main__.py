@@ -26,19 +26,17 @@ import psy_view
 def start_app(ds):
     from PyQt5 import QtWidgets
     from PyQt5.QtGui import QIcon
-    from psy_view.ds_widget import DatasetWidget
     from psyplot_gui import rcParams
 
     rcParams['help_explorer.use_webengineview'] = False
 
+    from psy_view.ds_widget import DatasetWidget
     from psyplot_gui.common import get_icon
 
     app = QtWidgets.QApplication(sys.argv)
-    main = QtWidgets.QMainWindow()
-    main.setWindowIcon(QIcon(get_icon('logo.png')))
     ds_widget = DatasetWidget(ds)
-    main.setCentralWidget(ds_widget)
-    main.show()
+    ds_widget.setWindowIcon(QIcon(get_icon('logo.png')))
+    ds_widget.show()
     sys.excepthook = ds_widget.excepthook
     sys.exit(app.exec_())
 
