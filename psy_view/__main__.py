@@ -35,7 +35,7 @@ def start_app(ds):
 
     app = QtWidgets.QApplication(sys.argv)
     ds_widget = DatasetWidget(ds)
-    ds_widget.setWindowIcon(QIcon(get_icon('logo.png')))
+    ds_widget.setWindowIcon(QIcon(get_icon('logo.svg')))
     ds_widget.show()
     sys.excepthook = ds_widget.excepthook
     sys.exit(app.exec_())
