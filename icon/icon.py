@@ -8,6 +8,9 @@ import cartopy.crs as ccrs
 import cartopy.feature as cf
 from matplotlib.text import FontProperties
 
+# The path to the font
+fontpath = '/usr/share/fonts/truetype/freefont/FreeSansBoldOblique.ttf'
+
 fig = plt.figure(figsize=(8, 8), dpi=128)
 
 ax = fig.add_axes([0.0, 0.0, 1.0, 1.0], projection=ccrs.Orthographic(
@@ -20,9 +23,11 @@ text = ax.text(
     0.47, 0.5, 'Psy',
     transform=fig.transFigure,
     name='FreeSans',
+    fontproperties=FontProperties(fname=fontpath),
     size=256, ha='center', va='center',
     weight=400)
 
 ax.outline_patch.set_edgecolor('none')
 
 plt.savefig('icon1024.png', transparent=True)
+plt.savefig('icon1024.svg', transparent=True)
