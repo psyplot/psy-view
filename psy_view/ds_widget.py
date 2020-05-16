@@ -508,7 +508,7 @@ class DatasetWidget(QtWidgets.QSplitter):
             self, "Export image", os.getcwd(),
             "Images (*.png *.pdf *.jpg *.svg)")
         if ok:
-            self.sp.export(fname, rcParams['savefig_kws'])
+            self.sp.export(fname, **rcParams['savefig_kws'])
 
     def export_all_images(self):
         fname, ok = QtWidgets.QFileDialog.getSaveFileName(
@@ -527,7 +527,7 @@ class DatasetWidget(QtWidgets.QSplitter):
                             len(set(fnames)), ', '.join(set(fnames))))
                     if answer == QtWidgets.QMessageBox.No:
                         return
-            self._sp.export(fname, rcParams['savefig_kws'])
+            self._sp.export(fname, **rcParams['savefig_kws'])
 
     def export_animation(self):
         fname, ok = QtWidgets.QFileDialog.getSaveFileName(
