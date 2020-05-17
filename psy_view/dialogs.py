@@ -40,12 +40,12 @@ class BasemapDialog(QtWidgets.QDialog):
         self.lsm_box.setCheckable(True)
         hbox = QtWidgets.QHBoxLayout(self.lsm_box)
         hbox.addWidget(QtWidgets.QLabel("Resolution:"))
-        self.opt_110 = QtWidgets.QRadioButton("110m")
-        self.opt_50 = QtWidgets.QRadioButton("50m")
-        self.opt_10 = QtWidgets.QRadioButton("10m")
-        hbox.addWidget(self.opt_110)
-        hbox.addWidget(self.opt_50)
-        hbox.addWidget(self.opt_10)
+        self.opt_110m = QtWidgets.QRadioButton("110m")
+        self.opt_50m = QtWidgets.QRadioButton("50m")
+        self.opt_10m = QtWidgets.QRadioButton("10m")
+        hbox.addWidget(self.opt_110m)
+        hbox.addWidget(self.opt_50m)
+        hbox.addWidget(self.opt_10m)
 
         vbox.addWidget(self.lsm_box)
 
@@ -119,13 +119,12 @@ class BasemapDialog(QtWidgets.QDialog):
         if plotter.clat.value is not None:
             self.txt_clat.setText(str(plotter.clat.value))
 
-        if not plotter.lsm.value[0]:
+        lsm = plotter.lsm.value
+
+        if not lsm:
             self.lsm_box.setChecked(False)
         else:
-            try:
-                res = plotter.lsm.value[0][:-1]
-            except TypeError:
-                res = '110'
+            res = lsm['res']
             getattr(self, 'opt_' + res).setChecked(True)
 
         self.xgrid_value = None
@@ -186,11 +185,11 @@ class BasemapDialog(QtWidgets.QDialog):
             self.txt_clat.text().strip())
 
         if self.lsm_box.isChecked():
-            if self.opt_110.isChecked():
+            if self.opt_110m.isChecked():
                 ret['lsm'] = '110m'
-            elif self.opt_50.isChecked():
+            elif self.opt_50m.isChecked():
                 ret['lsm'] = '50m'
-            elif self.opt_10.isChecked():
+            elif self.opt_10m.isChecked():
                 ret['lsm'] = '10m'
         else:
             ret['lsm'] = False
