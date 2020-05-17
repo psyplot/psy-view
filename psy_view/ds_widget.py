@@ -812,6 +812,11 @@ class DatasetWidget(QtWidgets.QSplitter):
                 raw_data.ndim == 2 or
                 widget.plotter.ax.figure.canvas.manager.toolbar.mode != ''):
                 return
+            # check if the mappable contains the event
+            if not self.plotter.plot.mappable.contains(event)[0] and (
+                    not hasattr(self.plotter.plot, '_wrapped_plot') or
+                    not self.plotter.plot._wrapped_plot.contains(event)[0]):
+                return
             current_pm = self.plotmethod
             self.plotmethod = 'lineplot'
             linewidget = self.plotmethod_widget
