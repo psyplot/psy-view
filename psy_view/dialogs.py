@@ -10,11 +10,39 @@ class BasemapDialog(QtWidgets.QDialog):
     """A dialog to modify the basemap settings"""
 
     def __init__(self, plotter, *args, **kwargs):
+        import psy_simple.widgets.colors as pswc
+        import pandas as pd
         super().__init__(*args, **kwargs)
+        vbox = QtWidgets.QVBoxLayout(self)
+
+        self.color_table = table = QtWidgets.QTableWidget(2, 4)
+        self.colors = ['background', 'land', 'ocean', 'coast']
+
+        grid = QtWidgets.QGridLayout()
+
+        defaults = self.default_colors
+
+        self.widgets = widgets = pd.DataFrame(
+            index=['enable', 'color'], columns=self.colors, dtype=object)
+
+        for i, col in enumerate(self.colors):
+            widgets.iloc[0, i] = cb = QtWidgets.QCheckBox()
+            cb.setChecked(False)
+            widgets.iloc[1, i] = lbl = pswc.ColorLabel(defaults[col])
+            lbl.setEnabled(False)
+
+            cb.stateChanged.connect(lbl.setEnabled)
+
+            grid.addWidget(QtWidgets.QLabel(col), 0, i)
+            grid.addWidget(cb, 1, i)
+            grid.addWidget(lbl, 2, i)
+
+        vbox.addLayout(grid)
+
+
         self.button_box = QtWidgets.QDialogButtonBox(
             QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
             self)
-        vbox = QtWidgets.QVBoxLayout(self)
 
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
@@ -113,7 +141,39 @@ class BasemapDialog(QtWidgets.QDialog):
                        self.opt_para_every]:
             button.clicked.connect(self.update_forms)
 
+    @property
+    def default_colors(self):
+        import cartopy.feature as cf
+        import matplotlib as mpl
+        return {
+            'background': mpl.rcParams['axes.facecolor'],
+            'land': cf.LAND._kwargs['facecolor'],
+            'ocean': cf.OCEAN._kwargs['facecolor'],
+            'coast': 'k',
+            }
+
+    def get_colors(self, plotter):
+        ret = {}
+        if plotter.background.value != 'rc':
+            ret['background'] = plotter.background.value
+        lsm = plotter.lsm.value
+        for part in ['land', 'ocean', 'coast']:
+            if part in lsm:
+                ret[part] = lsm[part]
+        return ret
+
     def fill_from_plotter(self, plotter):
+
+        chosen_colors = self.get_colors(plotter)
+
+        for i, col in enumerate(self.colors):
+            enable = col in chosen_colors
+            cb = self.widgets.iloc[0, i]
+            lbl = self.widgets.iloc[1, i]
+            cb.setChecked(enable)
+            if enable:
+                lbl._set_color(chosen_colors[col])
+
         if plotter.clon.value is not None:
             self.txt_clon.setText(str(plotter.clon.value))
         if plotter.clat.value is not None:
@@ -184,15 +244,30 @@ class BasemapDialog(QtWidgets.QDialog):
         ret['clat'] = None if not self.txt_clat.text().strip() else float(
             self.txt_clat.text().strip())
 
-        if self.lsm_box.isChecked():
+        lsm = {}
+
+        for col in ['land', 'ocean', 'coast']:
+            lbl = self.widgets.loc['color', col]
+            if lbl.isEnabled():
+                lsm[col] = list(lbl.color.getRgbF())
+
+        if lsm or self.lsm_box.isChecked():
             if self.opt_110m.isChecked():
-                ret['lsm'] = '110m'
+                lsm['res'] = '110m'
             elif self.opt_50m.isChecked():
-                ret['lsm'] = '50m'
+                lsm['res'] = '50m'
             elif self.opt_10m.isChecked():
-                ret['lsm'] = '10m'
+                lsm['res'] = '10m'
+            else:
+                lsm['res'] = '110m'
         else:
-            ret['lsm'] = False
+            lsm['res'] = False
+        if lsm:
+            ret['lsm'] = lsm
+
+        bc_lbl = self.widgets.loc['color', 'background']
+        if bc_lbl.isEnabled():
+            ret['background'] = list(bc_lbl.color.getRgbF())
 
         if not self.meridionals_box.isChecked():
             ret['xgrid'] = False
