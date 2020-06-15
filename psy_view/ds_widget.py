@@ -336,24 +336,26 @@ class DatasetWidget(QtWidgets.QSplitter):
                 self.variable_layout.addWidget(btn, i // ncols, i % ncols)
 
     def load_variable_desc(self, item):
-        # if we are not at the lowest level or the item has already label, pass
-        if item.child(0).childCount() or self.ds_tree.itemWidget(
-                item.child(0), 0):
+        parent = item.parent()
+
+        tree = self.ds_tree
+
+        if parent is tree or parent is None or not (
+                DatasetTree.is_variable(item) or DatasetTree.is_coord(item)):
             return
 
+        if tree.isColumnHidden(1):
+            tree.showColumn(1)
+            tree.resizeColumnToContents(0)
+
         top = item
-        while top.parent() and top.parent() is not self.ds_tree:
+        while top.parent() and top.parent() is not self:
             top = top.parent()
         ds = top.ds()
         if ds is None:
             return
-        widget = QtWidgets.QScrollArea()
-        label = QtWidgets.QLabel(
-            '<pre>' + escape_html(str(ds.variables[item.text(0)])) + '</pre>')
-        label.setTextFormat(Qt.RichText)
-        widget.setWidget(label)
-        self.ds_tree.setItemWidget(item.child(0), 0, widget)
-        item.child(0).setFirstColumnSpanned(True)
+        desc = escape_html(str(ds.variables[item.text(0)]))
+        item.setToolTip(0, '<pre>' + desc + '</pre>')
 
     def clear_table(self):
         self.dimension_table.clear()
@@ -961,6 +963,15 @@ class DatasetWidget(QtWidgets.QSplitter):
                     i, 2, self.new_dimension_button(dim, coord[current]))
 
         table.resizeColumnsToContents()
+
+        # update plots items
+        for ds_item in self.ds_items:
+            for item in map(ds_item.child, range(ds_item.childCount())):
+                for child in map(item.child, range(item.childCount())):
+                    if DatasetTree.is_variable(child):
+                        plots_item = ds_item.get_plots_item(child)
+                        ds_item.refresh_plots_item(
+                            plots_item, child.text(0), self._sp, self.sp)
 
         # update animation checkbox
         dims_to_animate = get_dims_to_iterate(data)
