@@ -87,7 +87,7 @@ To install the current work-in-progress, please
 1. download Miniconda_
 2. create a new environment via::
 
-      conda create -n psy-view -c psyplot/label/master -c conda-forge psy-view
+      conda create -n psy-view -c psyplot/label/master -c conda-forge --override-channels psy-view
 
 3. activate this environment via::
 
@@ -104,4 +104,19 @@ To install the current work-in-progress, please
   See ``psy-view --help`` for more options
 
 .. _Miniconda: https://conda.io/en/latest/miniconda.html
-Run it headless in you browser by clicking |mybinder|
+
+As an alternativ to a local installation, you can also run it 
+headless in you browser by clicking |mybinder|
+
+Updating psy-view
++++++++++++++++++
+To update the development version, make sure you also update the 
+other dependencies. This can be don via::
+
+    conda update -n psy-view -c psyplot/label/master -c conda-forge \
+        --override-channels psy-view psy-maps psy-simple psyplot-gui psyplot
+
+If this does not work, you can also simply recreate the conda environment 
+using the command from above::
+
+    conda create -n psy-view -c psyplot/label/master -c conda-forge --override-channels psy-view
