@@ -65,6 +65,8 @@ class DatasetWidget(QtWidgets.QSplitter):
     def __init__(self, ds=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self._ds_nums = {}
+
         self.ds = ds
 
         self.setOrientation(Qt.Vertical)
@@ -152,7 +154,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         self.combo_array = QtWidgets.QComboBox()
         self.combo_array.setEditable(False)
-        self.combo_array.currentIndexChanged.connect(self.refresh)
+        self.combo_array.currentIndexChanged.connect(lambda: self.refresh())
         self.combo_array.currentIndexChanged.connect(self.show_current_figure)
         hbox.addWidget(self.combo_array)
 
@@ -218,7 +220,8 @@ class DatasetWidget(QtWidgets.QSplitter):
                 self.ds = ds_item.ds()
                 self.expand_ds_item(ds_item)
                 self.setup_variable_buttons()
-                self.refresh()
+                self.change_combo_array()
+                self.refresh(reset_combo=False)
 
     def expand_ds_item(self, ds_item):
         tree = self.ds_tree
@@ -286,6 +289,14 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.expand_ds_item(ds_item)
 
         tree.resizeColumnToContents(0)
+
+        if ds.psy.num not in self.open_datasets:
+            # make sure we do not loose track of open datasets
+            self._ds_nums[ds.psy.num] = ds
+
+    @property
+    def open_datasets(self):
+        return self._ds_nums
 
     @property
     def ds_items(self):
@@ -411,7 +422,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         for w in map(self.plot_tabs.widget, range(self.plot_tabs.count())):
             w.replot.connect(self.replot)
             w.reset.connect(self.reset)
-            w.changed.connect(self.refresh)
+            w.changed.connect(lambda: self.refresh())
 
     def replot(self, plotmethod):
         self.plotmethod = plotmethod
@@ -657,7 +668,7 @@ class DatasetWidget(QtWidgets.QSplitter):
             return sp
         return self.filter_sp(sp)
 
-    def filter_sp(self, sp):
+    def filter_sp(self, sp, ds_only=False):
         """Filter the psyplot project to only include the arrays of :attr:`ds`
         """
         if self._new_plot:
@@ -669,6 +680,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         for i in range(len(sp)):
             if list(sp[i:i+1].datasets) == [num]:
                 ret += sp[i:i+1]
+        if ds_only:
+            return ret
         arr_name = self.arr_name
         if arr_name is None:
             return ret
@@ -867,6 +880,25 @@ class DatasetWidget(QtWidgets.QSplitter):
                 btn.setChecked(v == name)
         self.refresh()
 
+    def change_combo_array(self):
+        with self.block_widgets(self.combo_array):
+            sp = self.filter_sp(self._sp, ds_only=True)
+            if sp and self.arr_name not in sp.arr_names:
+                new_arr = sp.arr_names[0]
+                all_arrays = getattr(self._sp, self.plotmethod)
+                try:
+                    idx_arr = all_arrays.arr_names.index(new_arr)
+                except ValueError:
+                    idx_arr = 0
+                self.combo_array.setCurrentIndex(idx_arr)
+                try:
+                    vname = self.data.name
+                except Exception:
+                    vname = self.variable
+                if vname is not NOTSET:
+                    self.expand_current_variable(vname)
+                    self.show_fig(sp[:1])
+
     def reset_combo_array(self):
         curr_arr_name = self.arr_name
         with self.block_widgets(self.combo_array):
@@ -889,12 +921,12 @@ class DatasetWidget(QtWidgets.QSplitter):
                             self.expand_ds_item(self.ds_item)
                             self.expand_current_variable(self.data.name)
 
-
-    def refresh(self):
+    def refresh(self, reset_combo=True):
 
         self.clear_table()
 
-        self.reset_combo_array()
+        if reset_combo:
+            self.reset_combo_array()
 
         if self.sp:
             variable = self.data.name
@@ -1030,6 +1062,12 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
     @property
     def sp(self):
         return self.plotmethod_widget.sp or None
+
+    @property
+    def open_datasets(self):
+        ret = self._sp.datasets
+        ret.update(self._ds_nums)
+        return ret
 
     @sp.setter
     def sp(self, sp):
