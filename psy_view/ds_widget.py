@@ -65,6 +65,8 @@ class DatasetWidget(QtWidgets.QSplitter):
     def __init__(self, ds=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self._ds_nums = {}
+
         self.ds = ds
 
         self.setOrientation(Qt.Vertical)
@@ -286,6 +288,14 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.expand_ds_item(ds_item)
 
         tree.resizeColumnToContents(0)
+
+        if ds.psy.num not in self.open_datasets:
+            # make sure we do not loose track of open datasets
+            self._ds_nums[ds.psy.num] = ds
+
+    @property
+    def open_datasets(self):
+        return self._ds_nums
 
     @property
     def ds_items(self):
@@ -1030,6 +1040,12 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
     @property
     def sp(self):
         return self.plotmethod_widget.sp or None
+
+    @property
+    def open_datasets(self):
+        ret = self._sp.datasets
+        ret.update(self._ds_nums)
+        return ret
 
     @sp.setter
     def sp(self, sp):
