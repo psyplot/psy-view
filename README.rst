@@ -87,7 +87,9 @@ To install the current work-in-progress, please
 1. download Miniconda_
 2. create a new environment via::
 
-      conda create -n psy-view -c psyplot/label/master -c conda-forge --override-channels psy-view
+      conda create -n psy-view -c psyplot/label/master -c conda-forge --override-channels psy-view 'cartopy<0.18'
+    
+   **There is currently an incompatibility with cartopy 0.18 (see https://github.com/psyplot/psy-maps/issues/20), but we are working on it**
 
 3. activate this environment via::
 
