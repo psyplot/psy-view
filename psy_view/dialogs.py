@@ -77,6 +77,17 @@ class BasemapDialog(QtWidgets.QDialog):
 
         vbox.addWidget(self.lsm_box)
 
+        self.grid_labels_box = QtWidgets.QGroupBox('Labels')
+        self.grid_labels_box.setToolTip("Draw labels of meridionals and "
+                                        "parallels")
+        self.grid_labels_box.setCheckable(True)
+        self.txt_grid_fontsize = QtWidgets.QLineEdit()
+
+        form = QtWidgets.QFormLayout(self.grid_labels_box)
+        form.addRow("Font size:", self.txt_grid_fontsize)
+
+        vbox.addWidget(self.grid_labels_box)
+
         self.meridionals_box = QtWidgets.QGroupBox('Meridionals')
         self.meridionals_box.setCheckable(True)
         self.opt_meri_auto = QtWidgets.QRadioButton("auto")
@@ -187,6 +198,12 @@ class BasemapDialog(QtWidgets.QDialog):
             res = lsm['res']
             getattr(self, 'opt_' + res).setChecked(True)
 
+        grid_labels = plotter.grid_labels.value
+        if grid_labels is None:
+            grid_labels = True
+        self.grid_labels_box.setChecked(grid_labels)
+        self.txt_grid_fontsize.setText(str(plotter.grid_labelsize.value))
+
         self.xgrid_value = None
         value = plotter.xgrid.value
         if not value:
@@ -268,6 +285,17 @@ class BasemapDialog(QtWidgets.QDialog):
         bc_lbl = self.widgets.loc['color', 'background']
         if bc_lbl.isEnabled():
             ret['background'] = list(bc_lbl.color.getRgbF())
+
+        ret["grid_labels"] = self.grid_labels_box.isChecked()
+        if ret["grid_labels"]:
+            ret["grid_labels"] = None
+            labelsize = self.txt_grid_fontsize.text().strip()
+            if labelsize:
+                try:
+                    labelsize = float(labelsize)
+                except TypeError:
+                    pass
+                ret["grid_labelsize"] = labelsize
 
         if not self.meridionals_box.isChecked():
             ret['xgrid'] = False
