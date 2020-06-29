@@ -61,6 +61,8 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     _new_plot = False
 
+    _preset = None
+
     ds_attr_columns = ['long_name', 'dims', 'shape']
 
     def __init__(self, ds=None, *args, **kwargs):
@@ -79,7 +81,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.lbl_ds = QtWidgets.QLineEdit()
         self.open_box.addWidget(self.lbl_ds)
         self.btn_open = utils.add_pushbutton(
-            get_psy_icon('run_arrow.png'), lambda: self.set_dataset(),
+            get_psy_icon('invalid.png'), lambda: self.set_dataset(),
             "Select and open a netCDF dataset", self.open_box, icon=True)
         self.open_widget = QtWidgets.QWidget()
         self.open_widget.setLayout(self.open_box)
@@ -151,11 +153,27 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.export_box.addWidget(self.btn_export)
 
         # --- Presets button
+        self.frm_preset = QtWidgets.QFrame()
+        self.frm_preset.setFrameStyle(QtWidgets.QFrame.StyledPanel)
+        hbox = QtWidgets.QHBoxLayout(self.frm_preset)
+
         self.btn_preset = QtWidgets.QToolButton()
         self.btn_preset.setText('Preset')
         self.btn_preset.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         self.btn_preset.setMenu(self.setup_preset_menu())
-        self.export_box.addWidget(self.btn_preset)
+        hbox.addWidget(self.btn_preset)
+
+        # --- presets label
+        self.lbl_preset = QtWidgets.QLabel('')
+        self.lbl_preset.setVisible(False)
+        hbox.addWidget(self.lbl_preset)
+
+        # --- unset preset button
+        self.btn_unset_preset = utils.add_pushbutton(
+            get_psy_icon('invalid.png'), self.unset_preset,
+            "Unset the current preset", hbox, icon=True)
+
+        self.export_box.addWidget(self.frm_preset)
 
         self.export_box.addStretch(0)
 
@@ -532,11 +550,28 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.load_preset(fname)
 
     def load_preset(self, preset):
+        self._preset = preset
         if self.sp:
             self.sp.load_preset(preset)
+        self.maybe_show_preset()
+
+    def unset_preset(self):
+        self._preset = None
+        self.maybe_show_preset()
+
+    def maybe_show_preset(self):
+        if self._preset is not None and isinstance(self._preset, str):
+            self.lbl_preset.setText('<i>' +
+                osp.basename(osp.splitext(self._preset)[0]) + '</i>')
+            self.lbl_preset.setVisible(True)
+            self.btn_unset_preset.setVisible(True)
+        elif self._preset is not None:
+            self.lbl_preset.setText('<i>custom</i>')
+            self.lbl_preset.setVisible(True)
+            self.btn_unset_preset.setVisible(True)
         else:
-            import psyplot.project as psy
-            self._preset = psy.Project._load_preset(preset)
+            self.lbl_preset.setVisible(False)
+            self.btn_unset_preset.setVisible(False)
 
     def save_current_preset(self):
         """Save the preset of the current plot to a file."""
@@ -577,14 +612,16 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         self._load_preset_action = menu.addAction(
             "Load preset", self._load_preset)
+        self._unset_preset_action = menu.addAction(
+            "Unset preset", self.unset_preset)
 
         menu.addSeparator()
 
         self._save_preset_actions.append(
-            menu.addAction('Save preset of current plot',
+            menu.addAction('Save format of current plot as preset',
                            self.save_current_preset))
         self._save_preset_actions.append(
-            menu.addAction('Save preset of all open plots',
+            menu.addAction('Save format of all plots as preset',
                            self.save_full_preset))
 
         for action in self._save_preset_actions:
@@ -680,8 +717,6 @@ class DatasetWidget(QtWidgets.QSplitter):
                 self.make_plot()
                 self.btn_del.setEnabled(True)
                 self.btn_export.setEnabled(True)
-                for action in self._save_preset_actions:
-                    action.setEnabled(True)
             self.refresh()
 
         return func
@@ -726,8 +761,10 @@ class DatasetWidget(QtWidgets.QSplitter):
         ret = self.plotmethod_widget.get_fmts(
             self.ds.psy[self.variable], True)
         if self._preset:
-            ret['preset'] = self._preset
-            self._preset = None
+            import psyplot.project as psy
+            preset = psy.Project.extract_fmts_from_preset(
+                self._preset, self.plotmethod)
+            ret.update(preset)
         return ret
 
     @property
@@ -889,6 +926,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         else:
             self.ani = None
             self.sp = sp = self.plot(name=self.variable, **self.plot_options)
+            self._preset = None
             cid = sp.plotters[0].ax.figure.canvas.mpl_connect(
                 'button_press_event', self.display_line)
             self.cids[self.plotmethod] = cid
@@ -1027,8 +1065,12 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         if self.sp:
             variable = self.data.name
+            for action in self._save_preset_actions:
+                action.setEnabled(True)
         else:
             variable = self.variable
+            for action in self._save_preset_actions:
+                action.setEnabled(False)
 
         # refresh variable buttons
         with self.silence_variable_buttons():
