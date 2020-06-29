@@ -13,6 +13,7 @@ from psyplot_gui.common import (
 import psyplot.data as psyd
 from psy_view.rcsetup import rcParams
 import psy_view.plotmethods as plotmethods
+from psyplot.config.rcsetup import get_configdir
 
 from matplotlib.animation import FuncAnimation
 
@@ -138,14 +139,31 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.lbl_interval = QtWidgets.QLabel('500 ms')
         self.navigation_box.addWidget(self.lbl_interval)
 
+        # --- export/import menus
+        self.export_box = QtWidgets.QHBoxLayout()
+
         # -- Export button
         self.btn_export = QtWidgets.QToolButton()
         self.btn_export.setText('Export')
         self.btn_export.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         self.btn_export.setMenu(self.setup_export_menu())
-        self.navigation_box.addWidget(self.btn_export)
+        self.btn_export.setEnabled(False)
+        self.export_box.addWidget(self.btn_export)
 
-        self.addLayout(self.navigation_box)
+        # --- Presets button
+        self.btn_preset = QtWidgets.QToolButton()
+        self.btn_preset.setText('Preset')
+        self.btn_preset.setPopupMode(QtWidgets.QToolButton.InstantPopup)
+        self.btn_preset.setMenu(self.setup_preset_menu())
+        self.export_box.addWidget(self.btn_preset)
+
+        self.export_box.addStretch(0)
+
+        vbox = QtWidgets.QVBoxLayout()
+        vbox.addLayout(self.navigation_box)
+        vbox.addLayout(self.export_box)
+
+        self.addLayout(vbox)
 
         # fourth row: array selector
 
@@ -505,6 +523,75 @@ class DatasetWidget(QtWidgets.QSplitter):
     def update_dims(self, dims):
         self.sp.update(dims=dims)
 
+    def _load_preset(self):
+        fname, ok = QtWidgets.QFileDialog.getOpenFileName(
+            self, 'Load preset', osp.join(get_configdir(), 'presets'),
+            'YAML files (*.yml *.yaml);;'
+            'All files (*)')
+        if ok:
+            self.load_preset(fname)
+
+    def load_preset(self, preset):
+        if self.sp:
+            self.sp.load_preset(preset)
+        else:
+            import psyplot.project as psy
+            self._preset = psy.Project._load_preset(preset)
+
+    def save_current_preset(self):
+        """Save the preset of the current plot to a file."""
+        try:
+            preset_func = self.sp.save_preset
+        except AttributeError:
+            pass
+        else:
+            self._save_preset(preset_func)
+
+    def save_full_preset(self):
+        """Save the preset of all open plots to a file."""
+        try:
+            preset_func = self._sp.save_preset
+        except AttributeError:
+            pass
+        else:
+            self._save_preset(preset_func)
+
+    def _save_preset(self, save_func):
+        """Save the preset to a file.
+
+        Parameters
+        ----------
+        save_func: function
+            The function that is called to save the preset"""
+        fname, ok = QtWidgets.QFileDialog.getSaveFileName(
+            self, 'Save preset', osp.join(get_configdir(), 'presets'),
+            'YAML files (*.yml *.yaml);;'
+            'All files (*)')
+        if not ok:
+            return
+        save_func(fname)
+
+    def setup_preset_menu(self):
+        self.preset_menu = menu = QtWidgets.QMenu()
+        self._save_preset_actions = []
+
+        self._load_preset_action = menu.addAction(
+            "Load preset", self._load_preset)
+
+        menu.addSeparator()
+
+        self._save_preset_actions.append(
+            menu.addAction('Save preset of current plot',
+                           self.save_current_preset))
+        self._save_preset_actions.append(
+            menu.addAction('Save preset of all open plots',
+                           self.save_full_preset))
+
+        for action in self._save_preset_actions:
+            action.setEnabled(False)
+
+        return menu
+
     def setup_export_menu(self):
         self.export_menu = menu = QtWidgets.QMenu()
         menu.addAction('image (PDF, PNG, etc.)', self.export_image)
@@ -581,6 +668,9 @@ class DatasetWidget(QtWidgets.QSplitter):
                         self.combo_array.setCurrentIndex(current - 1)
                 else:
                     self.btn_del.setEnabled(False)
+                    self.btn_export.setEnabled(False)
+                    for action in self._save_preset_actions:
+                        action.setEnabled(False)
 
             else:
                 with self.silence_variable_buttons():
@@ -589,6 +679,9 @@ class DatasetWidget(QtWidgets.QSplitter):
                             btn.setChecked(False)
                 self.make_plot()
                 self.btn_del.setEnabled(True)
+                self.btn_export.setEnabled(True)
+                for action in self._save_preset_actions:
+                    action.setEnabled(True)
             self.refresh()
 
         return func
@@ -630,8 +723,12 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     @property
     def plot_options(self):
-        return self.plotmethod_widget.get_fmts(
+        ret = self.plotmethod_widget.get_fmts(
             self.ds.psy[self.variable], True)
+        if self._preset:
+            ret['preset'] = self._preset
+            self._preset = None
+        return ret
 
     @property
     def plotmethod(self):
