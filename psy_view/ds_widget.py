@@ -703,11 +703,6 @@ class DatasetWidget(QtWidgets.QSplitter):
                     with self.block_widgets(self.combo_array):
                         current = self.combo_array.currentIndex()
                         self.combo_array.setCurrentIndex(current - 1)
-                else:
-                    self.btn_del.setEnabled(False)
-                    self.btn_export.setEnabled(False)
-                    for action in self._save_preset_actions:
-                        action.setEnabled(False)
 
             else:
                 with self.silence_variable_buttons():
@@ -715,8 +710,6 @@ class DatasetWidget(QtWidgets.QSplitter):
                         if var != v:
                             btn.setChecked(False)
                 self.make_plot()
-                self.btn_del.setEnabled(True)
-                self.btn_export.setEnabled(True)
             self.refresh()
 
         return func
@@ -1067,10 +1060,15 @@ class DatasetWidget(QtWidgets.QSplitter):
             variable = self.data.name
             for action in self._save_preset_actions:
                 action.setEnabled(True)
+            self.btn_del.setEnabled(True)
+            self.btn_export.setEnabled(True)
         else:
             variable = self.variable
             for action in self._save_preset_actions:
                 action.setEnabled(False)
+            self.btn_del.setEnabled(False)
+            self.btn_export.setEnabled(False)
+
 
         # refresh variable buttons
         with self.silence_variable_buttons():
