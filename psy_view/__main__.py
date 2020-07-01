@@ -23,7 +23,7 @@ from textwrap import dedent
 import psy_view
 
 
-def start_app(ds):
+def start_app(ds, name=None, plotmethod='mapplot', preset=None):
     from PyQt5 import QtWidgets
     from PyQt5.QtGui import QIcon
     from psyplot_gui import rcParams
@@ -36,7 +36,21 @@ def start_app(ds):
     app = QtWidgets.QApplication(sys.argv)
     ds_widget = DatasetWidget(ds)
     ds_widget.setWindowIcon(QIcon(get_icon('logo.svg')))
+    if preset is not None:
+        ds_widget.load_preset(preset)
+    if name is not None:
+        if ds is None:
+            raise ValueError("Variable specified but without dataset")
+        elif name not in ds_widget.variable_buttons:
+            valid = list(ds_widget.variable_buttons)
+            raise ValueError(f"{name} is not part of the dataset. "
+                             "Possible variables are {valid}.")
+        ds_widget.plotmethod = plotmethod
+        ds_widget.variable = name
+        ds_widget.make_plot()
+        ds_widget.refresh()
     ds_widget.show()
+    ds_widget.show_current_figure()
     sys.excepthook = ds_widget.excepthook
     sys.exit(app.exec_())
 
@@ -46,6 +60,19 @@ def get_parser():
 
     parser.add_argument(
         'input_file', help="The file to visualize", nargs='?', default=None)
+
+    parser.add_argument(
+        '-n', '--name',
+        help=("Variable name to display. Don't provide a variable to display "
+              "the first variable found in the dataset."),
+        const=object, nargs="?")
+
+    parser.add_argument(
+        '-pm', '--plotmethod', help="The plotmethod to use", default="mapplot",
+        choices=["mapplot", "plot2d", "lineplot"])
+
+    parser.add_argument(
+        '--preset', help="Apply a preset to the plot")
 
     parser.add_argument(
         '-V', '--version', action='version', version=psy_view.__version__)
@@ -73,7 +100,10 @@ def main():
     else:
         ds = None
 
-    start_app(ds)
+    if args.name is object and ds is not None:
+        args.name = list(ds)[0]
+
+    start_app(ds, args.name, args.plotmethod, args.preset)
 
 
 if __name__ == '__main__':
