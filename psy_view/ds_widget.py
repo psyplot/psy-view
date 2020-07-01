@@ -81,7 +81,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.lbl_ds = QtWidgets.QLineEdit()
         self.open_box.addWidget(self.lbl_ds)
         self.btn_open = utils.add_pushbutton(
-            get_psy_icon('invalid.png'), lambda: self.set_dataset(),
+            get_psy_icon('run_arrow.png'), lambda: self.set_dataset(),
             "Select and open a netCDF dataset", self.open_box, icon=True)
         self.open_widget = QtWidgets.QWidget()
         self.open_widget.setLayout(self.open_box)
