@@ -44,3 +44,32 @@ application/x-netcdf=Psy-View.Desktop
 [Added Associations]
 application/x-netcdf=Psy-View.desktop;application/x-netcdf=Psyplot.desktop;
 EOF
+
+# create a demo preset
+mkdir -p $HOME/.config/psyplot/presets
+cat > $HOME/.config/psyplot/presets/EUR-temperature.yml << EOF
+clabel: '%(long_name)s %(units)s'
+cmap: YlOrRd
+datagrid: k-
+lonlatbox: Europe
+lsm:
+  coast:
+  - 0.0
+  - 0.0
+  - 0.0
+  - 1.0
+  land:
+  - 0.6666666666666666
+  - 0.3333333333333333
+  - 0.0
+  - 1.0
+  ocean:
+  - 0.592156862745098
+  - 0.7137254901960784
+  - 0.8823529411764706
+  - 1.0
+  res: 50m
+title: '%(long_name)s over Europe'
+xgrid: false
+ygrid: false
+EOF
