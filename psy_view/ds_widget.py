@@ -554,6 +554,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         self._preset = preset
         if self.sp:
             self.sp.load_preset(preset)
+            self.refresh()
         self.maybe_show_preset()
 
     def unset_preset(self):
