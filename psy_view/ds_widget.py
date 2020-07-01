@@ -172,6 +172,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.btn_unset_preset = utils.add_pushbutton(
             get_psy_icon('invalid.png'), self.unset_preset,
             "Unset the current preset", hbox, icon=True)
+        self.btn_unset_preset.setVisible(False)
 
         self.export_box.addWidget(self.frm_preset)
 
