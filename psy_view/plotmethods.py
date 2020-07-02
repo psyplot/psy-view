@@ -447,8 +447,12 @@ class MapPlotWidget(PlotMethodWidget):
             plotter = self.plotter
             if isinstance(plotter.projection.value, str):
                 self.btn_proj.setText(plotter.projection.value)
+            else:
+                self.btn_proj.setText('Custom')
             if isinstance(plotter.cmap.value, str):
                 self.btn_cmap.setText(plotter.cmap.value)
+            else:
+                self.btn_cmap.setText('Custom')
 
     def transform(self, x, y):
         import cartopy.crs as ccrs

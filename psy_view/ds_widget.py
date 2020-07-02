@@ -3,6 +3,7 @@
 import os.path as osp
 import os
 import contextlib
+import yaml
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtCore import Qt
 import psy_view.utils as utils
@@ -551,14 +552,42 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.load_preset(fname)
 
     def load_preset(self, preset):
-        self._preset = preset
+        self.preset = preset
         if self.sp:
-            self.sp.load_preset(preset)
-            self.refresh()
+            preset = self.preset  # now that it's loaded
+            if preset:
+                self.sp.load_preset(preset)
+                self.refresh()
         self.maybe_show_preset()
 
+    @property
+    def preset(self):
+        if self._preset is None:
+            return {}
+        import psyplot.project as psy
+        preset = self._preset
+        try:
+            preset = psy.Project._load_preset(preset)
+        except yaml.constructor.ConstructorError as e:
+            answer = QtWidgets.QMessageBox.question(
+                self, "Can I trust this?",
+                f"Failed to load the preset at <i>{preset}</i> in safe mode. Can we "
+                "trust this preset and load it in unsafe mode?")
+            if answer == QtWidgets.QMessageBox.Yes:
+                psyd.rcParams['presets.trusted'].append(
+                    psy.Project._resolve_preset_path(preset))
+                preset = psy.Project._load_preset(preset)
+            else:
+                preset = {}
+        return preset
+
+    @preset.setter
+    def preset(self, value):
+        self._preset = value
+
+
     def unset_preset(self):
-        self._preset = None
+        self.preset = None
         self.maybe_show_preset()
 
     def maybe_show_preset(self):
@@ -755,10 +784,11 @@ class DatasetWidget(QtWidgets.QSplitter):
     def plot_options(self):
         ret = self.plotmethod_widget.get_fmts(
             self.ds.psy[self.variable], True)
-        if self._preset:
+        preset = self.preset
+        if preset:
             import psyplot.project as psy
             preset = psy.Project.extract_fmts_from_preset(
-                self._preset, self.plotmethod)
+                preset, self.plotmethod)
             ret.update(preset)
         return ret
 
