@@ -58,6 +58,8 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     _ani = None
 
+    _init_step = 0
+
     variable_frame = None
 
     _new_plot = False
@@ -104,7 +106,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         # -- animate backwards button
         self.btn_animate_backward = utils.add_pushbutton(
-            "◀◀", self.animate_backward,
+            "◀◀", lambda: self.animate_backward(),
             "Animate the time dimension backwards", self.navigation_box)
         self.btn_animate_backward.setCheckable(True)
 
@@ -124,7 +126,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         # -- animate forward button
         self.btn_animate_forward = utils.add_pushbutton(
-            "▶▶", self.animate_forward,
+            "▶▶", lambda: self.animate_forward(),
             "Animate the time dimension", self.navigation_box)
         self.btn_animate_forward.setCheckable(True)
 
@@ -438,7 +440,7 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.disable_navigation(self.btn_animate_backward)
             self.start_animation()
 
-    def animate_forward(self, event=None):
+    def animate_forward(self, nframes=None):
         if self._animating:
             self.stop_animation()
             self.btn_animate_forward.setText('▶▶')
@@ -447,7 +449,7 @@ class DatasetWidget(QtWidgets.QSplitter):
             self._animate_forward = True
             self.btn_animate_forward.setText('■')
             self.disable_navigation(self.btn_animate_forward)
-            self.start_animation()
+            self.start_animation(nframes)
 
     def setup_plot_tabs(self):
         self.plot_tabs.addTab(plotmethods.MapPlotWidget(self.get_sp, self.ds),
@@ -495,14 +497,17 @@ class DatasetWidget(QtWidgets.QSplitter):
         for v, btn in self.variable_buttons.items():
             btn.setEnabled(v in valid_variables)
 
-    def start_animation(self):
+    def start_animation(self, nframes=None):
         self._animating = True
+        self._animation_frames = nframes
+        self._starting_step = 1
         self.disable_variables()
         self.plot_tabs.setEnabled(False)
         if self.animation is None or self.animation.event_source is None:
             self.animation = FuncAnimation(
                 self.fig, self.update_dims, frames=self.animation_frames(),
-                init_func=self.sp.draw, interval=self.sl_interval.value())
+                init_func=self.sp.draw, interval=self.sl_interval.value(),
+                repeat=False)
             # HACK: Make sure that the animation starts although the figure
             # is already shown
             self.animation._draw_frame(next(self.animation_frames()))
@@ -530,11 +535,18 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.refresh()
 
     def animation_frames(self):
-        while self._animating:
+        while self._animating and self._animation_frames is None or \
+                self._animation_frames:
+            if self._animation_frames is not None and not self._init_step:
+                self._animation_frames -= 1
             dim = self.combo_dims.currentText()
             i = self.data.psy.idims[dim]
             imax = self.ds.dims[dim] - 1
-            if self._animate_forward:
+            if self._init_step:
+                self._init_step -= 1
+            elif self._starting_step:
+                self._starting_step -= 1
+            elif self._animate_forward:
                 i += -i if i == imax else 1
             else:
                 i += imax if i == 0 else -1
@@ -702,10 +714,16 @@ class DatasetWidget(QtWidgets.QSplitter):
             self, "Export animation", os.getcwd(),
             "Movie (*.mp4 *.mov *.gif)")
         if ok:
-            self.animate_forward()
+
+            dim = self.combo_dims.currentText()
+            nframes = self.ds.dims[dim]
+
+            self._init_step = 1
+            self.animate_forward(nframes)
             self.animation.save(fname, **rcParams['animations.export_kws'],
                            fps=round(1000. / self.sl_interval.value()))
             self.animate_forward()
+            self.animation = None
 
     def export_project(self):
         fname, ok = QtWidgets.QFileDialog.getSaveFileName(
