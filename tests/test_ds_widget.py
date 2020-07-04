@@ -410,7 +410,7 @@ def test_export_animation(qtbot, ds_widget, plotmethod, tmpdir, monkeypatch):
         lambda *args: (osp.join(tmpdir, "test.gif"), True))
 
     with rcParams.catch():
-        rcParams['animations.export_kws'] = {'writer': 'imagemagick'}
+        rcParams['animations.export_kws'] = {'writer': 'pillow'}
 
         ds_widget.export_animation()
 
