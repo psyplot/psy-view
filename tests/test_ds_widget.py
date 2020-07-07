@@ -382,8 +382,38 @@ def test_multi_export(ds_widget, qtbot, monkeypatch, tmpdir, plotmethod):
     monkeypatch.setattr(
         QtWidgets.QMessageBox, "question", dont_save)
 
+
+
     ds_widget.export_all_images()
 
     assert question_asked == [True]
 
     assert not osp.exists(osp.join(tmpdir, "test.png"))
+
+
+@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
+def test_export_animation(qtbot, ds_widget, plotmethod, tmpdir, monkeypatch):
+    """Test clicking the next time button"""
+    from psy_view.rcsetup import rcParams
+
+    ds_widget.plotmethod = plotmethod
+    ds_widget.sl_interval.setValue(10)
+    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    dim = ds_widget.combo_dims.currentText()
+
+    assert dim
+
+    assert not ds_widget._animating
+
+    monkeypatch.setattr(
+        QtWidgets.QFileDialog, "getSaveFileName",
+        lambda *args: (osp.join(tmpdir, "test.gif"), True))
+
+    with rcParams.catch():
+        rcParams['animations.export_kws'] = {'writer': 'pillow'}
+
+        ds_widget.export_animation()
+
+    assert not ds_widget._animating
+
+    assert osp.exists(osp.join(tmpdir, "test.gif"))

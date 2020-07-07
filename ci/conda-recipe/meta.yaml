@@ -39,6 +39,7 @@ test:
     - dask
     - netcdf4
     - seaborn
+    - pillow
     - psy-maps
   source_files:
     - tests
