@@ -4,22 +4,52 @@ orbs:
   win: circleci/windows@2.2.0
 
 commands:
+  install_linux:
+    description: "Setup linux environment"
+    steps:
+      - checkout
+      - run:
+          name: install apt requirements
+          command: |
+            sudo apt-get update
+            sudo apt-get install libgl1-mesa-glx libegl1-mesa-dev
+      - run:
+          name: Install conda
+          command: |
+            echo ""
+            echo "Installing a fresh version of Miniconda."
+            MINICONDA_URL="https://repo.continuum.io/miniconda"
+            MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
+            curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
+            bash $MINICONDA_FILE -bp $HOME/miniconda3
   configure_conda:
     description: "Install conda on the sytem"
+    parameters:
+      channels:
+        type: string
+        default: conda-forge psyplot
     steps:
       - run:
           name: Configure
           command: |
             which conda || source $HOME/miniconda3/bin/activate base
             conda config --set always_yes yes --set changeps1 no
-            conda config --add channels conda-forge
-            conda config --add channels psyplot
             conda update -q conda
-            conda install conda-build anaconda-client conda-verify
+            for CHANNEL in << parameters.channels >>; do
+              conda config --add channels ${CHANNEL}
+            done
             if [[ $CIRCLE_TAG == "" ]]; then
               conda config --add channels psyplot/label/master;
               conda config --add channels psyplot/label/${CIRCLE_BRANCH};
             fi
+  configure_recipe:
+    description: "Configure conda build"
+    steps:
+      - run:
+          name: Install anaconda client and conda-build
+          command: |
+            which conda || source $HOME/miniconda3/bin/activate base
+            conda install -c defaults --override-channels conda-build anaconda-client conda-verify
       - run:
           name: Environment info
           command: |
@@ -43,6 +73,21 @@ commands:
           command: |
             which conda || source $HOME/miniconda3/bin/activate base
             conda build ci/conda-recipe --python << parameters.python_version >>
+  clean_and_save:
+    description: "Clean packages and save cache"
+    parameters:
+      key:
+        type: string
+    steps:
+      - run:
+          name: Clean conda packages
+          command: |
+            which conda || source $HOME/miniconda3/bin/activate base
+            conda clean -q -p -y
+      - save_cache:
+          key: << parameters.key >>
+          paths:
+            - ~/miniconda3/pkgs
 
 
 jobs:
@@ -58,6 +103,7 @@ jobs:
     steps:
       - checkout
       - configure_conda
+      - configure_recipe
       - run:
           name: Build recipe
           shell: cmd.exe
@@ -70,24 +116,45 @@ jobs:
     working_directory: ~/test
     machine: true
     steps:
-      - checkout
-      - run:
-          name: install apt requirements
-          command: |
-            sudo apt-get update
-            sudo apt-get install libgl1-mesa-glx libegl1-mesa-dev
-      - run:
-          name: Install conda
-          command: |
-            echo ""
-            echo "Installing a fresh version of Miniconda."
-            MINICONDA_URL="https://repo.continuum.io/miniconda"
-            MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
-            curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
-            bash $MINICONDA_FILE -bp $HOME/miniconda3
+      - install_linux
       - configure_conda
+      - configure_recipe
+      - restore_cache:
+          keys:
+            - v4-<< parameters.python_version >>-{{ checksum "ci/conda-recipe/meta.yaml" }}-{{ checksum "ci/conda-recipe/recipe_append.yaml" }}
       - build_recipe:
           python_version: << parameters.python_version >>
+      - clean_and_save:
+          key: v4-<< parameters.python_version >>-{{ checksum "ci/conda-recipe/meta.yaml" }}-{{ checksum "ci/conda-recipe/recipe_append.yaml" }}
+  build_docs:
+    working_directory: ~/repo
+    machine: true
+    steps:
+      - install_linux
+      - configure_conda:
+          channels: defaults
+      - restore_cache:
+          keys:
+          - v4-{{ checksum "docs/environment.yml" }}
+      - run:
+          name: Create environment
+          command: |
+            which conda || source $HOME/miniconda3/bin/activate base
+            conda env create -f docs/environment.yml
+            conda activate psy-view-docs
+            pip install .
+      - clean_and_save:
+          key: v4-{{ checksum "docs/environment.yml" }}
+      - run:
+          name: Build the docs
+          command: |
+            which conda || source $HOME/miniconda3/bin/activate base
+            cd docs
+            conda activate psy-view-docs
+            make html
+      - store_artifacts:
+          path: ~/repo/docs/_build/html
+          destination: docs
 
 workflows:
   version: 2.1
@@ -96,6 +163,7 @@ workflows:
       - build_linux
       - build_linux:
           python_version: "3.7"
+      - build_docs
 #      - build_windows
 #      - build_windows:
 #          python_version: "3.7"
