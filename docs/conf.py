@@ -83,7 +83,10 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-autodoc_default_flags = ['show_inheritance', 'autosummary']
+autodoc_default_options = {
+    'show_inheritance': True,
+    'autosummary': True,
+    }
 
 not_document_data = ['psy_view.rcsetup.defaultParams',
                      'psy_view.rcsetup.rcParams']
