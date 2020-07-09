@@ -17,7 +17,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/."""
-from psy_view.version import __version__
+from psy_view._version import __version__
 
 __author__ = "Philipp S. Sommer"
 
