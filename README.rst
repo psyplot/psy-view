@@ -105,18 +105,36 @@ To install the current work-in-progress, please
 
 .. _Miniconda: https://conda.io/en/latest/miniconda.html
 
-As an alternativ to a local installation, you can also run it 
+As an alternativ to a local installation, you can also run it
 headless in you browser by clicking |mybinder|
 
 Updating psy-view
 +++++++++++++++++
-To update the development version, make sure you also update the 
+To update the development version, make sure you also update the
 other dependencies. This can be don via::
 
     conda update -n psy-view -c psyplot/label/master -c conda-forge \
         --override-channels psy-view psy-maps psy-simple psyplot-gui psyplot
 
-If this does not work, you can also simply recreate the conda environment 
+If this does not work, you can also simply recreate the conda environment
 using the command from above::
 
     conda create -n psy-view -c psyplot/label/master -c conda-forge --override-channels psy-view
+
+
+Building the docs
+-----------------
+The docs are automatically build for every commit using
+[circleci](https://app.circleci.com/pipelines/github/psyplot/psy-view) and uploaded
+as artifacts for a preview. Selected branches are additionally built on
+[readthedocs](https://psyplot.readthedocs.io/projects/psy-view).
+
+To build the docs locally (requires linux!), the following steps are necessary:
+
+1. clone this repository
+2. install Miniconda_
+3. create the conda environment: `conda env create -f docs/environment.yml`
+4. activate the conda environment: `conda activate psy-view-docs`
+5. install psy-view: `pip install .`
+6. change into the docs folder: `cd docs`
+7. run `make html`
