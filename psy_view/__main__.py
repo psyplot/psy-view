@@ -3,7 +3,7 @@
 
 **Disclaimer**
 
-Copyright (C) 2020  Philipp S. Sommer
+Copyright (C) 2020 Philipp S. Sommer
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>."""
+along with this program.  If not, see https://www.gnu.org/licenses/."""
 import sys
 import argparse
 from textwrap import dedent
