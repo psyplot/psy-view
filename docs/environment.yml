@@ -1,0 +1,16 @@
+name: psy-view-docs
+channels:
+    - psyplot/label/master
+    - psyplot
+    - chilipp/label/conda-forge
+dependencies:
+    - python>3.5
+    - sphinx
+    - sphinx_rtd_theme
+    - psy-maps
+    - psyplot-gui
+    - netcdf4
+    - pip
+    - pip:
+        - autodocsumm
+        - sphinx-argparse
