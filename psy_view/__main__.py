@@ -24,6 +24,23 @@ import psy_view
 
 
 def start_app(ds, name=None, plotmethod='mapplot', preset=None):
+    """Start the standalone GUI application.
+
+    This function creates a `QApplication` instance, an instance of the
+    :class:`psy_view.ds_widget.DatasetWidget` and enters the main event loop.
+
+    Parameters
+    ----------
+    ds: xarray.Dataset
+        The dataset to display. If None, the user can select it afterwards
+    name: str
+        The variable name in `ds` to display. If None, the user can select it
+        afterwards
+    plotmethod: {'mapplot' | 'lineplot' | 'plot2d' }
+        The plotmethod to use
+    preset: str
+        The preset to apply
+    """
     from PyQt5 import QtWidgets
     from PyQt5.QtGui import QIcon
     from psyplot_gui import rcParams
@@ -56,6 +73,7 @@ def start_app(ds, name=None, plotmethod='mapplot', preset=None):
 
 
 def get_parser():
+    """Get the command line parser for psy-view."""
     parser = argparse.ArgumentParser('psy-view')
 
     parser.add_argument(
@@ -88,6 +106,7 @@ def get_parser():
 
 
 def main():
+    """Start the app with the provided command-line options."""
     import psyplot.project as psy
     parser = get_parser()
     args = parser.parse_known_args()[0]
