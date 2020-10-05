@@ -16,14 +16,32 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see https://www.gnu.org/licenses/."""
+along with this program.  If not, see https://www.gnu.org/licenses/.
+"""
+from __future__ import annotations
+from typing import (
+    TYPE_CHECKING,
+    Dict,
+    Any,
+    Optional,
+    Tuple,
+    Union,
+    Type,
+)
+
 import sys
 import argparse
 from textwrap import dedent
 import psy_view
 
+if TYPE_CHECKING:
+    from xarray import Dataset
 
-def start_app(ds, name=None, plotmethod='mapplot', preset=None):
+
+def start_app(
+        ds: Optional[Dataset], name: Optional[str] = None,
+        plotmethod: str = 'mapplot', preset: Optional[str] = None
+    ) -> None:
     """Start the standalone GUI application.
 
     This function creates a `QApplication` instance, an instance of the
@@ -42,7 +60,7 @@ def start_app(ds, name=None, plotmethod='mapplot', preset=None):
         The preset to apply
     """
     from PyQt5 import QtWidgets
-    from PyQt5.QtGui import QIcon
+    from PyQt5.QtGui import QIcon  # pylint: disable=no-name-in-module
     from psyplot_gui import rcParams
 
     rcParams['help_explorer.use_webengineview'] = False
@@ -61,7 +79,7 @@ def start_app(ds, name=None, plotmethod='mapplot', preset=None):
         elif name not in ds_widget.variable_buttons:
             valid = list(ds_widget.variable_buttons)
             raise ValueError(f"{name} is not part of the dataset. "
-                             "Possible variables are {valid}.")
+                             f"Possible variables are {valid}.")
         ds_widget.plotmethod = plotmethod
         ds_widget.variable = name
         ds_widget.make_plot()
@@ -72,7 +90,7 @@ def start_app(ds, name=None, plotmethod='mapplot', preset=None):
     sys.exit(app.exec_())
 
 
-def get_parser():
+def get_parser() -> argparse.ArgumentParser:
     """Get the command line parser for psy-view."""
     parser = argparse.ArgumentParser('psy-view')
 
@@ -105,7 +123,7 @@ def get_parser():
     return parser
 
 
-def main():
+def main() -> None:
     """Start the app with the provided command-line options."""
     import psyplot.project as psy
     parser = get_parser()

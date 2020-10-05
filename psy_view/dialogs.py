@@ -17,17 +17,43 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/.
 """
+from __future__ import annotations
+from typing import (
+    TYPE_CHECKING,
+    Dict,
+    Any,
+    Optional,
+    Tuple,
+    Union,
+    Type,
+)
+
 import yaml
 from PyQt5 import QtWidgets, QtGui
 from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg as FigureCanvas)
 from matplotlib.figure import Figure
 
+if TYPE_CHECKING:
+    from psyplot.plotter import Plotter, Formatoption
+    from psyplot.project import Project
+    from PyQt5.QtCore import QEvent  # pylint: disable=no-name-in-module
+
+
+#: TODO: Find a more appropriate description here
+Color = Any
+
+#: TODO: Find a more appropriate description here
+LSM_T = Dict[str, Any]
+
 
 class BasemapDialog(QtWidgets.QDialog):
     """A dialog to modify the basemap settings."""
 
-    def __init__(self, plotter, *args, **kwargs):
+    xgrid_value: Optional[Union[str, Tuple[Any, Any]]]
+    ygrid_value: Optional[Union[str, Tuple[Any, Any]]]
+
+    def __init__(self, plotter: Plotter, *args, **kwargs) -> None:
         """
         Parameters
         ----------
@@ -232,7 +258,7 @@ class BasemapDialog(QtWidgets.QDialog):
             button.clicked.connect(self.update_forms)
 
     @property
-    def default_colors(self):
+    def default_colors(self) -> Dict[str, Color]:
         """Get default colors for the color labels in :attr:`widgets`."""
         import cartopy.feature as cf
         import matplotlib as mpl
@@ -243,7 +269,7 @@ class BasemapDialog(QtWidgets.QDialog):
             'coast': 'k',
             }
 
-    def get_colors(self, plotter):
+    def get_colors(self, plotter: Plotter) -> Dict[str, Color]:
         """Get the colors for :attr:`widgets` from the plotter formatoptions.
 
         Parameters
@@ -266,7 +292,7 @@ class BasemapDialog(QtWidgets.QDialog):
                 ret[part] = lsm[part]
         return ret
 
-    def fill_from_plotter(self, plotter):
+    def fill_from_plotter(self, plotter: Plotter) -> None:
         """Fill the dialog from a given plotter.
 
         Parameters
@@ -314,7 +340,7 @@ class BasemapDialog(QtWidgets.QDialog):
             self.opt_meri_num.setChecked(True)
             self.txt_meri_num.setText(str(value[1]))
         elif isinstance(value, tuple):
-            self.xgrid_value = value[:2]
+            self.xgrid_value: Tuple[Any, Any] = value[:2]  # type: ignore
             self.opt_meri_num.setChecked(True)
             steps = 11 if len(value) == 2 else value[3]
             self.txt_meri_num.setText(str(steps))
@@ -333,7 +359,7 @@ class BasemapDialog(QtWidgets.QDialog):
             self.txt_para_num.setText(str(value[1]))
             self.ygrid_value = value[0]
         elif isinstance(value, tuple):
-            self.ygrid_value = value[:2]
+            self.ygrid_value: Tuple[Any, Any] = value[:2]  # type: ignore
             self.opt_para_num.setChecked(True)
             steps = 11 if len(value) == 2 else value[3]
             self.txt_para_num.setText(str(steps))
@@ -341,7 +367,7 @@ class BasemapDialog(QtWidgets.QDialog):
             self.opt_para_at.setChecked(True)
             self.txt_para_at.setText(', '.join(map(str, value)))
 
-    def update_forms(self):
+    def update_forms(self) -> None:
         """Update text widgets for the options to draw merdionals and parallels.
         """
         if self.meridionals_box.isChecked():
@@ -354,16 +380,16 @@ class BasemapDialog(QtWidgets.QDialog):
             self.txt_para_num.setEnabled(self.opt_para_num.isChecked())
 
     @property
-    def value(self):
+    def value(self) -> Dict[str, Any]:
         """Get the formatoptions of this dialog to update a plotter."""
         import numpy as np
-        ret = {}
+        ret: Dict[str, Any] = {}
         ret['clon'] = None if not self.txt_clon.text().strip() else float(
             self.txt_clon.text().strip())
         ret['clat'] = None if not self.txt_clat.text().strip() else float(
             self.txt_clat.text().strip())
 
-        lsm = {}
+        lsm: LSM_T = {}
 
         for col in ['land', 'ocean', 'coast']:
             lbl = self.widgets.loc['color', col]
@@ -441,7 +467,7 @@ class BasemapDialog(QtWidgets.QDialog):
         return ret
 
     @classmethod
-    def update_plotter(cls, plotter):
+    def update_plotter(cls, plotter: Plotter) -> None:
         """Open a :class:`BasemapDialog` to update a plotter.
 
         Parameters
@@ -462,7 +488,7 @@ class BasemapDialog(QtWidgets.QDialog):
 class CmapDialog(QtWidgets.QDialog):
     """A dialog to modify color bounds and colormaps."""
 
-    def __init__(self, project, *args, **kwargs):
+    def __init__(self, project: Project, *args, **kwargs) -> None:
         """
         Parameters
         ----------
@@ -525,11 +551,11 @@ class CmapDialog(QtWidgets.QDialog):
         vbox.addWidget(self.button_box)
 
     @property
-    def plotter(self):
+    def plotter(self) -> Plotter:
         """Get the plotter with the formatoptions we use to fill this dialog."""
         return self.bounds_widget.editor.fmto.plotter
 
-    def update_preview(self):
+    def update_preview(self) -> None:
         """Update the :attr:`cbar_preview` from the various :attr:`fmt_widgets`.
         """
         try:
@@ -548,7 +574,7 @@ class CmapDialog(QtWidgets.QDialog):
             bounds=bounds, cticks=cticks, cmap=cmap)
 
     @property
-    def fmts(self):
+    def fmts(self) -> Dict[str, Any]:
         """Map from formatoption in :attr:`fmt_widgets` to values."""
         ret = {}
         for fmt, widget in self.fmt_widgets.items():
@@ -563,7 +589,7 @@ class CmapDialog(QtWidgets.QDialog):
         return ret
 
     @classmethod
-    def update_project(cls, project):
+    def update_project(cls, project: Project) -> None:
         """Create a :class:`CmapDialog` to update a `project`
 
         This classmethod creates a new :class:`CmapDialog` instance, fills it
@@ -584,18 +610,34 @@ class CmapDialog(QtWidgets.QDialog):
             project.update(**dialog.fmts)
 
 
+class FakePlotter(Plotter):
+    """A dummy plotter for the colorbar preview."""
+
+    bounds: Formatoption
+    cmap: Formatoption
+    cticks: Formatoption
+    cbar: Formatoption
+
+
 class ColorbarPreview(FigureCanvas):
     """A preview widget of a colorbar.
 
     This matplotlib figure contains one single axes to display the colorbar
     filled by the formatoptions of a given `plotter`."""
 
-    def __init__(self, plotter, parent=None, *args, **kwargs):
+    def __init__(
+            self,
+            plotter: Plotter,
+            parent: Optional[QtWidgets.QWidget] = None,
+            *args, **kwargs
+        ) -> None:
         """
         Parameters
         ----------
         plotter: psy_simple.plotters.Base2D
             The plotter to use to draw the colorbar from
+        parent: QtWidget.QWidget
+            The parent widget
         """
         fig = Figure(*args, **kwargs)
 
@@ -612,14 +654,14 @@ class ColorbarPreview(FigureCanvas):
         self.plotter = plotter
         self.init_colorbar(plotter)
 
-    def resizeEvent(self, event):
+    def resizeEvent(self, event: QEvent) -> Any:
         """Reimplemented to make sure we cannot get smaller than 0."""
         h = event.size().height()
         if h <= 0:
             return
         return super().resizeEvent(event)
 
-    def init_colorbar(self, plotter):
+    def init_colorbar(self, plotter: Plotter) -> None:
         """Initialize the colorbar.
 
         This method extracts the formatoptions of the given `plotter` and draws
@@ -639,14 +681,14 @@ class ColorbarPreview(FigureCanvas):
             sm, norm=norm, cmap=cmap, cax=self.cax, orientation='horizontal')
 
     @property
-    def fake_plotter(self):
+    def fake_plotter(self) -> FakePlotter:
         """Create a plotter with the formatoptions of the real :attr:`plotter`.
 
         We can update this plotter without impacting the origin :attr:`plotter`
         """
         from psyplot.plotter import Plotter
 
-        class FakePlotter(Plotter):
+        class _FakePlotter(Plotter):
             bounds = self.plotter.bounds.__class__('bounds')
             cmap = self.plotter.cmap.__class__('cmap')
             cticks = self.plotter.cticks.__class__('cticks')
@@ -658,7 +700,7 @@ class ColorbarPreview(FigureCanvas):
         fig = Figure()
         ax = fig.add_subplot()
 
-        plotter = FakePlotter(
+        plotter = _FakePlotter(
             ref.data.copy(), make_plot=False, bounds=ref['bounds'],
             cmap=ref['cmap'], cticks=ref['cticks'], cbar='', ax=ax)
 
@@ -667,7 +709,7 @@ class ColorbarPreview(FigureCanvas):
         plotter.plot_data = ref.plot_data
         return plotter
 
-    def update_colorbar(self, **kwargs):
+    def update_colorbar(self, **kwargs) -> None:
         """Update the colorbar with new formatoptions.
 
         This method takes the :attr:`fake_plotter`, updates it from the given
@@ -730,7 +772,7 @@ class FormatoptionsEditor(QtWidgets.QWidget):
     a line editor and a text editor to set the value of a specific formatoption.
     """
 
-    def __init__(self, fmto, *args, **kwargs):
+    def __init__(self, fmto: Formatoption, *args, **kwargs) -> None:
         """
         Parameters
         ----------
@@ -771,12 +813,12 @@ class FormatoptionsEditor(QtWidgets.QWidget):
         self.setLayout(layout)
 
     @property
-    def changed(self):
+    def changed(self) -> bool:
         """Check if the value in this editor differs from the original `fmto`.
         """
         return self.fmto.diff(self.fmto.validate(self.get_obj()))
 
-    def toggle_multiline(self):
+    def toggle_multiline(self) -> None:
         """Switch from :attr:`line_edit` and :attr:`text_edit` or back."""
         multiline = self.multiline
         self.text_edit.setVisible(multiline)
@@ -787,18 +829,18 @@ class FormatoptionsEditor(QtWidgets.QWidget):
             self.line_edit.setText(self.text_edit.toPlainText())
 
     @property
-    def multiline(self):
+    def multiline(self) -> bool:
         """True if the :attr:`text_edit` should be visible."""
         return self.btn_multiline.isChecked()
 
     @property
-    def text(self):
+    def text(self) -> str:
         """Text of the :attr:`text_edit` (or :attr:`line_edit`)."""
         return (self.text_edit.toPlainText() if self.multiline else
                 self.line_edit.text())
 
     @text.setter
-    def text(self, s):
+    def text(self, s: str) -> None:
         self.clear_text()
         if self.multiline:
             self.text_edit.insertPlainText(s)
@@ -806,28 +848,28 @@ class FormatoptionsEditor(QtWidgets.QWidget):
             self.line_edit.insert(s)
 
     @property
-    def value(self):
+    def value(self) -> Any:
         """Load the value of :attr:`text` with yaml."""
         text = self.text
         return yaml.load(text, Loader=yaml.Loader)
 
-    def clear_text(self):
+    def clear_text(self) -> None:
         """Clear the editor."""
         if self.multiline:
             self.text_edit.clear()
         else:
             self.line_edit.clear()
 
-    def set_obj(self, obj):
+    def set_obj(self, obj: Any) -> None:
         """Clear the editor and set another object."""
         self.clear_text()
         self.insert_obj(obj)
 
-    def get_obj(self):
+    def get_obj(self) -> Any:
         """Alias for :attr:`value`."""
         return self.value
 
-    def insert_obj(self, obj):
+    def insert_obj(self, obj: Any) -> None:
         """Add a string to the formatoption widget.
 
         Parameters
@@ -878,8 +920,9 @@ class LabelWidgetLine(QtWidgets.QGroupBox):
     :meth:`psyplot.plotter.Formatoption.get_fmt_widget`) to contol it.
     """
 
-    def __init__(self, fmto, project, fmto_widget,
-                 widget_kws={}, *args, **kwargs):
+    def __init__(self, fmto: Formatoption, project: Project,
+                 fmto_widget: Type[QtWidgets.QWidget],
+                 widget_kws: Dict[str, Any] = {}, *args, **kwargs) -> None:
         """
         Parameters
         ----------
@@ -910,7 +953,7 @@ class LabelDialog(QtWidgets.QDialog):
 
     This class contains one :class:`LabelWidgetLine` per text formatoption."""
 
-    def __init__(self, project, *fmts):
+    def __init__(self, project: Project, *fmts: str) -> None:
         """
         Parameters
         ----------
@@ -943,7 +986,7 @@ class LabelDialog(QtWidgets.QDialog):
         self.setLayout(layout)
 
     @property
-    def fmts(self):
+    def fmts(self) -> Dict[str, Any]:
         """Mapping from formatoption key to value in this dialog."""
         ret = {}
         for fmt, widget in self.fmt_widgets.items():
@@ -958,7 +1001,7 @@ class LabelDialog(QtWidgets.QDialog):
         return ret
 
     @classmethod
-    def update_project(cls, project, *fmts):
+    def update_project(cls, project: Project, *fmts: str) -> None:
         """Create a :class:`LabelDialog` to update the labels in a `project`.
 
         This classmethod creates a new :class:`LabelDialog` instance, fills it

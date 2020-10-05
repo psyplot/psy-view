@@ -18,8 +18,24 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see https://www.gnu.org/licenses/."""
+along with this program.If not, see https: // www.gnu.org / licenses / . """
+from __future__ import annotations
 import os.path as osp
+
+from typing import (
+    TYPE_CHECKING,
+    ClassVar,
+    Callable,
+    Optional,
+    Union,
+    List,
+    Hashable,
+    Dict,
+    Any,
+    Tuple,
+    Iterator,
+)
+
 from functools import partial
 from itertools import chain, cycle
 import contextlib
@@ -35,10 +51,24 @@ from psyplot_gui.common import get_icon as get_psy_icon
 import psy_simple.widgets.colors as pswc
 import matplotlib.colors as mcol
 
+if TYPE_CHECKING:
+    from xarray import DataArray, Dataset, Variable
+    from psyplot.project import PlotterInterface, Project
+    from psyplot.data import InteractiveList
+    from psyplot.plotter import Plotter
+
 
 class PlotMethodWidget(QtWidgets.QWidget):
+    """Base class for interfacing a psyplot plotmethod.
 
-    plotmethod = None
+    This method serves as a base class for interfacing any of the psyplot
+    plot methods registered via :func:`psyplot.project.register_plotter`.
+
+    The name of the plotmethod should be implemented as the :attr:`plotmethod`
+    attribute.
+    """
+
+    plotmethod: ClassVar[str] = ''
 
     #: trigger a replot of this widget. This can be emitted with the
     #: :meth:`trigger_replot` method
@@ -54,76 +84,152 @@ class PlotMethodWidget(QtWidgets.QWidget):
 
     array_info = None
 
-    layout = None
 
-    def __init__(self, get_sp, ds):
+    layout: QtWidgets.QLayout = None
+
+    def __init__(
+            self, get_sp: Callable[[], Optional[Project]],
+            ds: Optional[Dataset]):
         super().__init__()
         self._get_sp = get_sp
 
         self.setup()
 
-        if self.layout is not None:
+        if hasattr(self, "layout"):
             self.setLayout(self.layout)
 
         self.refresh(ds)
 
     def setup(self):
+        """Set up widget during initialization."""
         pass
 
     @property
-    def sp(self):
+    def sp(self) -> Optional[Project]:
+        """Get the subproject of this plotmethod interface."""
         return getattr(self._get_sp(), self.plotmethod, None)
 
     @property
-    def data(self):
-        return self.sp[0]
+    def data(self) -> Union[DataArray, InteractiveList]:
+        """Get the data of this plotmethod interface."""
+        if self.sp is None:
+            raise ValueError("No plot has yet been initialized")
+        else:
+            return self.sp[0]
 
     @property
-    def plotter(self):
-        try:
+    def plotter(self) -> Optional[Plotter]:
+        """Get the first plotter of the :attr:`sp` project."""
+        if self.sp and self.sp.plotters:
             return self.sp.plotters[0]
-        except (IndexError, AttributeError):
+        else:
             return None
 
     @property
-    def formatoptions(self):
+    def formatoptions(self) -> List[str]:
+        """Get the formatoption keys of this plotmethod."""
         if self.plotter is not None:
             return list(self.plotter)
         else:
             import psyplot.project as psy
             return list(getattr(psy.plot, self.plotmethod).plotter_cls())
 
-    def get_fmts(self, var, init=False):
+    def get_fmts(
+            self, var: DataArray, init: bool = False
+        ) -> Dict[Union[Hashable, str, Any], Any]:
+        """Get the formatoptions for a new plot.
+        
+        Parameters
+        ----------
+        var: xarray.Variable
+            The variable in the base dataset
+        init: bool
+            If True, call the :meth:`init_dims` method to inject necessary
+            formatoptions and dimensions for the initialization.
+
+        Returns
+        -------
+        dict
+            A mapping from formatoption or dimension to the corresponding value
+            for the plotmethod.
+        """
         ret = {}
         if init:
             ret.update(self.init_dims(var))
         return ret
 
-    def init_dims(self, var):
+    def init_dims(
+            self, var: DataArray
+        ) -> Dict[Union[Hashable, str, Any], Any]:
+        """Get the formatoptions for a new plot.
+        
+        Parameters
+        ----------
+        var: xarray.Variable
+            The variable in the base dataset
+
+        Returns
+        -------
+        dict
+            A mapping from formatoption or dimension to the corresponding value
+            for the plotmethod.
+        
+        """
         return {}
 
-    def refresh(self, ds):
+    def refresh(self, ds: Optional[Dataset]) -> None:
+        """Refresh this widget from the given dataset."""
         self.setEnabled(bool(self.sp))
 
-    def trigger_replot(self):
+    def trigger_replot(self) -> None:
+        """Emit the :attr:`replot` signal to replot the project."""
         self.replot.emit(self.plotmethod)
 
     def trigger_reset(self):
+        """Emit the :attr:`reset` signal to reinitialize the project."""
         self.array_info = self.sp.array_info(
             standardize_dims=False)[self.sp[0].psy.arr_name]
         self.reset.emit(self.plotmethod)
 
     def trigger_refresh(self):
+        """Emit the :attr:`changed` signal to notify changes in the plot."""
         self.changed.emit(self.plotmethod)
 
-    def get_slice(self, x, y):
+    def get_slice(
+            self, x: float, y: float
+        ) -> Optional[Dict[Hashable, Union[int, slice]]]:
+        """Get the slice for the selected coordinates.
+
+        This method is called when the user clicks on the coordinates in the 
+        plot.
+
+        See Also
+        --------
+        psy_view.ds_widget.DatasetWidget.display_line
+
+        Notes
+        -----
+        This is reimplemented in the :class:`MapPlotWidget`.
+        """
         return None
 
-    def valid_variables(self, ds):
+    def valid_variables(self, ds: Dataset) -> List[Hashable]:
+        """Get a list of variables that can be visualized with this plotmethod.
+
+        Parameters
+        ----------
+        ds: xarray.Dataset
+            The dataset to use
+
+        Returns
+        -------
+        list of str
+            List of variable names to plot
+        """
         ret = []
         plotmethod = getattr(ds.psy.plot, self.plotmethod)
         for v in list(ds):
-            init_kws = self.init_dims(ds[v])
+            init_kws = self.init_dims(ds[v])  # type: ignore
             dims = init_kws.get('dims', {})
             decoder = init_kws.get('decoder')
             if plotmethod.check_data(ds, v, dims, decoder)[0][0]:
@@ -132,10 +238,17 @@ class PlotMethodWidget(QtWidgets.QWidget):
 
 
 class MapPlotWidget(PlotMethodWidget):
+    """A widget to control the mapplot plotmethod."""
 
     plotmethod = 'mapplot'
 
-    def setup(self):
+    def setup(self) -> None:
+        """Set up color and projection buttons.
+        
+        See Also
+        --------
+        setup_color_buttons
+        setup_projection_buttons"""
         self.layout = vbox = QtWidgets.QVBoxLayout()
 
         self.formatoptions_box = QtWidgets.QHBoxLayout()
@@ -152,7 +265,8 @@ class MapPlotWidget(PlotMethodWidget):
 
         vbox.addLayout(self.dimension_box)
 
-    def setup_color_buttons(self):
+    def setup_color_buttons(self) -> None:
+        """Set up the buttons to change the colormap, etc."""
         self.btn_cmap = pswc.CmapButton()
         self.btn_cmap.setToolTip("Select a different colormap")
         self.formatoptions_box.addWidget(self.btn_cmap)
@@ -165,7 +279,8 @@ class MapPlotWidget(PlotMethodWidget):
             "Edit color settings", self.formatoptions_box,
             icon=True)
 
-    def setup_cmap_menu(self):
+    def setup_cmap_menu(self) -> QtWidgets.QMenu:
+        """Set up the menu to change the colormaps."""
         menu = self.btn_cmap.cmap_menu
 
         menu.addSeparator()
@@ -178,14 +293,26 @@ class MapPlotWidget(PlotMethodWidget):
 
         return menu
 
-    def open_cmap_dialog(self, N=10):
-        if self.sp:
+    def open_cmap_dialog(self, N: int = 10) -> None:
+        """Open the dialog to change the colormap.
+        
+        Parameters
+        ----------
+        N: int
+            The number of colormaps to show
+
+        See Also
+        --------
+        psy_simple.widgets.colors.CmapButton
+        """
+        if self.plotter:
             N = self.plotter.plot.mappable.get_cmap().N
         else:
             N = 10
         self.btn_cmap.open_cmap_dialog(N)
 
-    def setup_projection_menu(self):
+    def setup_projection_menu(self) -> QtWidgets.QMenu:
+        """Set up the menu to modify the basemap."""
         menu = QtWidgets.QMenu()
         for projection in rcParams['projections']:
             menu.addAction(
@@ -196,7 +323,8 @@ class MapPlotWidget(PlotMethodWidget):
             "Customize basemap...", self.edit_basemap_settings)
         return menu
 
-    def setup_projection_buttons(self):
+    def setup_projection_buttons(self) -> None:
+        """Set up the buttons to modify the basemap."""
         self.btn_proj = utils.add_pushbutton(
             rcParams["projections"][0], self.choose_next_projection,
             "Change the basemap projection", self.formatoptions_box,
@@ -217,7 +345,8 @@ class MapPlotWidget(PlotMethodWidget):
             "Show the grid cell boundaries", self.formatoptions_box)
         self.btn_datagrid.setCheckable(True)
 
-    def setup_dimension_box(self):
+    def setup_dimension_box(self) -> None:
+        """Set up a box to control, what is the x and y-dimension."""
         self.dimension_box = QtWidgets.QGridLayout()
 
         self.dimension_box.addWidget(QtWidgets.QLabel('x-Dimension:'), 0, 0)
@@ -242,21 +371,49 @@ class MapPlotWidget(PlotMethodWidget):
         for combo in self.coord_combos:
             combo.currentIndexChanged.connect(self.trigger_refresh)
 
-    def set_xcoord(self, text):
+    def set_xcoord(self, text: str) -> None:
+        """Set the name of the x-coordinate."""
         self.set_combo_text(self.combo_xcoord, text)
 
-    def set_ycoord(self, text):
+    def set_ycoord(self, text: str) -> None:
+        """Set the name of the y-coordinate."""
         self.set_combo_text(self.combo_ycoord, text)
 
-    def set_combo_text(self, combo, text):
+    def set_combo_text(self, combo: QtWidgets.QComboBox, text: str) -> None:
+        """Convenience function to update set the current text of a combobox.
+        
+        Parameters
+        ----------
+        combo: PyQt5.QtWidgets.QComboBox
+            The combobox to modify
+        text: str
+            The item to use"""
         items = list(map(combo.itemText, range(combo.count())))
         if text in items:
             combo.setCurrentIndex(items.index(text))
 
-    def init_dims(self, var):
+    def init_dims(
+            self, var: DataArray
+        ) -> Dict[Union[Hashable, str, Any], Any]:
+        """Get the formatoptions for a new plot.
+        
+        This method updates the coordinates combo boxes with the 
+        x- and y-coordinate of the variable.
+        
+        Parameters
+        ----------
+        var: xarray.Variable
+            The variable in the base dataset
+
+        Returns
+        -------
+        dict
+            A mapping from formatoption or dimension to the corresponding value
+            for the plotmethod.
+        """
         ret = super().init_dims(var)
 
-        dims = {}
+        dims: Dict[Hashable, Union[int, slice]] = {}
         xdim = ydim = None
 
         if self.combo_xdim.currentIndex():
@@ -296,7 +453,19 @@ class MapPlotWidget(PlotMethodWidget):
 
         return ret
 
-    def valid_variables(self, ds):
+    def valid_variables(self, ds: Dataset) -> List[Hashable]:
+        """Get a list of variables that can be visualized with this plotmethod.
+
+        Parameters
+        ----------
+        ds: xarray.Dataset
+            The dataset to use
+
+        Returns
+        -------
+        list of str
+            List of variable names to plot
+        """
         valid = super().valid_variables(ds)
         if (not any(combo.count() for combo in self.coord_combos) or
                 not any(combo.currentIndex() for combo in self.coord_combos)):
@@ -318,19 +487,28 @@ class MapPlotWidget(PlotMethodWidget):
         return valid
 
     @property
-    def coord_combos(self):
+    def coord_combos(self) -> List[QtWidgets.QComboBox]:
+        """Get the combo boxes for x- and y-dimension and -coordinates."""
         return [self.combo_xdim, self.combo_ydim, self.combo_xcoord,
                 self.combo_ycoord]
 
     @contextlib.contextmanager
-    def block_combos(self):
+    def block_combos(self) -> Iterator[None]:
+        """Temporarilly block any signal of the :attr:`coord_combos`."""
         for combo in self.coord_combos:
             combo.blockSignals(True)
         yield
         for combo in self.coord_combos:
             combo.blockSignals(False)
 
-    def setEnabled(self, b):
+    def setEnabled(self, b: bool) -> None:
+        """Enable or disable the projection and color buttons.
+        
+        Parameters
+        ----------
+        b: bool
+            If True, enable the buttons, else disable.
+        """
         self.btn_proj_settings.setEnabled(b)
         self.proj_settings_action.setEnabled(b)
         self.btn_datagrid.setEnabled(b)
@@ -338,28 +516,42 @@ class MapPlotWidget(PlotMethodWidget):
         self.btn_cmap_settings.setEnabled(b)
         self.btn_labels.setEnabled(b)
 
-    def set_cmap(self, cmap):
-        if self.sp and 'cmap' in self.sp.plotters[0]:
-            self.plotter.update(cmap=cmap)
+    def set_cmap(self, cmap: str) -> None:
+        """Update the plotter with the given colormap.
 
-    def toggle_datagrid(self):
-        if self.btn_datagrid.isChecked():
-            self.plotter.update(datagrid='k--')
-        else:
-            self.plotter.update(datagrid=None)
+        Parameters
+        ----------
+        cmap: str
+            The colormap name.
+        """
+        plotter = self.plotter
+        if plotter and 'cmap' in plotter:
+            plotter.update(cmap=cmap)
 
-    def edit_labels(self):
+    def toggle_datagrid(self) -> None:
+        """Toggle the visibility of the grid cell boundaries."""
+        if self.plotter:
+            if self.btn_datagrid.isChecked():
+                self.plotter.update(datagrid='k--')
+            else:
+                self.plotter.update(datagrid=None)
+
+    def edit_labels(self) -> None:
+        """Open the dialog to edit the text labels in the plot."""
         dialogs.LabelDialog.update_project(
             self.sp, 'figtitle', 'title', 'clabel')
 
-    def edit_color_settings(self):
-        dialogs.CmapDialog.update_project(self.sp)
-        if isinstance(self.plotter.cmap.value, str):
-            self.btn_cmap.setText(self.plotter.cmap.value)
-        else:
-            self.btn_cmap.setText('Custom')
+    def edit_color_settings(self) -> None:
+        """Open the dialog to edit the color settings."""
+        if self.sp and self.plotter:
+            dialogs.CmapDialog.update_project(self.sp)
+            if isinstance(self.plotter.cmap.value, str):
+                self.btn_cmap.setText(self.plotter.cmap.value)
+            else:
+                self.btn_cmap.setText('Custom')
 
-    def choose_next_projection(self):
+    def choose_next_projection(self) -> None:
+        """Choose the next projection from the rcParams `projection` value."""
         select = False
         nprojections = len(rcParams['projections'])
         current = self.btn_proj.text()
@@ -370,16 +562,46 @@ class MapPlotWidget(PlotMethodWidget):
                 break
         self.set_projection(proj)
 
-    def set_projection(self, proj):
+    def set_projection(self, proj: str) -> None:
+        """Update the projection of the plot with the given projection.
+        
+        Parameters
+        ----------
+        projection: str
+            The projection name for the 
+            :attr:`~psy_maps.plotters.FieldPlotter.projection` formatoption.
+        """
         self.btn_proj.setText(proj)
-        if self.sp and 'projection' in self.sp.plotters[0]:
-            self.plotter.update(projection=proj)
+        plotter = self.plotter
+        if plotter and 'projection' in plotter:
+            plotter.update(projection=proj)
 
-    def edit_basemap_settings(self):
-        dialogs.BasemapDialog.update_plotter(self.plotter)
+    def edit_basemap_settings(self) -> None:
+        """Open a dialog to edit the basemap and projection settings."""
+        if self.plotter:
+            dialogs.BasemapDialog.update_plotter(self.plotter)
 
-    def get_fmts(self, var, init=False):
-        fmts = {}
+    def get_fmts(
+            self, var: DataArray,
+            init: bool = False
+        ) -> Dict[Union[Hashable, str, Any], Any]:
+        """Get the formatoptions for a new plot.
+        
+        Parameters
+        ----------
+        var: xarray.Variable
+            The variable in the base dataset
+        init: bool
+            If True, call the :meth:`init_dims` method to inject necessary
+            formatoptions and dimensions for the initialization.
+
+        Returns
+        -------
+        dict
+            A mapping from formatoption or dimension to the corresponding value
+            for the plotmethod.
+        """
+        fmts: Dict[Union[Hashable, str, Any], Any] = {}
 
         fmts['cmap'] = self.btn_cmap.text()
 
@@ -401,7 +623,8 @@ class MapPlotWidget(PlotMethodWidget):
 
         return fmts
 
-    def refresh(self, ds):
+    def refresh(self, ds: Optional[Dataset]) -> None:
+        """Refresh this widget from the given dataset."""
         self.setEnabled(bool(self.sp))
 
         auto = 'Set automatically'
@@ -415,7 +638,8 @@ class MapPlotWidget(PlotMethodWidget):
 
             current_dims = set(map(
                 self.combo_xdim.itemText, range(1, self.combo_xdim.count())))
-            ds_dims = list(dim for dim, n in ds.dims.items() if n > 1)
+            ds_dims = list(
+                map(str, (dim for dim, n in ds.dims.items() if n > 1)))
             if current_dims != set(ds_dims):
                 self.combo_xdim.clear()
                 self.combo_ydim.clear()
@@ -424,7 +648,8 @@ class MapPlotWidget(PlotMethodWidget):
 
             current_coords = set(map(
                 self.combo_xcoord.itemText, range(1, self.combo_xcoord.count())))
-            ds_coords = list(c for c, arr in ds.coords.items() if arr.ndim)
+            ds_coords = list(
+                map(str, (c for c, arr in ds.coords.items() if arr.ndim)))
             if current_coords != set(ds_coords):
                 self.combo_xcoord.clear()
                 self.combo_ycoord.clear()
@@ -459,9 +684,10 @@ class MapPlotWidget(PlotMethodWidget):
                 self.combo_xcoord.setCurrentText(xcoord)
                 self.combo_ycoord.setCurrentText(ycoord)
 
-    def refresh_from_sp(self):
-        if self.sp:
-            plotter = self.plotter
+    def refresh_from_sp(self) -> None:
+        """Refresh this widget from the plotters project."""
+        plotter = self.plotter
+        if plotter:
             if isinstance(plotter.projection.value, str):
                 self.btn_proj.setText(plotter.projection.value)
             else:
@@ -471,14 +697,35 @@ class MapPlotWidget(PlotMethodWidget):
             else:
                 self.btn_cmap.setText('Custom')
 
-    def transform(self, x, y):
+    def transform(self, x: float, y: float) -> Tuple[float, float]:
+        """Transform coordinates of a point to the plots projection.
+
+        Parameters
+        ----------
+        x: float
+            The x-coordinate in axes coordinates
+        y: float
+            The y-coordinate in axes coordinates
+
+        Returns
+        -------
+        float
+            The transformed x-coordinate `x`
+        float
+            The transformed y-coordinate `y`
+        """
         import cartopy.crs as ccrs
         import numpy as np
-        x, y = self.plotter.transform.projection.transform_point(
-            x, y, self.plotter.ax.projection)
+        plotter = self.plotter
+        if not plotter:
+            raise ValueError(
+                "Cannot transform the coordinates as no plot is shown "
+                "currently!") 
+        x, y = plotter.transform.projection.transform_point(
+            x, y, plotter.ax.projection)
         # shift if necessary
-        if isinstance(self.plotter.transform.projection, ccrs.PlateCarree):
-            coord = self.plotter.plot.xcoord
+        if isinstance(plotter.transform.projection, ccrs.PlateCarree):
+            coord = plotter.plot.xcoord
             if coord.min() >= 0 and x < 0:
                 x -= 360
             elif coord.max() <= 180 and x > 180:
@@ -488,11 +735,33 @@ class MapPlotWidget(PlotMethodWidget):
                 y = np.deg2rad(y)
         return x, y
 
-    def get_slice(self, x, y):
+    def get_slice(
+            self, x: float, y: float
+        ) -> Optional[Dict[Hashable, Union[int, slice]]]:
+        """Get the slice for the selected coordinates.
+
+        This method is called when the user clicks on the coordinates in the 
+        plot.
+
+        See Also
+        --------
+        psy_view.ds_widget.DatasetWidget.display_line
+
+        Notes
+        -----
+        This is reimplemented in the :class:`MapPlotWidget`.
+        """
         import numpy as np
         data = self.data.psy.base.psy[self.data.name]
-        x, y =  self.transform(x, y)
-        fmto = self.plotter.plot
+        x, y = self.transform(x, y)
+        plotter = self.plotter
+
+        if not plotter:
+            raise ValueError(
+                "Cannot transform the coordinates as no plot is shown "
+                "currently!")
+                
+        fmto = plotter.plot
 
         xcoord = fmto.xcoord
         ycoord = fmto.ycoord
@@ -507,48 +776,61 @@ class MapPlotWidget(PlotMethodWidget):
             else:
                 return {data.dims[-1]: imin}
         else:
-            x = xcoord.indexes[xcoord.name].get_loc(x, method='nearest')
-            y = ycoord.indexes[ycoord.name].get_loc(y, method='nearest')
-            return dict(zip(data.dims[-2:], [y, x]))
+            ix: int = xcoord.indexes[xcoord.name].get_loc(x, method='nearest')
+            iy: int = ycoord.indexes[ycoord.name].get_loc(y, method='nearest')
+            return dict(zip(data.dims[-2:], [iy, ix]))
 
 
 class Plot2DWidget(MapPlotWidget):
+    """A widget to control the plot2d plotmethod."""
 
     plotmethod = 'plot2d'
 
-    def setup_projection_buttons(self):
+    def setup_projection_buttons(self) -> None:
+        """Reimplemented to only show the datagrid button."""
         self.btn_datagrid = utils.add_pushbutton(
             "Cells", self.toggle_datagrid,
             "Show the grid cell boundaries", self.formatoptions_box)
         self.btn_datagrid.setCheckable(True)
 
-    def setEnabled(self, b):
+    def setEnabled(self, b: bool) -> None:
+        """Enable or disable the datagrid and color buttons.
+        
+        Parameters
+        ----------
+        b: bool
+            If True, enable the buttons, else disable.
+        """
         self.btn_datagrid.setEnabled(b)
         self.btn_cmap_settings.setEnabled(b)
         self.btn_labels.setEnabled(b)
 
-    def edit_labels(self):
+    def edit_labels(self) -> None:
+        """Open the dialog to edit the text labels in the plot."""
         dialogs.LabelDialog.update_project(
             self.sp, 'figtitle', 'title', 'clabel', 'xlabel', 'ylabel')
 
-    def transform(self, x, y):
+    def transform(self, x: float, y: float) -> Tuple[float, float]:
+        """Reimplemented to not transform the coordinates."""
         return x, y
 
-    def refresh_from_sp(self):
-        if self.sp:
-            plotter = self.plotter
+    def refresh_from_sp(self) -> None:
+        """Refresh this widget from the plotters project."""
+        plotter = self.plotter
+        if plotter:
             if isinstance(plotter.cmap.value, str):
                 self.btn_cmap.setText(plotter.cmap.value)
 
 
 class LinePlotWidget(PlotMethodWidget):
+    """A widget to control the lineplot plotmethod."""
 
     plotmethod = 'lineplot'
 
-    def setup(self):
+    def setup(self) -> None:
+        """Set up widget during initialization."""
         self.layout = self.formatoptions_box = QtWidgets.QHBoxLayout()
 
-        # TODO: Implement a button to choose the dimension
         self.formatoptions_box.addWidget(QtWidgets.QLabel('x-Dimension:'))
         self.combo_dims = QtWidgets.QComboBox()
         self.combo_dims.setEditable(False)
@@ -573,23 +855,39 @@ class LinePlotWidget(PlotMethodWidget):
             "Edit title, x-label, legendlabels, etc.", self.formatoptions_box)
 
     @property
-    def xdim(self):
+    def xdim(self) -> str:
+        """Get the x-dimension for the plot."""
         return self.combo_dims.currentText()
 
     @xdim.setter
-    def xdim(self, xdim):
+    def xdim(self, xdim: Hashable) -> None:
         if xdim != self.combo_dims.currentText():
-            self.combo_dims.setCurrentText(xdim)
+            self.combo_dims.setCurrentText(str(xdim))
 
     @property
-    def data(self):
+    def data(self) -> DataArray:
+        """The first array in the list."""
         data = super().data
         if len(data) - 1 < self.combo_lines.currentIndex():
             return data[0]
         else:
             return data[self.combo_lines.currentIndex()]
 
-    def add_line(self, name=None, **sl):
+    def add_line(self, name: Hashable = None, **sl) -> None:
+        """Add a line to the plot.
+
+        This method adds a new line for the plot specified by the given 
+        `name` of the variable and the slices.
+
+        Parameters
+        ----------
+        name: str
+            The variable name to display
+        ``**sl``
+            The slices to turn the `name` variable into a 1D-array.
+        """
+        if not self.sp:
+            raise ValueError("No plot has yet been initialized!")
         ds = self.data.psy.base
         xdim = self.xdim
         if name is None:
@@ -613,7 +911,12 @@ class LinePlotWidget(PlotMethodWidget):
         self.combo_lines.setCurrentText(item)
         self.trigger_refresh()
 
-    def remove_line(self):
+    def remove_line(self) -> None:
+        """Remove the current line from the plot."""
+        if not self.sp:
+            raise ValueError(
+                "No plot has yet been initialized, so I cannot remove any line!"
+            )
         i = self.combo_lines.currentIndex()
         self.sp[0].pop(i)
         self.sp.update(replot=True)
@@ -621,14 +924,34 @@ class LinePlotWidget(PlotMethodWidget):
         self.changed.emit(self.plotmethod)
 
     @property
-    def item_texts(self):
+    def item_texts(self) -> List[str]:
+        """Get the labels for the individual lines."""
+        if not self.sp:
+            return []
         return [f'Line {i}: {arr.psy._short_info()}'
                 for i, arr in enumerate(self.sp[0])]
 
-    def init_dims(self, var):
-        ret = {}
-        xdim = self.xdim or next((d for d in var.dims if var[d].size > 1),
-                                 None)
+    def init_dims(
+            self, var: DataArray
+        ) -> Dict[Union[Hashable, str, Any], Any]:
+        """Get the formatoptions for a new plot.
+        
+        Parameters
+        ----------
+        var: xarray.Variable
+            The variable in the base dataset
+
+        Returns
+        -------
+        dict
+            A mapping from formatoption or dimension to the corresponding value
+            for the plotmethod.
+        
+        """
+        ret: Dict[Union[Hashable, str, Any], Any] = {}
+        xdim: Union[None, Hashable, str] = self.xdim or next(
+            (d for d in var.dims if var[d].size > 1), None  # type: ignore
+        )
         if self.array_info:
             arr_names = {}
             for arrname, d in self.array_info.items():
@@ -656,19 +979,33 @@ class LinePlotWidget(PlotMethodWidget):
                     ret[d] = 0
         return ret
 
-    def edit_labels(self):
+    def edit_labels(self) -> None:
+        """Open the dialog to edit the text labels in the plot."""
         dialogs.LabelDialog.update_project(
             self.sp, 'figtitle', 'title', 'xlabel', 'ylabel', 'legendlabels')
 
     @contextlib.contextmanager
-    def block_combos(self):
+    def block_combos(self) -> Iterator[None]:
+        """Temporarilly block any signal of the combo boxes."""
         self.combo_dims.blockSignals(True)
         self.combo_lines.blockSignals(True)
         yield
         self.combo_dims.blockSignals(False)
         self.combo_lines.blockSignals(False)
 
-    def valid_variables(self, ds):
+    def valid_variables(self, ds: Dataset) -> List[Hashable]:
+        """Get a list of variables that can be visualized with this plotmethod.
+
+        Parameters
+        ----------
+        ds: xarray.Dataset
+            The dataset to use
+
+        Returns
+        -------
+        list of str
+            List of variable names to plot
+        """
         valid = list(ds)
         if not self.sp or len(self.sp[0]) < 2:
             return valid
@@ -676,7 +1013,8 @@ class LinePlotWidget(PlotMethodWidget):
             current_dim = self.combo_dims.currentText()
             return [v for v in valid if current_dim in ds[v].dims]
 
-    def refresh(self, ds):
+    def refresh(self, ds) -> None:
+        """Refresh this widget from the given dataset."""
         if self.sp:
             with self.block_combos():
                 self.combo_dims.clear()

@@ -19,7 +19,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/."""
 
 from ._version import get_versions
+
 __version__ = get_versions()['version']
+
 del get_versions
 
 __author__ = "Philipp S. Sommer"
