@@ -90,7 +90,7 @@ install:
         conda config --add channels psyplot/label/master;
         conda config --add channels psyplot/label/${TRAVIS_BRANCH};
       fi
-    - python ci/setup_append.py ci/conda-recipe pyqt=${QT_VERSION}
+    - python ci/setup_append.py ci/conda-recipe pyqt=${QT_VERSION} 'cartopy>=0.18'
     - if [[ $USE_PIP == true ]]; then
         python -m pip install . -r ci/requirements.txt;
       fi
