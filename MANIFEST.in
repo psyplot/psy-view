@@ -1,3 +1,5 @@
 include README.rst
 include LICENSE
 include psy_view/icons/*.png
+include versioneer.py
+include psy_view/_version.py

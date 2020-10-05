@@ -4,6 +4,8 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import sys
 
+import versioneer
+
 
 class PyTest(TestCommand):
     user_options = [('pytest-args=', 'a', "Arguments to pass to pytest")]
@@ -27,11 +29,7 @@ def readme():
             'https://raw.githubusercontent.com/psyplot/psyplot/master/'
             'img/screenshot.png')
 
-
-# read the version from version.py
-with open(osp.join('psy_view', 'version.py')) as f:
-    exec(f.read())
-
+version = versioneer.get_version()
 
 dependencies = [
     'psyplot-gui>1.2.4',
@@ -53,8 +51,11 @@ if not os.getenv('CONDA_BUILD'):
         dependencies.append('pyqt5-sip')
 
 
+cmdclass = versioneer.get_cmdclass({'test': PyTest})
+
+
 setup(name='psy-view',
-      version=__version__,
+      version=version,
       description='ncview-like interface to psyplot',
       long_description=readme(),
       classifiers=[
@@ -83,7 +84,7 @@ setup(name='psy-view',
           ]},
       include_package_data=True,
       tests_require=['pytest', 'pytest-qt'],
-      cmdclass={'test': PyTest},
+      cmdclass=cmdclass,
       entry_points={
           'console_scripts': ['psy-view=psy_view.__main__:main'],
           'psyplot_gui': ['psy-view=psy_view.ds_widget:DatasetWidgetPlugin'],
