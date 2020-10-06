@@ -46,7 +46,12 @@ from psyplot_gui.common import (
     DockMixin, get_icon as get_psy_icon, PyErrorMessage)
 import psyplot.data as psyd
 from psy_view.rcsetup import rcParams
-import psy_view.plotmethods as plotmethods
+from psy_view.plotmethods import (
+    PlotMethodWidget,
+    MapPlotWidget,
+    Plot2DWidget,
+    LinePlotWidget,
+)
 from psyplot.config.rcsetup import get_configdir
 
 from matplotlib.animation import FuncAnimation
@@ -592,11 +597,11 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     def setup_plot_tabs(self) -> None:
         """Setup the tabs of the various plot methods."""
-        self.plot_tabs.addTab(plotmethods.MapPlotWidget(self.get_sp, self.ds),
+        self.plot_tabs.addTab(MapPlotWidget(self.get_sp, self.ds),
                               'mapplot')
-        self.plot_tabs.addTab(plotmethods.Plot2DWidget(self.get_sp, self.ds),
+        self.plot_tabs.addTab(Plot2DWidget(self.get_sp, self.ds),
                               'plot2d')
-        lineplot_widget = plotmethods.LinePlotWidget(self.get_sp, self.ds)
+        lineplot_widget = LinePlotWidget(self.get_sp, self.ds)
         self.plot_tabs.addTab(lineplot_widget, 'lineplot')
 
         for w in map(self.plot_tabs.widget, range(self.plot_tabs.count())):
@@ -1038,14 +1043,14 @@ class DatasetWidget(QtWidgets.QSplitter):
     def plot_options(self) -> Dict[str, Any]:
         """Get further keyword arguments for the :attr:`plot` function."""
         if self.ds is not None:
-            ret = self.plotmethod_widget.get_fmts(
+            ret: Dict[str, Any] = self.plotmethod_widget.get_fmts(  # type: ignore
                 self.ds.psy[self.variable], True)
             preset = self.preset
             if preset:
                 import psyplot.project as psy
                 preset = psy.Project.extract_fmts_from_preset(
                     preset, self.plotmethod)
-                ret.update(preset)
+                ret.update(dict(preset))
             return ret
         return {}
 
@@ -1067,7 +1072,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         return list(map(self.plot_tabs.tabText, range(self.plot_tabs.count())))
 
     @property
-    def plotmethod_widget(self) -> plotmethods.PlotMethodWidget:
+    def plotmethod_widget(self) -> PlotMethodWidget:
         """Get widget of the current plotmethod."""
         label = self.plotmethod
         i = next((i for i in range(self.plot_tabs.count())
@@ -1075,7 +1080,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         return self.plot_tabs.widget(i)
 
     @property
-    def plotmethod_widgets(self) -> Dict[str, plotmethods.PlotMethodWidget]:
+    def plotmethod_widgets(self) -> Dict[str, PlotMethodWidget]:
         """Get a list of available plotmethod widgets."""
         return dict(zip(self.plotmethods, map(self.plot_tabs.widget,
                                               range(self.plot_tabs.count()))))
@@ -1117,17 +1122,18 @@ class DatasetWidget(QtWidgets.QSplitter):
         --------
         make_plot: plot the currently selected variable without asking
         """
-        name, ok = QtWidgets.QInputDialog.getItem(
-            self, 'New plot', 'Select a variable',
-            self.plotmethod_widget.valid_variables(self.ds))
-        if not ok:
-            return
-        with self.silence_variable_buttons():
-            for v, btn in self.variable_buttons.items():
-                btn.setChecked(v == name)
-        with self.creating_new_plot():
-            self.make_plot()
-        self.btn_del.setEnabled(True)
+        if self.ds is not None:
+            name, ok = QtWidgets.QInputDialog.getItem(
+                self, 'New plot', 'Select a variable',
+                self.plotmethod_widget.valid_variables(self.ds))
+            if not ok:
+                return
+            with self.silence_variable_buttons():
+                for v, btn in self.variable_buttons.items():
+                    btn.setChecked(v == name)
+            with self.creating_new_plot():
+                self.make_plot()
+            self.btn_del.setEnabled(True)
         self.refresh()
 
     @contextlib.contextmanager
@@ -1413,11 +1419,11 @@ class DatasetWidget(QtWidgets.QSplitter):
         for i in range(self.plot_tabs.count()):
             w = self.plot_tabs.widget(i)
             w.refresh(self.ds)
-        if self.variable_buttons:
+        if self.ds is not None and self.variable_buttons:
             valid_variables = self.plotmethod_widget.valid_variables(self.ds)
             for v, btn in self.variable_buttons.items():
                 btn.setEnabled(v in valid_variables)
-        if self.ds is None or variable is NOTSET or not self.sp:
+        elif self.ds is None or variable is NOTSET or not self.sp:
             return
 
         data = self.data

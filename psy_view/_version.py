@@ -9,6 +9,9 @@
 # versioneer-0.18 (https://github.com/warner/python-versioneer)
 
 """Git implementation of _version.py."""
+
+# pylint: skip-file
+
 from typing import Dict
 
 import errno

@@ -611,13 +611,24 @@ class CmapDialog(QtWidgets.QDialog):
             project.update(**dialog.fmts)
 
 
+class _DummyFormatOption(Formatoption):
+    """Dummy formatoption for static type checking.
+    
+    This is just a workaround for the static type checker to be able to tell
+    what the :class:`FakePlotter` formatoptions are, used in 
+    :attr:`ColorbarPreview.fake_plotter`
+    """
+    def update(self,):
+        pass
+
+
 class FakePlotter(Plotter):
     """A dummy plotter for the colorbar preview."""
 
-    bounds: Formatoption
-    cmap: Formatoption
-    cticks: Formatoption
-    cbar: Formatoption
+    bounds: Formatoption = _DummyFormatOption('bounds')
+    cmap: Formatoption = _DummyFormatOption('cmap')
+    cticks: Formatoption = _DummyFormatOption('cticks')
+    cbar: Formatoption = _DummyFormatOption('cbar')
 
 
 class ColorbarPreview(FigureCanvas):
