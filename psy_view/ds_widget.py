@@ -1426,50 +1426,62 @@ class DatasetWidget(QtWidgets.QSplitter):
         elif self.ds is None or variable is NOTSET or not self.sp:
             return
 
-        data = self.data
-        ds_data = self.ds[self.variable]
-
-        with self.silence_variable_buttons():
-            self.variable_buttons[self.variable].setChecked(True)
-
         table = self.dimension_table
-        dims: Tuple[Hashable, ...] = ds_data.dims  # type: ignore
-        table.setRowCount(ds_data.ndim)
-        table.setVerticalHeaderLabels(ds_data.dims)
 
-        # set time, z, x, y info
-        for c in 'XYTZ':
-            cname = ds_data.psy.get_dim(c)
-            if cname and cname in dims:
-                table.setItem(
-                    dims.index(cname), 0, QtWidgets.QTableWidgetItem(c))
+        if self.sp:
+            data = self.data
+            ds_data = self.ds[self.variable]
 
-        for i, dim in enumerate(dims):
-            coord = self.ds[dim]
-            if 'units' in coord.attrs:
-                table.setItem(
-                    i, 4, QtWidgets.QTableWidgetItem(
-                        str(coord.attrs['units'])))
-            try:
-                coord = list(map("{:1.4f}".format, coord.values))  # type: ignore
-            except (ValueError, TypeError):
+            with self.silence_variable_buttons():
+                self.variable_buttons[self.variable].setChecked(True)
+
+            dims: Tuple[Hashable, ...] = ds_data.dims  # type: ignore
+            table.setRowCount(ds_data.ndim)
+            table.setVerticalHeaderLabels(ds_data.dims)
+
+            # set time, z, x, y info
+            for c in 'XYTZ':
+                cname = ds_data.psy.get_dim(c)
+                if cname and cname in dims:
+                    table.setItem(
+                        dims.index(cname), 0, QtWidgets.QTableWidgetItem(c))
+
+            for i, dim in enumerate(dims):
+                coord = self.ds[dim]
+                if 'units' in coord.attrs:
+                    table.setItem(
+                        i, 4, QtWidgets.QTableWidgetItem(
+                            str(coord.attrs['units'])))
                 try:
-                    coord = coord.to_pandas().dt.to_pydatetime()  # type: ignore
-                except AttributeError:
-                    coord = list(map(str, coord.values))  # type: ignore
-                else:
-                    coord = [t.isoformat() for t in coord]  # type: ignore
-            first = coord[0]
-            last = coord[-1]
-            table.setItem(
-                i, 1, QtWidgets.QTableWidgetItem(first))
-            table.setItem(
-                i, 3, QtWidgets.QTableWidgetItem(last))
+                    coord = list(map("{:1.4f}".format, coord.values))  # type: ignore
+                except (ValueError, TypeError):
+                    try:
+                        coord = coord.to_pandas().dt.to_pydatetime()  # type: ignore
+                    except AttributeError:
+                        coord = list(map(str, coord.values))  # type: ignore
+                    else:
+                        coord = [t.isoformat() for t in coord]  # type: ignore
+                first = coord[0]
+                last = coord[-1]
+                table.setItem(
+                    i, 1, QtWidgets.QTableWidgetItem(first))
+                table.setItem(
+                    i, 3, QtWidgets.QTableWidgetItem(last))
 
-            current = data.psy.idims.get(dim)
-            if current is not None and isinstance(current, int):
-                table.setCellWidget(
-                    i, 2, self.new_dimension_button(dim, coord[current]))
+                current = data.psy.idims.get(dim)
+                if current is not None and isinstance(current, int):
+                    table.setCellWidget(
+                        i, 2, self.new_dimension_button(dim, coord[current]))
+
+            # update animation checkbox
+            dims_to_animate = get_dims_to_iterate(data)
+
+            current_dims_to_animate = list(map(
+                self.combo_dims.itemText,
+                range(self.combo_dims.count())))
+            if dims_to_animate != current_dims_to_animate:
+                self.combo_dims.clear()
+                self.combo_dims.addItems(dims_to_animate)
 
         table.resizeColumnsToContents()
 
@@ -1481,16 +1493,6 @@ class DatasetWidget(QtWidgets.QSplitter):
                         plots_item = ds_item.get_plots_item(child)
                         ds_item.refresh_plots_item(
                             plots_item, child.text(0), self._sp, self.sp)
-
-        # update animation checkbox
-        dims_to_animate = get_dims_to_iterate(data)
-
-        current_dims_to_animate = list(map(
-            self.combo_dims.itemText,
-            range(self.combo_dims.count())))
-        if dims_to_animate != current_dims_to_animate:
-            self.combo_dims.clear()
-            self.combo_dims.addItems(dims_to_animate)
 
     def new_dimension_button(
             self, dim: Hashable, label: Any) -> utils.QRightPushButton:
