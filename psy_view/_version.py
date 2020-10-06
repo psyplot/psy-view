@@ -10,6 +10,10 @@
 
 """Git implementation of _version.py."""
 
+# pylint: skip-file
+
+from typing import Dict
+
 import errno
 import os
 import re
@@ -41,7 +45,7 @@ def get_config():
     cfg = VersioneerConfig()
     cfg.VCS = "git"
     cfg.style = "pep440"
-    cfg.tag_prefix = ""
+    cfg.tag_prefix = "v"
     cfg.parentdir_prefix = "psy-view-"
     cfg.versionfile_source = "psy_view/_version.py"
     cfg.verbose = False
@@ -52,7 +56,7 @@ class NotThisMethod(Exception):
     """Exception raised if a method is not valid for the current scenario."""
 
 
-LONG_VERSION_PY = {}
+LONG_VERSION_PY: Dict[str, str] = {}
 HANDLERS = {}
 
 

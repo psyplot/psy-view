@@ -15,17 +15,30 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see https://www.gnu.org/licenses/."""
+along with this program.If not, see https: // www.gnu.org / licenses / .
+"""
+from __future__ import annotations
 import os.path as osp
+
+from typing import Callable, Optional, Union, List, cast, TYPE_CHECKING
+
 from PyQt5 import QtWidgets, QtCore, QtGui
 
+if TYPE_CHECKING:
+    from PyQt5.QtCore import QEvent  # pylint: disable=no-name-in-module
 
-def get_icon(name, ending='.png'):
+
+def get_icon(name: str, ending: str = '.png') -> str:
     return osp.join(osp.dirname(__file__), 'icons', name + ending)
 
 
-def add_pushbutton(label, connections=None, tooltip=None, layout=None,
-                   icon=False, toolbutton=None, *args, **kwargs):
+def add_pushbutton(
+        label: str,
+        connections: Optional[Union[List[Callable], Callable]] = None,
+        tooltip: Optional[str] = None,
+        layout: Optional[QtWidgets.QLayout] = None,
+        icon: bool = False, toolbutton: bool = False, *args, **kwargs
+    ) -> Union[QtWidgets.QPushButton, QtWidgets.QToolButton]:
     if icon or toolbutton:
         btn = QtWidgets.QToolButton(*args, **kwargs)
         if icon:
@@ -38,9 +51,10 @@ def add_pushbutton(label, connections=None, tooltip=None, layout=None,
         btn.setToolTip(tooltip)
     if connections is not None:
         try:
-            iter(connections)
+            iter(connections)  # type: ignore
         except TypeError:
-            connections = [connections]
+            connections = [connections]  # type: ignore
+        connections = cast(List[Callable], connections)
         for con in connections:
             btn.clicked.connect(con)
     if layout is not None:
@@ -53,7 +67,7 @@ class QRightPushButton(QtWidgets.QPushButton):
 
     rightclicked = QtCore.pyqtSignal()
 
-    def mousePressEvent(self, event):
+    def mousePressEvent(self, event: QEvent):
         if event.button() == QtCore.Qt.RightButton:
             self.rightclicked.emit()
             event.accept()

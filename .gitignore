@@ -5,6 +5,9 @@ __pycache__/
 # C extensions
 *.so
 
+# mypy cache
+.mypy_cache
+
 # Distribution / packaging
 .Python
 env/
@@ -70,4 +73,7 @@ target/
 *psyplotguirc.yml
 *psyplotrc.yml
 *debug_psyplot.log*
+
+# CI Test files
+ci/conda-recipe/recipe_append.yaml
 

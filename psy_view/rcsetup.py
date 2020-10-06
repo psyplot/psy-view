@@ -15,13 +15,22 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see https://www.gnu.org/licenses/."""
+along with this program.  If not, see https://www.gnu.org/licenses/.
+"""
+from __future__ import annotations
+from typing import (
+    Dict,
+    List,
+    Any,
+    Optional,
+)
+
 from psyplot_gui.config.rcsetup import (
     RcParams, validate_stringlist, psyplot_fname)
 from psyplot.config.rcsetup import validate_dict
 
 
-defaultParams = {
+defaultParams: Dict[str, List[Any]] = {
     "projections": [
         ["cf", "cyl", "robin", "ortho", "moll"], validate_stringlist,
         "The names of available projections"],
@@ -37,11 +46,11 @@ defaultParams = {
 class PsyViewRcParams(RcParams):
     """RcParams for the psyplot-gui package."""
 
-    HEADER = RcParams.HEADER.replace(
+    HEADER: str = RcParams.HEADER.replace(
         'psyplotrc.yml', 'psyviewrc.yml').replace(
             'PSYVIEWRC', 'psyviewrc.yml')
 
-    def load_from_file(self, fname=None):
+    def load_from_file(self, fname: Optional[str] = None):
         """
         Update rcParams from user-defined settings
 
