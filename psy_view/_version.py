@@ -45,7 +45,7 @@ def get_config():
     cfg = VersioneerConfig()
     cfg.VCS = "git"
     cfg.style = "pep440"
-    cfg.tag_prefix = ""
+    cfg.tag_prefix = "v"
     cfg.parentdir_prefix = "psy-view-"
     cfg.versionfile_source = "psy_view/_version.py"
     cfg.verbose = False
