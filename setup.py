@@ -4,6 +4,13 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import sys
 
+if os.getenv("READTHEDOCS") == "True":
+    # to make versioneer working, we need to unshallow this repo
+    # because RTD does a checkout with --depth 50
+    import subprocess as spr
+    rootdir = osp.dirname(__file__)
+    spr.check_call(["git", "-C", rootdir, "fetch", "--unshallow", "origin"])
+
 import versioneer
 
 
