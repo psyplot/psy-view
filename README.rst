@@ -13,7 +13,7 @@ psy-view: An ncview-like GUI with psyplot
     * - tests
       - |travis| |appveyor| |codecov|
     * - package
-      - |conda| |github|
+      - |version| |conda| |supported-versions| |supported-implementations| |github|
 
 .. |mybinder| image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop
@@ -31,13 +31,25 @@ psy-view: An ncview-like GUI with psyplot
     :alt: Coverage
     :target: https://codecov.io/gh/psyplot/psy-view
 
-.. |conda| image:: https://anaconda.org/psyplot/psy-view/badges/version.svg
+.. |conda| image:: https://anaconda.org/conda-forge/psy-view/badges/version.svg
     :alt: conda
-    :target: https://anaconda.org/conda-forge/psyplot
+    :target: https://anaconda.org/conda-forge/psy-view
 
 .. |github| image:: https://img.shields.io/github/release/psyplot/psy-view.svg
     :target: https://github.com/psyplot/psy-view/releases/latest
     :alt: Latest github release
+
+.. |version| image:: https://img.shields.io/pypi/v/psy-view.svg?style=flat
+    :alt: PyPI Package latest release
+    :target: https://pypi.python.org/pypi/psy-view
+
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/psy-view.svg?style=flat
+    :alt: Supported versions
+    :target: https://pypi.python.org/pypi/psy-view
+
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/psy-view.svg?style=flat
+    :alt: Supported implementations
+    :target: https://pypi.python.org/pypi/psy-view
 
 .. end-badges
 
@@ -51,10 +63,10 @@ graphical user interface to quickly dive into the data inside a netCDF file.
 **This package is currently under development and we highly appreciate your
 feedback! Please try it out yourself and, if you would like to see more features,
 find bugs or want to say anything else, please leave your comments and
-experiences at https://github.com/psyplot/psy-view/issues or send a mail at
+experiences at https://github.com/psyplot/psy-view/issues or send a mail to
 psyplot@hzg.de.**
 
-.. image:: img/screenshot.png
+.. image:: docs/_static/screenshot.png
     :alt: Screenshot
     :target: https://github.com/psyplot/psy-view
 
@@ -65,11 +77,13 @@ Some of the most important features offered by psy-view are:
 - intuitive GUI to select variables, dimensions, slices, etc. and change the
   plot
 - automatically decodes CF-conventions and supports unstructured grid, such as
-  ICON or UGRID
+  ICON_ or UGRID_
 - animation interface
 - different projections
 - implemented in psyplot-gui_ for full flexibility (if desired)
 
+.. _ICON: https://mpimet.mpg.de/en/communication/news/focus-on-overview/icon-development
+.. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/
 .. _psyplot-gui: https://psyplot.readthedocs.io/projects/psyplot-gui
 
 
