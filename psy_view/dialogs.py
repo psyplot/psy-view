@@ -34,8 +34,9 @@ from matplotlib.backends.backend_qt5agg import (
     FigureCanvasQTAgg as FigureCanvas)
 from matplotlib.figure import Figure
 
+from psyplot.plotter import Plotter, Formatoption
+
 if TYPE_CHECKING:
-    from psyplot.plotter import Plotter, Formatoption
     from psyplot.project import Project
     from PyQt5.QtCore import QEvent  # pylint: disable=no-name-in-module
 
@@ -688,7 +689,7 @@ class ColorbarPreview(FigureCanvas):
         """
         from psyplot.plotter import Plotter
 
-        class _FakePlotter(Plotter):
+        class _FakePlotter(FakePlotter):
             bounds = self.plotter.bounds.__class__('bounds')
             cmap = self.plotter.cmap.__class__('cmap')
             cticks = self.plotter.cticks.__class__('cticks')
