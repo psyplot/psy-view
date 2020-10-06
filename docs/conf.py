@@ -58,9 +58,8 @@ templates_path = ['_templates']
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 # create the api documentation
-if osp.exists(osp.join(osp.dirname(__file__), 'api')):
-    shutil.rmtree(osp.join(osp.dirname(__file__), 'api'))
-spr.check_call(['bash', 'apigen.bash'])
+if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
+    spr.check_call(['bash', 'apigen.bash'])
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
