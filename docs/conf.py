@@ -48,7 +48,10 @@ extensions = [
     'sphinxarg.ext',
     'psyplot.sphinxext.extended_napoleon',
     'autodocsumm',
+    'sphinx.ext.todo',
 ]
+
+todo_include_todos = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -58,9 +61,8 @@ templates_path = ['_templates']
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 # create the api documentation
-if osp.exists(osp.join(osp.dirname(__file__), 'api')):
-    shutil.rmtree(osp.join(osp.dirname(__file__), 'api'))
-spr.check_call(['bash', 'apigen.bash'])
+if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
+    spr.check_call(['bash', 'apigen.bash'])
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -82,6 +84,14 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+html_context = {
+    'css_files': [
+        # overrides for wide tables in RTD theme, particularly for
+        # psy-view vs. ncview comparison
+        '_static/theme_overrides.css',
+        ],
+    }
 
 autodoc_default_options = {
     'show_inheritance': True,
