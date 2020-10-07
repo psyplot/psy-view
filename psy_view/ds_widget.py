@@ -143,6 +143,8 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         self._ds_nums: Dict[int, Dataset] = {}
 
+        self.setChildrenCollapsible(False)
+
         self.ds: Optional[Dataset] = ds
 
         self.setOrientation(Qt.Vertical)
@@ -295,6 +297,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         # seventh row: dimensions
         self.dimension_table = QtWidgets.QTableWidget()
+        self.dimension_table.setMinimumHeight(200)
         self.addWidget(self.dimension_table)
 
         self.disable_navigation()
@@ -307,6 +310,7 @@ class DatasetWidget(QtWidgets.QSplitter):
     def setup_ds_tree(self) -> None:
         """Setup the number of columns and the header of the dataset tree."""
         self.ds_tree = tree = QtWidgets.QTreeWidget()
+        tree.setMinimumHeight(400)
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
         tree.setHeaderLabels([''] + self.ds_attr_columns)
 
