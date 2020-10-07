@@ -162,6 +162,10 @@ def create_screenshot(
     from psy_view.ds_widget import DatasetWidget
     from psyplot.data import open_dataset
 
+    output = osp.join("_static", output)
+    if on_rtd:
+        return output
+
     app = QApplication.instance()
     if app is None:
         app = QApplication([])
@@ -184,7 +188,6 @@ def create_screenshot(
     if enable is not None:
         w.setEnabled(enable)
 
-    output = osp.join("_static", output)
     w.grab().save(osp.join(confdir, output))
     ds_widget.close_sp()
     ds_widget.close()
