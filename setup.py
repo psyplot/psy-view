@@ -9,7 +9,7 @@ if os.getenv("READTHEDOCS") == "True":
     # because RTD does a checkout with --depth 50
     import subprocess as spr
     rootdir = osp.dirname(__file__)
-    spr.check_call(["git", "-C", rootdir, "fetch", "--unshallow", "origin"])
+    spr.call(["git", "-C", rootdir, "fetch", "--unshallow", "origin"])
 
 import versioneer
 
