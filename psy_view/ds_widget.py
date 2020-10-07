@@ -292,8 +292,10 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.addWidget(self.plot_tabs)
 
         # sixth row: variables
+        self.variable_scroll = QtWidgets.QScrollArea()
+        self.variable_scroll.setWidgetResizable(True)
         self.setup_variable_buttons()
-        self.addWidget(self.variable_frame)
+        self.addWidget(self.variable_scroll)
 
         # seventh row: dimensions
         self.dimension_table = QtWidgets.QTableWidget()
@@ -488,9 +490,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         """Setup the variable buttons for the current dataset."""
         variable_frame = QtWidgets.QGroupBox('Variables')
 
-        if self.variable_frame is not None:
-            self.replaceWidget(self.indexOf(self.variable_frame),
-                               variable_frame)
+        self.variable_scroll.setWidget(variable_frame)
         self.variable_frame = variable_frame
         self.variable_layout = QtWidgets.QGridLayout(self.variable_frame)
         self.variable_buttons = {}
@@ -505,6 +505,12 @@ class DatasetWidget(QtWidgets.QSplitter):
                 btn.setCheckable(True)
                 self.variable_buttons[v] = btn
                 self.variable_layout.addWidget(btn, i // ncols, i % ncols)
+
+            if len(ds):
+                rows = len(ds) // ncols
+                minrows = max(1, min(3, rows))
+                self.variable_scroll.setMinimumHeight(
+                        (minrows + 2) * btn.sizeHint().height())
 
     def load_variable_desc(self, item: QtWidgets.QTreeWidgetItem) -> None:
         """Load the description of the variable of a given tree item.
