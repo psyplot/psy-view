@@ -299,7 +299,6 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         # seventh row: dimensions
         self.dimension_table = QtWidgets.QTableWidget()
-        self.dimension_table.setMinimumHeight(300)
         self.addWidget(self.dimension_table)
 
         self.disable_navigation()
@@ -312,9 +311,27 @@ class DatasetWidget(QtWidgets.QSplitter):
     def setup_ds_tree(self) -> None:
         """Setup the number of columns and the header of the dataset tree."""
         self.ds_tree = tree = QtWidgets.QTreeWidget()
-        tree.setMinimumHeight(400)
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
         tree.setHeaderLabels([''] + self.ds_attr_columns)
+
+    def showEvent(self, event):
+        ret = super().showEvent(event)
+        current_size = self.size()
+        current_sizes = self.sizes()
+        new_sizes = list(current_sizes)
+        itree = self.indexOf(self.ds_tree)
+        itable = self.indexOf(self.dimension_table)
+        diff = 0
+        if current_sizes[itree] < 400:
+            diff += 400 - current_sizes[itree]
+            current_sizes[itree] = 400
+        if current_sizes[itable] < 300:
+            diff += 300 - current_sizes[itable]
+            current_sizes[itable] = 300
+        if diff:
+            self.resize(current_size.width(), current_size.height() + diff)
+            self.setSizes(current_sizes)
+        return ret
 
     def close_current_plot(self) -> None:
         """Close the figure of the current variable."""
