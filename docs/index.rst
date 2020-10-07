@@ -101,7 +101,11 @@ Interested? Read more in the section :ref:`psy-view-vs-ncview`.
    :maxdepth: 2
    :caption: Contents:
 
-   ncview   
+   installing
+   getting-started
+   user-guide
+   ncview
+   command_line
    api/psy_view
    todo
 

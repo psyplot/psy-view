@@ -12,16 +12,22 @@
 #
 import os
 import os.path as osp
-import subprocess as spr
 import shutil
 import re
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
 
+import subprocess as spr
+
+from docutils import nodes
+from docutils.statemachine import StringList
+from docutils.parsers.rst import directives
+
+from sphinx.util.docutils import SphinxDirective
 
 # -- Project information -----------------------------------------------------
 
 import psy_view
+
+confdir = osp.dirname(__file__)
 
 project = 'psy-view'
 copyright = '2020, Philipp S. Sommer'
@@ -145,3 +151,140 @@ intersphinx_mapping = {
     'psyplot_gui': ('https://psyplot.readthedocs.io/projects/'
                     'psyplot-gui/en/latest/', None),
 }
+
+
+def create_screenshot(
+        code: str, output: str, make_plot: bool = False, enable: bool = None,
+        plotmethod: str = "mapplot", minwidth=None,
+    ) -> str:
+    """Generate a screenshot of the GUI."""
+    from PyQt5.QtWidgets import QApplication
+    from psy_view.ds_widget import DatasetWidget
+    from psyplot.data import open_dataset
+
+    app = QApplication.instance()
+    if app is None:
+        app = QApplication([])
+
+    ds_widget = DatasetWidget(open_dataset(osp.join(confdir, "demo.nc")))
+    ds_widget.plotmethod = plotmethod
+
+    if make_plot:
+        ds_widget.variable_buttons["t2m"].click()
+
+    if minwidth:
+        ds_widget.setMinimumWidth(minwidth)
+
+    ds_widget.show()  # to make sure we can see everything
+
+    options = {"ds_widget": ds_widget}
+    exec("w = " + code, options)
+    w = options['w']
+
+    if enable is not None:
+        w.setEnabled(enable)
+
+    output = osp.join("_static", output)
+    w.grab().save(osp.join(confdir, output))
+    ds_widget.close_sp()
+    ds_widget.close()
+    return output
+
+
+def plotmethod(argument):
+    return directives.choice(argument, ("mapplot", "lineplot", "plot2d"))
+
+
+class ScreenshotDirective(SphinxDirective):
+    """A directive to generate screenshots of the GUI.
+
+    Usage::
+
+        .. screenshot:: <widget> <img-file>
+            :width: 20px
+            ... other image options ...
+    """
+
+    has_content = False
+
+    option_spec = directives.images.Image.option_spec.copy()
+
+    option_spec["plot"] = directives.flag
+    option_spec["enable"] = directives.flag
+    option_spec["plotmethod"] = plotmethod
+    option_spec["minwidth"] = directives.positive_int
+
+    target_directive = "image"
+
+    required_arguments = 2
+    optional_arguments = 0
+
+    def add_line(self, line: str) -> None:
+        """Append one line of generated reST to the output."""
+        source = self.get_source_info()
+        if line.strip():  # not a blank line
+            self.result.append(line, *source)
+        else:
+            self.result.append('', *source)
+
+    def generate(self) -> None:
+        """Generate the content."""
+        self.add_line(f".. {self.target_directive}:: {self.img_name}")
+        
+        for option, val in self.options.items():
+            self.add_line(f"    :{option}: {val}")
+
+    def run(self):
+        """Run the directive."""
+        reporter = self.state.document.reporter
+
+        self.result = StringList()
+
+        make_plot = self.options.pop("plot", False) is None
+        enable = True if self.options.pop("enable", False) is None else None
+
+        self.img_name = create_screenshot(
+            *self.arguments, make_plot=make_plot, enable=enable,
+            plotmethod=self.options.pop("plotmethod", None) or "mapplot",
+            minwidth=self.options.pop("minwidth", None),
+        )
+
+        self.generate()
+
+        node = nodes.paragraph()
+        node.document = self.state.document
+        self.state.nested_parse(self.result, 0, node)
+
+        return node.children
+
+
+class ScreenshotFigureDirective(ScreenshotDirective):
+    """A directive to generate screenshots of the GUI.
+
+    Usage::
+
+        .. screenshot-figure:: <widget> <img-file>
+            :width: 20px
+            ... other image options ...
+
+            some caption
+    """
+
+    target_directive = "figure"
+
+    has_content = True
+
+    def generate(self):
+        super().generate()
+
+        if self.content:
+            self.add_line('')
+            indent = "    "
+            for line in self.content:
+                self.add_line(indent + line)
+        
+
+
+def setup(app):
+    app.add_directive('screenshot', ScreenshotDirective)
+    app.add_directive("screenshot-figure", ScreenshotFigureDirective)
