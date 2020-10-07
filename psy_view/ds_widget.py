@@ -297,7 +297,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         # seventh row: dimensions
         self.dimension_table = QtWidgets.QTableWidget()
-        self.dimension_table.setMinimumHeight(200)
+        self.dimension_table.setMinimumHeight(300)
         self.addWidget(self.dimension_table)
 
         self.disable_navigation()
