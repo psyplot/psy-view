@@ -39,6 +39,8 @@ from typing import (
 from functools import partial
 from itertools import chain, cycle
 import contextlib
+import textwrap
+
 import xarray as xr
 from psyplot.utils import unique_everseen
 
@@ -840,7 +842,9 @@ class LinePlotWidget(PlotMethodWidget):
         self.combo_lines = QtWidgets.QComboBox()
         self.combo_lines.setEditable(False)
         self.formatoptions_box.addWidget(self.combo_lines)
-        self.combo_lines.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContents)
+        self.combo_lines.setSizeAdjustPolicy(
+            QtWidgets.QComboBox.AdjustToContents)
+        self.combo_lines.currentIndexChanged.connect(self.trigger_refresh)
         self.formatoptions_box.addStretch(0)
 
         self.btn_add = utils.add_pushbutton(
@@ -1037,9 +1041,12 @@ class LinePlotWidget(PlotMethodWidget):
                 current = self.combo_lines.currentIndex()
                 self.combo_lines.clear()
                 descriptions = self.item_texts
-                self.combo_lines.addItems(descriptions)
+                short_descs = [textwrap.shorten(s, 50) for s in descriptions]
+                self.combo_lines.addItems(short_descs)
+                for i, desc in enumerate(descriptions):
+                    self.combo_lines.setItemData(i, desc, QtCore.Qt.ToolTipRole)
                 if current < len(descriptions):
-                    self.combo_lines.setCurrentText(descriptions[current])
+                    self.combo_lines.setCurrentText(short_descs[current])
         else:
             with self.block_combos():
                 self.combo_dims.clear()
