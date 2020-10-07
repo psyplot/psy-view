@@ -14,6 +14,7 @@ import os
 import os.path as osp
 import shutil
 import re
+import warnings
 
 import subprocess as spr
 
@@ -22,6 +23,8 @@ from docutils.statemachine import StringList
 from docutils.parsers.rst import directives
 
 from sphinx.util.docutils import SphinxDirective
+
+warnings.filterwarnings("ignore", message=r"\s*Downloading:")
 
 # -- Project information -----------------------------------------------------
 
