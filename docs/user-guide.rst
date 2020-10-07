@@ -313,6 +313,7 @@ lineplot
 
 .. ipython::
     :suppress:
+    :okwarning:
 
     In [1]: import psyplot.project as psy
        ...: with psy.plot.lineplot(
