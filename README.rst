@@ -14,6 +14,8 @@ psy-view: An ncview-like GUI with psyplot
       - |travis| |appveyor| |codecov|
     * - package
       - |version| |conda| |supported-versions| |supported-implementations| |github|
+    * - get in touch
+      - |gitter| |mailing-list| |issues|
 
 .. |mybinder| image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop
@@ -50,6 +52,18 @@ psy-view: An ncview-like GUI with psyplot
 .. |supported-implementations| image:: https://img.shields.io/pypi/implementation/psy-view.svg?style=flat
     :alt: Supported implementations
     :target: https://pypi.python.org/pypi/psy-view
+
+.. |gitter| image:: https://img.shields.io/gitter/room/psyplot/community.svg?style=flat
+    :target: https://gitter.im/psyplot/community
+    :alt: Gitter
+
+.. |mailing-list| image:: https://img.shields.io/badge/join-mailing%20list-brightgreen.svg?style=flat
+    :target: https://www.listserv.dfn.de/sympa/subscribe/psyplot
+    :alt: DFN mailing list
+
+.. |issues| image:: https://img.shields.io/github/issues-raw/psyplot/psy-view.svg?style=flat
+    :target: https://github.com/psyplot/psy-view/issues
+    :alt: GitHub issues
 
 .. end-badges
 
@@ -136,6 +150,26 @@ For alternative installation instructions, update information or deinstallation
 instructions, please have a look into the `installation docs`_.
 
 .. _installation docs: https://psyplot.readthedocs.io/projects/psy-view/en/latest/installing.html
+
+
+Get in touch
+------------
+Any quesions? Do not hessitate to get in touch with the psyplot developers.
+
+- Create an issue at the `bug tracker`_
+- Chat with the developers in out `channel on gitter`_
+- Subscribe to the `mailing list`_ and ask for support
+- Sent a mail to psyplot@hzg.de
+
+See also the `code of conduct`_, and our `contribution guide`_ for more
+information and a guide about good bug reports.
+
+.. _bug tracker: https://github.com/psyplot/psy-view
+.. _channel on gitter: https://gitter.im/psyplot/community
+.. _mailing list: https://www.listserv.dfn.de/sympa/subscribe/psyplot
+.. _code of conduct: https://github.com/psyplot/psyplot/blob/master/CODE_OF_CONDUCT.md
+.. _contribution guide: https://github.com/psyplot/psyplot/blob/master/CONTRIBUTING.md
+
 
 
 Copyright disclaimer
