@@ -89,8 +89,8 @@ graphical user interface to quickly dive into the data inside a netCDF file.
         :target: https://www.listserv.dfn.de/sympa/subscribe/psyplot
         :alt: DFN mailing list
 
-    .. |issues| image:: https://img.shields.io/github/issues-raw/psyplot/psyplot.svg?style=flat
-        :target: https://github.com/psyplot/psyplot/issues
+    .. |issues| image:: https://img.shields.io/github/issues-raw/psyplot/psy-view.svg?style=flat
+        :target: https://github.com/psyplot/psy-view/issues
         :alt: GitHub issues
 
 .. end-badges
