@@ -20,33 +20,33 @@ terminal (or `Anaconda Prompt` on Windows) and type::
 
     $ conda create -n psyplot -c conda-forge psy-view
 
-to install it. On Linux and OS X, you may event want to type::
+to install it. On Linux and OS X, you may instead want to type::
 
     $ conda create -n psyplot -c conda-forge --override-channels psy-view
 
 in order to not mix the anaconda defaults and and conda-forge channel, because
 mixing them can sometimes cause incompatibilities.
 
-The statements above will install psy-view and all it's necessary 
+The commands above installed psy-view and all it's necessary
 dependencies into a separate environment that you can activate via::
 
     $ conda activate psyplot
 
-You may launch the GUI via typing::
+Now launch the GUI via typing::
 
     $ psy-view
 
-in the terminal (Anaconda Prompt). On Windows, you will also have a 
+in the terminal (Anaconda Prompt). On Windows, you will also have a
 corresponding entry in the start menu.
 
-Note that you will always have to activate the conda environment 
+Note that you will always have to activate the conda environment
 (`conda activate psyplot`) in order to start `psy-view`. The advantage, however,
 is that other packages installed via conda are not affected by the dependencies
 of psy-view.
 
 .. note::
 
-    Alternatively, you can also install psy-view directly in an existing conda 
+    Alternatively, you can also install psy-view directly in an existing conda
     environment by using::
 
         $ conda install -c conda-forge psy-view
@@ -132,7 +132,7 @@ and build the recipe via::
 Building the docs
 -----------------
 To build the docs, check out the github_ repository and install the
-requirements in ``'docs/environment.yml'``. The easiest way to do this is, 
+requirements in ``'docs/environment.yml'``. The easiest way to do this is,
 again, via conda::
 
     $ conda env create -f docs/environment.yml
