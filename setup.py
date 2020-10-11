@@ -39,9 +39,8 @@ def readme():
 version = versioneer.get_version()
 
 dependencies = [
-    'psyplot-gui>1.2.4',
-    'psyplot>1.2.1',
-    'psy-maps>1.2.0',
+    'psyplot-gui>=1.3.0',
+    'psy-maps>=1.3.0',
     'netCDF4',
 ]
 
