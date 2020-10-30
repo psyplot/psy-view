@@ -20,6 +20,21 @@ def test_mapplot(qtbot, ds_widget):
     qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
     assert not ds_widget.sp
 
+
+@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d'])
+@pytest.mark.parametrize('i', list(range(5)))
+def test_change_plot_type(qtbot, ds_widget, plotmethod, i):
+    """Test plotting and closing with mapplot"""
+    ds_widget.plotmethod = plotmethod
+    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    assert ds_widget.sp
+    pm_widget = ds_widget.plotmethod_widget
+    pm_widget.combo_plot.setCurrentIndex(i)
+    plot_type = pm_widget.plot_types[i]
+
+    assert ds_widget.sp.plotters[0].plot.value == plot_type
+
+
 @pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d'])
 def test_variable_switch(qtbot, ds_widget, plotmethod):
     """Test switching of variables"""
@@ -332,9 +347,6 @@ def test_open_and_close_plots(
     assert not bool(ds_widget._sp)
     assert not any(btn.isChecked() for name, btn in
                    ds_widget.variable_buttons.items())
-
-
-
 
 
 @pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
