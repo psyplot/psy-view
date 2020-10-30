@@ -829,6 +829,12 @@ class MapPlotWidget(PlotMethodWidget):
         if 'units' in var.attrs:
             fmts['clabel'] += ' %(units)s'
 
+        fmts['plot'] = self.plot_types[self.combo_plot.currentIndex()]
+        if fmts['plot'] == 'contour':
+            # we need to set a global map extend, see
+            # https://github.com/SciTools/cartopy/issues/1673
+            fmts['map_extent'] = 'global'
+
         if init:
             fmts.update(self.init_dims(var))
 
