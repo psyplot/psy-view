@@ -37,6 +37,7 @@ from typing import (
     TypeVar,
     Type,
 )
+from enum import Enum
 
 from functools import partial
 from itertools import chain, cycle
@@ -65,6 +66,22 @@ if TYPE_CHECKING:
 
 
 T = TypeVar("T", bound="GridCell")
+
+
+class PlotType(str, Enum):
+    """A value for the 2D ``plot`` formatoption.
+
+    See Also
+    --------
+    psy_simple.plotters.Simple2DPlotter.plot
+    psy_maps.plotters.FieldPlotter.plot
+    """
+
+    mesh = "mesh"
+    contourf = "contourf"
+    contour = "contour"
+    poly = "poly"
+
 
 @dataclasses.dataclass
 class GridCell:
@@ -422,12 +439,19 @@ class MapPlotWidget(PlotMethodWidget):
     def setup_plot_buttons(self) -> None:
         """Setup the second row of formatoption widgets."""
         self.combo_plot = QtWidgets.QComboBox()
-        self.plot_types = ["mesh", "contourf", "contour", "poly", None]
+        self.plot_types: List[Optional[PlotType]] = [
+            PlotType.mesh,
+            PlotType.contourf,
+            PlotType.contour,
+            PlotType.poly,
+            None
+        ]
         self.combo_plot.setEditable(False)
         self.combo_plot.addItems([
             "Default", "Filled contours", "Contours", "Gridcell polygons",
             "Disable"
         ])
+        self.combo_plot.currentIndexChanged.connect(self._set_plot_type)
 
         self.btn_datagrid = utils.add_pushbutton(
             "Gridcell boundaries", self.toggle_datagrid,
@@ -745,6 +769,23 @@ class MapPlotWidget(PlotMethodWidget):
         plotter = self.plotter
         if plotter and 'projection' in plotter:
             plotter.update(projection=proj)
+
+    def _set_plot_type(self, i: int) -> None:
+        """Set the plot type from the index in :attr:`combo_plot`."""
+        self.set_plot_type(self.plot_types[i])
+
+    def set_plot_type(self, plot_type: Optional[PlotType]) -> None:
+        """Update the value for the ``plot`` formatoption
+
+        Parameters
+        ----------
+        ploy_type: :class:`PlotType` or None
+            The value for the :attr:`~psy_simple.plotters.Simple2DPlotter.plot`
+            formatoption.
+        """
+        plotter = self.plotter
+        if plotter:
+            plotter.update(plot=plot_type)
 
     def edit_basemap_settings(self) -> None:
         """Open a dialog to edit the basemap and projection settings."""
