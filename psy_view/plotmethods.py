@@ -34,12 +34,16 @@ from typing import (
     Any,
     Tuple,
     Iterator,
+    TypeVar,
+    Type,
 )
 
 from functools import partial
 from itertools import chain, cycle
 import contextlib
 import textwrap
+
+import dataclasses
 
 import xarray as xr
 from psyplot.utils import unique_everseen
@@ -58,6 +62,55 @@ if TYPE_CHECKING:
     from psyplot.project import PlotterInterface, Project
     from psyplot.data import InteractiveList
     from psyplot.plotter import Plotter
+
+
+T = TypeVar("T", bound="GridCell")
+
+@dataclasses.dataclass
+class GridCell:
+    """A grid cell within a QGridLayout managing one QWidget."""
+
+    #: the :class:`PyQt5.QtWidgets.QWidget` instance (i.e. the widget) or a
+    #: layout (:class:`PyQt5.QtWidgets.QLayout`)
+    qobject: Union[QtWidgets.QWidget, QtWidgets.QLayout]
+
+    #: The starting column for the widget. If None, it will be estimated based
+    #: on the other widgets in the row
+    column: Optional[int] = None
+
+    #: The number of columns to cover
+    colspan: int = 1
+
+    #: A boolean whether to add stretch or not
+    stretch: bool = False
+
+    @classmethod
+    def from_alias(
+        cls: Type[T],
+        o: Union[QtWidgets.QWidget, QtWidgets.QLayout],
+        c: Optional[int] = None,
+        cs: int = 1,
+        s: bool = False
+    ) -> T:
+        """Create a :class:`GridCell` from shorter kws.
+
+        Parameters
+        ----------
+        o: QWidget or QLayout
+            The alias for :attr:`qobject`
+        c: int or None, optional
+            The alias for :attr:`column`
+        cs: int, optional
+            The alias for :attr:`colspan`
+        s: bool, optional
+            The alias for :attr:`stretch`
+
+        Returns
+        -------
+        GridCell
+            The generated instance of :class:`GridCell`
+        """
+        return cls(qobject=o, column=c, colspan=cs, stretch=s)
 
 
 class PlotMethodWidget(QtWidgets.QWidget):
@@ -86,8 +139,7 @@ class PlotMethodWidget(QtWidgets.QWidget):
 
     array_info = None
 
-
-    layout: QtWidgets.QLayout = None
+    layout: QtWidgets.QGridLayout = None
 
     def __init__(
             self, get_sp: Callable[[], Optional[Project]],
@@ -102,10 +154,65 @@ class PlotMethodWidget(QtWidgets.QWidget):
 
         self.refresh(ds)
 
-    def setup(self):
-        """Set up widget during initialization."""
+    def setup(self) -> None:
+        """Set up the widget during initialization."""
+        self.layout = QtWidgets.QGridLayout()
+        self.setup_widgets()
+        self.setup_widget_grid()
+
+    @property
+    def formatoption_rows(self) -> List[List[GridCell]]:
+        """Get a mapping from row name to a row of :class:`GridCells`."""
+        rows: List[List[GridCell]] = []
+        for func in self.fmt_setup_functions:
+            rows.extend(self.get_rows(func))
+        return rows
+
+
+    def get_rows(self, func: Callable) -> List[List[GridCell]]:
+        """Get the rows of the formatoption widgets.
+
+        This method should take callable from the :attr:`fmt_setup_functions`
+        list and return the rows corresponding to :attr:`formatoption_rows`.
+        """
+        return [[]]
+
+    @property
+    def fmt_setup_functions(self) -> List[Callable]:
+        """Get a list of rows for formatoptions.
+
+        This property returns a list of callable. Each callable should setup
+        a horizonal (or widget) that is added to the :attr:`layout` vbox.
+        """
+        return []
+
+    def setup_widgets(self) -> None:
+        """Set up the widgets for this plotmethod."""
+        for func in self.fmt_setup_functions:
+            func()
+
+    def setup_separation_line(self) -> None:
+        """Just a convenience function to create a separation line.
+
+        This method does nothing but tells :meth:`get_rows` to add an instance
+        of :class:`QHline`.
+        """
         pass
 
+    def setup_widget_grid(self) -> None:
+        """Setup the widget grid based on :attr:`formatoption_rows`."""
+        rows = self.formatoption_rows
+        layout = self.layout
+        for i, row in enumerate(rows):
+            col: int = 0
+            for gc in row:
+                col = gc.column if gc.column is not None else col
+                if isinstance(gc.qobject, QtWidgets.QLayout):
+                    layout.addLayout(gc.qobject, i, col, 1, gc.colspan)
+                else:
+                    layout.addWidget(gc.qobject, i, col, 1, gc.colspan)
+                col += gc.colspan
+        layout.setRowStretch(len(rows), 1)
     @property
     def sp(self) -> Optional[Project]:
         """Get the subproject of this plotmethod interface."""
@@ -140,7 +247,7 @@ class PlotMethodWidget(QtWidgets.QWidget):
             self, var: DataArray, init: bool = False
         ) -> Dict[Union[Hashable, str, Any], Any]:
         """Get the formatoptions for a new plot.
-        
+
         Parameters
         ----------
         var: xarray.Variable
@@ -164,7 +271,7 @@ class PlotMethodWidget(QtWidgets.QWidget):
             self, var: DataArray
         ) -> Dict[Union[Hashable, str, Any], Any]:
         """Get the formatoptions for a new plot.
-        
+
         Parameters
         ----------
         var: xarray.Variable
@@ -175,7 +282,7 @@ class PlotMethodWidget(QtWidgets.QWidget):
         dict
             A mapping from formatoption or dimension to the corresponding value
             for the plotmethod.
-        
+
         """
         return {}
 
@@ -202,7 +309,7 @@ class PlotMethodWidget(QtWidgets.QWidget):
         ) -> Optional[Dict[Hashable, Union[int, slice]]]:
         """Get the slice for the selected coordinates.
 
-        This method is called when the user clicks on the coordinates in the 
+        This method is called when the user clicks on the coordinates in the
         plot.
 
         See Also
@@ -239,46 +346,111 @@ class PlotMethodWidget(QtWidgets.QWidget):
         return ret
 
 
+class QHLine(QtWidgets.QFrame):
+    """A horizontal seperation line."""
+    def __init__(self):
+        super().__init__()
+        self.setMinimumWidth(1)
+        self.setFixedHeight(20)
+        self.setFrameShape(QtWidgets.QFrame.HLine)
+        self.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.setSizePolicy(
+            QtWidgets.QSizePolicy.Preferred,
+            QtWidgets.QSizePolicy.Minimum
+        )
+
+
 class MapPlotWidget(PlotMethodWidget):
     """A widget to control the mapplot plotmethod."""
 
     plotmethod = 'mapplot'
 
-    def setup(self) -> None:
-        """Set up color and projection buttons.
-        
-        See Also
-        --------
-        setup_color_buttons
-        setup_projection_buttons"""
-        self.layout = vbox = QtWidgets.QVBoxLayout()
+    def get_rows(self, func: Callable) -> List[List[GridCell]]:
+        """Get the rows of the formatoption widgets.
 
-        self.formatoptions_box = QtWidgets.QHBoxLayout()
-        self.setup_color_buttons()
-        self.setup_projection_buttons()
+        This method should take callable from the :attr:`fmt_setup_functions`
+        list and return the rows corresponding to :attr:`formatoption_rows`.
+        """
+        if func == self.setup_color_buttons:
+            row = [
+                GridCell(QtWidgets.QLabel("Colormap")),
+                GridCell(self.btn_cmap),
+                GridCell(self.btn_cmap_settings, stretch=True),
+            ]
+        elif func == self.setup_plot_buttons:
+            row = [
+                GridCell(QtWidgets.QLabel("Plot type")),
+                GridCell(self.combo_plot),
+                GridCell(self.btn_datagrid, stretch=True),
+            ]
+        elif func == self.setup_projection_buttons:
+            row = [
+                GridCell(QtWidgets.QLabel("Projection")),
+                GridCell(self.btn_proj),
+                GridCell(self.btn_proj_settings, stretch=True),
+            ]
+        elif func == self.setup_labels_button:
+            row = [GridCell(self.btn_labels, colspan=3)]
+        elif func == self.setup_separation_line:
+            row = [GridCell(QHLine(), colspan=3)]
+        elif func == self.setup_dimension_box:
+            row = [GridCell(self.dimension_box, colspan=3)]
+        else:
+            raise ValueError(f"Unknown function {func}")
+        return [row]
+
+    @property
+    def fmt_setup_functions(self) -> List[Callable]:
+        """Get a list of rows for formatoptions.
+
+        This property returns a list of callable. Each callable should setup
+        a horizonal (or widget) that is added to the :attr:`layout` vbox.
+        """
+        return [
+            self.setup_color_buttons, self.setup_plot_buttons,
+            self.setup_projection_buttons, self.setup_labels_button,
+            self.setup_separation_line,
+            self.setup_dimension_box,
+        ]
+
+    def setup_labels_button(self) -> None:
+        """Add a button to modify the text labels."""
         self.btn_labels = utils.add_pushbutton(
-            "Labels", self.edit_labels, "Edit title, colorbar labels, etc.",
-            self.formatoptions_box)
+            "Edit labels", self.edit_labels, "Edit title, colorbar labels, etc."
+        )
 
-        vbox.addLayout(self.formatoptions_box)
+    def setup_plot_buttons(self) -> None:
+        """Setup the second row of formatoption widgets."""
+        self.combo_plot = QtWidgets.QComboBox()
+        self.plot_types = ["mesh", "contourf", "contour", "poly", None]
+        self.combo_plot.setEditable(False)
+        self.combo_plot.addItems([
+            "Default", "Filled contours", "Contours", "Gridcell polygons",
+            "Disable"
+        ])
 
-        self.dimension_box = QtWidgets.QGridLayout()
-        self.setup_dimension_box()
+        self.btn_datagrid = utils.add_pushbutton(
+            "Gridcell boundaries", self.toggle_datagrid,
+            "Toggle the visibility of grid cell boundaries")
+        self.btn_datagrid.setCheckable(True)
 
-        vbox.addLayout(self.dimension_box)
+        return
 
     def setup_color_buttons(self) -> None:
         """Set up the buttons to change the colormap, etc."""
         self.btn_cmap = pswc.CmapButton()
+        self.btn_cmap.setSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
         self.btn_cmap.setToolTip("Select a different colormap")
-        self.formatoptions_box.addWidget(self.btn_cmap)
+
         self.btn_cmap.colormap_changed.connect(self.set_cmap)
         self.btn_cmap.colormap_changed[mcol.Colormap].connect(self.set_cmap)
         self.setup_cmap_menu()
 
         self.btn_cmap_settings = utils.add_pushbutton(
             utils.get_icon('color_settings'), self.edit_color_settings,
-            "Edit color settings", self.formatoptions_box,
+            "Edit color settings",
             icon=True)
 
     def setup_cmap_menu(self) -> QtWidgets.QMenu:
@@ -297,7 +469,7 @@ class MapPlotWidget(PlotMethodWidget):
 
     def open_cmap_dialog(self, N: int = 10) -> None:
         """Open the dialog to change the colormap.
-        
+
         Parameters
         ----------
         N: int
@@ -329,23 +501,19 @@ class MapPlotWidget(PlotMethodWidget):
         """Set up the buttons to modify the basemap."""
         self.btn_proj = utils.add_pushbutton(
             rcParams["projections"][0], self.choose_next_projection,
-            "Change the basemap projection", self.formatoptions_box,
+            "Change the basemap projection",
             toolbutton=True)
         self.btn_proj.setMenu(self.setup_projection_menu())
-        max_width = max(map(self.btn_proj.fontMetrics().width,
-                            rcParams['projections'])) * 2
-        self.btn_proj.setMinimumWidth(max_width)
+
+        self.btn_proj.setSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
         self.btn_proj.setPopupMode(QtWidgets.QToolButton.MenuButtonPopup)
 
         self.btn_proj_settings = utils.add_pushbutton(
             utils.get_icon('proj_settings'), self.edit_basemap_settings,
-            "Edit basemap settings", self.formatoptions_box,
+            "Edit basemap settings",
             icon=True)
-
-        self.btn_datagrid = utils.add_pushbutton(
-            "Cells", self.toggle_datagrid,
-            "Show the grid cell boundaries", self.formatoptions_box)
-        self.btn_datagrid.setCheckable(True)
 
     def setup_dimension_box(self) -> None:
         """Set up a box to control, what is the x and y-dimension."""
@@ -383,7 +551,7 @@ class MapPlotWidget(PlotMethodWidget):
 
     def set_combo_text(self, combo: QtWidgets.QComboBox, text: str) -> None:
         """Convenience function to update set the current text of a combobox.
-        
+
         Parameters
         ----------
         combo: PyQt5.QtWidgets.QComboBox
@@ -398,10 +566,10 @@ class MapPlotWidget(PlotMethodWidget):
             self, var: DataArray
         ) -> Dict[Union[Hashable, str, Any], Any]:
         """Get the formatoptions for a new plot.
-        
-        This method updates the coordinates combo boxes with the 
+
+        This method updates the coordinates combo boxes with the
         x- and y-coordinate of the variable.
-        
+
         Parameters
         ----------
         var: xarray.Variable
@@ -505,7 +673,7 @@ class MapPlotWidget(PlotMethodWidget):
 
     def setEnabled(self, b: bool) -> None:
         """Enable or disable the projection and color buttons.
-        
+
         Parameters
         ----------
         b: bool
@@ -566,11 +734,11 @@ class MapPlotWidget(PlotMethodWidget):
 
     def set_projection(self, proj: str) -> None:
         """Update the projection of the plot with the given projection.
-        
+
         Parameters
         ----------
         projection: str
-            The projection name for the 
+            The projection name for the
             :attr:`~psy_maps.plotters.FieldPlotter.projection` formatoption.
         """
         self.btn_proj.setText(proj)
@@ -588,7 +756,7 @@ class MapPlotWidget(PlotMethodWidget):
             init: bool = False
         ) -> Dict[Union[Hashable, str, Any], Any]:
         """Get the formatoptions for a new plot.
-        
+
         Parameters
         ----------
         var: xarray.Variable
@@ -722,7 +890,7 @@ class MapPlotWidget(PlotMethodWidget):
         if not plotter:
             raise ValueError(
                 "Cannot transform the coordinates as no plot is shown "
-                "currently!") 
+                "currently!")
         x, y = plotter.transform.projection.transform_point(
             x, y, plotter.ax.projection)
         # shift if necessary
@@ -742,7 +910,7 @@ class MapPlotWidget(PlotMethodWidget):
         ) -> Optional[Dict[Hashable, Union[int, slice]]]:
         """Get the slice for the selected coordinates.
 
-        This method is called when the user clicks on the coordinates in the 
+        This method is called when the user clicks on the coordinates in the
         plot.
 
         See Also
@@ -762,7 +930,7 @@ class MapPlotWidget(PlotMethodWidget):
             raise ValueError(
                 "Cannot transform the coordinates as no plot is shown "
                 "currently!")
-                
+
         fmto = plotter.plot
 
         xcoord = fmto.xcoord
@@ -788,16 +956,20 @@ class Plot2DWidget(MapPlotWidget):
 
     plotmethod = 'plot2d'
 
-    def setup_projection_buttons(self) -> None:
-        """Reimplemented to only show the datagrid button."""
-        self.btn_datagrid = utils.add_pushbutton(
-            "Cells", self.toggle_datagrid,
-            "Show the grid cell boundaries", self.formatoptions_box)
-        self.btn_datagrid.setCheckable(True)
+    @property
+    def fmt_setup_functions(self) -> List[Callable]:
+        """Get a list of rows for formatoptions.
+
+        This property returns a list of callable. Each callable should setup
+        a horizonal (or widget) that is added to the :attr:`layout` vbox.
+        """
+        ret = super().fmt_setup_functions
+        ret.remove(self.setup_projection_buttons)
+        return ret
 
     def setEnabled(self, b: bool) -> None:
         """Enable or disable the datagrid and color buttons.
-        
+
         Parameters
         ----------
         b: bool
@@ -829,34 +1001,69 @@ class LinePlotWidget(PlotMethodWidget):
 
     plotmethod = 'lineplot'
 
-    def setup(self) -> None:
-        """Set up widget during initialization."""
-        self.layout = self.formatoptions_box = QtWidgets.QHBoxLayout()
+    @property
+    def fmt_setup_functions(self) -> List[Callable]:
+        return [
+            self.setup_dimension_combo,
+            self.setup_line_selection,
+            self.setup_labels_button,
+        ]
 
-        self.formatoptions_box.addWidget(QtWidgets.QLabel('x-Dimension:'))
+    def get_rows(self, func: Callable) -> List[List[GridCell]]:
+        """Get the rows of the formatoption widgets.
+
+        This method should take callable from the :attr:`fmt_setup_functions`
+        list and return the rows corresponding to :attr:`formatoption_rows`.
+        """
+        if func == self.setup_dimension_combo:
+            row = [
+                GridCell(QtWidgets.QLabel('x-Dimension:')),
+                GridCell(self.combo_dims)
+            ]
+        elif func == self.setup_line_selection:
+            row = [
+                GridCell(QtWidgets.QLabel('Active line:')),
+                GridCell(self.combo_lines),
+                GridCell(self.btn_add),
+                GridCell(self.btn_del)
+            ]
+        elif func == self.setup_labels_button:
+            row = [GridCell(self.btn_labels, colspan=4)]
+        else:
+            raise ValueError(f"Unknown function {func}")
+        return [row]
+
+    def setup_dimension_combo(self) -> None:
+        """Set up the combobox for selecting the x-dimension."""
         self.combo_dims = QtWidgets.QComboBox()
         self.combo_dims.setEditable(False)
         self.combo_dims.currentIndexChanged.connect(self.trigger_reset)
-        self.formatoptions_box.addWidget(self.combo_dims)
+        self.combo_dims.setSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
 
+    def setup_line_selection(self) -> None:
+        """Setup the row for selecting new lines."""
         self.combo_lines = QtWidgets.QComboBox()
         self.combo_lines.setEditable(False)
-        self.formatoptions_box.addWidget(self.combo_lines)
-        self.combo_lines.setSizeAdjustPolicy(
-            QtWidgets.QComboBox.AdjustToContents)
+
+        self.combo_lines.setSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
         self.combo_lines.currentIndexChanged.connect(self.trigger_refresh)
-        self.formatoptions_box.addStretch(0)
 
         self.btn_add = utils.add_pushbutton(
             QtGui.QIcon(get_psy_icon('plus')), lambda: self.add_line(),
-            "Add a line to the plot", self.formatoptions_box, icon=True)
+            "Add a line to the plot", icon=True)
         self.btn_del = utils.add_pushbutton(
             QtGui.QIcon(get_psy_icon('minus')), self.remove_line,
-            "Add a line to the plot", self.formatoptions_box, icon=True)
+            "Add a line to the plot", icon=True)
 
+    def setup_labels_button(self) -> None:
+        """Add a button to modify the text labels."""
         self.btn_labels = utils.add_pushbutton(
-            "Labels", self.edit_labels,
-            "Edit title, x-label, legendlabels, etc.", self.formatoptions_box)
+            "Edit labels", self.edit_labels,
+            "Edit title, x-label, legendlabels, etc.")
 
     @property
     def xdim(self) -> str:
@@ -880,7 +1087,7 @@ class LinePlotWidget(PlotMethodWidget):
     def add_line(self, name: Hashable = None, **sl) -> None:
         """Add a line to the plot.
 
-        This method adds a new line for the plot specified by the given 
+        This method adds a new line for the plot specified by the given
         `name` of the variable and the slices.
 
         Parameters
@@ -939,7 +1146,7 @@ class LinePlotWidget(PlotMethodWidget):
             self, var: DataArray
         ) -> Dict[Union[Hashable, str, Any], Any]:
         """Get the formatoptions for a new plot.
-        
+
         Parameters
         ----------
         var: xarray.Variable
@@ -950,7 +1157,7 @@ class LinePlotWidget(PlotMethodWidget):
         dict
             A mapping from formatoption or dimension to the corresponding value
             for the plotmethod.
-        
+
         """
         ret: Dict[Union[Hashable, str, Any], Any] = {}
         xdim: Union[None, Hashable, str] = self.xdim or next(
@@ -1017,8 +1224,22 @@ class LinePlotWidget(PlotMethodWidget):
             current_dim = self.combo_dims.currentText()
             return [v for v in valid if current_dim in ds[v].dims]
 
+    def setEnabled(self, b: bool) -> None:
+        """Enable or disable the datagrid and color buttons.
+
+        Parameters
+        ----------
+        b: bool
+            If True, enable the buttons, else disable.
+        """
+        self.btn_add.setEnabled(b)
+        self.btn_del.setEnabled(b and self.sp and len(self.sp[0]) > 1)
+        self.btn_labels.setEnabled(b)
+
     def refresh(self, ds) -> None:
         """Refresh this widget from the given dataset."""
+        self.setEnabled(bool(self.sp))
+
         if self.sp:
             with self.block_combos():
                 self.combo_dims.clear()
@@ -1051,5 +1272,3 @@ class LinePlotWidget(PlotMethodWidget):
             with self.block_combos():
                 self.combo_dims.clear()
                 self.combo_lines.clear()
-        self.btn_add.setEnabled(bool(self.sp))
-        self.btn_del.setEnabled(bool(self.sp) and len(self.sp[0]) > 1)
