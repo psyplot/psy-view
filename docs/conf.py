@@ -18,6 +18,10 @@ import warnings
 
 import subprocess as spr
 
+# note: we need to import pyplot here, because otherwise it might fail to load
+# the ipython extension
+import matplotlib.pyplot as plt
+
 from docutils import nodes
 from docutils.statemachine import StringList
 from docutils.parsers.rst import directives
@@ -37,7 +41,7 @@ copyright = '2020, Philipp S. Sommer'
 author = 'Philipp S. Sommer'
 
 
-version = re.match('\d+\.\d+\.\d+', psy_view.__version__).group()
+version = re.match(r'\d+\.\d+\.\d+', psy_view.__version__).group()  # type: ignore
 # The full version, including alpha/beta/rc tags.
 release = psy_view.__version__
 
@@ -59,6 +63,8 @@ extensions = [
     'autodocsumm',
     'sphinx.ext.todo',
 ]
+
+rebuild_screenshots = False
 
 todo_include_todos = True
 
@@ -114,7 +120,7 @@ not_document_data = ['psy_view.rcsetup.defaultParams',
 
 latex_elements = {
     # Additional stuff for the LaTeX preamble.
-    'preamble': '\setcounter{tocdepth}{10}'
+    'preamble': r'\setcounter{tocdepth}{10}'
 }
 
 master_doc = 'index'
@@ -159,9 +165,10 @@ intersphinx_mapping = {
 def create_screenshot(
         code: str, output: str, make_plot: bool = False, enable: bool = None,
         plotmethod: str = "mapplot", minwidth=None,
+        generate=rebuild_screenshots,
     ) -> str:
     """Generate a screenshot of the GUI."""
-    from PyQt5.QtWidgets import QApplication, QSizePolicy
+    from PyQt5.QtWidgets import QApplication, QSizePolicy  # pylint: disable=no-name-in-module
     from psy_view.ds_widget import DatasetWidget
     from psyplot.data import open_dataset
 
@@ -172,6 +179,9 @@ def create_screenshot(
     app = QApplication.instance()
     if app is None:
         app = QApplication([])
+
+    if not generate and osp.exists(output):
+        return output
 
     ds_widget = DatasetWidget(open_dataset(osp.join(confdir, "demo.nc")))
     ds_widget.plotmethod = plotmethod
@@ -221,6 +231,7 @@ class ScreenshotDirective(SphinxDirective):
     option_spec["enable"] = directives.flag
     option_spec["plotmethod"] = plotmethod
     option_spec["minwidth"] = directives.positive_int
+    option_spec["generate"] = directives.flag
 
     target_directive = "image"
 
@@ -244,17 +255,21 @@ class ScreenshotDirective(SphinxDirective):
 
     def run(self):
         """Run the directive."""
-        reporter = self.state.document.reporter
-
         self.result = StringList()
 
         make_plot = self.options.pop("plot", False) is None
         enable = True if self.options.pop("enable", False) is None else None
 
+        rebuild_screenshot = (
+            self.options.pop("generate", False) or
+            self.env.app.config.rebuild_screenshots
+        )
+
         self.img_name = create_screenshot(
             *self.arguments, make_plot=make_plot, enable=enable,
             plotmethod=self.options.pop("plotmethod", None) or "mapplot",
             minwidth=self.options.pop("minwidth", None),
+            generate=rebuild_screenshot,
         )
 
         self.generate()
@@ -296,3 +311,4 @@ class ScreenshotFigureDirective(ScreenshotDirective):
 def setup(app):
     app.add_directive('screenshot', ScreenshotDirective)
     app.add_directive("screenshot-figure", ScreenshotFigureDirective)
+    app.add_config_value('rebuild_screenshots', rebuild_screenshots, 'env')
