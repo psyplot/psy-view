@@ -32,8 +32,8 @@ from psyplot.config.rcsetup import validate_dict
 
 defaultParams: Dict[str, List[Any]] = {
     "projections": [
-        ["cf", "cyl", "robin", "ortho", "moll"], validate_stringlist,
-        "The names of available projections"],
+        ["cf", "cyl", "robin", "ortho", "moll", "northpole", "southpole"],
+         validate_stringlist, "The names of available projections"],
     "savefig_kws": [
         dict(dpi=250), validate_dict,
         "Options that are passed to plt.savefig when exporting images"],
