@@ -161,7 +161,7 @@ def create_screenshot(
         plotmethod: str = "mapplot", minwidth=None,
     ) -> str:
     """Generate a screenshot of the GUI."""
-    from PyQt5.QtWidgets import QApplication
+    from PyQt5.QtWidgets import QApplication, QSizePolicy
     from psy_view.ds_widget import DatasetWidget
     from psyplot.data import open_dataset
 
@@ -182,14 +182,16 @@ def create_screenshot(
     if minwidth:
         ds_widget.setMinimumWidth(minwidth)
 
-    ds_widget.show()  # to make sure we can see everything
-
     options = {"ds_widget": ds_widget}
     exec("w = " + code, options)
     w = options['w']
 
     if enable is not None:
         w.setEnabled(enable)
+
+    w.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
+
+    ds_widget.show()  # to make sure we can see everything
 
     w.grab().save(osp.join(confdir, output))
     ds_widget.close_sp()
@@ -236,7 +238,7 @@ class ScreenshotDirective(SphinxDirective):
     def generate(self) -> None:
         """Generate the content."""
         self.add_line(f".. {self.target_directive}:: {self.img_name}")
-        
+
         for option, val in self.options.items():
             self.add_line(f"    :{option}: {val}")
 
@@ -288,7 +290,7 @@ class ScreenshotFigureDirective(ScreenshotDirective):
             indent = "    "
             for line in self.content:
                 self.add_line(indent + line)
-        
+
 
 
 def setup(app):
