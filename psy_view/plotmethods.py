@@ -83,6 +83,18 @@ class PlotType(str, Enum):
     poly = "poly"
 
 
+#: A mapping from projection identifier to the text we want to use in the GUI
+projection_map = {
+    "cf": "Default",
+    "cyl": "Cylindric",
+    "robin": "Robinson",
+    "ortho": "Orthographic",
+    "moll": "Mollweide",
+    "northpole": "Arctic (Northpole)",
+    "southpole": "Antarctic (Southpole)",
+}
+
+
 @dataclasses.dataclass
 class GridCell:
     """A grid cell within a QGridLayout managing one QWidget."""
@@ -514,18 +526,67 @@ class MapPlotWidget(PlotMethodWidget):
         menu = QtWidgets.QMenu()
         for projection in rcParams['projections']:
             menu.addAction(
-                projection, partial(self.set_projection, projection))
+                projection_map.get(projection, projection),
+                partial(self.set_projection, projection),
+            )
         menu.addSeparator()
         self.proj_settings_action = menu.addAction(
             QtGui.QIcon(utils.get_icon('proj_settings')),
             "Customize basemap...", self.edit_basemap_settings)
         return menu
 
+    def get_projection_label(self, proj: str) -> str:
+        """Get the label for a projection in the GUI.
+
+        Parameters
+        ----------
+        proj: str
+            The projection value for the
+            :attr:`~psy_maps.plotters.FieldPlotter.plot` formatoption
+
+        Returns
+        -------
+        str
+            The label of the projection in the GUI
+
+        See Also
+        --------
+        get_projection_label
+        projection_map
+        psy_maps.plotters.FieldPlotter.plot
+        """
+        return projection_map.get(proj, proj)
+
+    def get_projection_value(self, label: str) -> str:
+        """Get the value for the `projection` formatoption.
+
+        This method is the inverse of :meth:`get_projection_label`.
+
+        Parameters
+        ----------
+        label: str
+            The projection label that is used in the GUI
+            :attr:`~psy_maps.plotters.FieldPlotter.plot` formatoption
+
+        Returns
+        -------
+        str
+            The value to use for the ``projection`` formatoption
+
+        See Also
+        --------
+        get_projection_label
+        projection_map
+        psy_maps.plotters.FieldPlotter.plot
+        """
+        inv_map = {lbl: proj for proj, lbl in projection_map.items()}
+        return inv_map.get(label, rcParams["projections"][0])
+
     def setup_projection_buttons(self) -> None:
         """Set up the buttons to modify the basemap."""
         self.btn_proj = utils.add_pushbutton(
-            rcParams["projections"][0], self.choose_next_projection,
-            "Change the basemap projection",
+            self.get_projection_label(rcParams["projections"][0]),
+            self.choose_next_projection, "Change the basemap projection",
             toolbutton=True)
         self.btn_proj.setMenu(self.setup_projection_menu())
 
@@ -748,7 +809,8 @@ class MapPlotWidget(PlotMethodWidget):
         """Choose the next projection from the rcParams `projection` value."""
         select = False
         nprojections = len(rcParams['projections'])
-        current = self.btn_proj.text()
+        current = self.get_projection_value(self.btn_proj.text())
+
         for i, proj in enumerate(cycle(rcParams['projections'])):
             if proj == current:
                 select = True
@@ -765,7 +827,7 @@ class MapPlotWidget(PlotMethodWidget):
             The projection name for the
             :attr:`~psy_maps.plotters.FieldPlotter.projection` formatoption.
         """
-        self.btn_proj.setText(proj)
+        self.btn_proj.setText(self.get_projection_label(proj))
         plotter = self.plotter
         if plotter and 'projection' in plotter:
             plotter.update(projection=proj)
@@ -817,7 +879,9 @@ class MapPlotWidget(PlotMethodWidget):
         fmts['cmap'] = self.btn_cmap.text()
 
         if 'projection' in self.formatoptions:
-            fmts['projection'] = self.btn_proj.text()
+            fmts['projection'] = self.get_projection_value(
+                self.btn_proj.text()
+            )
 
         if 'time' in var.dims:
             fmts['title'] = '%(time)s'
@@ -906,7 +970,9 @@ class MapPlotWidget(PlotMethodWidget):
         plotter = self.plotter
         if plotter:
             if isinstance(plotter.projection.value, str):
-                self.btn_proj.setText(plotter.projection.value)
+                self.btn_proj.setText(
+                    self.get_projection_label(plotter.projection.value)
+                )
             else:
                 self.btn_proj.setText('Custom')
             if isinstance(plotter.cmap.value, str):
