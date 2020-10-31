@@ -64,8 +64,8 @@ if TYPE_CHECKING:
     from matplotlib.backend_bases import MouseEvent
     from psyplot_gui.main import MainWindow
 
-NOTSET_T = Type[object]
-NOTSET: NOTSET_T = object
+
+NOTSET = "__NOVARIABLEAVAILABLE"
 
 
 def get_dims_to_iterate(arr: DataArray) -> List[str]:
@@ -124,6 +124,9 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     #: A :class:`PyQt5.QtWidgets.QGroupBox` that contains the variable buttons
     variable_frame: Optional[QtWidgets.QGroupBox] = None
+
+    #: Buttons for selecting variables in the :attr:`ds`
+    variable_buttons: Dict[str, QtWidgets.QPushButton]
 
     _new_plot: bool = False
 
@@ -318,7 +321,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         ret = super().showEvent(event)
         current_size = self.size()
         current_sizes = self.sizes()
-        new_sizes = list(current_sizes)
+
         itree = self.indexOf(self.ds_tree)
         itable = self.indexOf(self.dimension_table)
         diff = 0
@@ -791,7 +794,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     def load_preset(self, preset: Optional[Union[str, Dict[str, Any]]]):
         """Load a given preset from disk.
-        
+
         Parameters
         ----------
         preset: str or dict
@@ -990,7 +993,7 @@ class DatasetWidget(QtWidgets.QSplitter):
     def export_python(self):
         """Export the project as python file.
 
-        This method is not yet implemented as the functionality is missing in 
+        This method is not yet implemented as the functionality is missing in
         psyplot.
         """
         pass
@@ -1022,7 +1025,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         yield self.block_widgets(*self.variable_buttons.values())  # type: ignore
 
     @property
-    def variable(self) -> Union[str, NOTSET_T]:
+    def variable(self) -> str:
         """The current variable"""
         for v, btn in self.variable_buttons.items():
             if btn.isChecked():
@@ -1030,7 +1033,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         return NOTSET
 
     @variable.setter
-    def variable(self, value: Union[str, NOTSET_T]) -> None:
+    def variable(self, value: str) -> None:
         with self.silence_variable_buttons():
             for v, btn in self.variable_buttons.items():
                 btn.setChecked(v == value)
@@ -1038,7 +1041,7 @@ class DatasetWidget(QtWidgets.QSplitter):
     @property
     def available_plotmethods(self) -> List[str]:
         """Get the plotmethods that can visualize the selected variable.
-        
+
         Returns
         -------
         list of str
@@ -1046,7 +1049,7 @@ class DatasetWidget(QtWidgets.QSplitter):
             :attr:`variable`
         """
         v = self.variable
-        if v is NOTSET:
+        if v == NOTSET:
             return []
         ret = []
         ds: Dataset = self.ds  # type: ignore
@@ -1141,10 +1144,10 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     def new_plot(self) -> None:
         """Select a new variable and make a plot.
-        
+
         This method asks for a variable and them makes a new plot with the
         selected plotmethod.
-        
+
         See Also
         --------
         make_plot: plot the currently selected variable without asking
@@ -1380,7 +1383,7 @@ class DatasetWidget(QtWidgets.QSplitter):
                     vname = self.data.name
                 except Exception:
                     vname = self.variable
-                if vname is not NOTSET:
+                if vname != NOTSET:
                     self.expand_current_variable(vname)
                     self.show_fig(sp[:1])
 
@@ -1410,7 +1413,7 @@ class DatasetWidget(QtWidgets.QSplitter):
     def refresh(self, reset_combo: bool = True) -> None:
         """Refresh the state of this widget.
 
-        This method refreshes the widget based on the selected project, 
+        This method refreshes the widget based on the selected project,
         variable, etc.
 
         Parameters
@@ -1450,7 +1453,7 @@ class DatasetWidget(QtWidgets.QSplitter):
             valid_variables = self.plotmethod_widget.valid_variables(self.ds)
             for v, btn in self.variable_buttons.items():
                 btn.setEnabled(v in valid_variables)
-        elif self.ds is None or variable is NOTSET or not self.sp:
+        elif self.ds is None or variable == NOTSET or not self.sp:
             return
 
         table = self.dimension_table
@@ -1557,6 +1560,16 @@ class DatasetWidget(QtWidgets.QSplitter):
         return update
 
 
+class DatasetWidgetStandAlone(DatasetWidget):
+    """A :class:`DatasetWidget` that is supposed to work as a standalone GUI"""
+
+    def closeEvent(self, event: Any):
+        """Reimplemented close event to stop the running ``QApplication``."""
+        ret = super().closeEvent(event)
+        QtWidgets.QApplication.instance().quit()
+        return ret
+
+
 class DatasetWidgetPlugin(DatasetWidget, DockMixin):
     """A :class:`DatasetWidget` plugin for the psyplot GUI.
 
@@ -1653,7 +1666,7 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
 
     def setup_ds_tree(self) -> None:
         """Setup the number of columns and the header of the dataset tree.
-        
+
         Reimplemented to use the :class:`psyplot_gui.content_widget.DatasetTree`
         """
         self.ds_tree = tree = DatasetTree()
