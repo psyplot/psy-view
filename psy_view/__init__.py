@@ -78,11 +78,11 @@ def start_app(
 
     rcParams['help_explorer.use_webengineview'] = False
 
-    from psy_view.ds_widget import DatasetWidget
+    from psy_view.ds_widget import DatasetWidgetStandAlone
     from psyplot_gui.common import get_icon
 
     app = QtWidgets.QApplication(sys.argv)
-    ds_widget = DatasetWidget(ds)
+    ds_widget = DatasetWidgetStandAlone(ds)
     ds_widget.setWindowIcon(QIcon(get_icon('logo.svg')))
     if preset is not None:
         ds_widget.load_preset(preset)
