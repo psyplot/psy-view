@@ -179,12 +179,6 @@ class DatasetWidget(QtWidgets.QSplitter):
         # third row, navigation
         self.navigation_box = QtWidgets.QHBoxLayout()
 
-        self.btn_reload = utils.add_pushbutton(
-            get_psy_icon("refresh.png"), self.reload,
-            "Close all open datasets and recreate the plots",
-            self.navigation_box, icon=True
-        )
-
         # -- animate backwards button
         self.btn_animate_backward = utils.add_pushbutton(
             "◀◀", lambda: self.animate_backward(),
@@ -259,6 +253,12 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.btn_unset_preset.setVisible(False)
 
         self.export_box.addWidget(self.frm_preset)
+
+        self.btn_reload = utils.add_pushbutton(
+            get_psy_icon("refresh.png"), self.reload,
+            "Close all open datasets and recreate the plots",
+            self.export_box, icon=True
+        )
 
         self.export_box.addStretch(0)
 

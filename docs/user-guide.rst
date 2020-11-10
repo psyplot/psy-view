@@ -122,6 +122,11 @@ animations or to export the plot settings for later usage. The |btn_preset|
 button lets you select custom presets for your plots (see the
 :ref:`psyplot docs <psyplot:presets>`).
 
+The |btn_reload| button finally let's you close all open figures and datasets
+and automatically recreates the figures with the same settings. This can be
+very useful when the file on your disk changed, and you just want to see the
+latest version.
+
 .. |btn_prev| screenshot:: ds_widget.btn_prev docs-btn_prev.png
     :height: 1.3em
     :enable:
@@ -154,6 +159,9 @@ button lets you select custom presets for your plots (see the
     :height: 1.3em
     :enable:
 
+.. |btn_reload| screenshot:: ds_widget.btn_reload docs-btn_reload.png
+    :height: 1.3em
+    :enable:
 
 .. _user-guide-select-plot:
 
