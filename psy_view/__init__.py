@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/."""
 from __future__ import annotations
 from typing import (
-    TYPE_CHECKING,
     Dict,
     Any,
     Optional,
@@ -31,8 +30,8 @@ from typing import (
 import sys
 import argparse
 
-if TYPE_CHECKING:
-    from xarray import Dataset
+# importing xarray here for some reason speeds up starting the GUI...
+import xarray as xr
 
 from ._version import get_versions
 
@@ -52,7 +51,7 @@ __license__ = "GPLv3"
 
 
 def start_app(
-        ds: Optional[Dataset], name: Optional[str] = None,
+        ds: Optional[xr.Dataset], name: Optional[str] = None,
         plotmethod: str = 'mapplot', preset: Optional[str] = None
     ) -> None:
     """Start the standalone GUI application.
