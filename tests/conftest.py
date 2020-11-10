@@ -3,14 +3,17 @@ import pytest
 import psyplot_gui.compat.qtcompat
 
 
-test_dir = osp.dirname(__file__)
+_test_dir = osp.dirname(__file__)
 
 
+@pytest.fixture
+def test_dir() -> str:
+    return _test_dir
 
 
 @pytest.fixture(params=["regular-test.nc", "regional-icon-test.nc",
                         "rotated-pole-test.nc", "icon-test.nc"])
-def test_file(request):
+def test_file(test_dir, request):
     return osp.join(test_dir, request.param)
 
 

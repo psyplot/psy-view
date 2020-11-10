@@ -13,3 +13,6 @@ Added
 -----
 - A widget to control the plot type for mapplot and plot2d (see
   `#46 <https://github.com/psyplot/psy-view/pull/46>`__)
+- A button to reload all plots. This is useful, for instance, if the data on
+  your disk changed and you just want to update the plot
+  `#48 <https://github.com/psyplot/psy-view/pull/48>`__)
