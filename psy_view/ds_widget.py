@@ -179,6 +179,12 @@ class DatasetWidget(QtWidgets.QSplitter):
         # third row, navigation
         self.navigation_box = QtWidgets.QHBoxLayout()
 
+        self.btn_reload = utils.add_pushbutton(
+            get_psy_icon("refresh.png"), self.reload,
+            "Close all open datasets and recreate the plots",
+            self.navigation_box, icon=True
+        )
+
         # -- animate backwards button
         self.btn_animate_backward = utils.add_pushbutton(
             "◀◀", lambda: self.animate_backward(),
@@ -310,6 +316,26 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.refresh()
 
         self.cids: Dict[str, int] = {}
+
+    def reload(self) -> None:
+        """Close the plot and recreate it."""
+        import psyplot.project as psy
+
+        sp = self._sp
+        fname = sp.dsnames_map[self.ds.psy.num]  # type: ignore
+        project = sp.save_project()
+        sp.close(True, True, True)
+        self.ds_tree.clear()
+        self._ds_nums.clear()
+        self.refresh()
+        self._sp = sp = psy.Project.load_project(project)
+        self._ds_nums = sp.datasets
+        num = next(num for num, f in sp.dsnames_map.items() if f == fname)
+        self.ds = self.open_datasets[num]
+        for ds in self._ds_nums.values():
+            self._add_ds_item(ds)
+        sp.show()
+        self.refresh()
 
     def setup_ds_tree(self) -> None:
         """Setup the number of columns and the header of the dataset tree."""
@@ -443,6 +469,9 @@ class DatasetWidget(QtWidgets.QSplitter):
     def add_ds_item(self) -> None:
         """Add a new :class:`DatasetTreeItem` for the current :attr:`ds`."""
         ds: Dataset = self.ds  # type: ignore
+        self._add_ds_item(ds)
+
+    def _add_ds_item(self, ds: Dataset) -> None:
         tree = self.ds_tree
         ds_item = DatasetTreeItem(ds, self.ds_attr_columns, 0)
         fname = psyd.get_filename_ds(ds, False)[0]
@@ -462,6 +491,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         if ds.psy.num not in self.open_datasets:
             # make sure we do not loose track of open datasets
             self._ds_nums[ds.psy.num] = ds
+
 
     @property
     def open_datasets(self) -> Dict[int, Dataset]:
@@ -1640,6 +1670,33 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
             if ds.psy.num not in self._sp.datasets:
                 self.set_dataset(ds)
 
+    def reload(self) -> None:
+        """Close the plot and recreate it."""
+        import psyplot.project as psy
+
+        if not all(self._sp.dsnames_map.values()):
+            # we have datasets that only exist in memory, so better ask
+            answer = QtWidgets.QMessageBox.question(
+                self, "Shall I close this?",
+                "Reloading the data closes all open plots. Any data in the memory "
+                "is lost and open files are reloaded from disk! "
+                "Shall I really continue?")
+            if answer != QtWidgets.QMessageBox.Yes:
+                return
+
+        sp = self._sp
+        fname = sp.dsnames_map[self.ds.psy.num]  # type: ignore
+        project = sp.save_project()
+        sp.close(True, True, True)
+        self.ds_tree.clear()
+        self._ds_nums.clear()
+        self.refresh()
+        self._sp = sp = psy.Project.load_project(project)
+        num = next(num for num, f in sp.dsnames_map.items() if f == fname)
+        self.ds = self.open_datasets[num]
+        sp.show()
+        self.refresh()
+
     def oncpchange(self, sp: Optional[Project]) -> None:
         """Update this widget from the current psyplot main (or sub) project."""
         self.reset_combo_array()
@@ -1651,6 +1708,8 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
             self.btn_del.setEnabled(False)
         elif self.ds is None and self._sp:
             self.set_dataset(next(iter(self._sp.datasets.values())))
+        elif self.ds is not None and self._sp:
+            self.enable_navigation()
 
     def show_fig(self, sp: Optional[Project]) -> None:
         """Show the figure of the the current subproject."""

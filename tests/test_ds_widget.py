@@ -1,5 +1,6 @@
 """Test the main functionality of the psy-view package, namely the widget"""
 import os.path as osp
+import shutil
 from PyQt5.QtCore import Qt
 from PyQt5 import QtWidgets
 import pytest
@@ -429,3 +430,27 @@ def test_export_animation(qtbot, ds_widget, plotmethod, tmpdir, monkeypatch):
     assert not ds_widget._animating
 
     assert osp.exists(osp.join(tmpdir, "test.gif"))
+
+
+def test_reload(qtbot, test_dir, tmp_path) -> None:
+    """Test the reload button."""
+    import psyplot.project as psy
+    from psy_view.ds_widget import DatasetWidget
+
+    f1, f2 = "regular-test.nc", "regional-icon-test.nc"
+    shutil.copy(osp.join(test_dir, f1), str(tmp_path / f1))
+
+    ds_widget = DatasetWidget(psy.open_dataset(str(tmp_path / f1)))
+    qtbot.addWidget(ds_widget)
+    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+
+    assert ds_widget.ds_tree.topLevelItemCount() == 1
+    assert ds_widget.ds["t2m"].ndim == 4
+
+    # now copy the icon file to the same destination and reload everything
+    shutil.copy(osp.join(test_dir, f2), str(tmp_path / f1))
+    ds_widget.reload()
+
+    assert ds_widget.ds_tree.topLevelItemCount() == 1
+    assert ds_widget.ds["t2m"].ndim == 3
+    assert len(psy.gcp(True)) == 1
