@@ -127,7 +127,7 @@ To install the current work-in-progress, please
    dependencies into a separate environment. You can activate it via::
 
 
-      conda activate psy-view
+      conda activate psyplot
 
 4. Now launch the GUI via typing::
 
