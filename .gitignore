@@ -58,6 +58,8 @@ coverage.xml
 docs/api/
 docs/_build/
 docs/index.doctree
+docs/docs-*.png
+docs/_static/docs-*.png
 
 # PyBuilder
 target/
