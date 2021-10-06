@@ -4,13 +4,6 @@ from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 import sys
 
-if os.getenv("READTHEDOCS") == "True":
-    # to make versioneer working, we need to unshallow this repo
-    # because RTD does a checkout with --depth 50
-    import subprocess as spr
-    rootdir = osp.dirname(__file__)
-    spr.call(["git", "-C", rootdir, "fetch", "--unshallow", "origin"])
-
 import versioneer
 
 
@@ -32,9 +25,10 @@ class PyTest(TestCommand):
 def readme():
     with open('README.rst') as f:
         return f.read().replace(
-            'img/screenshot.png',
-            'https://raw.githubusercontent.com/psyplot/psyplot/master/'
-            'img/screenshot.png')
+            'docs/_static/screenshot.png',
+            'https://raw.githubusercontent.com/psyplot/psy-view/master/'
+            'docs/_static/screenshot.png')
+
 
 version = versioneer.get_version()
 
@@ -66,7 +60,7 @@ setup(name='psy-view',
       long_description=readme(),
       long_description_content_type="text/x-rst",
       classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Science/Research',
         'Topic :: Scientific/Engineering :: Visualization',
         'Topic :: Scientific/Engineering :: GIS',
@@ -76,13 +70,14 @@ setup(name='psy-view',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Operating System :: OS Independent',
       ],
       keywords=('visualization earth-sciences paleo climate paleoclimate '
                 'pollen diagram digitization database'),
       url='https://github.com/psyplot/psy-view',
       author='Philipp S. Sommer',
-      author_email='philipp.sommer@hzg.de',
+      author_email='philipp.sommer@hereon.de',
       license="GPLv3",
       packages=find_packages(exclude=['docs', 'tests*', 'examples']),
       install_requires=dependencies,

@@ -27,7 +27,7 @@ you see the remote desktop, your URL will be something like
 5. The file you uploaded will now appear on the desktop in the previous tab
 
 
-.. |mybinder| image:: https://mybinder.org/badge_logo.svg
+.. |mybinder| image:: https://static.mybinder.org/badge_logo.svg
     :target: https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop
     :alt: mybinder-demo
 

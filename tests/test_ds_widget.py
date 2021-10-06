@@ -1,5 +1,6 @@
 """Test the main functionality of the psy-view package, namely the widget"""
 import os.path as osp
+import sys
 import shutil
 from PyQt5.QtCore import Qt
 from PyQt5 import QtWidgets
@@ -432,6 +433,7 @@ def test_export_animation(qtbot, ds_widget, plotmethod, tmpdir, monkeypatch):
     assert osp.exists(osp.join(tmpdir, "test.gif"))
 
 
+@pytest.mark.skipif(sys.platform == "win32", reason="Troubles with tmp_path")
 def test_reload(qtbot, test_dir, tmp_path) -> None:
     """Test the reload button."""
     import psyplot.project as psy

@@ -99,7 +99,7 @@ filename with strings like
 <li> <code>%i</code> for a continuous counter of the images</li>
 <li><code>%(name)s</code> for variable names</li>
 <li>or other netCDF attributes (see the
-  <a href="https://psyplot.readthedocs.io/en/latest/api/psyplot.project.html#psyplot.project.Project.export">
+  <a href="https://psyplot.github.io/psyplot/api/psyplot.project.html#psyplot.project.Project.export">
   examples of exporting psyplot projects</a>)</li>
 </ul>
 

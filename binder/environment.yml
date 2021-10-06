@@ -1,5 +1,6 @@
 channels:
 - psyplot/label/master
+- psyplot
 - manics # Used by jupyter-desktop-server
 - conda-forge
 dependencies:
@@ -8,6 +9,8 @@ dependencies:
 - netcdf4
 - pip
 - ncview
+- matplotlib>=3.3
+- cartopy>=0.18
 
 # Required for jupyter-desktop-server
 - websockify

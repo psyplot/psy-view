@@ -25,6 +25,7 @@ import matplotlib.pyplot as plt
 from docutils import nodes
 from docutils.statemachine import StringList
 from docutils.parsers.rst import directives
+from docutils.parsers.rst.directives import images
 
 from sphinx.util.docutils import SphinxDirective
 
@@ -37,8 +38,10 @@ import psy_view
 confdir = osp.dirname(__file__)
 
 project = 'psy-view'
-copyright = '2020, Philipp S. Sommer'
-author = 'Philipp S. Sommer'
+copyright = ", ".join(
+    psy_view.__copyright__.strip().replace("Copyright (C) ", "").splitlines()
+)
+author = psy_view.__author__
 
 
 version = re.match(r'\d+\.\d+\.\d+', psy_view.__version__).group()  # type: ignore
@@ -71,10 +74,6 @@ todo_include_todos = True
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
-# on_rtd is whether we are on readthedocs.org, this line of code grabbed from
-# docs.readthedocs.org
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-
 # create the api documentation
 if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
     spr.check_call(['bash', 'apigen.bash'])
@@ -90,23 +89,12 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-if not on_rtd:  # only import and set the theme if we're building docs locally
-    import sphinx_rtd_theme
-    html_theme = 'sphinx_rtd_theme'
-    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
-html_context = {
-    'css_files': [
-        # overrides for wide tables in RTD theme, particularly for
-        # psy-view vs. ncview comparison
-        '_static/theme_overrides.css',
-        ],
-    }
 
 autodoc_default_options = {
     'show_inheritance': True,
@@ -148,17 +136,14 @@ epub_exclude_files = ['search.html']
 intersphinx_mapping = {
     'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
     'numpy': ('https://numpy.org/doc/stable/', None),
-    'matplotlib': ('https://matplotlib.org/', None),
+    'matplotlib': ('https://matplotlib.org/stable/', None),
     'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
     'xarray': ('https://xarray.pydata.org/en/stable/', None),
     'cartopy': ('https://scitools.org.uk/cartopy/docs/latest/', None),
-    'psyplot': ('https://psyplot.readthedocs.io/en/latest/', None),
-    'psy_simple': ('https://psyplot.readthedocs.io/projects/'
-                   'psy-simple/en/latest/', None),
-    'psy_maps': ('https://psyplot.readthedocs.io/projects/'
-                 'psy-maps/en/latest/', None),
-    'psyplot_gui': ('https://psyplot.readthedocs.io/projects/'
-                    'psyplot-gui/en/latest/', None),
+    'psyplot': ('https://psyplot.github.io/psyplot/', None),
+    'psy_simple': ('https://psyplot.github.io/psy-simple/', None),
+    'psy_maps': ('https://psyplot.github.io/psy-maps/', None),
+    'psyplot_gui': ('https://psyplot.github.io/psyplot-gui/', None),
 }
 
 
@@ -173,8 +158,6 @@ def create_screenshot(
     from psyplot.data import open_dataset
 
     output = osp.join("_static", output)
-    if on_rtd:
-        return output
 
     app = QApplication.instance()
     if app is None:
@@ -225,7 +208,7 @@ class ScreenshotDirective(SphinxDirective):
 
     has_content = False
 
-    option_spec = directives.images.Image.option_spec.copy()
+    option_spec = images.Image.option_spec.copy()
 
     option_spec["plot"] = directives.flag
     option_spec["enable"] = directives.flag
@@ -307,8 +290,8 @@ class ScreenshotFigureDirective(ScreenshotDirective):
                 self.add_line(indent + line)
 
 
-
 def setup(app):
     app.add_directive('screenshot', ScreenshotDirective)
     app.add_directive("screenshot-figure", ScreenshotFigureDirective)
     app.add_config_value('rebuild_screenshots', rebuild_screenshots, 'env')
+    app.add_css_file("theme_overrides.css")

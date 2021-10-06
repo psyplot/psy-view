@@ -41,7 +41,7 @@ in the terminal.
     in the terminal to start it from there. See also :ref:`psyplot-gui-embed`.
 
 
-.. _psyplot GUI: https://psyplot.readthedocs.io/projects/psyplot-gui
+.. _psyplot GUI: https://psyplot.github.io/psyplot-gui
 
 
 .. _user-guide-gui:
