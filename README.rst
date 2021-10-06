@@ -8,22 +8,24 @@ psy-view: An ncview-like GUI with psyplot
     :stub-columns: 1
     :widths: 10 90
 
-    * - examples
-      - |mybinder|
+    * - docs
+      - |docs| |mybinder|
     * - tests
-      - |travis| |appveyor| |codecov|
+      - |circleci| |appveyor| |codecov|
     * - package
-      - |version| |conda| |supported-versions| |supported-implementations| |github|
+      - |version| |conda| |github| |zenodo|
+    * - implementations
+      - |supported-versions| |supported-implementations|
     * - get in touch
       - |gitter| |mailing-list| |issues|
 
 .. |mybinder| image:: https://mybinder.org/badge_logo.svg
-   :target: https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop
-   :alt: mybinder.org
+    :target: https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop
+    :alt: mybinder.org
 
-.. |travis| image:: https://travis-ci.org/psyplot/psy-view.svg?branch=master
-    :alt: Travis
-    :target: https://travis-ci.org/psyplot/psy-view
+.. |circleci| image:: https://circleci.com/gh/psyplot/psy-view/tree/master.svg?style=svg
+    :alt: CircleCI
+    :target: https://circleci.com/gh/psyplot/psy-view/tree/master
 
 .. |appveyor| image:: https://ci.appveyor.com/api/projects/status/a7qxvvwt0e41j32h/branch/master?svg=true
     :alt: AppVeyor
@@ -65,6 +67,10 @@ psy-view: An ncview-like GUI with psyplot
     :target: https://github.com/psyplot/psy-view/issues
     :alt: GitHub issues
 
+.. |zenodo| image:: https://zenodo.org/badge/249615633.svg
+    :alt: Zenodo
+    :target: https://zenodo.org/badge/latestdoi/249615633
+
 .. end-badges
 
 This package defines a viewer application for netCDF files, that is highly
@@ -98,7 +104,7 @@ Some of the most important features offered by psy-view are:
 
 .. _ICON: https://mpimet.mpg.de/en/communication/news/focus-on-overview/icon-development
 .. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/
-.. _psyplot-gui: https://psyplot.readthedocs.io/projects/psyplot-gui
+.. _psyplot-gui: https://psyplot.github.io/psyplot-gui
 
 
 Test it without installation
@@ -149,7 +155,7 @@ headless in you browser by clicking |mybinder|
 For alternative installation instructions, update information or deinstallation
 instructions, please have a look into the `installation docs`_.
 
-.. _installation docs: https://psyplot.readthedocs.io/projects/psy-view/en/latest/installing.html
+.. _installation docs: https://psyplot.github.io/psy-view/installing.html
 
 
 Get in touch

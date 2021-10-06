@@ -94,12 +94,12 @@ Psy-view supports all python versions greater than 3.7. Other dependencies are
 
 
 .. _conda: https://conda.io/docs/
-.. _anaconda: https://www.anaconda.com/download/
-.. _miniconda: https://conda.io/miniconda.html
-.. _psyplot: https://psyplot.readthedocs.io/en/latest/installing.html
-.. _the corresponding dependencies: https://psyplot.readthedocs.io/en/latest/installing.html#dependencies
-.. _psy-maps: https://psyplot.readthedocs.io/projects/psy-maps/en/latest/installing.html
-.. _psyplot-gui: https://psyplot.readthedocs.io/projects/psyplot-gui/en/latest/installing.html
+.. _anaconda: https://www.anaconda.com/products/individual
+.. _miniconda: https://docs.conda.io/en/latest/miniconda.html
+.. _psyplot: https://psyplot.github.io/psyplot/installing.html
+.. _the corresponding dependencies: https://psyplot.github.io/psyplot/installing.html#dependencies
+.. _psy-maps: https://psyplot.github.io/psy-maps/installing.html
+.. _psyplot-gui: https://psyplot.github.io/psyplot-gui/installing.html
 .. _netCDF4: https://github.com/Unidata/netcdf4-python
 
 
@@ -149,7 +149,7 @@ Then build the docs via::
 
 
 .. _github: https://github.com/psyplot/psy-view
-.. _pytest: https://pytest.org/latest/contents.html
+.. _pytest: https://pytest.org/en/latest/contents.html
 
 
 .. _uninstall:
