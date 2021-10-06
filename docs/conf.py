@@ -25,6 +25,7 @@ import matplotlib.pyplot as plt
 from docutils import nodes
 from docutils.statemachine import StringList
 from docutils.parsers.rst import directives
+from docutils.parsers.rst.directives import images
 
 from sphinx.util.docutils import SphinxDirective
 
@@ -215,7 +216,7 @@ class ScreenshotDirective(SphinxDirective):
 
     has_content = False
 
-    option_spec = directives.images.Image.option_spec.copy()
+    option_spec = images.Image.option_spec.copy()
 
     option_spec["plot"] = directives.flag
     option_spec["enable"] = directives.flag
