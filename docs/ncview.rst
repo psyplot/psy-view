@@ -99,11 +99,11 @@ creating a new issue at https://github.com/psyplot/psy-view/issues/
 
 
 .. _grid_mapping: http://cfconventions.org/Data/cf-conventions/cf-conventions-1.8/cf-conventions.html#appendix-grid-mappings
-.. _projection of the plot via cartopy: https://scitools.org.uk/cartopy/docs/latest/crs/projections.html
+.. _projection of the plot via cartopy: https://scitools.org.uk/cartopy/docs/latest/reference/crs.html#list-of-projections
 .. _xarray: http://xarray.pydata.org/en/stable/
 .. _matplotlib: https://matplotlib.org/
 .. _PyQt5: https://riverbankcomputing.com/software/pyqt
 .. _cartopy: https://scitools.org.uk/cartopy/docs/latest
 .. _psyplot GUI: https://psyplot.github.io/psyplot-gui/
-.. _ICON: https://mpimet.mpg.de/en/communication/news/focus-on-overview/icon-development
+.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
 .. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/
