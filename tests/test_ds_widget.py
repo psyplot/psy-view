@@ -433,7 +433,7 @@ def test_export_animation(qtbot, ds_widget, plotmethod, tmpdir, monkeypatch):
     assert osp.exists(osp.join(tmpdir, "test.gif"))
 
 
-@pytest.mark.skipif(sys.platform == "win32", "Troubles with tmp_path")
+@pytest.mark.skipif(sys.platform == "win32", reason="Troubles with tmp_path")
 def test_reload(qtbot, test_dir, tmp_path) -> None:
     """Test the reload button."""
     import psyplot.project as psy
