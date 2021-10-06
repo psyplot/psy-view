@@ -19,6 +19,10 @@ psy-view: An ncview-like GUI with psyplot
     * - get in touch
       - |gitter| |mailing-list| |issues|
 
+.. |docs| image:: https://img.shields.io/github/deployments/psyplot/psy-view/github-pages
+    :alt: Documentation
+    :target: http://psyplot.github.io/psy-view/
+
 .. |mybinder| image:: https://mybinder.org/badge_logo.svg
     :target: https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop
     :alt: mybinder.org
