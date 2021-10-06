@@ -1,16 +1,12 @@
 name: psy-view-docs
 channels:
+    - local
     - psyplot/label/master
-    - psyplot
-    - chilipp/label/conda-forge
+    - conda-forge
 dependencies:
-    - python>3.5
+    - python=3.8
     - sphinx
     - sphinx_rtd_theme
-    - psy-maps
-    - psyplot-gui
-    - netcdf4
-    - pip
-    - pip:
-        - autodocsumm
-        - sphinx-argparse
+    - psy-view
+    - autodocsumm
+    - sphinx-argparse

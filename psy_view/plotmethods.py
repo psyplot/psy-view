@@ -787,7 +787,7 @@ class MapPlotWidget(PlotMethodWidget):
         """Toggle the visibility of the grid cell boundaries."""
         if self.plotter:
             if self.btn_datagrid.isChecked():
-                self.plotter.update(datagrid='k--')
+                self.plotter.update(datagrid='k-')
             else:
                 self.plotter.update(datagrid=None)
 

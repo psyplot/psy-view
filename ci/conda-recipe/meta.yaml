@@ -46,6 +46,7 @@ test:
   commands:
     - psy-view --help
     - pytest -sv --cov=psy_view
+    - codecov
 
 app:
   entry: psy-view
@@ -63,5 +64,5 @@ about:
   description: |
     This package provides a graphical user interface to quickly visualize the
     contents of a netCDF file
-  doc_url: http://psyplot.readthedocs.io/projects/psy-view
+  doc_url: http://psyplot.github.io/psy-view
   dev_url: https://github.com/psyplot/psy-view
