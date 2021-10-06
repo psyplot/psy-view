@@ -96,14 +96,6 @@ html_theme = 'sphinx_rtd_theme'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-html_context = {
-    'css_files': [
-        # overrides for wide tables in RTD theme, particularly for
-        # psy-view vs. ncview comparison
-        '_static/theme_overrides.css',
-        ],
-    }
-
 autodoc_default_options = {
     'show_inheritance': True,
     'autosummary': True,
@@ -298,8 +290,8 @@ class ScreenshotFigureDirective(ScreenshotDirective):
                 self.add_line(indent + line)
 
 
-
 def setup(app):
     app.add_directive('screenshot', ScreenshotDirective)
     app.add_directive("screenshot-figure", ScreenshotFigureDirective)
     app.add_config_value('rebuild_screenshots', rebuild_screenshots, 'env')
+    app.add_css_file("theme_overrides.css")
