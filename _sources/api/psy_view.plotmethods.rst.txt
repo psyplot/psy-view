@@ -1,0 +1,7 @@
+psy\_view.plotmethods module
+============================
+
+.. automodule:: psy_view.plotmethods
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psy_view.rcsetup module &mdash; psy-view 0.1.0+2.g42a8ab3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="psy_view.utils module" href="psy_view.utils.html" />
+    <link rel="prev" title="psy_view.plotmethods module" href="psy_view.plotmethods.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psy-view
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ncview.html">psy-view vs. ncview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="psy_view.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="psy_view.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="psy_view.dialogs.html">psy_view.dialogs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.ds_widget.html">psy_view.ds_widget module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.plotmethods.html">psy_view.plotmethods module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">psy_view.rcsetup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.utils.html">psy_view.utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="psy_view.html">API Reference</a> &raquo;</li>
+      <li>psy_view.rcsetup module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psy_view.rcsetup.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psy_view.rcsetup">
+<span id="psy-view-rcsetup-module"></span><h1>psy_view.rcsetup module<a class="headerlink" href="#module-psy_view.rcsetup" title="Permalink to this headline"></a></h1>
+<p>Configuration parameters for psy-view</p>
+<p><strong>Disclaimer</strong></p>
+<p>Copyright (C) 2020 Philipp S. Sommer</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</p>
+<p><strong>Classes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.rcsetup.PsyViewRcParams" title="psy_view.rcsetup.PsyViewRcParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PsyViewRcParams</span></code></a>(*args, **kwargs)</p></td>
+<td><p>RcParams for the psyplot-gui package.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.rcsetup.PsyViewRcParams">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.rcsetup.</span></span><span class="sig-name descname"><span class="pre">PsyViewRcParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/rcsetup.html#PsyViewRcParams"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.rcsetup.PsyViewRcParams" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.config.rcsetup.html#psyplot.config.rcsetup.RcParams" title="(in psyplot v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.config.rcsetup.RcParams</span></code></a></p>
+<p>RcParams for the psyplot-gui package.</p>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.rcsetup.PsyViewRcParams.HEADER" title="psy_view.rcsetup.PsyViewRcParams.HEADER"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HEADER</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.rcsetup.PsyViewRcParams.load_from_file" title="psy_view.rcsetup.PsyViewRcParams.load_from_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_from_file</span></code></a>([fname])</p></td>
+<td><p>Update rcParams from user-defined settings</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.rcsetup.PsyViewRcParams.HEADER">
+<span class="sig-name descname"><span class="pre">HEADER</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'Configuration</span> <span class="pre">parameters</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">psyplot</span> <span class="pre">module\n\nYou</span> <span class="pre">can</span> <span class="pre">copy</span> <span class="pre">this</span> <span class="pre">file</span> <span class="pre">(or</span> <span class="pre">parts</span> <span class="pre">of</span> <span class="pre">it)</span> <span class="pre">to</span> <span class="pre">another</span> <span class="pre">path</span> <span class="pre">and</span> <span class="pre">save</span> <span class="pre">it</span> <span class="pre">as\npsyviewrc.yml.</span> <span class="pre">The</span> <span class="pre">directory</span> <span class="pre">should</span> <span class="pre">then</span> <span class="pre">be</span> <span class="pre">stored</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">PSYPLOTCONFIGDIR\nenvironment</span> <span class="pre">variable.'</span></em><a class="headerlink" href="#psy_view.rcsetup.PsyViewRcParams.HEADER" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.rcsetup.PsyViewRcParams.load_from_file">
+<span class="sig-name descname"><span class="pre">load_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/rcsetup.html#PsyViewRcParams.load_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.rcsetup.PsyViewRcParams.load_from_file" title="Permalink to this definition"></a></dt>
+<dd><p>Update rcParams from user-defined settings</p>
+<p>This function updates the instance with what is found in <cite>fname</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>str</em>) – Path to the yaml configuration file. Possible keys of the
+dictionary are defined by <code class="xref py py-data docutils literal notranslate"><span class="pre">config.rcsetup.defaultParams</span></code>.
+If None, the <code class="xref py py-func docutils literal notranslate"><span class="pre">config.rcsetup.psyplot_fname()</span></code> function is used.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dump_to_file</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">psyplot_fname</span></code></p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psy_view.plotmethods.html" class="btn btn-neutral float-left" title="psy_view.plotmethods module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="psy_view.utils.html" class="btn btn-neutral float-right" title="psy_view.utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

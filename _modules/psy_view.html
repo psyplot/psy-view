@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psy_view &mdash; psy-view 0.1.0+2.g42a8ab3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psy-view
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ncview.html">psy-view vs. ncview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/psy_view.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>psy_view</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for psy_view</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;ncview-like GUI to the psyplot framework</span>
+
+<span class="sd">**Disclaimer**</span>
+
+<span class="sd">Copyright (C) 2020 Philipp S. Sommer</span>
+
+<span class="sd">This program is free software: you can redistribute it and/or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">This program is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with this program.  If not, see https://www.gnu.org/licenses/.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+    <span class="n">Type</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="c1"># importing xarray here for some reason speeds up starting the GUI...</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+
+<span class="kn">from</span> <span class="nn">._version</span> <span class="kn">import</span> <span class="n">get_versions</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="n">get_versions</span><span class="p">()[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span>
+
+<span class="k">del</span> <span class="n">get_versions</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Philipp S. Sommer&quot;</span>
+
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s2">&quot;Copyright 2020, Philipp S. Sommer&quot;</span>
+
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;philipp.sommer@hzg.de&quot;</span>
+
+<span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Development&quot;</span>
+
+<span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;GPLv3&quot;</span>
+
+
+<div class="viewcode-block" id="start_app"><a class="viewcode-back" href="../api/psy_view.html#psy_view.start_app">[docs]</a><span class="k">def</span> <span class="nf">start_app</span><span class="p">(</span>
+        <span class="n">ds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">plotmethod</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;mapplot&#39;</span><span class="p">,</span> <span class="n">preset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Start the standalone GUI application.</span>
+
+<span class="sd">    This function creates a `QApplication` instance, an instance of the</span>
+<span class="sd">    :class:`psy_view.ds_widget.DatasetWidget` and enters the main event loop.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ds: xarray.Dataset</span>
+<span class="sd">        The dataset to display. If None, the user can select it afterwards</span>
+<span class="sd">    name: str</span>
+<span class="sd">        The variable name in `ds` to display. If None, the user can select it</span>
+<span class="sd">        afterwards</span>
+<span class="sd">    plotmethod: {&#39;mapplot&#39; | &#39;lineplot&#39; | &#39;plot2d&#39; }</span>
+<span class="sd">        The plotmethod to use</span>
+<span class="sd">    preset: str</span>
+<span class="sd">        The preset to apply</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtWidgets</span>
+    <span class="kn">from</span> <span class="nn">PyQt5.QtGui</span> <span class="kn">import</span> <span class="n">QIcon</span>  <span class="c1"># pylint: disable=no-name-in-module</span>
+    <span class="kn">from</span> <span class="nn">psyplot_gui</span> <span class="kn">import</span> <span class="n">rcParams</span>
+
+    <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;help_explorer.use_webengineview&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="kn">from</span> <span class="nn">psy_view.ds_widget</span> <span class="kn">import</span> <span class="n">DatasetWidgetStandAlone</span>
+    <span class="kn">from</span> <span class="nn">psyplot_gui.common</span> <span class="kn">import</span> <span class="n">get_icon</span>
+
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">ds_widget</span> <span class="o">=</span> <span class="n">DatasetWidgetStandAlone</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+    <span class="n">ds_widget</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">get_icon</span><span class="p">(</span><span class="s1">&#39;logo.svg&#39;</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">preset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ds_widget</span><span class="o">.</span><span class="n">load_preset</span><span class="p">(</span><span class="n">preset</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ds</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Variable specified but without dataset&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ds_widget</span><span class="o">.</span><span class="n">variable_buttons</span><span class="p">:</span>
+            <span class="n">valid</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ds_widget</span><span class="o">.</span><span class="n">variable_buttons</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not part of the dataset. &quot;</span>
+                             <span class="sa">f</span><span class="s2">&quot;Possible variables are </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="n">ds_widget</span><span class="o">.</span><span class="n">plotmethod</span> <span class="o">=</span> <span class="n">plotmethod</span>
+        <span class="n">ds_widget</span><span class="o">.</span><span class="n">variable</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="n">ds_widget</span><span class="o">.</span><span class="n">make_plot</span><span class="p">()</span>
+        <span class="n">ds_widget</span><span class="o">.</span><span class="n">refresh</span><span class="p">()</span>
+    <span class="n">ds_widget</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">ds_widget</span><span class="o">.</span><span class="n">show_current_figure</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="n">ds_widget</span><span class="o">.</span><span class="n">excepthook</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="get_parser"><a class="viewcode-back" href="../api/psy_view.html#psy_view.get_parser">[docs]</a><span class="k">def</span> <span class="nf">get_parser</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Get the command line parser for psy-view.&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="s1">&#39;psy-view&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;input_file&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The file to visualize&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Variable name to display. Don&#39;t provide a variable to display &quot;</span>
+              <span class="s2">&quot;the first variable found in the dataset.&quot;</span><span class="p">),</span>
+        <span class="n">const</span><span class="o">=</span><span class="nb">object</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-pm&#39;</span><span class="p">,</span> <span class="s1">&#39;--plotmethod&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The plotmethod to use&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;mapplot&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mapplot&quot;</span><span class="p">,</span> <span class="s2">&quot;plot2d&quot;</span><span class="p">,</span> <span class="s2">&quot;lineplot&quot;</span><span class="p">])</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;--preset&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Apply a preset to the plot&quot;</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">epilog</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    psy-view  Copyright (C) 2020  Philipp S. Sommer</span>
+
+<span class="s2">    This program comes with ABSOLUTELY NO WARRANTY.</span>
+<span class="s2">    This is free software, and you are welcome to redistribute it</span>
+<span class="s2">    under the conditions of the GNU GENERAL PUBLIC LICENSE, Version 3.&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../api/psy_view.html#psy_view.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Start the app with the provided command-line options.&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">psyplot.project</span> <span class="k">as</span> <span class="nn">psy</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">input_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">ds</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">decode_times</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="nb">object</span> <span class="ow">and</span> <span class="n">ds</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ds</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">start_app</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">plotmethod</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">preset</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

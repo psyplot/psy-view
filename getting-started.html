@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting started &mdash; psy-view 0.1.0+2.g42a8ab3 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="User guide" href="user-guide.html" />
+    <link rel="prev" title="Installation" href="installing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psy-view
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#binder-examples">Binder examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#uploading-your-own-data">Uploading your own data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#run-it-locally">Run it locally</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ncview.html">psy-view vs. ncview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psy_view.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Getting started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/getting-started.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<span id="id1"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline"></a></h1>
+<section id="binder-examples">
+<h2>Binder examples<a class="headerlink" href="#binder-examples" title="Permalink to this headline"></a></h2>
+<p>You can run a demo of psy-view in your webbrowser by clicking <a class="reference external" href="https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop"><img alt="mybinder-demo" src="https://static.mybinder.org/badge_logo.svg" /></a>. This
+will show you a remote desktop (after some time for launching the server) where
+you can test psy-view (and the psyplot-gui) for different test files.</p>
+<section id="uploading-your-own-data">
+<span id="binder-upload"></span><h3>Uploading your own data<a class="headerlink" href="#uploading-your-own-data" title="Permalink to this headline"></a></h3>
+<p>You can also upload your own data to visualize it on the binder instance. Once
+you see the remote desktop, your URL will be something like
+<code class="docutils literal notranslate"><span class="pre">https://hub.gke2.mybinder.org/user/psyplot-psy-view-.../desktop/?token=...</span></code>.</p>
+<ol class="arabic simple">
+<li><p>open a new tab</p></li>
+<li><p>take the URL from the previous tab and replace the last part from the url
+(<code class="docutils literal notranslate"><span class="pre">desktop/?token=...</span></code>)  with <code class="docutils literal notranslate"><span class="pre">tree/Desktop</span></code>).</p></li>
+<li><p>Now click the <span class="guilabel">Upload</span> button and select the file you want to upload</p></li>
+<li><p>Upload the file</p></li>
+<li><p>The file you uploaded will now appear on the desktop in the previous tab</p></li>
+</ol>
+</section>
+</section>
+<section id="run-it-locally">
+<h2>Run it locally<a class="headerlink" href="#run-it-locally" title="Permalink to this headline"></a></h2>
+<p>Congratulations! You successfully installed psy-view on your system (if not,
+head over to <a class="reference internal" href="installing.html#install"><span class="std std-ref">Installation</span></a>).</p>
+<p>This small example shows you, how to make a simple georeferenced plot. You can
+use the <a class="reference download internal" download="" href="_downloads/6d351965500a2dd3ef53e3daa3ac50d1/demo.nc"><code class="xref download docutils literal notranslate"><span class="pre">demo.nc</span></code></a> file for this demo.</p>
+<p>Start the GUI from the command line via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psy-view demo.nc
+</pre></div>
+</div>
+<p>A widget will open that looks like</p>
+<img alt="_images/docs-getting-started-ds_widget.png" src="_images/docs-getting-started-ds_widget.png" />
+<p>You see a button for the <cite>t2m</cite> variable: <a class="reference internal" href="_images/docs-getting-started-t2m.png"><img alt="t2m" src="_images/docs-getting-started-t2m.png" style="height: 1.3em;" /></a>. Click it, and it opens a plot
+like this:</p>
+<img alt="_images/docs-getting-started-example.png" src="_images/docs-getting-started-example.png" />
+<p>Now use the <a class="reference internal" href="_images/docs-getting-started-btn_cmap.png"><img alt="btn_cmap" src="_images/docs-getting-started-btn_cmap.png" style="height: 1.3em;" /></a> button to select a different colormap, edit the
+projection via the <a class="reference internal" href="_images/docs-getting-started-btn_proj.png"><img alt="btn_proj" src="_images/docs-getting-started-btn_proj.png" style="height: 1.3em;" /></a> button, or update the dimensions via the
+navigation buttons: <a class="reference internal" href="_images/docs-btn_prev.png"><img alt="btn_prev" src="_images/docs-btn_prev.png" style="height: 1.3em;" /></a>, <a class="reference internal" href="_images/docs-btn_next.png"><img alt="btn_next" src="_images/docs-btn_next.png" style="height: 1.3em;" /></a>, <a class="reference internal" href="_images/docs-btn_animate_backward.png"><img alt="btn_animate_backward" src="_images/docs-btn_animate_backward.png" style="height: 1.3em;" /></a> and
+<a class="reference internal" href="_images/docs-btn_animate_forward.png"><img alt="btn_animate_forward" src="_images/docs-btn_animate_forward.png" style="height: 1.3em;" /></a>.</p>
+<p>More documentation about the GUI elements is provided in our
+<a class="reference internal" href="user-guide.html#user-guide"><span class="std std-ref">User guide</span></a>. And if you are interested in the python code,
+checkout the <a class="reference internal" href="api/psy_view.html#api"><span class="std std-ref">API reference</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installing.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user-guide.html" class="btn btn-neutral float-right" title="User guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

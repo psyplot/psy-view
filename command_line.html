@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Command line usage &mdash; psy-view 0.1.0+2.g42a8ab3 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api/psy_view.html" />
+    <link rel="prev" title="psy-view vs. ncview" href="ncview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psy-view
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ncview.html">psy-view vs. ncview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Command line usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Positional Arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Named Arguments">Named Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/psy_view.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Command line usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/command_line.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="command-line-usage">
+<span id="command-line"></span><h1>Command line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this headline"></a></h1>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">psy_view.__main__</span></code> module defines the command line options for
+psy-view. It can be run from the command line via:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python -m psy-view <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>arguments<span class="o">]</span>
+</pre></div>
+</div>
+<p>or simply:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>psy-view <span class="o">[</span>options<span class="o">]</span> <span class="o">[</span>arguments<span class="o">]</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usage: psy-view
+       <span class="o">[</span>-h<span class="o">]</span>
+       <span class="o">[</span>-n <span class="o">[</span>NAME<span class="o">]]</span>
+       <span class="o">[</span>-pm <span class="o">{</span>mapplot,plot2d,lineplot<span class="o">}]</span>
+       <span class="o">[</span>--preset PRESET<span class="o">]</span>
+       <span class="o">[</span>-V<span class="o">]</span>
+       <span class="o">[</span>input_file<span class="o">]</span>
+</pre></div>
+</div>
+<section id="Positional Arguments">
+<h2>Positional Arguments<a class="headerlink" href="#Positional Arguments" title="Permalink to this headline"></a></h2>
+<dl class="option-list">
+<dt><kbd>input_file</kbd></dt>
+<dd><p>The file to visualize</p>
+</dd>
+</dl>
+</section>
+<section id="Named Arguments">
+<h2>Named Arguments<a class="headerlink" href="#Named Arguments" title="Permalink to this headline"></a></h2>
+<dl class="option-list">
+<dt><kbd>-n, --name</kbd></dt>
+<dd><p>Variable name to display. Don’t provide a variable to display the first variable found in the dataset.</p>
+</dd>
+<dt><kbd>-pm, --plotmethod</kbd></dt>
+<dd><p>Possible choices: mapplot, plot2d, lineplot</p>
+<p>The plotmethod to use</p>
+<p>Default: “mapplot”</p>
+</dd>
+<dt><kbd>--preset</kbd></dt>
+<dd><p>Apply a preset to the plot</p>
+</dd>
+<dt><kbd>-V, --version</kbd></dt>
+<dd><p>show program’s version number and exit</p>
+</dd>
+</dl>
+</section>
+<p><p>psy-view  Copyright (C) 2020  Philipp S. Sommer</p>
+<p>This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under the conditions of the GNU GENERAL PUBLIC LICENSE, Version 3.</p>
+</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ncview.html" class="btn btn-neutral float-left" title="psy-view vs. ncview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/psy_view.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+psy\_view.dialogs module
+========================
+
+.. automodule:: psy_view.dialogs
+   :members:
+   :undoc-members:
+   :show-inheritance:

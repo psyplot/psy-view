@@ -1,0 +1,20 @@
+.. _api:
+API Reference
+=================
+
+.. automodule:: psy_view
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   psy_view.dialogs
+   psy_view.ds_widget
+   psy_view.plotmethods
+   psy_view.rcsetup
+   psy_view.utils

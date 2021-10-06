@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psy-view vs. ncview &mdash; psy-view 0.1.0+2.g42a8ab3 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Command line usage" href="command_line.html" />
+    <link rel="prev" title="User guide" href="user-guide.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> psy-view
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">User guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">psy-view vs. ncview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/psy_view.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>psy-view vs. ncview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/ncview.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="psy-view-vs-ncview">
+<span id="id1"></span><h1>psy-view vs. ncview<a class="headerlink" href="#psy-view-vs-ncview" title="Permalink to this headline"></a></h1>
+<p>When developping <em>psy-view</em>, we had the intuitiveness of <a class="reference external" href="http://meteora.ucsd.edu/~pierce/ncview_home_page.html">ncview</a> in mind, a
+light-weight graphical user interface to visualize the contents of netCDF files.</p>
+<p>In general, <cite>psy-view</cite> can do everything that <cite>ncview</cite> does, and more.</p>
+<a class="reference external image-reference" href="http://meteora.ucsd.edu/~pierce/ncview_home_page.html"><img alt="ncview screenshot" src="_images/ncview.png" /></a>
+<p>The following table tries to summarize the differences of the features for both
+softwares. If you feel like anything is missing or wrong, please tell us by
+creating a new issue at <a class="reference external" href="https://github.com/psyplot/psy-view/issues/">https://github.com/psyplot/psy-view/issues/</a></p>
+<table class="colwidths-given docutils align-default" id="id3">
+<caption><span class="caption-text">psy-view vs. ncview</span><a class="headerlink" href="#id3" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 50%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head stub"><p>Feature</p></th>
+<th class="head"><p>psy-view</p></th>
+<th class="head"><p>ncview</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><th class="stub"><p>supported grids</p></th>
+<td><ul class="simple">
+<li><p>rectilinear (i.e. standard <span class="math notranslate nohighlight">\(nx\times ny\)</span> grid)</p></li>
+<li><p><a class="reference external" href="https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations">ICON</a> (triangular, hexagonal, etc.)</p></li>
+<li><p><a class="reference external" href="http://ugrid-conventions.github.io/ugrid-conventions/">UGRID</a> (triangular, hexagonal, etc.)</p></li>
+</ul>
+</td>
+<td><p>rectilinear</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>supported plots</p></th>
+<td><ul class="simple">
+<li><p>georeferenced plots</p></li>
+<li><p>standard 2D-plots</p></li>
+<li><p>line plots</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>georeferenced plots</p></li>
+<li><p>standard 2D-plots</p></li>
+<li><p>line plots</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>mouse features</p></th>
+<td><ul class="simple">
+<li><p>plot a time series when clicking on a plot</p></li>
+<li><p>show coordinates and data when hovering the plot</p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>plot a time series when clicking on a plot</p></li>
+<li><p>show coordinates and data when hovering the plot</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>View the data</p></th>
+<td><p>not yet implemented</p></td>
+<td><p>comes with a simple and basic editor</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>image export</p></th>
+<td><p>all common formats (e.g.
+<abbr title="Portable Document Format">PDF</abbr>,
+<abbr title="Portable Network Graphics">PNG</abbr>,
+<abbr title="Graphics Interchange Format">GIF</abbr>, etc.) with high resolution</p></td>
+<td><p><abbr title="PostScript">PS</abbr></p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>animation export</p></th>
+<td><p>GIF, MP4 (using ffmpeg or imagemagick)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a beta feature</p>
+</div>
+</td>
+<td><p>not implemented</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p><abbr>GUI (Graphical User Interface</abbr>) startup time</p></th>
+<td><p>fast locally, slow via X11</p></td>
+<td><p>fast</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>projection support</p></th>
+<td><ul class="simple">
+<li><p>decodes CF-conformal <a class="reference external" href="http://cfconventions.org/Data/cf-conventions/cf-conventions-1.8/cf-conventions.html#appendix-grid-mappings">grid_mapping</a> attributes</p></li>
+<li><p>flexibly choose the <a class="reference external" href="https://scitools.org.uk/cartopy/docs/latest/reference/crs.html#list-of-projections">projection of the plot via cartopy</a></p></li>
+</ul>
+</td>
+<td><ul class="simple">
+<li><p>decodes CF-conformal <a class="reference external" href="http://cfconventions.org/Data/cf-conventions/cf-conventions-1.8/cf-conventions.html#appendix-grid-mappings">grid_mapping</a> attributes</p></li>
+<li><p>plots on standard lat-lon projection only</p></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><th class="stub"><p>supported files</p></th>
+<td><p>anything that is supported by xarray (netCDF, GRIB, GeoTIFF, etc.)</p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>add more documentation for supported file types</p>
+</div>
+</td>
+<td><p>netCDF files only</p></td>
+</tr>
+<tr class="row-odd"><th class="stub"><p>Language</p></th>
+<td><p>Entirely written in Python with the use of</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://xarray.pydata.org/en/stable/">xarray</a></p></li>
+<li><p><a class="reference external" href="https://matplotlib.org/">matplotlib</a></p></li>
+<li><p><a class="reference external" href="https://riverbankcomputing.com/software/pyqt">PyQt5</a></p></li>
+<li><p><a class="reference external" href="https://scitools.org.uk/cartopy/docs/latest">cartopy</a></p></li>
+</ul>
+</td>
+<td><p>Entirely written in C</p></td>
+</tr>
+<tr class="row-even"><th class="stub"><p>Extensibility</p></th>
+<td><p>psy-view is built upon psyplot, so you can</p>
+<ul class="simple">
+<li><p>export the plot settings</p></li>
+<li><p>use it in python scripts</p></li>
+<li><p>use the more general <a class="reference external" href="https://psyplot.github.io/psyplot-gui/">psyplot GUI</a></p></li>
+</ul>
+</td>
+<td><p>cannot be extended</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="user-guide.html" class="btn btn-neutral float-left" title="User guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="command_line.html" class="btn btn-neutral float-right" title="Command line usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

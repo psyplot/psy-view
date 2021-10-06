@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psy_view.utils module &mdash; psy-view 0.1.0+2.g42a8ab3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="ToDos" href="../todo.html" />
+    <link rel="prev" title="psy_view.rcsetup module" href="psy_view.rcsetup.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psy-view
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ncview.html">psy-view vs. ncview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="psy_view.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="psy_view.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="psy_view.dialogs.html">psy_view.dialogs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.ds_widget.html">psy_view.ds_widget module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.plotmethods.html">psy_view.plotmethods module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.rcsetup.html">psy_view.rcsetup module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">psy_view.utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="psy_view.html">API Reference</a> &raquo;</li>
+      <li>psy_view.utils module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psy_view.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psy_view.utils">
+<span id="psy-view-utils-module"></span><h1>psy_view.utils module<a class="headerlink" href="#module-psy_view.utils" title="Permalink to this headline"></a></h1>
+<p>Utility functions for psy-view.</p>
+<p><strong>Disclaimer</strong></p>
+<p>Copyright (C) 2020 Philipp S. Sommer</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.If not, see https: // www.gnu.org / licenses / .</p>
+<p><strong>Classes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.utils.QRightPushButton" title="psy_view.utils.QRightPushButton"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QRightPushButton</span></code></a></p></td>
+<td><p>A push button that acts differently when right-clicked</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.utils.add_pushbutton" title="psy_view.utils.add_pushbutton"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_pushbutton</span></code></a>(label[, connections, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.utils.get_icon" title="psy_view.utils.get_icon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_icon</span></code></a>(name[, ending])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.utils.QRightPushButton">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.utils.</span></span><span class="sig-name descname"><span class="pre">QRightPushButton</span></span><a class="reference internal" href="../_modules/psy_view/utils.html#QRightPushButton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.QRightPushButton" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QPushButton</span></code></p>
+<p>A push button that acts differently when right-clicked</p>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.utils.QRightPushButton.mousePressEvent" title="psy_view.utils.QRightPushButton.mousePressEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mousePressEvent</span></code></a>(self, QMouseEvent)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.utils.QRightPushButton.rightclicked" title="psy_view.utils.QRightPushButton.rightclicked"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rightclicked</span></code></a>(*args, **kwargs)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.utils.QRightPushButton.mousePressEvent">
+<span class="sig-name descname"><span class="pre">mousePressEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QMouseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/utils.html#QRightPushButton.mousePressEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.QRightPushButton.mousePressEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.utils.QRightPushButton.rightclicked">
+<span class="sig-name descname"><span class="pre">rightclicked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#psy_view.utils.QRightPushButton.rightclicked" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psy_view.utils.add_pushbutton">
+<span class="sig-prename descclassname"><span class="pre">psy_view.utils.</span></span><span class="sig-name descname"><span class="pre">add_pushbutton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connections</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tooltip</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">PyQt5.QtWidgets.QLayout</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icon</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolbutton</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PyQt5.QtWidgets.QPushButton</span><span class="p"><span class="pre">,</span> </span><span class="pre">PyQt5.QtWidgets.QToolButton</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/utils.html#add_pushbutton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.add_pushbutton" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psy_view.utils.get_icon">
+<span class="sig-prename descclassname"><span class="pre">psy_view.utils.</span></span><span class="sig-name descname"><span class="pre">get_icon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'.png'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/psy_view/utils.html#get_icon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.get_icon" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psy_view.rcsetup.html" class="btn btn-neutral float-left" title="psy_view.rcsetup module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../todo.html" class="btn btn-neutral float-right" title="ToDos" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

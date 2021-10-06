@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psy_view.dialogs module &mdash; psy-view 0.1.0+2.g42a8ab3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="psy_view.ds_widget module" href="psy_view.ds_widget.html" />
+    <link rel="prev" title="API Reference" href="psy_view.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psy-view
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ncview.html">psy-view vs. ncview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="psy_view.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="psy_view.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">psy_view.dialogs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.ds_widget.html">psy_view.ds_widget module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.plotmethods.html">psy_view.plotmethods module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.rcsetup.html">psy_view.rcsetup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.utils.html">psy_view.utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="psy_view.html">API Reference</a> &raquo;</li>
+      <li>psy_view.dialogs module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psy_view.dialogs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psy_view.dialogs">
+<span id="psy-view-dialogs-module"></span><h1>psy_view.dialogs module<a class="headerlink" href="#module-psy_view.dialogs" title="Permalink to this headline"></a></h1>
+<p>Dialogs for manipulating formatoptions.</p>
+<p><strong>Disclaimer</strong></p>
+<p>Copyright (C) 2020 Philipp S. Sommer</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</p>
+<p><strong>Classes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog" title="psy_view.dialogs.BasemapDialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BasemapDialog</span></code></a>(plotter, *args, **kwargs)</p></td>
+<td><p>A dialog to modify the basemap settings.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.CmapDialog" title="psy_view.dialogs.CmapDialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CmapDialog</span></code></a>(project, *args, **kwargs)</p></td>
+<td><p>A dialog to modify color bounds and colormaps.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.ColorbarPreview" title="psy_view.dialogs.ColorbarPreview"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ColorbarPreview</span></code></a>(plotter[, parent])</p></td>
+<td><p>A preview widget of a colorbar.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.FakePlotter" title="psy_view.dialogs.FakePlotter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FakePlotter</span></code></a>([data, ax, auto_update, ...])</p></td>
+<td><p>A dummy plotter for the colorbar preview.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor" title="psy_view.dialogs.FormatoptionsEditor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FormatoptionsEditor</span></code></a>(fmto, *args, **kwargs)</p></td>
+<td><p>A widget to update a formatoption.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.LabelDialog" title="psy_view.dialogs.LabelDialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LabelDialog</span></code></a>(project, *fmts)</p></td>
+<td><p>A dialog to change labels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.LabelWidgetLine" title="psy_view.dialogs.LabelWidgetLine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a>(fmto, project, fmto_widget)</p></td>
+<td><p>A widget to change a formatoption.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.dialogs.</span></span><span class="sig-name descname"><span class="pre">BasemapDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plotter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Plotter" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Plotter</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/dialogs.html#BasemapDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.BasemapDialog" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDialog</span></code></p>
+<p>A dialog to modify the basemap settings.</p>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.button_box" title="psy_view.dialogs.BasemapDialog.button_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">button_box</span></code></a></p></td>
+<td><p>Button box to cancel the operator or update the plotter</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.colors" title="psy_view.dialogs.BasemapDialog.colors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colors</span></code></a></p></td>
+<td><p>colors that affect the map background</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.default_colors" title="psy_view.dialogs.BasemapDialog.default_colors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_colors</span></code></a></p></td>
+<td><p>Get default colors for the color labels in <code class="xref py py-attr docutils literal notranslate"><span class="pre">widgets</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.grid_labels_box" title="psy_view.dialogs.BasemapDialog.grid_labels_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">grid_labels_box</span></code></a></p></td>
+<td><p>group box drawing grid lines and labels</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.lsm_box" title="psy_view.dialogs.BasemapDialog.lsm_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lsm_box</span></code></a></p></td>
+<td><p>group box for modifying the resolution of the land-sea-mask, see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_110m" title="psy_view.dialogs.BasemapDialog.opt_110m"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_110m</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_50m" title="psy_view.dialogs.BasemapDialog.opt_50m"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_50m</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_10m" title="psy_view.dialogs.BasemapDialog.opt_10m"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_10m</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.meridionals_box" title="psy_view.dialogs.BasemapDialog.meridionals_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meridionals_box</span></code></a></p></td>
+<td><p>Group box for options specific to meridionals (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_auto" title="psy_view.dialogs.BasemapDialog.opt_meri_auto"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_auto</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_at" title="psy_view.dialogs.BasemapDialog.opt_meri_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_at</span></code></a> and <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_every" title="psy_view.dialogs.BasemapDialog.opt_meri_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_every</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_num" title="psy_view.dialogs.BasemapDialog.opt_meri_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_num</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_10m" title="psy_view.dialogs.BasemapDialog.opt_10m"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_10m</span></code></a></p></td>
+<td><p>Radiobutton for 10m resolution of lsm</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_110m" title="psy_view.dialogs.BasemapDialog.opt_110m"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_110m</span></code></a></p></td>
+<td><p>Radiobutton for 110m resolution of lsm</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_50m" title="psy_view.dialogs.BasemapDialog.opt_50m"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_50m</span></code></a></p></td>
+<td><p>Radiobutton for 50m resolution of lsm</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_at" title="psy_view.dialogs.BasemapDialog.opt_meri_at"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_meri_at</span></code></a></p></td>
+<td><p>Radiobutton for giving the exact position of meridionals (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_meri_at" title="psy_view.dialogs.BasemapDialog.txt_meri_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_meri_at</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_auto" title="psy_view.dialogs.BasemapDialog.opt_meri_auto"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_meri_auto</span></code></a></p></td>
+<td><p>Radiobutton for automatic drawing of meridionals</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_every" title="psy_view.dialogs.BasemapDialog.opt_meri_every"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_meri_every</span></code></a></p></td>
+<td><p>Radiobutton for equal-width spaced meridionals (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_meri_every" title="psy_view.dialogs.BasemapDialog.txt_meri_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_meri_every</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_num" title="psy_view.dialogs.BasemapDialog.opt_meri_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_meri_num</span></code></a></p></td>
+<td><p>Radiobutton to draw a specific number of meridionals with equal-distance (see also <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_meri_num" title="psy_view.dialogs.BasemapDialog.txt_meri_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_meri_num</span></code></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_at" title="psy_view.dialogs.BasemapDialog.opt_para_at"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_para_at</span></code></a></p></td>
+<td><p>Radiobutton for giving the exact position of parallels (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_para_at" title="psy_view.dialogs.BasemapDialog.txt_para_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_para_at</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_auto" title="psy_view.dialogs.BasemapDialog.opt_para_auto"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_para_auto</span></code></a></p></td>
+<td><p>Radiobutton for automatic drawing of parallels</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_every" title="psy_view.dialogs.BasemapDialog.opt_para_every"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_para_every</span></code></a></p></td>
+<td><p>Radiobutton for equal-width spaced parallels (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_para_every" title="psy_view.dialogs.BasemapDialog.txt_para_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_para_every</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_num" title="psy_view.dialogs.BasemapDialog.opt_para_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">opt_para_num</span></code></a></p></td>
+<td><p>Radiobutton to draw a specific number of parallels with equal-distance (see also <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_para_num" title="psy_view.dialogs.BasemapDialog.txt_para_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_para_num</span></code></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.parallels_box" title="psy_view.dialogs.BasemapDialog.parallels_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parallels_box</span></code></a></p></td>
+<td><p>Group box for options specific to parallels (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_auto" title="psy_view.dialogs.BasemapDialog.opt_para_auto"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_auto</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_at" title="psy_view.dialogs.BasemapDialog.opt_para_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_at</span></code></a> and <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_every" title="psy_view.dialogs.BasemapDialog.opt_para_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_every</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_num" title="psy_view.dialogs.BasemapDialog.opt_para_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_num</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_clat" title="psy_view.dialogs.BasemapDialog.txt_clat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">txt_clat</span></code></a></p></td>
+<td><p>text box for the central latitude (clat formatoption)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_clon" title="psy_view.dialogs.BasemapDialog.txt_clon"><code class="xref py py-obj docutils literal notranslate"><span class="pre">txt_clon</span></code></a></p></td>
+<td><p>text box for the central longitude (clon formatoption)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_grid_fontsize" title="psy_view.dialogs.BasemapDialog.txt_grid_fontsize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">txt_grid_fontsize</span></code></a></p></td>
+<td><p>text box for the fontsize of grid labels</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_meri_at" title="psy_view.dialogs.BasemapDialog.txt_meri_at"><code class="xref py py-obj docutils literal notranslate"><span class="pre">txt_meri_at</span></code></a></p></td>
+<td><p>Text field to enter the location of the meridionals on the map (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_at" title="psy_view.dialogs.BasemapDialog.opt_meri_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_at</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_meri_every" title="psy_view.dialogs.BasemapDialog.txt_meri_every"><code class="xref py py-obj docutils literal notranslate"><span class="pre">txt_meri_every</span></code></a></p></td>
+<td><p>Text box to specify the distance between two meridionals (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_every" title="psy_view.dialogs.BasemapDialog.opt_meri_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_every</span></code></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_meri_num" title="psy_view.dialogs.BasemapDialog.txt_meri_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">txt_meri_num</span></code></a></p></td>
+<td><p>Text box to set the number of meridionals to be shown (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_num" title="psy_view.dialogs.BasemapDialog.opt_meri_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_num</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_para_at" title="psy_view.dialogs.BasemapDialog.txt_para_at"><code class="xref py py-obj docutils literal notranslate"><span class="pre">txt_para_at</span></code></a></p></td>
+<td><p>Text field to enter the location of the parallels on the map (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_at" title="psy_view.dialogs.BasemapDialog.opt_para_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_at</span></code></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_para_every" title="psy_view.dialogs.BasemapDialog.txt_para_every"><code class="xref py py-obj docutils literal notranslate"><span class="pre">txt_para_every</span></code></a></p></td>
+<td><p>Text box to specify the distance between two parallels (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_every" title="psy_view.dialogs.BasemapDialog.opt_para_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_every</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_para_num" title="psy_view.dialogs.BasemapDialog.txt_para_num"><code class="xref py py-obj docutils literal notranslate"><span class="pre">txt_para_num</span></code></a></p></td>
+<td><p>Text box to set the number of parallels to be shown (see <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_num" title="psy_view.dialogs.BasemapDialog.opt_para_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_num</span></code></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.value" title="psy_view.dialogs.BasemapDialog.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a></p></td>
+<td><p>Get the formatoptions of this dialog to update a plotter.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.xgrid_value" title="psy_view.dialogs.BasemapDialog.xgrid_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xgrid_value</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.ygrid_value" title="psy_view.dialogs.BasemapDialog.ygrid_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ygrid_value</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.fill_from_plotter" title="psy_view.dialogs.BasemapDialog.fill_from_plotter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fill_from_plotter</span></code></a>(plotter)</p></td>
+<td><p>Fill the dialog from a given plotter.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.get_colors" title="psy_view.dialogs.BasemapDialog.get_colors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_colors</span></code></a>(plotter)</p></td>
+<td><p>Get the colors for <code class="xref py py-attr docutils literal notranslate"><span class="pre">widgets</span></code> from the plotter formatoptions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.update_forms" title="psy_view.dialogs.BasemapDialog.update_forms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_forms</span></code></a>()</p></td>
+<td><p>Update text widgets for the options to draw merdionals and parallels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.BasemapDialog.update_plotter" title="psy_view.dialogs.BasemapDialog.update_plotter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_plotter</span></code></a>(plotter)</p></td>
+<td><p>Open a <a class="reference internal" href="#psy_view.dialogs.BasemapDialog" title="psy_view.dialogs.BasemapDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasemapDialog</span></code></a> to update a plotter.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.button_box">
+<span class="sig-name descname"><span class="pre">button_box</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.button_box" title="Permalink to this definition"></a></dt>
+<dd><p>Button box to cancel the operator or update the plotter</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.colors">
+<span class="sig-name descname"><span class="pre">colors</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.colors" title="Permalink to this definition"></a></dt>
+<dd><p>colors that affect the map background</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.default_colors">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">default_colors</span></span><em class="property"><span class="pre">:</span> <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.default_colors" title="Permalink to this definition"></a></dt>
+<dd><p>Get default colors for the color labels in <code class="xref py py-attr docutils literal notranslate"><span class="pre">widgets</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.fill_from_plotter">
+<span class="sig-name descname"><span class="pre">fill_from_plotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plotter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Plotter" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Plotter</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#BasemapDialog.fill_from_plotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.fill_from_plotter" title="Permalink to this definition"></a></dt>
+<dd><p>Fill the dialog from a given plotter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>plotter</strong> (<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.MapPlotter" title="(in psy-maps v1.3.2)"><em>psy_maps.plotters.MapPlotter</em></a>) – The plotter to get the formatoptions from.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.get_colors">
+<span class="sig-name descname"><span class="pre">get_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plotter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Plotter" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Plotter</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#BasemapDialog.get_colors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.get_colors" title="Permalink to this definition"></a></dt>
+<dd><p>Get the colors for <code class="xref py py-attr docutils literal notranslate"><span class="pre">widgets</span></code> from the plotter formatoptions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>plotter</strong> (<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.MapPlotter" title="(in psy-maps v1.3.2)"><em>psy_maps.plotters.MapPlotter</em></a>) – The plotter with the formatoptions</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A mapping from formatoptions in <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.colors" title="psy_view.dialogs.BasemapDialog.colors"><code class="xref py py-attr docutils literal notranslate"><span class="pre">colors</span></code></a> to the corresponding
+color in the <cite>plotter</cite>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.grid_labels_box">
+<span class="sig-name descname"><span class="pre">grid_labels_box</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.grid_labels_box" title="Permalink to this definition"></a></dt>
+<dd><p>group box drawing grid lines and labels</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.lsm_box">
+<span class="sig-name descname"><span class="pre">lsm_box</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.lsm_box" title="Permalink to this definition"></a></dt>
+<dd><p>group box for modifying the resolution of the land-sea-mask, see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_110m" title="psy_view.dialogs.BasemapDialog.opt_110m"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_110m</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_50m" title="psy_view.dialogs.BasemapDialog.opt_50m"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_50m</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_10m" title="psy_view.dialogs.BasemapDialog.opt_10m"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_10m</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.meridionals_box">
+<span class="sig-name descname"><span class="pre">meridionals_box</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.meridionals_box" title="Permalink to this definition"></a></dt>
+<dd><p>Group box for options specific to meridionals (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_auto" title="psy_view.dialogs.BasemapDialog.opt_meri_auto"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_auto</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_at" title="psy_view.dialogs.BasemapDialog.opt_meri_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_at</span></code></a> and
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_every" title="psy_view.dialogs.BasemapDialog.opt_meri_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_every</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_num" title="psy_view.dialogs.BasemapDialog.opt_meri_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_num</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_10m">
+<span class="sig-name descname"><span class="pre">opt_10m</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_10m" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton for 10m resolution of lsm</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_110m">
+<span class="sig-name descname"><span class="pre">opt_110m</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_110m" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton for 110m resolution of lsm</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_50m">
+<span class="sig-name descname"><span class="pre">opt_50m</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_50m" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton for 50m resolution of lsm</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_meri_at">
+<span class="sig-name descname"><span class="pre">opt_meri_at</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_meri_at" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton for giving the exact position of meridionals (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_meri_at" title="psy_view.dialogs.BasemapDialog.txt_meri_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_meri_at</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_meri_auto">
+<span class="sig-name descname"><span class="pre">opt_meri_auto</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_meri_auto" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton for automatic drawing of meridionals</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_meri_every">
+<span class="sig-name descname"><span class="pre">opt_meri_every</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_meri_every" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton for equal-width spaced meridionals (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_meri_every" title="psy_view.dialogs.BasemapDialog.txt_meri_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_meri_every</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_meri_num">
+<span class="sig-name descname"><span class="pre">opt_meri_num</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_meri_num" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton to draw a specific number of meridionals with
+equal-distance (see also <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_meri_num" title="psy_view.dialogs.BasemapDialog.txt_meri_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_meri_num</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_para_at">
+<span class="sig-name descname"><span class="pre">opt_para_at</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_para_at" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton for giving the exact position of parallels (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_para_at" title="psy_view.dialogs.BasemapDialog.txt_para_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_para_at</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_para_auto">
+<span class="sig-name descname"><span class="pre">opt_para_auto</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_para_auto" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton for automatic drawing of parallels</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_para_every">
+<span class="sig-name descname"><span class="pre">opt_para_every</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_para_every" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton for equal-width spaced parallels (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_para_every" title="psy_view.dialogs.BasemapDialog.txt_para_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_para_every</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.opt_para_num">
+<span class="sig-name descname"><span class="pre">opt_para_num</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.opt_para_num" title="Permalink to this definition"></a></dt>
+<dd><p>Radiobutton to draw a specific number of parallels with
+equal-distance (see also <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.txt_para_num" title="psy_view.dialogs.BasemapDialog.txt_para_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">txt_para_num</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.parallels_box">
+<span class="sig-name descname"><span class="pre">parallels_box</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.parallels_box" title="Permalink to this definition"></a></dt>
+<dd><p>Group box for options specific to parallels (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_auto" title="psy_view.dialogs.BasemapDialog.opt_para_auto"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_auto</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_at" title="psy_view.dialogs.BasemapDialog.opt_para_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_at</span></code></a> and
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_every" title="psy_view.dialogs.BasemapDialog.opt_para_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_every</span></code></a>, <a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_num" title="psy_view.dialogs.BasemapDialog.opt_para_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_num</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.txt_clat">
+<span class="sig-name descname"><span class="pre">txt_clat</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.txt_clat" title="Permalink to this definition"></a></dt>
+<dd><p>text box for the central latitude (clat formatoption)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.txt_clon">
+<span class="sig-name descname"><span class="pre">txt_clon</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.txt_clon" title="Permalink to this definition"></a></dt>
+<dd><p>text box for the central longitude (clon formatoption)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.txt_grid_fontsize">
+<span class="sig-name descname"><span class="pre">txt_grid_fontsize</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.txt_grid_fontsize" title="Permalink to this definition"></a></dt>
+<dd><p>text box for the fontsize of grid labels</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.txt_meri_at">
+<span class="sig-name descname"><span class="pre">txt_meri_at</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.txt_meri_at" title="Permalink to this definition"></a></dt>
+<dd><p>Text field to enter the location of the meridionals on the map (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_at" title="psy_view.dialogs.BasemapDialog.opt_meri_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_at</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.txt_meri_every">
+<span class="sig-name descname"><span class="pre">txt_meri_every</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.txt_meri_every" title="Permalink to this definition"></a></dt>
+<dd><p>Text box to specify the distance between two meridionals (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_every" title="psy_view.dialogs.BasemapDialog.opt_meri_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_every</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.txt_meri_num">
+<span class="sig-name descname"><span class="pre">txt_meri_num</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.txt_meri_num" title="Permalink to this definition"></a></dt>
+<dd><p>Text box to set the number of meridionals to be shown (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_meri_num" title="psy_view.dialogs.BasemapDialog.opt_meri_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_meri_num</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.txt_para_at">
+<span class="sig-name descname"><span class="pre">txt_para_at</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.txt_para_at" title="Permalink to this definition"></a></dt>
+<dd><p>Text field to enter the location of the parallels on the map (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_at" title="psy_view.dialogs.BasemapDialog.opt_para_at"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_at</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.txt_para_every">
+<span class="sig-name descname"><span class="pre">txt_para_every</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.txt_para_every" title="Permalink to this definition"></a></dt>
+<dd><p>Text box to specify the distance between two parallels (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_every" title="psy_view.dialogs.BasemapDialog.opt_para_every"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_every</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.txt_para_num">
+<span class="sig-name descname"><span class="pre">txt_para_num</span></span><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.txt_para_num" title="Permalink to this definition"></a></dt>
+<dd><p>Text box to set the number of parallels to be shown (see
+<a class="reference internal" href="#psy_view.dialogs.BasemapDialog.opt_para_num" title="psy_view.dialogs.BasemapDialog.opt_para_num"><code class="xref py py-attr docutils literal notranslate"><span class="pre">opt_para_num</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.update_forms">
+<span class="sig-name descname"><span class="pre">update_forms</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#BasemapDialog.update_forms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.update_forms" title="Permalink to this definition"></a></dt>
+<dd><p>Update text widgets for the options to draw merdionals and parallels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.update_plotter">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">update_plotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plotter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Plotter" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Plotter</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#BasemapDialog.update_plotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.update_plotter" title="Permalink to this definition"></a></dt>
+<dd><p>Open a <a class="reference internal" href="#psy_view.dialogs.BasemapDialog" title="psy_view.dialogs.BasemapDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasemapDialog</span></code></a> to update a plotter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>plotter</strong> (<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.MapPlotter" title="(in psy-maps v1.3.2)"><em>psy_maps.plotters.MapPlotter</em></a>) – The plotter to update.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.value">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="pre">:</span> <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.value" title="Permalink to this definition"></a></dt>
+<dd><p>Get the formatoptions of this dialog to update a plotter.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.xgrid_value">
+<span class="sig-name descname"><span class="pre">xgrid_value</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.xgrid_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.BasemapDialog.ygrid_value">
+<span class="sig-name descname"><span class="pre">ygrid_value</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.dialogs.BasemapDialog.ygrid_value" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.dialogs.CmapDialog">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.dialogs.</span></span><span class="sig-name descname"><span class="pre">CmapDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Project</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/dialogs.html#CmapDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.CmapDialog" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDialog</span></code></p>
+<p>A dialog to modify color bounds and colormaps.</p>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.CmapDialog.button_box" title="psy_view.dialogs.CmapDialog.button_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">button_box</span></code></a></p></td>
+<td><p>Button box to accept or cancel this dialog</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.CmapDialog.cbar_preview" title="psy_view.dialogs.CmapDialog.cbar_preview"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cbar_preview</span></code></a></p></td>
+<td><p><a class="reference internal" href="#psy_view.dialogs.ColorbarPreview" title="psy_view.dialogs.ColorbarPreview"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorbarPreview</span></code></a> to show a preview of the colorbar with the selected formatoption in <a class="reference internal" href="#psy_view.dialogs.CmapDialog.fmt_widgets" title="psy_view.dialogs.CmapDialog.fmt_widgets"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_widgets</span></code></a></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.CmapDialog.fmt_widgets" title="psy_view.dialogs.CmapDialog.fmt_widgets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fmt_widgets</span></code></a></p></td>
+<td><p>Mapping from formatoption key to <a class="reference internal" href="#psy_view.dialogs.LabelWidgetLine" title="psy_view.dialogs.LabelWidgetLine"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a> widgets to controlling the formatoption</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.CmapDialog.fmts" title="psy_view.dialogs.CmapDialog.fmts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fmts</span></code></a></p></td>
+<td><p>Map from formatoption in <a class="reference internal" href="#psy_view.dialogs.CmapDialog.fmt_widgets" title="psy_view.dialogs.CmapDialog.fmt_widgets"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_widgets</span></code></a> to values.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.CmapDialog.plotter" title="psy_view.dialogs.CmapDialog.plotter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plotter</span></code></a></p></td>
+<td><p>Get the plotter with the formatoptions we use to fill this dialog.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.CmapDialog.tabs" title="psy_view.dialogs.CmapDialog.tabs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tabs</span></code></a></p></td>
+<td><p>tabs for switching between bounds (<code class="xref py py-attr docutils literal notranslate"><span class="pre">bounds_widget</span></code>) and colorbar ticks (<code class="xref py py-attr docutils literal notranslate"><span class="pre">cticks_widget</span></code>)</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.CmapDialog.update_preview" title="psy_view.dialogs.CmapDialog.update_preview"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_preview</span></code></a>()</p></td>
+<td><p>Update the <a class="reference internal" href="#psy_view.dialogs.CmapDialog.cbar_preview" title="psy_view.dialogs.CmapDialog.cbar_preview"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cbar_preview</span></code></a> from the various <a class="reference internal" href="#psy_view.dialogs.CmapDialog.fmt_widgets" title="psy_view.dialogs.CmapDialog.fmt_widgets"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_widgets</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.CmapDialog.update_project" title="psy_view.dialogs.CmapDialog.update_project"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_project</span></code></a>(project)</p></td>
+<td><p>Create a <a class="reference internal" href="#psy_view.dialogs.CmapDialog" title="psy_view.dialogs.CmapDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">CmapDialog</span></code></a> to update a <cite>project</cite></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.CmapDialog.button_box">
+<span class="sig-name descname"><span class="pre">button_box</span></span><a class="headerlink" href="#psy_view.dialogs.CmapDialog.button_box" title="Permalink to this definition"></a></dt>
+<dd><p>Button box to accept or cancel this dialog</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.CmapDialog.cbar_preview">
+<span class="sig-name descname"><span class="pre">cbar_preview</span></span><a class="headerlink" href="#psy_view.dialogs.CmapDialog.cbar_preview" title="Permalink to this definition"></a></dt>
+<dd><p><a class="reference internal" href="#psy_view.dialogs.ColorbarPreview" title="psy_view.dialogs.ColorbarPreview"><code class="xref py py-class docutils literal notranslate"><span class="pre">ColorbarPreview</span></code></a> to show a preview of the colorbar with
+the selected formatoption in <a class="reference internal" href="#psy_view.dialogs.CmapDialog.fmt_widgets" title="psy_view.dialogs.CmapDialog.fmt_widgets"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_widgets</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.CmapDialog.fmt_widgets">
+<span class="sig-name descname"><span class="pre">fmt_widgets</span></span><a class="headerlink" href="#psy_view.dialogs.CmapDialog.fmt_widgets" title="Permalink to this definition"></a></dt>
+<dd><p>Mapping from formatoption key to <a class="reference internal" href="#psy_view.dialogs.LabelWidgetLine" title="psy_view.dialogs.LabelWidgetLine"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a> widgets to
+controlling the formatoption</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.CmapDialog.fmts">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fmts</span></span><em class="property"><span class="pre">:</span> <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.dialogs.CmapDialog.fmts" title="Permalink to this definition"></a></dt>
+<dd><p>Map from formatoption in <a class="reference internal" href="#psy_view.dialogs.CmapDialog.fmt_widgets" title="psy_view.dialogs.CmapDialog.fmt_widgets"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_widgets</span></code></a> to values.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.CmapDialog.plotter">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">plotter</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Plotter" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Plotter</span></a></em><a class="headerlink" href="#psy_view.dialogs.CmapDialog.plotter" title="Permalink to this definition"></a></dt>
+<dd><p>Get the plotter with the formatoptions we use to fill this dialog.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.CmapDialog.tabs">
+<span class="sig-name descname"><span class="pre">tabs</span></span><a class="headerlink" href="#psy_view.dialogs.CmapDialog.tabs" title="Permalink to this definition"></a></dt>
+<dd><p>tabs for switching between bounds (<code class="xref py py-attr docutils literal notranslate"><span class="pre">bounds_widget</span></code>) and
+colorbar ticks (<code class="xref py py-attr docutils literal notranslate"><span class="pre">cticks_widget</span></code>)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.CmapDialog.update_preview">
+<span class="sig-name descname"><span class="pre">update_preview</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#CmapDialog.update_preview"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.CmapDialog.update_preview" title="Permalink to this definition"></a></dt>
+<dd><p>Update the <a class="reference internal" href="#psy_view.dialogs.CmapDialog.cbar_preview" title="psy_view.dialogs.CmapDialog.cbar_preview"><code class="xref py py-attr docutils literal notranslate"><span class="pre">cbar_preview</span></code></a> from the various <a class="reference internal" href="#psy_view.dialogs.CmapDialog.fmt_widgets" title="psy_view.dialogs.CmapDialog.fmt_widgets"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_widgets</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.CmapDialog.update_project">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">update_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Project</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#CmapDialog.update_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.CmapDialog.update_project" title="Permalink to this definition"></a></dt>
+<dd><p>Create a <a class="reference internal" href="#psy_view.dialogs.CmapDialog" title="psy_view.dialogs.CmapDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">CmapDialog</span></code></a> to update a <cite>project</cite></p>
+<p>This classmethod creates a new <a class="reference internal" href="#psy_view.dialogs.CmapDialog" title="psy_view.dialogs.CmapDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">CmapDialog</span></code></a> instance, fills it
+with the formatoptions of the first plotter in <cite>project</cite>, enters the
+main event loop, and updates the <cite>project</cite> upon acceptance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>project</strong> (<a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.project.html#psyplot.project.Project" title="(in psyplot v1.3.1)"><em>psyplot.project.Project</em></a>) – The psyplot project to update</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="psy_view.dialogs.Color">
+<span class="sig-prename descclassname"><span class="pre">psy_view.dialogs.</span></span><span class="sig-name descname"><span class="pre">Color</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><em class="property"> <span class="pre">=</span> <span class="pre">typing.Any</span></em><a class="headerlink" href="#psy_view.dialogs.Color" title="Permalink to this definition"></a></dt>
+<dd><p>Find a more appropriate description here</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>TODO</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.dialogs.ColorbarPreview">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.dialogs.</span></span><span class="sig-name descname"><span class="pre">ColorbarPreview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plotter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Plotter" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Plotter</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">PyQt5.QtWidgets.QWidget</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/dialogs.html#ColorbarPreview"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.ColorbarPreview" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.backends.backend_qt5agg.FigureCanvasQTAgg</span></code></p>
+<p>A preview widget of a colorbar.</p>
+<p>This matplotlib figure contains one single axes to display the colorbar
+filled by the formatoptions of a given <cite>plotter</cite>.</p>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.fake_plotter" title="psy_view.dialogs.ColorbarPreview.fake_plotter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fake_plotter</span></code></a></p></td>
+<td><p>Create a plotter with the formatoptions of the real <a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.plotter" title="psy_view.dialogs.ColorbarPreview.plotter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plotter</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.plotter" title="psy_view.dialogs.ColorbarPreview.plotter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plotter</span></code></a></p></td>
+<td><p>The plotter to use for displaying the colorbar</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.init_colorbar" title="psy_view.dialogs.ColorbarPreview.init_colorbar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_colorbar</span></code></a>(plotter)</p></td>
+<td><p>Initialize the colorbar.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.resizeEvent" title="psy_view.dialogs.ColorbarPreview.resizeEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">resizeEvent</span></code></a>(event)</p></td>
+<td><p>Reimplemented to make sure we cannot get smaller than 0.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.update_colorbar" title="psy_view.dialogs.ColorbarPreview.update_colorbar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_colorbar</span></code></a>(**kwargs)</p></td>
+<td><p>Update the colorbar with new formatoptions.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.ColorbarPreview.fake_plotter">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fake_plotter</span></span><em class="property"><span class="pre">:</span> <a class="reference internal" href="#psy_view.dialogs.FakePlotter" title="psy_view.dialogs.FakePlotter"><span class="pre">psy_view.dialogs.FakePlotter</span></a></em><a class="headerlink" href="#psy_view.dialogs.ColorbarPreview.fake_plotter" title="Permalink to this definition"></a></dt>
+<dd><p>Create a plotter with the formatoptions of the real <a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.plotter" title="psy_view.dialogs.ColorbarPreview.plotter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plotter</span></code></a>.</p>
+<p>We can update this plotter without impacting the origin <a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.plotter" title="psy_view.dialogs.ColorbarPreview.plotter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plotter</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.ColorbarPreview.init_colorbar">
+<span class="sig-name descname"><span class="pre">init_colorbar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plotter</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Plotter" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Plotter</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#ColorbarPreview.init_colorbar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.ColorbarPreview.init_colorbar" title="Permalink to this definition"></a></dt>
+<dd><p>Initialize the colorbar.</p>
+<p>This method extracts the formatoptions of the given <cite>plotter</cite> and draws
+the colorbar.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.ColorbarPreview.plotter">
+<span class="sig-name descname"><span class="pre">plotter</span></span><a class="headerlink" href="#psy_view.dialogs.ColorbarPreview.plotter" title="Permalink to this definition"></a></dt>
+<dd><p>The plotter to use for displaying the colorbar</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.ColorbarPreview.resizeEvent">
+<span class="sig-name descname"><span class="pre">resizeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">QEvent</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#ColorbarPreview.resizeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.ColorbarPreview.resizeEvent" title="Permalink to this definition"></a></dt>
+<dd><p>Reimplemented to make sure we cannot get smaller than 0.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.ColorbarPreview.update_colorbar">
+<span class="sig-name descname"><span class="pre">update_colorbar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#ColorbarPreview.update_colorbar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.ColorbarPreview.update_colorbar" title="Permalink to this definition"></a></dt>
+<dd><p>Update the colorbar with new formatoptions.</p>
+<p>This method takes the <a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.fake_plotter" title="psy_view.dialogs.ColorbarPreview.fake_plotter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fake_plotter</span></code></a>, updates it from the given
+<cite>kwargs</cite>, updates the colorbar preview.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>**kwargs</strong> – <cite>bounds</cite>, <cite>cmap</cite>, <cite>cticks</cite> or <cite>cbar</cite> formatoption keyword-value
+pairs</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.dialogs.FakePlotter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.dialogs.</span></span><span class="sig-name descname"><span class="pre">FakePlotter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_update</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">draw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">make_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clear</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_post</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/dialogs.html#FakePlotter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.FakePlotter" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Plotter" title="(in psyplot v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot.plotter.Plotter</span></code></a></p>
+<p>A dummy plotter for the colorbar preview.</p>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FakePlotter.bounds" title="psy_view.dialogs.FakePlotter.bounds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bounds</span></code></a></p></td>
+<td><p>Dummy formatoption for static type checking.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.FakePlotter.cbar" title="psy_view.dialogs.FakePlotter.cbar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cbar</span></code></a></p></td>
+<td><p>Dummy formatoption for static type checking.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FakePlotter.cmap" title="psy_view.dialogs.FakePlotter.cmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cmap</span></code></a></p></td>
+<td><p>Dummy formatoption for static type checking.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.FakePlotter.cticks" title="psy_view.dialogs.FakePlotter.cticks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cticks</span></code></a></p></td>
+<td><p>Dummy formatoption for static type checking.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.FakePlotter.bounds">
+<span class="sig-name descname"><span class="pre">bounds</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Formatoption</span></a></em><a class="headerlink" href="#psy_view.dialogs.FakePlotter.bounds" title="Permalink to this definition"></a></dt>
+<dd><p>Dummy formatoption for static type checking.</p>
+<p>This is just a workaround for the static type checker to be able to tell
+what the <a class="reference internal" href="#psy_view.dialogs.FakePlotter" title="psy_view.dialogs.FakePlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">FakePlotter</span></code></a> formatoptions are, used in
+<a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.fake_plotter" title="psy_view.dialogs.ColorbarPreview.fake_plotter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ColorbarPreview.fake_plotter</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.FakePlotter.cbar">
+<span class="sig-name descname"><span class="pre">cbar</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Formatoption</span></a></em><a class="headerlink" href="#psy_view.dialogs.FakePlotter.cbar" title="Permalink to this definition"></a></dt>
+<dd><p>Dummy formatoption for static type checking.</p>
+<p>This is just a workaround for the static type checker to be able to tell
+what the <a class="reference internal" href="#psy_view.dialogs.FakePlotter" title="psy_view.dialogs.FakePlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">FakePlotter</span></code></a> formatoptions are, used in
+<a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.fake_plotter" title="psy_view.dialogs.ColorbarPreview.fake_plotter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ColorbarPreview.fake_plotter</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.FakePlotter.cmap">
+<span class="sig-name descname"><span class="pre">cmap</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Formatoption</span></a></em><a class="headerlink" href="#psy_view.dialogs.FakePlotter.cmap" title="Permalink to this definition"></a></dt>
+<dd><p>Dummy formatoption for static type checking.</p>
+<p>This is just a workaround for the static type checker to be able to tell
+what the <a class="reference internal" href="#psy_view.dialogs.FakePlotter" title="psy_view.dialogs.FakePlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">FakePlotter</span></code></a> formatoptions are, used in
+<a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.fake_plotter" title="psy_view.dialogs.ColorbarPreview.fake_plotter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ColorbarPreview.fake_plotter</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.FakePlotter.cticks">
+<span class="sig-name descname"><span class="pre">cticks</span></span><em class="property"><span class="pre">:</span> <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Formatoption</span></a></em><a class="headerlink" href="#psy_view.dialogs.FakePlotter.cticks" title="Permalink to this definition"></a></dt>
+<dd><p>Dummy formatoption for static type checking.</p>
+<p>This is just a workaround for the static type checker to be able to tell
+what the <a class="reference internal" href="#psy_view.dialogs.FakePlotter" title="psy_view.dialogs.FakePlotter"><code class="xref py py-class docutils literal notranslate"><span class="pre">FakePlotter</span></code></a> formatoptions are, used in
+<a class="reference internal" href="#psy_view.dialogs.ColorbarPreview.fake_plotter" title="psy_view.dialogs.ColorbarPreview.fake_plotter"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ColorbarPreview.fake_plotter</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.dialogs.</span></span><span class="sig-name descname"><span class="pre">FormatoptionsEditor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="(in psyplot v1.3.1)"><span class="pre">psyplot.plotter.Formatoption</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/dialogs.html#FormatoptionsEditor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code></p>
+<p>A widget to update a formatoption.</p>
+<p>This widget is a light-weight version of the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">psyplot_gui.fmt_widget.FormatoptionsWidget</span></code> class. It contains
+a line editor and a text editor to set the value of a specific formatoption.</p>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.btn_multiline" title="psy_view.dialogs.FormatoptionsEditor.btn_multiline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">btn_multiline</span></code></a></p></td>
+<td><p>A tool button to switch from the single line editor <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_edit</span></code></a> to the multi-line editor <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.changed" title="psy_view.dialogs.FormatoptionsEditor.changed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">changed</span></code></a></p></td>
+<td><p>Check if the value in this editor differs from the original <cite>fmto</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.fmto" title="psy_view.dialogs.FormatoptionsEditor.fmto"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fmto</span></code></a></p></td>
+<td><p>The <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="(in psyplot v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> that fills this widget</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.initial_value" title="psy_view.dialogs.FormatoptionsEditor.initial_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initial_value</span></code></a></p></td>
+<td><p>Value of the <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.fmto" title="psy_view.dialogs.FormatoptionsEditor.fmto"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmto</span></code></a> at the initialization of this widget</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">line_edit</span></code></a></p></td>
+<td><p>A single line editor holding the formatoption value (see also <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a> and <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.btn_multiline" title="psy_view.dialogs.FormatoptionsEditor.btn_multiline"><code class="xref py py-attr docutils literal notranslate"><span class="pre">btn_multiline</span></code></a>)</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.multiline" title="psy_view.dialogs.FormatoptionsEditor.multiline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiline</span></code></a></p></td>
+<td><p>True if the <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a> should be visible.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text" title="psy_view.dialogs.FormatoptionsEditor.text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">text</span></code></a></p></td>
+<td><p>Text of the <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a> (or <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_edit</span></code></a>).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">text_edit</span></code></a></p></td>
+<td><p>A multi-line editor holiding the value of <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.fmto" title="psy_view.dialogs.FormatoptionsEditor.fmto"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmto</span></code></a> (see also <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_edit</span></code></a> and <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.btn_multiline" title="psy_view.dialogs.FormatoptionsEditor.btn_multiline"><code class="xref py py-attr docutils literal notranslate"><span class="pre">btn_multiline</span></code></a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.value" title="psy_view.dialogs.FormatoptionsEditor.value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">value</span></code></a></p></td>
+<td><p>Load the value of <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text" title="psy_view.dialogs.FormatoptionsEditor.text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text</span></code></a> with yaml.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.clear_text" title="psy_view.dialogs.FormatoptionsEditor.clear_text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_text</span></code></a>()</p></td>
+<td><p>Clear the editor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.get_obj" title="psy_view.dialogs.FormatoptionsEditor.get_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_obj</span></code></a>()</p></td>
+<td><p>Alias for <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.value" title="psy_view.dialogs.FormatoptionsEditor.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.insert_obj" title="psy_view.dialogs.FormatoptionsEditor.insert_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">insert_obj</span></code></a>(obj)</p></td>
+<td><p>Add a string to the formatoption widget.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.set_obj" title="psy_view.dialogs.FormatoptionsEditor.set_obj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_obj</span></code></a>(obj)</p></td>
+<td><p>Clear the editor and set another object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.toggle_multiline" title="psy_view.dialogs.FormatoptionsEditor.toggle_multiline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toggle_multiline</span></code></a>()</p></td>
+<td><p>Switch from <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_edit</span></code></a> and <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a> or back.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.btn_multiline">
+<span class="sig-name descname"><span class="pre">btn_multiline</span></span><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.btn_multiline" title="Permalink to this definition"></a></dt>
+<dd><p>A tool button to switch from the single line editor <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_edit</span></code></a>
+to the multi-line editor <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.changed">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">changed</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.changed" title="Permalink to this definition"></a></dt>
+<dd><p>Check if the value in this editor differs from the original <cite>fmto</cite>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.clear_text">
+<span class="sig-name descname"><span class="pre">clear_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#FormatoptionsEditor.clear_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.clear_text" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the editor.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.fmto">
+<span class="sig-name descname"><span class="pre">fmto</span></span><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.fmto" title="Permalink to this definition"></a></dt>
+<dd><p>The <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Formatoption" title="(in psyplot v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Formatoption</span></code></a> that fills this widget</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.get_obj">
+<span class="sig-name descname"><span class="pre">get_obj</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#FormatoptionsEditor.get_obj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.get_obj" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.value" title="psy_view.dialogs.FormatoptionsEditor.value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">value</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.initial_value">
+<span class="sig-name descname"><span class="pre">initial_value</span></span><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.initial_value" title="Permalink to this definition"></a></dt>
+<dd><p>Value of the <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.fmto" title="psy_view.dialogs.FormatoptionsEditor.fmto"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmto</span></code></a> at the initialization of this widget</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.insert_obj">
+<span class="sig-name descname"><span class="pre">insert_obj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#FormatoptionsEditor.insert_obj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.insert_obj" title="Permalink to this definition"></a></dt>
+<dd><p>Add a string to the formatoption widget.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>obj</strong> (<em>object</em>) – The object to insert into the line editor. it will be dumped
+using yaml and displayed in the <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a> (or
+<a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_edit</span></code></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.line_edit">
+<span class="sig-name descname"><span class="pre">line_edit</span></span><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="Permalink to this definition"></a></dt>
+<dd><p>A single line editor holding the formatoption value (see also
+<a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a> and <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.btn_multiline" title="psy_view.dialogs.FormatoptionsEditor.btn_multiline"><code class="xref py py-attr docutils literal notranslate"><span class="pre">btn_multiline</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.multiline">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">multiline</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.multiline" title="Permalink to this definition"></a></dt>
+<dd><p>True if the <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a> should be visible.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.set_obj">
+<span class="sig-name descname"><span class="pre">set_obj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#FormatoptionsEditor.set_obj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.set_obj" title="Permalink to this definition"></a></dt>
+<dd><p>Clear the editor and set another object.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.text">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">text</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.text" title="Permalink to this definition"></a></dt>
+<dd><p>Text of the <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a> (or <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_edit</span></code></a>).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.text_edit">
+<span class="sig-name descname"><span class="pre">text_edit</span></span><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="Permalink to this definition"></a></dt>
+<dd><p>A multi-line editor holiding the value of <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.fmto" title="psy_view.dialogs.FormatoptionsEditor.fmto"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmto</span></code></a> (see also
+<a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_edit</span></code></a> and <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.btn_multiline" title="psy_view.dialogs.FormatoptionsEditor.btn_multiline"><code class="xref py py-attr docutils literal notranslate"><span class="pre">btn_multiline</span></code></a>)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.toggle_multiline">
+<span class="sig-name descname"><span class="pre">toggle_multiline</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#FormatoptionsEditor.toggle_multiline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.toggle_multiline" title="Permalink to this definition"></a></dt>
+<dd><p>Switch from <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.line_edit" title="psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">line_edit</span></code></a> and <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text_edit" title="psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_edit</span></code></a> or back.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.FormatoptionsEditor.value">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="pre">:</span> <span class="pre">Any</span></em><a class="headerlink" href="#psy_view.dialogs.FormatoptionsEditor.value" title="Permalink to this definition"></a></dt>
+<dd><p>Load the value of <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor.text" title="psy_view.dialogs.FormatoptionsEditor.text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text</span></code></a> with yaml.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="psy_view.dialogs.LSM_T">
+<span class="sig-prename descclassname"><span class="pre">psy_view.dialogs.</span></span><span class="sig-name descname"><span class="pre">LSM_T</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#psy_view.dialogs.LSM_T" title="Permalink to this definition"></a></dt>
+<dd><p>Find a more appropriate description here</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>TODO</p>
+</dd>
+</dl>
+<p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Any</span></code>]</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.dialogs.LabelDialog">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.dialogs.</span></span><span class="sig-name descname"><span class="pre">LabelDialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Project</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">fmts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/dialogs.html#LabelDialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.LabelDialog" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QDialog</span></code></p>
+<p>A dialog to change labels.</p>
+<p>This class contains one <a class="reference internal" href="#psy_view.dialogs.LabelWidgetLine" title="psy_view.dialogs.LabelWidgetLine"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a> per text formatoption.</p>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.LabelDialog.fmts" title="psy_view.dialogs.LabelDialog.fmts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fmts</span></code></a></p></td>
+<td><p>Mapping from formatoption key to value in this dialog.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.dialogs.LabelDialog.update_project" title="psy_view.dialogs.LabelDialog.update_project"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_project</span></code></a>(project, *fmts)</p></td>
+<td><p>Create a <a class="reference internal" href="#psy_view.dialogs.LabelDialog" title="psy_view.dialogs.LabelDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelDialog</span></code></a> to update the labels in a <cite>project</cite>.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.dialogs.LabelDialog.fmts">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fmts</span></span><em class="property"><span class="pre">:</span> <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.dialogs.LabelDialog.fmts" title="Permalink to this definition"></a></dt>
+<dd><p>Mapping from formatoption key to value in this dialog.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.dialogs.LabelDialog.update_project">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">update_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Project</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">fmts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/dialogs.html#LabelDialog.update_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.LabelDialog.update_project" title="Permalink to this definition"></a></dt>
+<dd><p>Create a <a class="reference internal" href="#psy_view.dialogs.LabelDialog" title="psy_view.dialogs.LabelDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelDialog</span></code></a> to update the labels in a <cite>project</cite>.</p>
+<p>This classmethod creates a new <a class="reference internal" href="#psy_view.dialogs.LabelDialog" title="psy_view.dialogs.LabelDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelDialog</span></code></a> instance, fills it
+with the formatoptions of the first plotter in <cite>project</cite>, enters the
+main event loop, and updates the <cite>project</cite> upon acceptance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>project</strong> (<a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.project.html#psyplot.project.Project" title="(in psyplot v1.3.1)"><em>psyplot.project.Project</em></a>) – The psyplot project to update. Note that we will only use the
+very first plotter in this project</p></li>
+<li><p><strong>*fmts</strong> – The formatoption keys to display. Each formatoption should be a
+subclass of <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.base.html#psy_simple.base.TextBase" title="(in psy-simple v1.3.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_simple.base.TextBase</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.dialogs.LabelWidgetLine">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.dialogs.</span></span><span class="sig-name descname"><span class="pre">LabelWidgetLine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmto</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Formatoption</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Project</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fmto_widget</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">QtWidgets.QWidget</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">widget_kws</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/dialogs.html#LabelWidgetLine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.dialogs.LabelWidgetLine" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QGroupBox</span></code></p>
+<p>A widget to change a formatoption.</p>
+<p>This class holds a <a class="reference internal" href="#psy_view.dialogs.FormatoptionsEditor" title="psy_view.dialogs.FormatoptionsEditor"><code class="xref py py-class docutils literal notranslate"><span class="pre">FormatoptionsEditor</span></code></a> to control the
+appearance of a specific formatoption. Additionally it displays the
+formatoption specific line widget (see
+<a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.plotter.html#psyplot.plotter.Formatoption.get_fmt_widget" title="(in psyplot v1.3.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">psyplot.plotter.Formatoption.get_fmt_widget()</span></code></a>) to contol it.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psy_view.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="psy_view.ds_widget.html" class="btn btn-neutral float-right" title="psy_view.ds_widget module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; psy-view 0.1.0+2.g42a8ab3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="psy_view.dialogs module" href="psy_view.dialogs.html" />
+    <link rel="prev" title="Command line usage" href="../command_line.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psy-view
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ncview.html">psy-view vs. ncview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.dialogs.html">psy_view.dialogs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.ds_widget.html">psy_view.ds_widget module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.plotmethods.html">psy_view.plotmethods module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.rcsetup.html">psy_view.rcsetup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.utils.html">psy_view.utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psy_view.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psy_view">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-psy_view" title="Permalink to this headline"></a></h1>
+<p>ncview-like GUI to the psyplot framework</p>
+<p><strong>Disclaimer</strong></p>
+<p>Copyright (C) 2020 Philipp S. Sommer</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see <a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>.</p>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.get_parser" title="psy_view.get_parser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_parser</span></code></a>()</p></td>
+<td><p>Get the command line parser for psy-view.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.main" title="psy_view.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">main</span></code></a>()</p></td>
+<td><p>Start the app with the provided command-line options.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.start_app" title="psy_view.start_app"><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_app</span></code></a>(ds[, name, plotmethod, preset])</p></td>
+<td><p>Start the standalone GUI application.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="psy_view.get_parser">
+<span class="sig-prename descclassname"><span class="pre">psy_view.</span></span><span class="sig-name descname"><span class="pre">get_parser</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">argparse.ArgumentParser</span></span></span><a class="reference internal" href="../_modules/psy_view.html#get_parser"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.get_parser" title="Permalink to this definition"></a></dt>
+<dd><p>Get the command line parser for psy-view.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psy_view.main">
+<span class="sig-prename descclassname"><span class="pre">psy_view.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.main" title="Permalink to this definition"></a></dt>
+<dd><p>Start the app with the provided command-line options.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="psy_view.start_app">
+<span class="sig-prename descclassname"><span class="pre">psy_view.</span></span><span class="sig-name descname"><span class="pre">start_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">xarray.core.dataset.Dataset</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plotmethod</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'mapplot'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preset</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view.html#start_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.start_app" title="Permalink to this definition"></a></dt>
+<dd><p>Start the standalone GUI application.</p>
+<p>This function creates a <cite>QApplication</cite> instance, an instance of the
+<a class="reference internal" href="psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget" title="psy_view.ds_widget.DatasetWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_view.ds_widget.DatasetWidget</span></code></a> and enters the main event loop.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><em>xarray.Dataset</em></a>) – The dataset to display. If None, the user can select it afterwards</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – The variable name in <cite>ds</cite> to display. If None, the user can select it
+afterwards</p></li>
+<li><p><strong>plotmethod</strong> (<em>{'mapplot'</em><em> | </em><em>'lineplot'</em><em> | </em><em>'plot2d' }</em>) – The plotmethod to use</p></li>
+<li><p><strong>preset</strong> (<em>str</em>) – The preset to apply</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="psy_view.dialogs.html">psy_view.dialogs module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psy_view.ds_widget.html">psy_view.ds_widget module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psy_view.plotmethods.html">psy_view.plotmethods module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psy_view.rcsetup.html">psy_view.rcsetup module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psy_view.utils.html">psy_view.utils module</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../command_line.html" class="btn btn-neutral float-left" title="Command line usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="psy_view.dialogs.html" class="btn btn-neutral float-right" title="psy_view.dialogs module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

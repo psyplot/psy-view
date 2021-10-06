@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>psy_view.plotmethods module &mdash; psy-view 0.1.0+2.g42a8ab3 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="psy_view.rcsetup module" href="psy_view.rcsetup.html" />
+    <link rel="prev" title="psy_view.ds_widget module" href="psy_view.ds_widget.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> psy-view
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ncview.html">psy-view vs. ncview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="psy_view.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="psy_view.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="psy_view.dialogs.html">psy_view.dialogs module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.ds_widget.html">psy_view.ds_widget module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">psy_view.plotmethods module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.rcsetup.html">psy_view.rcsetup module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.utils.html">psy_view.utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="psy_view.html">API Reference</a> &raquo;</li>
+      <li>psy_view.plotmethods module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api/psy_view.plotmethods.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-psy_view.plotmethods">
+<span id="psy-view-plotmethods-module"></span><h1>psy_view.plotmethods module<a class="headerlink" href="#module-psy_view.plotmethods" title="Permalink to this headline"></a></h1>
+<p>Plotmethod widgets.</p>
+<p>This module defines the widgets to interface with the mapplot, plot2d and
+lineplot plotmethods</p>
+<p><strong>Disclaimer</strong></p>
+<p>Copyright (C) 2020 Philipp S. Sommer</p>
+<p>This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.If not, see https: // www.gnu.org / licenses / .</p>
+<p><strong>Classes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.GridCell" title="psy_view.plotmethods.GridCell"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GridCell</span></code></a>(qobject[, column, colspan, stretch])</p></td>
+<td><p>A grid cell within a QGridLayout managing one QWidget.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget" title="psy_view.plotmethods.LinePlotWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LinePlotWidget</span></code></a>(get_sp, ds)</p></td>
+<td><p>A widget to control the lineplot plotmethod.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget" title="psy_view.plotmethods.MapPlotWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MapPlotWidget</span></code></a>(get_sp, ds)</p></td>
+<td><p>A widget to control the mapplot plotmethod.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.Plot2DWidget" title="psy_view.plotmethods.Plot2DWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Plot2DWidget</span></code></a>(get_sp, ds)</p></td>
+<td><p>A widget to control the plot2d plotmethod.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget" title="psy_view.plotmethods.PlotMethodWidget"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PlotMethodWidget</span></code></a>(get_sp, ds)</p></td>
+<td><p>Base class for interfacing a psyplot plotmethod.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotType" title="psy_view.plotmethods.PlotType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PlotType</span></code></a>(value)</p></td>
+<td><p>A value for the 2D <code class="docutils literal notranslate"><span class="pre">plot</span></code> formatoption.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.QHLine" title="psy_view.plotmethods.QHLine"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QHLine</span></code></a>()</p></td>
+<td><p>A horizontal seperation line.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.projection_map" title="psy_view.plotmethods.projection_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projection_map</span></code></a></p></td>
+<td><p>A mapping from projection identifier to the text we want to use in the GUI</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.plotmethods.GridCell">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.plotmethods.</span></span><span class="sig-name descname"><span class="pre">GridCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qobject</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PyQt5.QtWidgets.QWidget</span><span class="p"><span class="pre">,</span> </span><span class="pre">PyQt5.QtWidgets.QLayout</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colspan</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stretch</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#GridCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.GridCell" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A grid cell within a QGridLayout managing one QWidget.</p>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.GridCell.colspan" title="psy_view.plotmethods.GridCell.colspan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colspan</span></code></a></p></td>
+<td><p>The number of columns to cover</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.GridCell.column" title="psy_view.plotmethods.GridCell.column"><code class="xref py py-obj docutils literal notranslate"><span class="pre">column</span></code></a></p></td>
+<td><p>The starting column for the widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.GridCell.qobject" title="psy_view.plotmethods.GridCell.qobject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">qobject</span></code></a></p></td>
+<td><p>the <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code> instance (i.e.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.GridCell.stretch" title="psy_view.plotmethods.GridCell.stretch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">stretch</span></code></a></p></td>
+<td><p>A boolean whether to add stretch or not</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.GridCell.from_alias" title="psy_view.plotmethods.GridCell.from_alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_alias</span></code></a>(o[, c, cs, s])</p></td>
+<td><p>Create a <a class="reference internal" href="#psy_view.plotmethods.GridCell" title="psy_view.plotmethods.GridCell"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridCell</span></code></a> from shorter kws.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.GridCell.colspan">
+<span class="sig-name descname"><span class="pre">colspan</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#psy_view.plotmethods.GridCell.colspan" title="Permalink to this definition"></a></dt>
+<dd><p>The number of columns to cover</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.GridCell.column">
+<span class="sig-name descname"><span class="pre">column</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#psy_view.plotmethods.GridCell.column" title="Permalink to this definition"></a></dt>
+<dd><p>The starting column for the widget. If None, it will be estimated based
+on the other widgets in the row</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.GridCell.from_alias">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_alias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">o</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PyQt5.QtWidgets.QWidget</span><span class="p"><span class="pre">,</span> </span><span class="pre">PyQt5.QtWidgets.QLayout</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">psy_view.plotmethods.T</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#GridCell.from_alias"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.GridCell.from_alias" title="Permalink to this definition"></a></dt>
+<dd><p>Create a <a class="reference internal" href="#psy_view.plotmethods.GridCell" title="psy_view.plotmethods.GridCell"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridCell</span></code></a> from shorter kws.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>o</strong> (<em>QWidget</em><em> or </em><em>QLayout</em>) – The alias for <a class="reference internal" href="#psy_view.plotmethods.GridCell.qobject" title="psy_view.plotmethods.GridCell.qobject"><code class="xref py py-attr docutils literal notranslate"><span class="pre">qobject</span></code></a></p></li>
+<li><p><strong>c</strong> (<em>int</em><em> or </em><em>None</em><em>, </em><em>optional</em>) – The alias for <a class="reference internal" href="#psy_view.plotmethods.GridCell.column" title="psy_view.plotmethods.GridCell.column"><code class="xref py py-attr docutils literal notranslate"><span class="pre">column</span></code></a></p></li>
+<li><p><strong>cs</strong> (<em>int</em><em>, </em><em>optional</em>) – The alias for <a class="reference internal" href="#psy_view.plotmethods.GridCell.colspan" title="psy_view.plotmethods.GridCell.colspan"><code class="xref py py-attr docutils literal notranslate"><span class="pre">colspan</span></code></a></p></li>
+<li><p><strong>s</strong> (<em>bool</em><em>, </em><em>optional</em>) – The alias for <a class="reference internal" href="#psy_view.plotmethods.GridCell.stretch" title="psy_view.plotmethods.GridCell.stretch"><code class="xref py py-attr docutils literal notranslate"><span class="pre">stretch</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The generated instance of <a class="reference internal" href="#psy_view.plotmethods.GridCell" title="psy_view.plotmethods.GridCell"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridCell</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#psy_view.plotmethods.GridCell" title="psy_view.plotmethods.GridCell">GridCell</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.GridCell.qobject">
+<span class="sig-name descname"><span class="pre">qobject</span></span><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PyQt5.QtWidgets.QWidget</span><span class="p"><span class="pre">,</span> </span><span class="pre">PyQt5.QtWidgets.QLayout</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.GridCell.qobject" title="Permalink to this definition"></a></dt>
+<dd><p>the <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code> instance (i.e. the widget) or a
+layout (<code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QLayout</span></code>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.GridCell.stretch">
+<span class="sig-name descname"><span class="pre">stretch</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><em class="property"> <span class="pre">=</span> <span class="pre">False</span></em><a class="headerlink" href="#psy_view.plotmethods.GridCell.stretch" title="Permalink to this definition"></a></dt>
+<dd><p>A boolean whether to add stretch or not</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.plotmethods.</span></span><span class="sig-name descname"><span class="pre">LinePlotWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">get_sp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Project</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dataset</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget" title="psy_view.plotmethods.PlotMethodWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_view.plotmethods.PlotMethodWidget</span></code></a></p>
+<p>A widget to control the lineplot plotmethod.</p>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.add_line" title="psy_view.plotmethods.LinePlotWidget.add_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_line</span></code></a>([name])</p></td>
+<td><p>Add a line to the plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.block_combos" title="psy_view.plotmethods.LinePlotWidget.block_combos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_combos</span></code></a>()</p></td>
+<td><p>Temporarilly block any signal of the combo boxes.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.edit_labels" title="psy_view.plotmethods.LinePlotWidget.edit_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_labels</span></code></a>()</p></td>
+<td><p>Open the dialog to edit the text labels in the plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.get_rows" title="psy_view.plotmethods.LinePlotWidget.get_rows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_rows</span></code></a>(func)</p></td>
+<td><p>Get the rows of the formatoption widgets.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.init_dims" title="psy_view.plotmethods.LinePlotWidget.init_dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_dims</span></code></a>(var)</p></td>
+<td><p>Get the formatoptions for a new plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.refresh" title="psy_view.plotmethods.LinePlotWidget.refresh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refresh</span></code></a>(ds)</p></td>
+<td><p>Refresh this widget from the given dataset.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.remove_line" title="psy_view.plotmethods.LinePlotWidget.remove_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_line</span></code></a>()</p></td>
+<td><p>Remove the current line from the plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.setEnabled" title="psy_view.plotmethods.LinePlotWidget.setEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEnabled</span></code></a>(b)</p></td>
+<td><p>Enable or disable the datagrid and color buttons.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.setup_dimension_combo" title="psy_view.plotmethods.LinePlotWidget.setup_dimension_combo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_dimension_combo</span></code></a>()</p></td>
+<td><p>Set up the combobox for selecting the x-dimension.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.setup_labels_button" title="psy_view.plotmethods.LinePlotWidget.setup_labels_button"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_labels_button</span></code></a>()</p></td>
+<td><p>Add a button to modify the text labels.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.setup_line_selection" title="psy_view.plotmethods.LinePlotWidget.setup_line_selection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_line_selection</span></code></a>()</p></td>
+<td><p>Setup the row for selecting new lines.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.valid_variables" title="psy_view.plotmethods.LinePlotWidget.valid_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_variables</span></code></a>(ds)</p></td>
+<td><p>Get a list of variables that can be visualized with this plotmethod.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.data" title="psy_view.plotmethods.LinePlotWidget.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p>The first array in the list.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.fmt_setup_functions" title="psy_view.plotmethods.LinePlotWidget.fmt_setup_functions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fmt_setup_functions</span></code></a></p></td>
+<td><p>Get a list of rows for formatoptions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.item_texts" title="psy_view.plotmethods.LinePlotWidget.item_texts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">item_texts</span></code></a></p></td>
+<td><p>Get the labels for the individual lines.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.plotmethod" title="psy_view.plotmethods.LinePlotWidget.plotmethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plotmethod</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.xdim" title="psy_view.plotmethods.LinePlotWidget.xdim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">xdim</span></code></a></p></td>
+<td><p>Get the x-dimension for the plot.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.add_line">
+<span class="sig-name descname"><span class="pre">add_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">sl</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.add_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.add_line" title="Permalink to this definition"></a></dt>
+<dd><p>Add a line to the plot.</p>
+<p>This method adds a new line for the plot specified by the given
+<cite>name</cite> of the variable and the slices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The variable name to display</p></li>
+<li><p><strong>**sl</strong> – The slices to turn the <cite>name</cite> variable into a 1D-array.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.block_combos">
+<span class="sig-name descname"><span class="pre">block_combos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.block_combos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.block_combos" title="Permalink to this definition"></a></dt>
+<dd><p>Temporarilly block any signal of the combo boxes.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.data">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="pre">:</span> <span class="pre">DataArray</span></em><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.data" title="Permalink to this definition"></a></dt>
+<dd><p>The first array in the list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.edit_labels">
+<span class="sig-name descname"><span class="pre">edit_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.edit_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.edit_labels" title="Permalink to this definition"></a></dt>
+<dd><p>Open the dialog to edit the text labels in the plot.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.fmt_setup_functions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fmt_setup_functions</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.fmt_setup_functions" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of rows for formatoptions.</p>
+<p>This property returns a list of callable. Each callable should setup
+a horizonal (or widget) that is added to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">layout</span></code> vbox.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.get_rows">
+<span class="sig-name descname"><span class="pre">get_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#psy_view.plotmethods.GridCell" title="psy_view.plotmethods.GridCell"><span class="pre">psy_view.plotmethods.GridCell</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.get_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.get_rows" title="Permalink to this definition"></a></dt>
+<dd><p>Get the rows of the formatoption widgets.</p>
+<p>This method should take callable from the <a class="reference internal" href="#psy_view.plotmethods.LinePlotWidget.fmt_setup_functions" title="psy_view.plotmethods.LinePlotWidget.fmt_setup_functions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_setup_functions</span></code></a>
+list and return the rows corresponding to <code class="xref py py-attr docutils literal notranslate"><span class="pre">formatoption_rows</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.init_dims">
+<span class="sig-name descname"><span class="pre">init_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">DataArray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.init_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.init_dims" title="Permalink to this definition"></a></dt>
+<dd><p>Get the formatoptions for a new plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.19.1.dev6)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A mapping from formatoption or dimension to the corresponding value
+for the plotmethod.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.item_texts">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">item_texts</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.item_texts" title="Permalink to this definition"></a></dt>
+<dd><p>Get the labels for the individual lines.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.plotmethod">
+<span class="sig-name descname"><span class="pre">plotmethod</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">'lineplot'</span></em><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.plotmethod" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.refresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.refresh" title="Permalink to this definition"></a></dt>
+<dd><p>Refresh this widget from the given dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.remove_line">
+<span class="sig-name descname"><span class="pre">remove_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.remove_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.remove_line" title="Permalink to this definition"></a></dt>
+<dd><p>Remove the current line from the plot.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.setEnabled">
+<span class="sig-name descname"><span class="pre">setEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.setEnabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.setEnabled" title="Permalink to this definition"></a></dt>
+<dd><p>Enable or disable the datagrid and color buttons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>b</strong> (<em>bool</em>) – If True, enable the buttons, else disable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.setup_dimension_combo">
+<span class="sig-name descname"><span class="pre">setup_dimension_combo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.setup_dimension_combo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.setup_dimension_combo" title="Permalink to this definition"></a></dt>
+<dd><p>Set up the combobox for selecting the x-dimension.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.setup_labels_button">
+<span class="sig-name descname"><span class="pre">setup_labels_button</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.setup_labels_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.setup_labels_button" title="Permalink to this definition"></a></dt>
+<dd><p>Add a button to modify the text labels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.setup_line_selection">
+<span class="sig-name descname"><span class="pre">setup_line_selection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.setup_line_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.setup_line_selection" title="Permalink to this definition"></a></dt>
+<dd><p>Setup the row for selecting new lines.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.valid_variables">
+<span class="sig-name descname"><span class="pre">valid_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#LinePlotWidget.valid_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.valid_variables" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of variables that can be visualized with this plotmethod.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><em>xarray.Dataset</em></a>) – The dataset to use</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of variable names to plot</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.LinePlotWidget.xdim">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">xdim</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#psy_view.plotmethods.LinePlotWidget.xdim" title="Permalink to this definition"></a></dt>
+<dd><p>Get the x-dimension for the plot.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.plotmethods.</span></span><span class="sig-name descname"><span class="pre">MapPlotWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">get_sp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Project</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dataset</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget" title="psy_view.plotmethods.PlotMethodWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_view.plotmethods.PlotMethodWidget</span></code></a></p>
+<p>A widget to control the mapplot plotmethod.</p>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.block_combos" title="psy_view.plotmethods.MapPlotWidget.block_combos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">block_combos</span></code></a>()</p></td>
+<td><p>Temporarilly block any signal of the <a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.coord_combos" title="psy_view.plotmethods.MapPlotWidget.coord_combos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">coord_combos</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.choose_next_projection" title="psy_view.plotmethods.MapPlotWidget.choose_next_projection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">choose_next_projection</span></code></a>()</p></td>
+<td><p>Choose the next projection from the rcParams <cite>projection</cite> value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.edit_basemap_settings" title="psy_view.plotmethods.MapPlotWidget.edit_basemap_settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_basemap_settings</span></code></a>()</p></td>
+<td><p>Open a dialog to edit the basemap and projection settings.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.edit_color_settings" title="psy_view.plotmethods.MapPlotWidget.edit_color_settings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_color_settings</span></code></a>()</p></td>
+<td><p>Open the dialog to edit the color settings.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.edit_labels" title="psy_view.plotmethods.MapPlotWidget.edit_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_labels</span></code></a>()</p></td>
+<td><p>Open the dialog to edit the text labels in the plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_fmts" title="psy_view.plotmethods.MapPlotWidget.get_fmts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_fmts</span></code></a>(var[, init])</p></td>
+<td><p>Get the formatoptions for a new plot.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_projection_label" title="psy_view.plotmethods.MapPlotWidget.get_projection_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_projection_label</span></code></a>(proj)</p></td>
+<td><p>Get the label for a projection in the GUI.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_projection_value" title="psy_view.plotmethods.MapPlotWidget.get_projection_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_projection_value</span></code></a>(label)</p></td>
+<td><p>Get the value for the <cite>projection</cite> formatoption.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_rows" title="psy_view.plotmethods.MapPlotWidget.get_rows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_rows</span></code></a>(func)</p></td>
+<td><p>Get the rows of the formatoption widgets.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_slice" title="psy_view.plotmethods.MapPlotWidget.get_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_slice</span></code></a>(x, y)</p></td>
+<td><p>Get the slice for the selected coordinates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.init_dims" title="psy_view.plotmethods.MapPlotWidget.init_dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_dims</span></code></a>(var)</p></td>
+<td><p>Get the formatoptions for a new plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.open_cmap_dialog" title="psy_view.plotmethods.MapPlotWidget.open_cmap_dialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_cmap_dialog</span></code></a>([N])</p></td>
+<td><p>Open the dialog to change the colormap.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.refresh" title="psy_view.plotmethods.MapPlotWidget.refresh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refresh</span></code></a>(ds)</p></td>
+<td><p>Refresh this widget from the given dataset.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.refresh_from_sp" title="psy_view.plotmethods.MapPlotWidget.refresh_from_sp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refresh_from_sp</span></code></a>()</p></td>
+<td><p>Refresh this widget from the plotters project.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setEnabled" title="psy_view.plotmethods.MapPlotWidget.setEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEnabled</span></code></a>(b)</p></td>
+<td><p>Enable or disable the projection and color buttons.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_cmap" title="psy_view.plotmethods.MapPlotWidget.set_cmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_cmap</span></code></a>(cmap)</p></td>
+<td><p>Update the plotter with the given colormap.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_combo_text" title="psy_view.plotmethods.MapPlotWidget.set_combo_text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_combo_text</span></code></a>(combo, text)</p></td>
+<td><p>Convenience function to update set the current text of a combobox.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_plot_type" title="psy_view.plotmethods.MapPlotWidget.set_plot_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_plot_type</span></code></a>(plot_type)</p></td>
+<td><p>Update the value for the <code class="docutils literal notranslate"><span class="pre">plot</span></code> formatoption</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_projection" title="psy_view.plotmethods.MapPlotWidget.set_projection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_projection</span></code></a>(proj)</p></td>
+<td><p>Update the projection of the plot with the given projection.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_xcoord" title="psy_view.plotmethods.MapPlotWidget.set_xcoord"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_xcoord</span></code></a>(text)</p></td>
+<td><p>Set the name of the x-coordinate.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_ycoord" title="psy_view.plotmethods.MapPlotWidget.set_ycoord"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ycoord</span></code></a>(text)</p></td>
+<td><p>Set the name of the y-coordinate.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_cmap_menu" title="psy_view.plotmethods.MapPlotWidget.setup_cmap_menu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_cmap_menu</span></code></a>()</p></td>
+<td><p>Set up the menu to change the colormaps.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_color_buttons" title="psy_view.plotmethods.MapPlotWidget.setup_color_buttons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_color_buttons</span></code></a>()</p></td>
+<td><p>Set up the buttons to change the colormap, etc.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_dimension_box" title="psy_view.plotmethods.MapPlotWidget.setup_dimension_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_dimension_box</span></code></a>()</p></td>
+<td><p>Set up a box to control, what is the x and y-dimension.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_labels_button" title="psy_view.plotmethods.MapPlotWidget.setup_labels_button"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_labels_button</span></code></a>()</p></td>
+<td><p>Add a button to modify the text labels.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_plot_buttons" title="psy_view.plotmethods.MapPlotWidget.setup_plot_buttons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_plot_buttons</span></code></a>()</p></td>
+<td><p>Setup the second row of formatoption widgets.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_projection_buttons" title="psy_view.plotmethods.MapPlotWidget.setup_projection_buttons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_projection_buttons</span></code></a>()</p></td>
+<td><p>Set up the buttons to modify the basemap.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_projection_menu" title="psy_view.plotmethods.MapPlotWidget.setup_projection_menu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_projection_menu</span></code></a>()</p></td>
+<td><p>Set up the menu to modify the basemap.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.toggle_datagrid" title="psy_view.plotmethods.MapPlotWidget.toggle_datagrid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">toggle_datagrid</span></code></a>()</p></td>
+<td><p>Toggle the visibility of the grid cell boundaries.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.transform" title="psy_view.plotmethods.MapPlotWidget.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(x, y)</p></td>
+<td><p>Transform coordinates of a point to the plots projection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.valid_variables" title="psy_view.plotmethods.MapPlotWidget.valid_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_variables</span></code></a>(ds)</p></td>
+<td><p>Get a list of variables that can be visualized with this plotmethod.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.coord_combos" title="psy_view.plotmethods.MapPlotWidget.coord_combos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">coord_combos</span></code></a></p></td>
+<td><p>Get the combo boxes for x- and y-dimension and -coordinates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.fmt_setup_functions" title="psy_view.plotmethods.MapPlotWidget.fmt_setup_functions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fmt_setup_functions</span></code></a></p></td>
+<td><p>Get a list of rows for formatoptions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.plotmethod" title="psy_view.plotmethods.MapPlotWidget.plotmethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plotmethod</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.block_combos">
+<span class="sig-name descname"><span class="pre">block_combos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.block_combos"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.block_combos" title="Permalink to this definition"></a></dt>
+<dd><p>Temporarilly block any signal of the <a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.coord_combos" title="psy_view.plotmethods.MapPlotWidget.coord_combos"><code class="xref py py-attr docutils literal notranslate"><span class="pre">coord_combos</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.choose_next_projection">
+<span class="sig-name descname"><span class="pre">choose_next_projection</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.choose_next_projection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.choose_next_projection" title="Permalink to this definition"></a></dt>
+<dd><p>Choose the next projection from the rcParams <cite>projection</cite> value.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.coord_combos">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">coord_combos</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">PyQt5.QtWidgets.QComboBox</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.coord_combos" title="Permalink to this definition"></a></dt>
+<dd><p>Get the combo boxes for x- and y-dimension and -coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.edit_basemap_settings">
+<span class="sig-name descname"><span class="pre">edit_basemap_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.edit_basemap_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.edit_basemap_settings" title="Permalink to this definition"></a></dt>
+<dd><p>Open a dialog to edit the basemap and projection settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.edit_color_settings">
+<span class="sig-name descname"><span class="pre">edit_color_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.edit_color_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.edit_color_settings" title="Permalink to this definition"></a></dt>
+<dd><p>Open the dialog to edit the color settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.edit_labels">
+<span class="sig-name descname"><span class="pre">edit_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.edit_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.edit_labels" title="Permalink to this definition"></a></dt>
+<dd><p>Open the dialog to edit the text labels in the plot.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.fmt_setup_functions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fmt_setup_functions</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.fmt_setup_functions" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of rows for formatoptions.</p>
+<p>This property returns a list of callable. Each callable should setup
+a horizonal (or widget) that is added to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">layout</span></code> vbox.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.get_fmts">
+<span class="sig-name descname"><span class="pre">get_fmts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.get_fmts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.get_fmts" title="Permalink to this definition"></a></dt>
+<dd><p>Get the formatoptions for a new plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.19.1.dev6)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p></li>
+<li><p><strong>init</strong> (<em>bool</em>) – If True, call the <a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.init_dims" title="psy_view.plotmethods.MapPlotWidget.init_dims"><code class="xref py py-meth docutils literal notranslate"><span class="pre">init_dims()</span></code></a> method to inject necessary
+formatoptions and dimensions for the initialization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A mapping from formatoption or dimension to the corresponding value
+for the plotmethod.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.get_projection_label">
+<span class="sig-name descname"><span class="pre">get_projection_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.get_projection_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.get_projection_label" title="Permalink to this definition"></a></dt>
+<dd><p>Get the label for a projection in the GUI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>proj</strong> (<em>str</em>) – The projection value for the
+<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.3.2)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> formatoption</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The label of the projection in the GUI</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_projection_label" title="psy_view.plotmethods.MapPlotWidget.get_projection_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_projection_label</span></code></a>, <a class="reference internal" href="#psy_view.plotmethods.projection_map" title="psy_view.plotmethods.projection_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projection_map</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter.plot</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.get_projection_value">
+<span class="sig-name descname"><span class="pre">get_projection_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.get_projection_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.get_projection_value" title="Permalink to this definition"></a></dt>
+<dd><p>Get the value for the <cite>projection</cite> formatoption.</p>
+<p>This method is the inverse of <a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_projection_label" title="psy_view.plotmethods.MapPlotWidget.get_projection_label"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_projection_label()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>label</strong> (<em>str</em>) – The projection label that is used in the GUI
+<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.3.2)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> formatoption</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The value to use for the <code class="docutils literal notranslate"><span class="pre">projection</span></code> formatoption</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_projection_label" title="psy_view.plotmethods.MapPlotWidget.get_projection_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_projection_label</span></code></a>, <a class="reference internal" href="#psy_view.plotmethods.projection_map" title="psy_view.plotmethods.projection_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projection_map</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter.plot</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.get_rows">
+<span class="sig-name descname"><span class="pre">get_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#psy_view.plotmethods.GridCell" title="psy_view.plotmethods.GridCell"><span class="pre">psy_view.plotmethods.GridCell</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.get_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.get_rows" title="Permalink to this definition"></a></dt>
+<dd><p>Get the rows of the formatoption widgets.</p>
+<p>This method should take callable from the <a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.fmt_setup_functions" title="psy_view.plotmethods.MapPlotWidget.fmt_setup_functions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_setup_functions</span></code></a>
+list and return the rows corresponding to <code class="xref py py-attr docutils literal notranslate"><span class="pre">formatoption_rows</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.get_slice">
+<span class="sig-name descname"><span class="pre">get_slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">slice</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.get_slice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.get_slice" title="Permalink to this definition"></a></dt>
+<dd><p>Get the slice for the selected coordinates.</p>
+<p>This method is called when the user clicks on the coordinates in the
+plot.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.display_line" title="psy_view.ds_widget.DatasetWidget.display_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_view.ds_widget.DatasetWidget.display_line</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This is reimplemented in the <a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget" title="psy_view.plotmethods.MapPlotWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">MapPlotWidget</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.init_dims">
+<span class="sig-name descname"><span class="pre">init_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">DataArray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.init_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.init_dims" title="Permalink to this definition"></a></dt>
+<dd><p>Get the formatoptions for a new plot.</p>
+<p>This method updates the coordinates combo boxes with the
+x- and y-coordinate of the variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.19.1.dev6)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A mapping from formatoption or dimension to the corresponding value
+for the plotmethod.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.open_cmap_dialog">
+<span class="sig-name descname"><span class="pre">open_cmap_dialog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.open_cmap_dialog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.open_cmap_dialog" title="Permalink to this definition"></a></dt>
+<dd><p>Open the dialog to change the colormap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>N</strong> (<em>int</em>) – The number of colormaps to show</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.widgets.colors.html#psy_simple.widgets.colors.CmapButton" title="(in psy-simple v1.3.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_simple.widgets.colors.CmapButton</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.plotmethod">
+<span class="sig-name descname"><span class="pre">plotmethod</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">'mapplot'</span></em><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.plotmethod" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dataset</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.refresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.refresh" title="Permalink to this definition"></a></dt>
+<dd><p>Refresh this widget from the given dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.refresh_from_sp">
+<span class="sig-name descname"><span class="pre">refresh_from_sp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.refresh_from_sp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.refresh_from_sp" title="Permalink to this definition"></a></dt>
+<dd><p>Refresh this widget from the plotters project.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setEnabled">
+<span class="sig-name descname"><span class="pre">setEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setEnabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setEnabled" title="Permalink to this definition"></a></dt>
+<dd><p>Enable or disable the projection and color buttons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>b</strong> (<em>bool</em>) – If True, enable the buttons, else disable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.set_cmap">
+<span class="sig-name descname"><span class="pre">set_cmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmap</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.set_cmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.set_cmap" title="Permalink to this definition"></a></dt>
+<dd><p>Update the plotter with the given colormap.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cmap</strong> (<em>str</em>) – The colormap name.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.set_combo_text">
+<span class="sig-name descname"><span class="pre">set_combo_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">combo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">PyQt5.QtWidgets.QComboBox</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.set_combo_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.set_combo_text" title="Permalink to this definition"></a></dt>
+<dd><p>Convenience function to update set the current text of a combobox.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>combo</strong> (<em>PyQt5.QtWidgets.QComboBox</em>) – The combobox to modify</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – The item to use</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.set_plot_type">
+<span class="sig-name descname"><span class="pre">set_plot_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_type</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#psy_view.plotmethods.PlotType" title="psy_view.plotmethods.PlotType"><span class="pre">psy_view.plotmethods.PlotType</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.set_plot_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.set_plot_type" title="Permalink to this definition"></a></dt>
+<dd><p>Update the value for the <code class="docutils literal notranslate"><span class="pre">plot</span></code> formatoption</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ploy_type</strong> (<a class="reference internal" href="#psy_view.plotmethods.PlotType" title="psy_view.plotmethods.PlotType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotType</span></code></a> or None) – The value for the <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.plot" title="(in psy-simple v1.3.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a>
+formatoption.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.set_projection">
+<span class="sig-name descname"><span class="pre">set_projection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.set_projection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.set_projection" title="Permalink to this definition"></a></dt>
+<dd><p>Update the projection of the plot with the given projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>projection</strong> (<em>str</em>) – The projection name for the
+<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.projection" title="(in psy-maps v1.3.2)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">projection</span></code></a> formatoption.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.set_xcoord">
+<span class="sig-name descname"><span class="pre">set_xcoord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.set_xcoord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.set_xcoord" title="Permalink to this definition"></a></dt>
+<dd><p>Set the name of the x-coordinate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.set_ycoord">
+<span class="sig-name descname"><span class="pre">set_ycoord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.set_ycoord"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.set_ycoord" title="Permalink to this definition"></a></dt>
+<dd><p>Set the name of the y-coordinate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setup_cmap_menu">
+<span class="sig-name descname"><span class="pre">setup_cmap_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PyQt5.QtWidgets.QMenu</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setup_cmap_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setup_cmap_menu" title="Permalink to this definition"></a></dt>
+<dd><p>Set up the menu to change the colormaps.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setup_color_buttons">
+<span class="sig-name descname"><span class="pre">setup_color_buttons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setup_color_buttons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setup_color_buttons" title="Permalink to this definition"></a></dt>
+<dd><p>Set up the buttons to change the colormap, etc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setup_dimension_box">
+<span class="sig-name descname"><span class="pre">setup_dimension_box</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setup_dimension_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setup_dimension_box" title="Permalink to this definition"></a></dt>
+<dd><p>Set up a box to control, what is the x and y-dimension.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setup_labels_button">
+<span class="sig-name descname"><span class="pre">setup_labels_button</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setup_labels_button"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setup_labels_button" title="Permalink to this definition"></a></dt>
+<dd><p>Add a button to modify the text labels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setup_plot_buttons">
+<span class="sig-name descname"><span class="pre">setup_plot_buttons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setup_plot_buttons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setup_plot_buttons" title="Permalink to this definition"></a></dt>
+<dd><p>Setup the second row of formatoption widgets.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setup_projection_buttons">
+<span class="sig-name descname"><span class="pre">setup_projection_buttons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setup_projection_buttons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setup_projection_buttons" title="Permalink to this definition"></a></dt>
+<dd><p>Set up the buttons to modify the basemap.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setup_projection_menu">
+<span class="sig-name descname"><span class="pre">setup_projection_menu</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">PyQt5.QtWidgets.QMenu</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setup_projection_menu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setup_projection_menu" title="Permalink to this definition"></a></dt>
+<dd><p>Set up the menu to modify the basemap.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.toggle_datagrid">
+<span class="sig-name descname"><span class="pre">toggle_datagrid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.toggle_datagrid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.toggle_datagrid" title="Permalink to this definition"></a></dt>
+<dd><p>Toggle the visibility of the grid cell boundaries.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.transform" title="Permalink to this definition"></a></dt>
+<dd><p>Transform coordinates of a point to the plots projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>float</em>) – The x-coordinate in axes coordinates</p></li>
+<li><p><strong>y</strong> (<em>float</em>) – The y-coordinate in axes coordinates</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>float</em> – The transformed x-coordinate <cite>x</cite></p></li>
+<li><p><em>float</em> – The transformed y-coordinate <cite>y</cite></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.valid_variables">
+<span class="sig-name descname"><span class="pre">valid_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.valid_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.valid_variables" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of variables that can be visualized with this plotmethod.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><em>xarray.Dataset</em></a>) – The dataset to use</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of variable names to plot</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.plotmethods.Plot2DWidget">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.plotmethods.</span></span><span class="sig-name descname"><span class="pre">Plot2DWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">get_sp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Project</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dataset</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#Plot2DWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.Plot2DWidget" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget" title="psy_view.plotmethods.MapPlotWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">psy_view.plotmethods.MapPlotWidget</span></code></a></p>
+<p>A widget to control the plot2d plotmethod.</p>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.Plot2DWidget.edit_labels" title="psy_view.plotmethods.Plot2DWidget.edit_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_labels</span></code></a>()</p></td>
+<td><p>Open the dialog to edit the text labels in the plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.Plot2DWidget.refresh_from_sp" title="psy_view.plotmethods.Plot2DWidget.refresh_from_sp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refresh_from_sp</span></code></a>()</p></td>
+<td><p>Refresh this widget from the plotters project.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.Plot2DWidget.setEnabled" title="psy_view.plotmethods.Plot2DWidget.setEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEnabled</span></code></a>(b)</p></td>
+<td><p>Enable or disable the datagrid and color buttons.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.Plot2DWidget.transform" title="psy_view.plotmethods.Plot2DWidget.transform"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code></a>(x, y)</p></td>
+<td><p>Reimplemented to not transform the coordinates.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.Plot2DWidget.fmt_setup_functions" title="psy_view.plotmethods.Plot2DWidget.fmt_setup_functions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fmt_setup_functions</span></code></a></p></td>
+<td><p>Get a list of rows for formatoptions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.Plot2DWidget.plotmethod" title="psy_view.plotmethods.Plot2DWidget.plotmethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plotmethod</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.Plot2DWidget.edit_labels">
+<span class="sig-name descname"><span class="pre">edit_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#Plot2DWidget.edit_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.Plot2DWidget.edit_labels" title="Permalink to this definition"></a></dt>
+<dd><p>Open the dialog to edit the text labels in the plot.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.Plot2DWidget.fmt_setup_functions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fmt_setup_functions</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.Plot2DWidget.fmt_setup_functions" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of rows for formatoptions.</p>
+<p>This property returns a list of callable. Each callable should setup
+a horizonal (or widget) that is added to the <code class="xref py py-attr docutils literal notranslate"><span class="pre">layout</span></code> vbox.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.Plot2DWidget.plotmethod">
+<span class="sig-name descname"><span class="pre">plotmethod</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">'plot2d'</span></em><a class="headerlink" href="#psy_view.plotmethods.Plot2DWidget.plotmethod" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.Plot2DWidget.refresh_from_sp">
+<span class="sig-name descname"><span class="pre">refresh_from_sp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#Plot2DWidget.refresh_from_sp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.Plot2DWidget.refresh_from_sp" title="Permalink to this definition"></a></dt>
+<dd><p>Refresh this widget from the plotters project.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.Plot2DWidget.setEnabled">
+<span class="sig-name descname"><span class="pre">setEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#Plot2DWidget.setEnabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.Plot2DWidget.setEnabled" title="Permalink to this definition"></a></dt>
+<dd><p>Enable or disable the datagrid and color buttons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>b</strong> (<em>bool</em>) – If True, enable the buttons, else disable.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.Plot2DWidget.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#Plot2DWidget.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.Plot2DWidget.transform" title="Permalink to this definition"></a></dt>
+<dd><p>Reimplemented to not transform the coordinates.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.plotmethods.</span></span><span class="sig-name descname"><span class="pre">PlotMethodWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">get_sp</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Project</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dataset</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QWidget</span></code></p>
+<p>Base class for interfacing a psyplot plotmethod.</p>
+<p>This method serves as a base class for interfacing any of the psyplot
+plot methods registered via <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.project.html#psyplot.project.register_plotter" title="(in psyplot v1.3.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project.register_plotter()</span></code></a>.</p>
+<p>The name of the plotmethod should be implemented as the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.plotmethod" title="psy_view.plotmethods.PlotMethodWidget.plotmethod"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plotmethod</span></code></a>
+attribute.</p>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.array_info" title="psy_view.plotmethods.PlotMethodWidget.array_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">array_info</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.changed" title="psy_view.plotmethods.PlotMethodWidget.changed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">changed</span></code></a>(*args, **kwargs)</p></td>
+<td><p>signalize that the widget has been changed but not plot changes are needed</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.data" title="psy_view.plotmethods.PlotMethodWidget.data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data</span></code></a></p></td>
+<td><p>Get the data of this plotmethod interface.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.fmt_setup_functions" title="psy_view.plotmethods.PlotMethodWidget.fmt_setup_functions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fmt_setup_functions</span></code></a></p></td>
+<td><p>Get a list of rows for formatoptions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.formatoption_rows" title="psy_view.plotmethods.PlotMethodWidget.formatoption_rows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">formatoption_rows</span></code></a></p></td>
+<td><p>Get a mapping from row name to a row of <code class="xref py py-class docutils literal notranslate"><span class="pre">GridCells</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.formatoptions" title="psy_view.plotmethods.PlotMethodWidget.formatoptions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">formatoptions</span></code></a></p></td>
+<td><p>Get the formatoption keys of this plotmethod.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.layout" title="psy_view.plotmethods.PlotMethodWidget.layout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">layout</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.plotmethod" title="psy_view.plotmethods.PlotMethodWidget.plotmethod"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plotmethod</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.plotter" title="psy_view.plotmethods.PlotMethodWidget.plotter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plotter</span></code></a></p></td>
+<td><p>Get the first plotter of the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.sp" title="psy_view.plotmethods.PlotMethodWidget.sp"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sp</span></code></a> project.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.replot" title="psy_view.plotmethods.PlotMethodWidget.replot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replot</span></code></a>(*args, **kwargs)</p></td>
+<td><p>trigger a replot of this widget.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.reset" title="psy_view.plotmethods.PlotMethodWidget.reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset</span></code></a>(*args, **kwargs)</p></td>
+<td><p>trigger a replot of this widget.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.sp" title="psy_view.plotmethods.PlotMethodWidget.sp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sp</span></code></a></p></td>
+<td><p>Get the subproject of this plotmethod interface.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Methods:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.get_fmts" title="psy_view.plotmethods.PlotMethodWidget.get_fmts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_fmts</span></code></a>(var[, init])</p></td>
+<td><p>Get the formatoptions for a new plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.get_rows" title="psy_view.plotmethods.PlotMethodWidget.get_rows"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_rows</span></code></a>(func)</p></td>
+<td><p>Get the rows of the formatoption widgets.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.get_slice" title="psy_view.plotmethods.PlotMethodWidget.get_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_slice</span></code></a>(x, y)</p></td>
+<td><p>Get the slice for the selected coordinates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.init_dims" title="psy_view.plotmethods.PlotMethodWidget.init_dims"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_dims</span></code></a>(var)</p></td>
+<td><p>Get the formatoptions for a new plot.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.refresh" title="psy_view.plotmethods.PlotMethodWidget.refresh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refresh</span></code></a>(ds)</p></td>
+<td><p>Refresh this widget from the given dataset.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.setup" title="psy_view.plotmethods.PlotMethodWidget.setup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup</span></code></a>()</p></td>
+<td><p>Set up the widget during initialization.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.setup_separation_line" title="psy_view.plotmethods.PlotMethodWidget.setup_separation_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_separation_line</span></code></a>()</p></td>
+<td><p>Just a convenience function to create a separation line.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.setup_widget_grid" title="psy_view.plotmethods.PlotMethodWidget.setup_widget_grid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_widget_grid</span></code></a>()</p></td>
+<td><p>Setup the widget grid based on <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.formatoption_rows" title="psy_view.plotmethods.PlotMethodWidget.formatoption_rows"><code class="xref py py-attr docutils literal notranslate"><span class="pre">formatoption_rows</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.setup_widgets" title="psy_view.plotmethods.PlotMethodWidget.setup_widgets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_widgets</span></code></a>()</p></td>
+<td><p>Set up the widgets for this plotmethod.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.trigger_refresh" title="psy_view.plotmethods.PlotMethodWidget.trigger_refresh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trigger_refresh</span></code></a>()</p></td>
+<td><p>Emit the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.changed" title="psy_view.plotmethods.PlotMethodWidget.changed"><code class="xref py py-attr docutils literal notranslate"><span class="pre">changed</span></code></a> signal to notify changes in the plot.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.trigger_replot" title="psy_view.plotmethods.PlotMethodWidget.trigger_replot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trigger_replot</span></code></a>()</p></td>
+<td><p>Emit the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.replot" title="psy_view.plotmethods.PlotMethodWidget.replot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">replot</span></code></a> signal to replot the project.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.trigger_reset" title="psy_view.plotmethods.PlotMethodWidget.trigger_reset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trigger_reset</span></code></a>()</p></td>
+<td><p>Emit the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.reset" title="psy_view.plotmethods.PlotMethodWidget.reset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">reset</span></code></a> signal to reinitialize the project.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.valid_variables" title="psy_view.plotmethods.PlotMethodWidget.valid_variables"><code class="xref py py-obj docutils literal notranslate"><span class="pre">valid_variables</span></code></a>(ds)</p></td>
+<td><p>Get a list of variables that can be visualized with this plotmethod.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.array_info">
+<span class="sig-name descname"><span class="pre">array_info</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.array_info" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.changed">
+<span class="sig-name descname"><span class="pre">changed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.changed" title="Permalink to this definition"></a></dt>
+<dd><p>signalize that the widget has been changed but not plot changes are
+needed</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.data">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="pre">:</span> <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">DataArray</span><span class="p"><span class="pre">,</span> </span><span class="pre">InteractiveList</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.data" title="Permalink to this definition"></a></dt>
+<dd><p>Get the data of this plotmethod interface.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.fmt_setup_functions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">fmt_setup_functions</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.fmt_setup_functions" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of rows for formatoptions.</p>
+<p>This property returns a list of callable. Each callable should setup
+a horizonal (or widget) that is added to the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.layout" title="psy_view.plotmethods.PlotMethodWidget.layout"><code class="xref py py-attr docutils literal notranslate"><span class="pre">layout</span></code></a> vbox.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.formatoption_rows">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">formatoption_rows</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#psy_view.plotmethods.GridCell" title="psy_view.plotmethods.GridCell"><span class="pre">psy_view.plotmethods.GridCell</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.formatoption_rows" title="Permalink to this definition"></a></dt>
+<dd><p>Get a mapping from row name to a row of <code class="xref py py-class docutils literal notranslate"><span class="pre">GridCells</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.formatoptions">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">formatoptions</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.formatoptions" title="Permalink to this definition"></a></dt>
+<dd><p>Get the formatoption keys of this plotmethod.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.get_fmts">
+<span class="sig-name descname"><span class="pre">get_fmts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">DataArray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.get_fmts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.get_fmts" title="Permalink to this definition"></a></dt>
+<dd><p>Get the formatoptions for a new plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.19.1.dev6)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p></li>
+<li><p><strong>init</strong> (<em>bool</em>) – If True, call the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.init_dims" title="psy_view.plotmethods.PlotMethodWidget.init_dims"><code class="xref py py-meth docutils literal notranslate"><span class="pre">init_dims()</span></code></a> method to inject necessary
+formatoptions and dimensions for the initialization.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A mapping from formatoption or dimension to the corresponding value
+for the plotmethod.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.get_rows">
+<span class="sig-name descname"><span class="pre">get_rows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#psy_view.plotmethods.GridCell" title="psy_view.plotmethods.GridCell"><span class="pre">psy_view.plotmethods.GridCell</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.get_rows"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.get_rows" title="Permalink to this definition"></a></dt>
+<dd><p>Get the rows of the formatoption widgets.</p>
+<p>This method should take callable from the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.fmt_setup_functions" title="psy_view.plotmethods.PlotMethodWidget.fmt_setup_functions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fmt_setup_functions</span></code></a>
+list and return the rows corresponding to <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.formatoption_rows" title="psy_view.plotmethods.PlotMethodWidget.formatoption_rows"><code class="xref py py-attr docutils literal notranslate"><span class="pre">formatoption_rows</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.get_slice">
+<span class="sig-name descname"><span class="pre">get_slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">slice</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.get_slice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.get_slice" title="Permalink to this definition"></a></dt>
+<dd><p>Get the slice for the selected coordinates.</p>
+<p>This method is called when the user clicks on the coordinates in the
+plot.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.display_line" title="psy_view.ds_widget.DatasetWidget.display_line"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_view.ds_widget.DatasetWidget.display_line</span></code></a></p>
+</div>
+<p class="rubric">Notes</p>
+<p>This is reimplemented in the <a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget" title="psy_view.plotmethods.MapPlotWidget"><code class="xref py py-class docutils literal notranslate"><span class="pre">MapPlotWidget</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.init_dims">
+<span class="sig-name descname"><span class="pre">init_dims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">DataArray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.init_dims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.init_dims" title="Permalink to this definition"></a></dt>
+<dd><p>Get the formatoptions for a new plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>var</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v0.19.1.dev6)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A mapping from formatoption or dimension to the corresponding value
+for the plotmethod.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.layout">
+<span class="sig-name descname"><span class="pre">layout</span></span><em class="property"><span class="pre">:</span> <span class="pre">PyQt5.QtWidgets.QGridLayout</span></em><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.layout" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.plotmethod">
+<span class="sig-name descname"><span class="pre">plotmethod</span></span><em class="property"><span class="pre">:</span> <span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">''</span></em><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.plotmethod" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.plotter">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">plotter</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Plotter</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.plotter" title="Permalink to this definition"></a></dt>
+<dd><p>Get the first plotter of the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.sp" title="psy_view.plotmethods.PlotMethodWidget.sp"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sp</span></code></a> project.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.refresh">
+<span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dataset</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.refresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.refresh" title="Permalink to this definition"></a></dt>
+<dd><p>Refresh this widget from the given dataset.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.replot">
+<span class="sig-name descname"><span class="pre">replot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.replot" title="Permalink to this definition"></a></dt>
+<dd><p>trigger a replot of this widget. This can be emitted with the
+<a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.trigger_replot" title="psy_view.plotmethods.PlotMethodWidget.trigger_replot"><code class="xref py py-meth docutils literal notranslate"><span class="pre">trigger_replot()</span></code></a> method</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.reset" title="Permalink to this definition"></a></dt>
+<dd><p>trigger a replot of this widget. This can be emitted with the
+<a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.trigger_reset" title="psy_view.plotmethods.PlotMethodWidget.trigger_reset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">trigger_reset()</span></code></a> method</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.setup" title="Permalink to this definition"></a></dt>
+<dd><p>Set up the widget during initialization.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.setup_separation_line">
+<span class="sig-name descname"><span class="pre">setup_separation_line</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.setup_separation_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.setup_separation_line" title="Permalink to this definition"></a></dt>
+<dd><p>Just a convenience function to create a separation line.</p>
+<p>This method does nothing but tells <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.get_rows" title="psy_view.plotmethods.PlotMethodWidget.get_rows"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_rows()</span></code></a> to add an instance
+of <code class="xref py py-class docutils literal notranslate"><span class="pre">QHline</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.setup_widget_grid">
+<span class="sig-name descname"><span class="pre">setup_widget_grid</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.setup_widget_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.setup_widget_grid" title="Permalink to this definition"></a></dt>
+<dd><p>Setup the widget grid based on <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.formatoption_rows" title="psy_view.plotmethods.PlotMethodWidget.formatoption_rows"><code class="xref py py-attr docutils literal notranslate"><span class="pre">formatoption_rows</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.setup_widgets">
+<span class="sig-name descname"><span class="pre">setup_widgets</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.setup_widgets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.setup_widgets" title="Permalink to this definition"></a></dt>
+<dd><p>Set up the widgets for this plotmethod.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.sp">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">sp</span></span><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Project</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.sp" title="Permalink to this definition"></a></dt>
+<dd><p>Get the subproject of this plotmethod interface.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.trigger_refresh">
+<span class="sig-name descname"><span class="pre">trigger_refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.trigger_refresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.trigger_refresh" title="Permalink to this definition"></a></dt>
+<dd><p>Emit the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.changed" title="psy_view.plotmethods.PlotMethodWidget.changed"><code class="xref py py-attr docutils literal notranslate"><span class="pre">changed</span></code></a> signal to notify changes in the plot.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.trigger_replot">
+<span class="sig-name descname"><span class="pre">trigger_replot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.trigger_replot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.trigger_replot" title="Permalink to this definition"></a></dt>
+<dd><p>Emit the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.replot" title="psy_view.plotmethods.PlotMethodWidget.replot"><code class="xref py py-attr docutils literal notranslate"><span class="pre">replot</span></code></a> signal to replot the project.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.trigger_reset">
+<span class="sig-name descname"><span class="pre">trigger_reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.trigger_reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.trigger_reset" title="Permalink to this definition"></a></dt>
+<dd><p>Emit the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.reset" title="psy_view.plotmethods.PlotMethodWidget.reset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">reset</span></code></a> signal to reinitialize the project.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotMethodWidget.valid_variables">
+<span class="sig-name descname"><span class="pre">valid_variables</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ds</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dataset</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Hashable</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotMethodWidget.valid_variables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotMethodWidget.valid_variables" title="Permalink to this definition"></a></dt>
+<dd><p>Get a list of variables that can be visualized with this plotmethod.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="https://xarray.pydata.org/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v0.19.1.dev6)"><em>xarray.Dataset</em></a>) – The dataset to use</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of variable names to plot</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.plotmethods.</span></span><span class="sig-name descname"><span class="pre">PlotType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#PlotType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.PlotType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>A value for the 2D <code class="docutils literal notranslate"><span class="pre">plot</span></code> formatoption.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.plot" title="(in psy-simple v1.3.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_simple.plotters.Simple2DPlotter.plot</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter.plot</span></code></a></p>
+</div>
+<p><strong>Attributes:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotType.contour" title="psy_view.plotmethods.PlotType.contour"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contour</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotType.contourf" title="psy_view.plotmethods.PlotType.contourf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contourf</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotType.mesh" title="psy_view.plotmethods.PlotType.mesh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mesh</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.PlotType.poly" title="psy_view.plotmethods.PlotType.poly"><code class="xref py py-obj docutils literal notranslate"><span class="pre">poly</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotType.contour">
+<span class="sig-name descname"><span class="pre">contour</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'contour'</span></em><a class="headerlink" href="#psy_view.plotmethods.PlotType.contour" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotType.contourf">
+<span class="sig-name descname"><span class="pre">contourf</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'contourf'</span></em><a class="headerlink" href="#psy_view.plotmethods.PlotType.contourf" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotType.mesh">
+<span class="sig-name descname"><span class="pre">mesh</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'mesh'</span></em><a class="headerlink" href="#psy_view.plotmethods.PlotType.mesh" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="psy_view.plotmethods.PlotType.poly">
+<span class="sig-name descname"><span class="pre">poly</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'poly'</span></em><a class="headerlink" href="#psy_view.plotmethods.PlotType.poly" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="psy_view.plotmethods.QHLine">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.plotmethods.</span></span><span class="sig-name descname"><span class="pre">QHLine</span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#QHLine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.QHLine" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QFrame</span></code></p>
+<p>A horizontal seperation line.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="psy_view.plotmethods.projection_map">
+<span class="sig-prename descclassname"><span class="pre">psy_view.plotmethods.</span></span><span class="sig-name descname"><span class="pre">projection_map</span></span><em class="property"> <span class="pre">=</span> <span class="pre">{'cf':</span> <span class="pre">'Default',</span> <span class="pre">'cyl':</span> <span class="pre">'Cylindric',</span> <span class="pre">'moll':</span> <span class="pre">'Mollweide',</span> <span class="pre">'northpole':</span> <span class="pre">'Arctic</span> <span class="pre">(Northpole)',</span> <span class="pre">'ortho':</span> <span class="pre">'Orthographic',</span> <span class="pre">'robin':</span> <span class="pre">'Robinson',</span> <span class="pre">'southpole':</span> <span class="pre">'Antarctic</span> <span class="pre">(Southpole)'}</span></em><a class="headerlink" href="#psy_view.plotmethods.projection_map" title="Permalink to this definition"></a></dt>
+<dd><p>A mapping from projection identifier to the text we want to use in the GUI</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psy_view.ds_widget.html" class="btn btn-neutral float-left" title="psy_view.ds_widget module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="psy_view.rcsetup.html" class="btn btn-neutral float-right" title="psy_view.rcsetup module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Copyright 2020, Philipp S. Sommer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
