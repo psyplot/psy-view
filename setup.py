@@ -97,8 +97,10 @@ setup(name='psy-view',
         'Programming Language :: Python :: 3.9',
         'Operating System :: OS Independent',
       ],
-      keywords=('visualization earth-sciences paleo climate paleoclimate '
-                'pollen diagram digitization database'),
+      keywords=(
+          'visualization netcdf raster cartopy earth-sciences pyqt qt '
+          'ipython jupyter qtconsole ncview'
+      ),
       url='https://github.com/psyplot/psy-view',
       author='Philipp S. Sommer',
       author_email='psyplot@hereon.de',
