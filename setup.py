@@ -1,3 +1,27 @@
+"""Setup script for the psy-view package."""
+
+# Disclaimer
+# ----------
+#
+# Copyright (C) 2021 Helmholtz-Zentrum Hereon
+# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
+#
+# This file is part of psy-view and is released under the GNU LGPL-3.O license.
+# See COPYING and COPYING.LESSER in the root of the repository for full
+# licensing details.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3.0 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU LGPL-3.0 license for more details.
+#
+# You should have received a copy of the GNU LGPL-3.0 license
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 import os
 import os.path as osp
 from setuptools import setup, find_packages
@@ -65,7 +89,7 @@ setup(name='psy-view',
         'Topic :: Scientific/Engineering :: Visualization',
         'Topic :: Scientific/Engineering :: GIS',
         'Topic :: Scientific/Engineering',
-        'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
+        'License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
@@ -77,8 +101,8 @@ setup(name='psy-view',
                 'pollen diagram digitization database'),
       url='https://github.com/psyplot/psy-view',
       author='Philipp S. Sommer',
-      author_email='philipp.sommer@hereon.de',
-      license="GPLv3",
+      author_email='psyplot@hereon.de',
+      license="LGPL-3.0-only",
       packages=find_packages(exclude=['docs', 'tests*', 'examples']),
       install_requires=dependencies,
       package_data={'psy_view': [
@@ -91,4 +115,9 @@ setup(name='psy-view',
           'console_scripts': ['psy-view=psy_view:main'],
           'psyplot_gui': ['psy-view=psy_view.ds_widget:DatasetWidgetPlugin'],
           },
+      project_urls={
+          'Documentation': 'https://psyplot.github.io/psy-view',
+          'Source': 'https://github.com/psyplot/psy-viewi',
+          'Tracker': 'https://github.com/psyplot/psy-view/issues',
+      },
       zip_safe=False)
