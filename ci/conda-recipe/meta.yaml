@@ -56,9 +56,11 @@ app:
 
 about:
   home: https://github.com/psyplot/psy-view
-  license: GPL-3.0
+  license: LGPL-3.0-only
   license_family: GPL
-  license_file: LICENSE
+  license_file:
+    - COPYING
+    - COPYING.LESSER
   summary: ncview-like interface to psyplot
 
   description: |

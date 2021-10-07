@@ -1,22 +1,27 @@
-"""Dialogs for manipulating formatoptions.
+"""Dialogs for manipulating formatoptions."""
 
-**Disclaimer**
+# Disclaimer
+# ----------
+#
+# Copyright (C) 2021 Helmholtz-Zentrum Hereon
+# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
+#
+# This file is part of psy-view and is released under the GNU LGPL-3.O license.
+# See COPYING and COPYING.LESSER in the root of the repository for full
+# licensing details.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 3.0 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU LGPL-3.0 license for more details.
+#
+# You should have received a copy of the GNU LGPL-3.0 license
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Copyright (C) 2020 Philipp S. Sommer
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see https://www.gnu.org/licenses/.
-"""
 from __future__ import annotations
 from typing import (
     TYPE_CHECKING,
@@ -613,9 +618,9 @@ class CmapDialog(QtWidgets.QDialog):
 
 class _DummyFormatOption(Formatoption):
     """Dummy formatoption for static type checking.
-    
+
     This is just a workaround for the static type checker to be able to tell
-    what the :class:`FakePlotter` formatoptions are, used in 
+    what the :class:`FakePlotter` formatoptions are, used in
     :attr:`ColorbarPreview.fake_plotter`
     """
     def update(self,):
