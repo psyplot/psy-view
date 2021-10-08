@@ -6,6 +6,12 @@ Fixed
 -----
 - psy-view is now compatible with psyplot 1.4.0
 
+
+Added
+-----
+- psy-view does now have a CITATION.cff file, see https://citation-file-format.github.io
+
+
 Changed
 -------
 - psy-view is now officially licensed under LGPL-3.0-only,
@@ -27,6 +33,7 @@ Changed
 - When closing the mainwindow of psy-view now, one closes all open windows (i.e.
   also the open figures, see
   `#47 <https://github.com/psyplot/psy-view/pull/47>`__)
+
 
 Added
 -----
