@@ -55,6 +55,7 @@ import dataclasses
 
 import xarray as xr
 from psyplot.utils import unique_everseen
+import psyplot.data as psyd
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 import psy_view.dialogs as dialogs
@@ -400,6 +401,17 @@ class MapPlotWidget(PlotMethodWidget):
     """A widget to control the mapplot plotmethod."""
 
     plotmethod = 'mapplot'
+
+    @property
+    def sp(self) -> Optional[Project]:
+        sp = super().sp
+        if sp:
+            arrays: List[str] = [
+                data.psy.arr_name for data in sp
+                if not isinstance(data, psyd.InteractiveList)
+            ]
+            return sp(arr_name=arrays)
+        return sp
 
     def get_rows(self, func: Callable) -> List[List[GridCell]]:
         """Get the rows of the formatoption widgets.
