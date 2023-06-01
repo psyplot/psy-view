@@ -1498,7 +1498,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         if self.sp:
             data = self.data
-            ds_data = self.ds[self.variable]
+            ds_data = self.ds.psy[self.variable]
 
             with self.silence_variable_buttons():
                 self.variable_buttons[self.variable].setChecked(True)
