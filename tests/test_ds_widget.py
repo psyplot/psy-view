@@ -1,33 +1,17 @@
 """Test the main functionality of the psy-view package, namely the widget."""
 
-# Disclaimer
-# ----------
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
 #
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-#
-# This file is part of psy-view and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-3.0-only
 
 import os.path as osp
-import sys
 import shutil
-from PyQt5.QtCore import Qt
-from PyQt5 import QtWidgets
+import sys
+
 import pytest
+from PyQt5 import QtWidgets
+from PyQt5.QtCore import Qt
 
 
 def test_variables(ds_widget, test_ds):
@@ -39,19 +23,19 @@ def test_variables(ds_widget, test_ds):
 
 def test_mapplot(qtbot, ds_widget):
     """Test plotting and closing with mapplot"""
-    ds_widget.plotmethod = 'mapplot'
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    ds_widget.plotmethod = "mapplot"
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert ds_widget.sp
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert not ds_widget.sp
 
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d'])
-@pytest.mark.parametrize('i', list(range(5)))
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d"])
+@pytest.mark.parametrize("i", list(range(5)))
 def test_change_plot_type(qtbot, ds_widget, plotmethod, i):
     """Test plotting and closing with mapplot"""
     ds_widget.plotmethod = plotmethod
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert ds_widget.sp
     pm_widget = ds_widget.plotmethod_widget
     pm_widget.combo_plot.setCurrentIndex(i)
@@ -60,39 +44,39 @@ def test_change_plot_type(qtbot, ds_widget, plotmethod, i):
     assert ds_widget.sp.plotters[0].plot.value == plot_type
 
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d'])
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d"])
 def test_variable_switch(qtbot, ds_widget, plotmethod):
     """Test switching of variables"""
     ds_widget.plotmethod = plotmethod
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert len(ds_widget.sp) == 1
-    assert ds_widget.data.name == 't2m'
-    qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
+    assert ds_widget.data.name == "t2m"
+    qtbot.mouseClick(ds_widget.variable_buttons["v"], Qt.LeftButton)
     assert len(ds_widget.sp) == 1
-    assert ds_widget.data.name == 'v'
-    qtbot.mouseClick(ds_widget.variable_buttons['v_2d'], Qt.LeftButton)
+    assert ds_widget.data.name == "v"
+    qtbot.mouseClick(ds_widget.variable_buttons["v_2d"], Qt.LeftButton)
     assert len(ds_widget.sp) == 1
-    assert ds_widget.data.name == 'v_2d'
-    qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
+    assert ds_widget.data.name == "v_2d"
+    qtbot.mouseClick(ds_widget.variable_buttons["v"], Qt.LeftButton)
     assert len(ds_widget.sp) == 1
-    assert ds_widget.data.name == 'v'
-    qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
+    assert ds_widget.data.name == "v"
+    qtbot.mouseClick(ds_widget.variable_buttons["v"], Qt.LeftButton)
     assert not ds_widget.sp
 
 
 def test_plot2d(qtbot, ds_widget):
     """Test plotting and closing with plot2d"""
-    ds_widget.plotmethod = 'plot2d'
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    ds_widget.plotmethod = "plot2d"
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert ds_widget.sp
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert not ds_widget.sp
 
 
 def test_plot2d_dim_switch(qtbot, ds_widget, test_ds, test_file):
-    arr = test_ds['t2m']
+    arr = test_ds["t2m"]
 
-    ds_widget.plotmethod = 'plot2d'
+    ds_widget.plotmethod = "plot2d"
 
     pm_widget = ds_widget.plotmethod_widget
 
@@ -104,9 +88,9 @@ def test_plot2d_dim_switch(qtbot, ds_widget, test_ds, test_file):
 
     fmts = pm_widget.init_dims(arr)
 
-    assert fmts['transpose']
+    assert fmts["transpose"]
 
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
 
     assert not pm_widget.combo_xdim.isEnabled()
 
@@ -114,19 +98,19 @@ def test_plot2d_dim_switch(qtbot, ds_widget, test_ds, test_file):
     assert ds_widget.plotter.plot_data.dims == arr.dims[:2]
 
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d'])
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d"])
 def test_plot2d_coord(qtbot, ds_widget, test_ds, test_file, plotmethod):
-    arr = test_ds.psy['t2m']
+    arr = test_ds.psy["t2m"]
 
     if osp.basename(test_file) != "rotated-pole-test.nc":
         return pytest.skip("Testing rotated coords only")
 
     ydim, xdim = arr.dims[-2:]
 
-    test_ds[xdim].attrs.pop('axis', None)
-    test_ds[ydim].attrs.pop('axis', None)
+    test_ds[xdim].attrs.pop("axis", None)
+    test_ds[ydim].attrs.pop("axis", None)
 
-    assert 'coordinates' in arr.encoding
+    assert "coordinates" in arr.encoding
 
     ds_widget.plotmethod = plotmethod
 
@@ -135,15 +119,15 @@ def test_plot2d_coord(qtbot, ds_widget, test_ds, test_file, plotmethod):
     assert pm_widget.combo_xcoord.isEnabled()
 
     # make the plot with default setting
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
 
     assert not pm_widget.combo_xcoord.isEnabled()
 
-    assert pm_widget.data.psy.get_coord('x').name != xdim
-    assert pm_widget.data.psy.get_coord('y').name != ydim
+    assert pm_widget.data.psy.get_coord("x").name != xdim
+    assert pm_widget.data.psy.get_coord("y").name != ydim
 
     # remove the plot
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
 
     assert pm_widget.combo_xcoord.isEnabled()
 
@@ -152,72 +136,72 @@ def test_plot2d_coord(qtbot, ds_widget, test_ds, test_file, plotmethod):
     pm_widget.combo_ycoord.setCurrentText(ydim)
 
     # make the plot with the changed settings
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
 
     assert not pm_widget.combo_xcoord.isEnabled()
 
-    assert pm_widget.data.psy.get_coord('x').name == xdim
-    assert pm_widget.data.psy.get_coord('y').name == ydim
+    assert pm_widget.data.psy.get_coord("x").name == xdim
+    assert pm_widget.data.psy.get_coord("y").name == ydim
 
 
 def test_lineplot(qtbot, ds_widget):
     """Test plotting and closing with lineplot"""
-    ds_widget.plotmethod = 'lineplot'
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    ds_widget.plotmethod = "lineplot"
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert ds_widget.sp
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert not ds_widget.sp
 
 
 def test_lineplot_switch(qtbot, ds_widget):
     """Test switching of variables"""
-    ds_widget.plotmethod = 'lineplot'
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    ds_widget.plotmethod = "lineplot"
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert len(ds_widget.sp) == 1
-    assert ds_widget.data.name == 't2m'
-    qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
+    assert ds_widget.data.name == "t2m"
+    qtbot.mouseClick(ds_widget.variable_buttons["v"], Qt.LeftButton)
     assert len(ds_widget.sp) == 1
-    assert ds_widget.data.name == 'v'
-    qtbot.mouseClick(ds_widget.variable_buttons['v'], Qt.LeftButton)
+    assert ds_widget.data.name == "v"
+    qtbot.mouseClick(ds_widget.variable_buttons["v"], Qt.LeftButton)
     assert not ds_widget.sp
 
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d'])
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d"])
 def test_cmap(qtbot, ds_widget, plotmethod):
     ds_widget.plotmethod = plotmethod
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     cmap = ds_widget.plotter.cmap.value
     assert ds_widget.plotter.plot.mappable.get_cmap().name == cmap
     ds_widget.plotmethod_widget.btn_cmap.menu().actions()[5].trigger()
     assert ds_widget.plotter.cmap.value != cmap
     assert ds_widget.plotter.plot.mappable.get_cmap().name != cmap
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
 
 
 def test_add_and_remove_line(qtbot, ds_widget, monkeypatch):
     "Test adding and removing lines"
-    ds_widget.plotmethod = 'lineplot'
+    ds_widget.plotmethod = "lineplot"
 
     monkeypatch.setattr(
-        QtWidgets.QInputDialog, "getItem",
-        lambda *args: ('t2m', True))
+        QtWidgets.QInputDialog, "getItem", lambda *args: ("t2m", True)
+    )
 
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert ds_widget.sp
     assert len(ds_widget.sp[0]) == 1
     qtbot.mouseClick(ds_widget.plotmethod_widget.btn_add, Qt.LeftButton)
     assert len(ds_widget.sp[0]) == 2
     qtbot.mouseClick(ds_widget.plotmethod_widget.btn_del, Qt.LeftButton)
     assert len(ds_widget.sp[0]) == 1
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert not ds_widget.sp
 
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d", "lineplot"])
 def test_btn_step(qtbot, ds_widget, plotmethod):
     """Test clicking the next time button"""
     ds_widget.plotmethod = plotmethod
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     dim = ds_widget.combo_dims.currentText()
     assert dim
     assert ds_widget.data.psy.idims[dim] == 0
@@ -230,11 +214,12 @@ def test_btn_step(qtbot, ds_widget, plotmethod):
     qtbot.mouseClick(ds_widget.btn_prev, Qt.LeftButton)
     assert ds_widget.data.psy.idims[dim] == 0
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
+
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d", "lineplot"])
 def test_dimension_button(qtbot, ds_widget, plotmethod):
     """Test clicking on a button in the dimension table"""
     ds_widget.plotmethod = plotmethod
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
 
     btn = ds_widget.dimension_table.cellWidget(1, 2)
 
@@ -251,8 +236,8 @@ def test_dimension_button(qtbot, ds_widget, plotmethod):
     assert ds_widget.data.psy.idims[dim] == 0
 
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
-@pytest.mark.parametrize('direction', ['forward', 'backward'])
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d", "lineplot"])
+@pytest.mark.parametrize("direction", ["forward", "backward"])
 def test_animate(qtbot, ds_widget, plotmethod, direction):
     """Test clicking the next time button"""
 
@@ -266,17 +251,16 @@ def test_animate(qtbot, ds_widget, plotmethod, direction):
         else:
             return True
 
-
     ds_widget.plotmethod = plotmethod
     ds_widget.sl_interval.setValue(10)
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     dim = ds_widget.combo_dims.currentText()
 
     assert dim
 
     steps = set(range(ds_widget.ds.dims[dim]))
 
-    btn = getattr(ds_widget, 'btn_animate_' + direction)
+    btn = getattr(ds_widget, "btn_animate_" + direction)
 
     assert not ds_widget._animating
 
@@ -301,46 +285,47 @@ def test_animate(qtbot, ds_widget, plotmethod, direction):
 
 
 def test_enable_disable_variables(test_ds, qtbot):
-    from psy_view.ds_widget import DatasetWidget
     import numpy as np
-    test_ds['line'] = ('xtest', np.zeros(7))
-    test_ds['xtest'] = ('xtest', np.arange(7))
+
+    from psy_view.ds_widget import DatasetWidget
+
+    test_ds["line"] = ("xtest", np.zeros(7))
+    test_ds["xtest"] = ("xtest", np.arange(7))
 
     ds_widget = DatasetWidget(test_ds)
     qtbot.addWidget(ds_widget)
 
-    assert ds_widget.variable_buttons['t2m'].isEnabled()
-    assert not ds_widget.variable_buttons['line'].isEnabled()
+    assert ds_widget.variable_buttons["t2m"].isEnabled()
+    assert not ds_widget.variable_buttons["line"].isEnabled()
 
-    ds_widget.plotmethod = 'lineplot'
+    ds_widget.plotmethod = "lineplot"
 
-    assert ds_widget.variable_buttons['t2m'].isEnabled()
-    assert ds_widget.variable_buttons['line'].isEnabled()
+    assert ds_widget.variable_buttons["t2m"].isEnabled()
+    assert ds_widget.variable_buttons["line"].isEnabled()
 
-    ds_widget.plotmethod = 'plot2d'
+    ds_widget.plotmethod = "plot2d"
 
-    assert ds_widget.variable_buttons['t2m'].isEnabled()
-    assert not ds_widget.variable_buttons['line'].isEnabled()
+    assert ds_widget.variable_buttons["t2m"].isEnabled()
+    assert not ds_widget.variable_buttons["line"].isEnabled()
 
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
-def test_open_and_close_plots(
-        ds_widget, qtbot, monkeypatch, plotmethod):
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d", "lineplot"])
+def test_open_and_close_plots(ds_widget, qtbot, monkeypatch, plotmethod):
     """Create multiple plots and export them all"""
     ds_widget.plotmethod = plotmethod
 
     monkeypatch.setattr(
-        QtWidgets.QInputDialog, "getItem",
-        lambda *args: ('t2m', True))
+        QtWidgets.QInputDialog, "getItem", lambda *args: ("t2m", True)
+    )
 
     qtbot.mouseClick(ds_widget.btn_add, Qt.LeftButton)
     assert ds_widget.sp
     assert len(ds_widget.sp) == 1
-    assert ds_widget.variable_buttons['t2m'].isChecked()
+    assert ds_widget.variable_buttons["t2m"].isChecked()
 
     monkeypatch.setattr(
-        QtWidgets.QInputDialog, "getItem",
-        lambda *args: ('u', True))
+        QtWidgets.QInputDialog, "getItem", lambda *args: ("u", True)
+    )
 
     # create a second plot
     qtbot.mouseClick(ds_widget.btn_add, Qt.LeftButton)
@@ -350,42 +335,43 @@ def test_open_and_close_plots(
     assert len(ds_widget._sp) == 2
     assert ds_widget.combo_array.count() == 2
     assert ds_widget.combo_array.currentIndex() == 1
-    assert ds_widget.variable_buttons['u'].isChecked()
+    assert ds_widget.variable_buttons["u"].isChecked()
 
     # switch to the first variable
     ds_widget.combo_array.setCurrentIndex(0)
     assert len(ds_widget.sp) == 1
     assert len(ds_widget._sp) == 2
-    assert ds_widget.data.name == 't2m'
-    assert ds_widget.variable_buttons['t2m'].isChecked()
+    assert ds_widget.data.name == "t2m"
+    assert ds_widget.variable_buttons["t2m"].isChecked()
 
     # close the plot
     qtbot.mouseClick(ds_widget.btn_del, Qt.LeftButton)
     assert len(ds_widget.sp) == 1
     assert len(ds_widget._sp) == 1
-    assert ds_widget.data.name == 'u'
-    assert ds_widget.variable_buttons['u'].isChecked()
+    assert ds_widget.data.name == "u"
+    assert ds_widget.variable_buttons["u"].isChecked()
 
     # close the second plot
     qtbot.mouseClick(ds_widget.btn_del, Qt.LeftButton)
     assert not bool(ds_widget.sp)
     assert not bool(ds_widget._sp)
-    assert not any(btn.isChecked() for name, btn in
-                   ds_widget.variable_buttons.items())
+    assert not any(
+        btn.isChecked() for name, btn in ds_widget.variable_buttons.items()
+    )
 
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d", "lineplot"])
 def test_multi_export(ds_widget, qtbot, monkeypatch, tmpdir, plotmethod):
     """Create multiple plots and export them all"""
     ds_widget.plotmethod = plotmethod
 
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     assert ds_widget.sp
     assert len(ds_widget.sp) == 1
 
     monkeypatch.setattr(
-        QtWidgets.QInputDialog, "getItem",
-        lambda *args: ('u', True))
+        QtWidgets.QInputDialog, "getItem", lambda *args: ("u", True)
+    )
 
     # create a second plot
     qtbot.mouseClick(ds_widget.btn_add, Qt.LeftButton)
@@ -399,16 +385,20 @@ def test_multi_export(ds_widget, qtbot, monkeypatch, tmpdir, plotmethod):
     # export the plots
 
     monkeypatch.setattr(
-        QtWidgets.QFileDialog, "getSaveFileName",
-        lambda *args: (osp.join(tmpdir, "test.pdf"), True))
+        QtWidgets.QFileDialog,
+        "getSaveFileName",
+        lambda *args: (osp.join(tmpdir, "test.pdf"), True),
+    )
 
     ds_widget.export_all_images()
 
     # Test if warning is triggered when exporting only one image
 
     monkeypatch.setattr(
-        QtWidgets.QFileDialog, "getSaveFileName",
-        lambda *args: (osp.join(tmpdir, "test.png"), True))
+        QtWidgets.QFileDialog,
+        "getSaveFileName",
+        lambda *args: (osp.join(tmpdir, "test.png"), True),
+    )
 
     question_asked = []
 
@@ -416,10 +406,7 @@ def test_multi_export(ds_widget, qtbot, monkeypatch, tmpdir, plotmethod):
         question_asked.append(True)
         return QtWidgets.QMessageBox.No
 
-    monkeypatch.setattr(
-        QtWidgets.QMessageBox, "question", dont_save)
-
-
+    monkeypatch.setattr(QtWidgets.QMessageBox, "question", dont_save)
 
     ds_widget.export_all_images()
 
@@ -428,14 +415,14 @@ def test_multi_export(ds_widget, qtbot, monkeypatch, tmpdir, plotmethod):
     assert not osp.exists(osp.join(tmpdir, "test.png"))
 
 
-@pytest.mark.parametrize('plotmethod', ['mapplot', 'plot2d', 'lineplot'])
+@pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d", "lineplot"])
 def test_export_animation(qtbot, ds_widget, plotmethod, tmpdir, monkeypatch):
     """Test clicking the next time button"""
     from psy_view.rcsetup import rcParams
 
     ds_widget.plotmethod = plotmethod
     ds_widget.sl_interval.setValue(10)
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
     dim = ds_widget.combo_dims.currentText()
 
     assert dim
@@ -443,11 +430,13 @@ def test_export_animation(qtbot, ds_widget, plotmethod, tmpdir, monkeypatch):
     assert not ds_widget._animating
 
     monkeypatch.setattr(
-        QtWidgets.QFileDialog, "getSaveFileName",
-        lambda *args: (osp.join(tmpdir, "test.gif"), True))
+        QtWidgets.QFileDialog,
+        "getSaveFileName",
+        lambda *args: (osp.join(tmpdir, "test.gif"), True),
+    )
 
     with rcParams.catch():
-        rcParams['animations.export_kws'] = {'writer': 'pillow'}
+        rcParams["animations.export_kws"] = {"writer": "pillow"}
 
         ds_widget.export_animation()
 
@@ -460,6 +449,7 @@ def test_export_animation(qtbot, ds_widget, plotmethod, tmpdir, monkeypatch):
 def test_reload(qtbot, test_dir, tmp_path) -> None:
     """Test the reload button."""
     import psyplot.project as psy
+
     from psy_view.ds_widget import DatasetWidget
 
     f1, f2 = "regular-test.nc", "regional-icon-test.nc"
@@ -467,9 +457,10 @@ def test_reload(qtbot, test_dir, tmp_path) -> None:
 
     ds_widget = DatasetWidget(psy.open_dataset(str(tmp_path / f1)))
     qtbot.addWidget(ds_widget)
-    qtbot.mouseClick(ds_widget.variable_buttons['t2m'], Qt.LeftButton)
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
 
     assert ds_widget.ds_tree.topLevelItemCount() == 1
+    assert ds_widget.ds is not None
     assert ds_widget.ds["t2m"].ndim == 4
 
     # now copy the icon file to the same destination and reload everything
@@ -477,5 +468,6 @@ def test_reload(qtbot, test_dir, tmp_path) -> None:
     ds_widget.reload()
 
     assert ds_widget.ds_tree.topLevelItemCount() == 1
+    assert ds_widget.ds is not None
     assert ds_widget.ds["t2m"].ndim == 3
     assert len(psy.gcp(True)) == 1

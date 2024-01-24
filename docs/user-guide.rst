@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _user-guide:
 
 User guide
@@ -220,10 +224,14 @@ mapplot
     :suppress:
 
     In [1]: import psyplot.project as psy
+       ...:
        ...: with psy.plot.mapplot(
-       ...:         "demo.nc", name="t2m",
-       ...:         cmap="viridis", xgrid=False, ygrid=False,
-       ...:     ) as sp:
+       ...:     "demo.nc",
+       ...:     name="t2m",
+       ...:     cmap="viridis",
+       ...:     xgrid=False,
+       ...:     ygrid=False,
+       ...: ) as sp:
        ...:     sp.export("docs-mapplot-example.png")
 
 .. image:: docs-mapplot-example.png
@@ -330,10 +338,12 @@ plot2d
     :suppress:
 
     In [1]: import psyplot.project as psy
+       ...:
        ...: with psy.plot.plot2d(
-       ...:         "demo.nc", name="t2m",
-       ...:         cmap="viridis",
-       ...:     ) as sp:
+       ...:     "demo.nc",
+       ...:     name="t2m",
+       ...:     cmap="viridis",
+       ...: ) as sp:
        ...:     sp.export("docs-plot2d-example.png")
 
 .. image:: docs-plot2d-example.png
@@ -358,13 +368,19 @@ lineplot
     :okwarning:
 
     In [1]: import psyplot.project as psy
+       ...:
        ...: with psy.plot.lineplot(
-       ...:         "demo.nc", name="t2m", x=0, y=[0, 15], z=0,
-       ...:         xticklabels='%B', xticks='data',
-       ...:         legendlabels='%(y)1.0f°N',
-       ...:         legend='lower right',
-       ...:         ylabel='{desc}',
-       ...:     ) as sp:
+       ...:     "demo.nc",
+       ...:     name="t2m",
+       ...:     x=0,
+       ...:     y=[0, 15],
+       ...:     z=0,
+       ...:     xticklabels="%B",
+       ...:     xticks="data",
+       ...:     legendlabels="%(y)1.0f°N",
+       ...:     legend="lower right",
+       ...:     ylabel="{desc}",
+       ...: ) as sp:
        ...:     sp.export("docs-lineplot-example.png")
 
 .. image:: docs-lineplot-example.png

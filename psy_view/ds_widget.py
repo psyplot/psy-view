@@ -1,76 +1,59 @@
 # -*- coding: utf-8 -*-
 """Dataset widget to display the contents of a dataset."""
 
-# Disclaimer
-# ----------
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
 #
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-#
-# This file is part of psy-view and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-3.0-only
 
 from __future__ import annotations
 
-import os.path as osp
+import contextlib
 import os
-
+import os.path as osp
 from typing import (
-    List,
     TYPE_CHECKING,
-    Optional,
-    Union,
-    Dict,
-    Iterator,
-    Type,
     Any,
     Callable,
+    Dict,
     Hashable,
+    Iterator,
+    List,
+    Optional,
     Tuple,
+    Union,
 )
 
-import contextlib
-
-import yaml
-from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
-import psy_view.utils as utils
-from psyplot_gui.content_widget import (
-    DatasetTree, DatasetTreeItem, escape_html)
-from psyplot_gui.common import (
-    DockMixin, get_icon as get_psy_icon, PyErrorMessage)
 import psyplot.data as psyd
-from psy_view.rcsetup import rcParams
+import yaml
+from matplotlib.animation import FuncAnimation
+from psyplot.config.rcsetup import get_configdir
+from psyplot_gui.common import DockMixin, PyErrorMessage
+from psyplot_gui.common import get_icon as get_psy_icon
+from psyplot_gui.content_widget import (
+    DatasetTree,
+    DatasetTreeItem,
+    escape_html,
+)
+from PyQt5 import QtGui, QtWidgets
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
+
+import psy_view.utils as utils
 from psy_view.plotmethods import (
-    PlotMethodWidget,
+    LinePlotWidget,
     MapPlotWidget,
     Plot2DWidget,
-    LinePlotWidget,
+    PlotMethodWidget,
 )
-from psyplot.config.rcsetup import get_configdir
-
-from matplotlib.animation import FuncAnimation
+from psy_view.rcsetup import rcParams
 
 if TYPE_CHECKING:
-    from xarray import DataArray, Dataset
-    from psyplot.project import PlotterInterface, Project
-    from psyplot.plotter import Plotter
-    from matplotlib.figure import Figure
     from matplotlib.backend_bases import MouseEvent
+    from matplotlib.figure import Figure
+    from psyplot.plotter import Plotter
+    from psyplot.project import PlotterInterface, Project
     from psyplot_gui.main import MainWindow
+    from xarray import DataArray, Dataset
 
 
 NOTSET = "__NOVARIABLEAVAILABLE"
@@ -93,8 +76,12 @@ def get_dims_to_iterate(arr: DataArray) -> List[str]:
         The dimension strings
     """
     base_var = next(arr.psy.iter_base_variables)
-    return [dim for dim, size in zip(base_var.dims, base_var.shape)
-            if size > 1 and arr[dim].ndim == 0]
+    return [
+        dim
+        for dim, size in zip(base_var.dims, base_var.shape)
+        if size > 1 and arr[dim].ndim == 0
+    ]
+
 
 TOO_MANY_FIGURES_WARNING = """
 Multiple figures are open but you specified only {} filenames: {}.<br>
@@ -119,7 +106,7 @@ class DatasetWidget(QtWidgets.QSplitter):
     """A widget to control the visualization of the variables in a dataset"""
 
     #: The title of the widget
-    title: str = 'psy-view Plot Control'
+    title: str = "psy-view Plot Control"
 
     #: Display the dock widget at the right side of the GUI
     dock_position = Qt.RightDockWidgetArea
@@ -141,7 +128,7 @@ class DatasetWidget(QtWidgets.QSplitter):
     _preset: Optional[Union[str, Dict]] = None
 
     #: Attributes to use in the dataset tree
-    ds_attr_columns: List[str] = ['long_name', 'dims', 'shape']
+    ds_attr_columns: List[str] = ["long_name", "dims", "shape"]
 
     def __init__(self, ds: Optional[Dataset] = None, *args, **kwargs) -> None:
         """
@@ -167,12 +154,15 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.lbl_ds = QtWidgets.QLineEdit()
         self.open_box.addWidget(self.lbl_ds)
         self.btn_open = utils.add_pushbutton(
-            get_psy_icon('run_arrow.png'), lambda: self.set_dataset(),
-            "Select and open a netCDF dataset", self.open_box, icon=True)
+            get_psy_icon("run_arrow.png"),
+            lambda: self.set_dataset(),
+            "Select and open a netCDF dataset",
+            self.open_box,
+            icon=True,
+        )
         self.open_widget = QtWidgets.QWidget()
         self.open_widget.setLayout(self.open_box)
         self.addWidget(self.open_widget)
-
 
         # second row: dataset representation
         self.setup_ds_tree()
@@ -189,14 +179,20 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         # -- animate backwards button
         self.btn_animate_backward = utils.add_pushbutton(
-            "◀◀", lambda: self.animate_backward(),
-            "Animate the time dimension backwards", self.navigation_box)
+            "◀◀",
+            lambda: self.animate_backward(),
+            "Animate the time dimension backwards",
+            self.navigation_box,
+        )
         self.btn_animate_backward.setCheckable(True)
 
         # -- go to previous button
         self.btn_prev = utils.add_pushbutton(
-            '◀', self.go_to_previous_step,
-            "Go to previous time step", self.navigation_box)
+            "◀",
+            self.go_to_previous_step,
+            "Go to previous time step",
+            self.navigation_box,
+        )
 
         # -- dimension menu for animation
         self.combo_dims = QtWidgets.QComboBox()
@@ -204,13 +200,19 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         # -- go to next button
         self.btn_next = utils.add_pushbutton(
-            '▶', self.go_to_next_step,
-            "Go to next time step", self.navigation_box)
+            "▶",
+            self.go_to_next_step,
+            "Go to next time step",
+            self.navigation_box,
+        )
 
         # -- animate forward button
         self.btn_animate_forward = utils.add_pushbutton(
-            "▶▶", lambda: self.animate_forward(),
-            "Animate the time dimension", self.navigation_box)
+            "▶▶",
+            lambda: self.animate_forward(),
+            "Animate the time dimension",
+            self.navigation_box,
+        )
         self.btn_animate_forward.setCheckable(True)
 
         # -- interval slider
@@ -224,7 +226,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.navigation_box.addWidget(self.sl_interval)
 
         # -- interval label
-        self.lbl_interval = QtWidgets.QLabel('500 ms')
+        self.lbl_interval = QtWidgets.QLabel("500 ms")
         self.navigation_box.addWidget(self.lbl_interval)
 
         # --- export/import menus
@@ -232,7 +234,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         # -- Export button
         self.btn_export = QtWidgets.QToolButton()
-        self.btn_export.setText('Export')
+        self.btn_export.setText("Export")
         self.btn_export.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         self.btn_export.setMenu(self.setup_export_menu())
         self.btn_export.setEnabled(False)
@@ -244,28 +246,34 @@ class DatasetWidget(QtWidgets.QSplitter):
         hbox = QtWidgets.QHBoxLayout(self.frm_preset)
 
         self.btn_preset = QtWidgets.QToolButton()
-        self.btn_preset.setText('Preset')
+        self.btn_preset.setText("Preset")
         self.btn_preset.setPopupMode(QtWidgets.QToolButton.InstantPopup)
         self.btn_preset.setMenu(self.setup_preset_menu())
         hbox.addWidget(self.btn_preset)
 
         # --- presets label
-        self.lbl_preset = QtWidgets.QLabel('')
+        self.lbl_preset = QtWidgets.QLabel("")
         self.lbl_preset.setVisible(False)
         hbox.addWidget(self.lbl_preset)
 
         # --- unset preset button
         self.btn_unset_preset = utils.add_pushbutton(
-            get_psy_icon('invalid.png'), self.unset_preset,
-            "Unset the current preset", hbox, icon=True)
+            get_psy_icon("invalid.png"),
+            self.unset_preset,
+            "Unset the current preset",
+            hbox,
+            icon=True,
+        )
         self.btn_unset_preset.setVisible(False)
 
         self.export_box.addWidget(self.frm_preset)
 
         self.btn_reload = utils.add_pushbutton(
-            get_psy_icon("refresh.png"), self.reload,
+            get_psy_icon("refresh.png"),
+            self.reload,
             "Close all open datasets and recreate the plots",
-            self.export_box, icon=True
+            self.export_box,
+            icon=True,
         )
 
         self.export_box.addStretch(0)
@@ -278,7 +286,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         # fourth row: array selector
 
-        self.array_frame = QtWidgets.QGroupBox('Current plot')
+        self.array_frame = QtWidgets.QGroupBox("Current plot")
         hbox = QtWidgets.QHBoxLayout()
 
         self.combo_array = QtWidgets.QComboBox()
@@ -288,12 +296,20 @@ class DatasetWidget(QtWidgets.QSplitter):
         hbox.addWidget(self.combo_array)
 
         self.btn_add = utils.add_pushbutton(
-            QtGui.QIcon(get_psy_icon('plus')), self.new_plot,
-            "Create a new plot", hbox, icon=True)
+            QtGui.QIcon(get_psy_icon("plus")),
+            self.new_plot,
+            "Create a new plot",
+            hbox,
+            icon=True,
+        )
         self.btn_add.setEnabled(ds is not None)
         self.btn_del = utils.add_pushbutton(
-            QtGui.QIcon(get_psy_icon('minus')), self.close_current_plot,
-            "Remove the current plot", hbox, icon=True)
+            QtGui.QIcon(get_psy_icon("minus")),
+            self.close_current_plot,
+            "Remove the current plot",
+            hbox,
+            icon=True,
+        )
         self.btn_del.setEnabled(False)
 
         hbox.addWidget(self.btn_add)
@@ -330,6 +346,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         import psyplot.project as psy
 
         sp = self._sp
+        if sp is None:
+            return
         fname = sp.dsnames_map[self.ds.psy.num]  # type: ignore
         project = sp.save_project()
         sp.close(True, True, True)
@@ -349,7 +367,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         """Setup the number of columns and the header of the dataset tree."""
         self.ds_tree = tree = QtWidgets.QTreeWidget()
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
-        tree.setHeaderLabels([''] + self.ds_attr_columns)
+        tree.setHeaderLabels([""] + self.ds_attr_columns)
 
     def showEvent(self, event):
         ret = super().showEvent(event)
@@ -384,7 +402,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         if not self.combo_array.count():
             return None
         else:
-            return self.combo_array.currentText().split(':')[0]
+            return self.combo_array.currentText().split(":")[0]
 
     def change_ds(self, ds_item: DatasetTreeItem) -> None:
         """Change the current dataset to another one.
@@ -438,11 +456,13 @@ class DatasetWidget(QtWidgets.QSplitter):
         if not current or not osp.exists(current):
             current = os.getcwd()
         fname, ok = QtWidgets.QFileDialog.getOpenFileName(
-            self, 'Open dataset', current,
-            'NetCDF files (*.nc *.nc4);;'
-            'Shape files (*.shp);;'
-            'All files (*)'
-            )
+            self,
+            "Open dataset",
+            current,
+            "NetCDF files (*.nc *.nc4);;"
+            "Shape files (*.shp);;"
+            "All files (*)",
+        )
         if not ok:
             return None
         ds = psyd.open_dataset(fname)
@@ -487,8 +507,8 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.lbl_ds.setText(fname)
             fname = osp.basename(fname)
         else:
-            self.lbl_ds.setText('')
-            fname = ''
+            self.lbl_ds.setText("")
+            fname = ""
         ds_item.setText(0, fname)
         tree.addTopLevelItem(ds_item)
 
@@ -499,7 +519,6 @@ class DatasetWidget(QtWidgets.QSplitter):
         if ds.psy.num not in self.open_datasets:
             # make sure we do not loose track of open datasets
             self._ds_nums[ds.psy.num] = ds
-
 
     @property
     def open_datasets(self) -> Dict[int, Dataset]:
@@ -522,7 +541,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         return None
 
     def expand_current_variable(
-            self, variable: Optional[Union[Any, Hashable]] = None) -> None:
+        self, variable: Optional[Union[Any, Hashable]] = None
+    ) -> None:
         """Expand the item in the dataset tree of variable.
 
         Parameters
@@ -537,8 +557,9 @@ class DatasetWidget(QtWidgets.QSplitter):
         tree.expandItem(top.child(0))
         if variable is None:
             variable: str = self.variable  # type: ignore
-        for var_item in map(top.child(0).child,
-                            range(top.child(0).childCount())):
+        for var_item in map(
+            top.child(0).child, range(top.child(0).childCount())
+        ):
             if var_item.text(0) == variable:
                 tree.expandItem(var_item)
             else:
@@ -546,7 +567,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     def setup_variable_buttons(self, ncols: int = 4) -> None:
         """Setup the variable buttons for the current dataset."""
-        variable_frame = QtWidgets.QGroupBox('Variables')
+        variable_frame = QtWidgets.QGroupBox("Variables")
 
         self.variable_scroll.setWidget(variable_frame)
         self.variable_frame = variable_frame
@@ -556,10 +577,10 @@ class DatasetWidget(QtWidgets.QSplitter):
         ds = self.ds
 
         if ds is not None:
-
             for i, v in enumerate(ds):
                 btn = utils.add_pushbutton(
-                    v, self._draw_variable(v), f"Visualize variable {v}")
+                    v, self._draw_variable(v), f"Visualize variable {v}"
+                )
                 btn.setCheckable(True)
                 self.variable_buttons[v] = btn
                 self.variable_layout.addWidget(btn, i // ncols, i % ncols)
@@ -568,7 +589,8 @@ class DatasetWidget(QtWidgets.QSplitter):
                 rows = len(ds) // ncols
                 minrows = max(1, min(3, rows))
                 self.variable_scroll.setMinimumHeight(
-                        (minrows + 2) * btn.sizeHint().height())
+                    (minrows + 2) * btn.sizeHint().height()
+                )
 
     def load_variable_desc(self, item: QtWidgets.QTreeWidgetItem) -> None:
         """Load the description of the variable of a given tree item.
@@ -583,8 +605,13 @@ class DatasetWidget(QtWidgets.QSplitter):
 
         tree = self.ds_tree
 
-        if parent is tree or parent is None or not (
-                DatasetTree.is_variable(item) or DatasetTree.is_coord(item)):
+        if (
+            parent is tree
+            or parent is None
+            or not (
+                DatasetTree.is_variable(item) or DatasetTree.is_coord(item)
+            )
+        ):
             return
 
         if tree.isColumnHidden(1):
@@ -598,14 +625,15 @@ class DatasetWidget(QtWidgets.QSplitter):
         if ds is None:
             return
         desc = escape_html(str(ds.variables[item.text(0)]))
-        item.setToolTip(0, '<pre>' + desc + '</pre>')
+        item.setToolTip(0, "<pre>" + desc + "</pre>")
 
     def clear_table(self) -> None:
         """Clear the table that shows the available dimensions."""
         self.dimension_table.clear()
         self.dimension_table.setColumnCount(5)
         self.dimension_table.setHorizontalHeaderLabels(
-            ['Type', 'First', 'Current', 'Last', 'Units'])
+            ["Type", "First", "Current", "Last", "Units"]
+        )
         self.dimension_table.setRowCount(0)
 
     def addLayout(self, layout: QtWidgets.QLayout) -> QtWidgets.QWidget:
@@ -643,11 +671,11 @@ class DatasetWidget(QtWidgets.QSplitter):
         """Start the current animation in backward direction, or stop it."""
         if self._animating:
             self.stop_animation()
-            self.btn_animate_backward.setText('◀◀')
+            self.btn_animate_backward.setText("◀◀")
             self.enable_navigation()
         else:
             self._animate_forward = False
-            self.btn_animate_backward.setText('■')
+            self.btn_animate_backward.setText("■")
             self.disable_navigation(self.btn_animate_backward)
             self.start_animation()
 
@@ -655,22 +683,20 @@ class DatasetWidget(QtWidgets.QSplitter):
         """Start the current animation in forward direction, or stop it."""
         if self._animating:
             self.stop_animation()
-            self.btn_animate_forward.setText('▶▶')
+            self.btn_animate_forward.setText("▶▶")
             self.enable_navigation()
         else:
             self._animate_forward = True
-            self.btn_animate_forward.setText('■')
+            self.btn_animate_forward.setText("■")
             self.disable_navigation(self.btn_animate_forward)
             self.start_animation(nframes)
 
     def setup_plot_tabs(self) -> None:
         """Setup the tabs of the various plot methods."""
-        self.plot_tabs.addTab(MapPlotWidget(self.get_sp, self.ds),
-                              'mapplot')
-        self.plot_tabs.addTab(Plot2DWidget(self.get_sp, self.ds),
-                              'plot2d')
+        self.plot_tabs.addTab(MapPlotWidget(self.get_sp, self.ds), "mapplot")
+        self.plot_tabs.addTab(Plot2DWidget(self.get_sp, self.ds), "plot2d")
         lineplot_widget = LinePlotWidget(self.get_sp, self.ds)
-        self.plot_tabs.addTab(lineplot_widget, 'lineplot')
+        self.plot_tabs.addTab(lineplot_widget, "lineplot")
 
         for w in map(self.plot_tabs.widget, range(self.plot_tabs.count())):
             w.replot.connect(self.replot)
@@ -713,8 +739,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         self.refresh()
 
     def disable_navigation(
-            self, but: Optional[QtWidgets.QPushButton] = None
-        ) -> None:
+        self, but: Optional[QtWidgets.QPushButton] = None
+    ) -> None:
         """Disable the navigation buttons.
 
         This function disables all navigation buttons but the one you specify.
@@ -724,16 +750,18 @@ class DatasetWidget(QtWidgets.QSplitter):
         but: PyQt5.QtWidgets.QPushButton
             If not None, this button is not disabled.
         """
-        for item in map(self.navigation_box.itemAt,
-                        range(self.navigation_box.count())):
+        for item in map(
+            self.navigation_box.itemAt, range(self.navigation_box.count())
+        ):
             w = item.widget()
             if w is not but and w is not self.sl_interval:
                 w.setEnabled(False)
 
     def enable_navigation(self) -> None:
         """Enable all navigation buttons again."""
-        for item in map(self.navigation_box.itemAt,
-                        range(self.navigation_box.count())):
+        for item in map(
+            self.navigation_box.itemAt, range(self.navigation_box.count())
+        ):
             w = item.widget()
             w.setEnabled(True)
 
@@ -768,9 +796,13 @@ class DatasetWidget(QtWidgets.QSplitter):
         if self.sp is not None:
             if self.animation is None or self.animation.event_source is None:
                 self.animation = FuncAnimation(
-                    self.fig, self.update_dims, frames=self.animation_frames(),
-                    init_func=self.sp.draw, interval=self.sl_interval.value(),
-                    repeat=False)
+                    self.fig,
+                    self.update_dims,
+                    frames=self.animation_frames(),
+                    init_func=self.sp.draw,
+                    interval=self.sl_interval.value(),
+                    repeat=False,
+                )
                 # HACK: Make sure that the animation starts although the figure
                 # is already shown
                 self.animation._draw_frame(next(self.animation_frames()))
@@ -779,7 +811,7 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     def reset_timer_interval(self, value: int) -> None:
         """Change the interval of the timer."""
-        self.lbl_interval.setText('%i ms' % value)
+        self.lbl_interval.setText("%i ms" % value)
         if self.animation is None or self.animation.event_source is None:
             pass
         else:
@@ -791,8 +823,10 @@ class DatasetWidget(QtWidgets.QSplitter):
     def stop_animation(self) -> None:
         """Stop the current animation."""
         self._animating = False
-        if (self.animation is not None and
-                self.animation.event_source is not None):
+        if (
+            self.animation is not None
+            and self.animation.event_source is not None
+        ):
             self.animation.event_source.stop()
         self.plot_tabs.setEnabled(True)
         self.enable_variables()
@@ -800,8 +834,11 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     def animation_frames(self) -> Iterator[Dict[str, int]]:
         """Get the animation frames for the :attr:`combo_dims` dimension."""
-        while self._animating and self._animation_frames is None or \
-                self._animation_frames:
+        while (
+            self._animating
+            and self._animation_frames is None
+            or self._animation_frames
+        ):
             if self._animation_frames is not None and not self._init_step:
                 self._animation_frames -= 1
             dim = self.combo_dims.currentText()
@@ -824,9 +861,11 @@ class DatasetWidget(QtWidgets.QSplitter):
     def _load_preset(self) -> None:
         """Open a file dialog and load the selected preset."""
         fname, ok = QtWidgets.QFileDialog.getOpenFileName(
-            self, 'Load preset', osp.join(get_configdir(), 'presets'),
-            'YAML files (*.yml *.yaml);;'
-            'All files (*)')
+            self,
+            "Load preset",
+            osp.join(get_configdir(), "presets"),
+            "YAML files (*.yml *.yaml);;" "All files (*)",
+        )
         if ok:
             self.load_preset(fname)
 
@@ -852,17 +891,21 @@ class DatasetWidget(QtWidgets.QSplitter):
         if self._preset is None:
             return {}
         import psyplot.project as psy
+
         preset = self._preset
         try:
             preset = psy.Project._load_preset(preset)
         except yaml.constructor.ConstructorError:
             answer = QtWidgets.QMessageBox.question(
-                self, "Can I trust this?",
+                self,
+                "Can I trust this?",
                 f"Failed to load the preset at <i>{preset}</i> in safe mode. Can we "
-                "trust this preset and load it in unsafe mode?")
+                "trust this preset and load it in unsafe mode?",
+            )
             if answer == QtWidgets.QMessageBox.Yes:
-                psyd.rcParams['presets.trusted'].append(
-                    psy.Project._resolve_preset_path(preset))
+                psyd.rcParams["presets.trusted"].append(
+                    psy.Project._resolve_preset_path(preset)
+                )
                 preset = psy.Project._load_preset(preset)
             else:
                 preset = {}
@@ -872,7 +915,6 @@ class DatasetWidget(QtWidgets.QSplitter):
     def preset(self, value: Optional[Union[str, Dict[str, Any]]]):
         self._preset = value
 
-
     def unset_preset(self) -> None:
         """Unset the current preset and do not use it anymore."""
         self.preset = None  # type: ignore
@@ -881,12 +923,13 @@ class DatasetWidget(QtWidgets.QSplitter):
     def maybe_show_preset(self) -> None:
         """Show the name of the current preset if one is selected."""
         if self._preset is not None and isinstance(self._preset, str):
-            self.lbl_preset.setText('<i>' +
-                osp.basename(osp.splitext(self._preset)[0]) + '</i>')
+            self.lbl_preset.setText(
+                "<i>" + osp.basename(osp.splitext(self._preset)[0]) + "</i>"
+            )
             self.lbl_preset.setVisible(True)
             self.btn_unset_preset.setVisible(True)
         elif self._preset is not None:
-            self.lbl_preset.setText('<i>custom</i>')
+            self.lbl_preset.setText("<i>custom</i>")
             self.lbl_preset.setVisible(True)
             self.btn_unset_preset.setVisible(True)
         else:
@@ -916,9 +959,11 @@ class DatasetWidget(QtWidgets.QSplitter):
             path as an argument
         """
         fname, ok = QtWidgets.QFileDialog.getSaveFileName(
-            self, 'Save preset', osp.join(get_configdir(), 'presets'),
-            'YAML files (*.yml *.yaml);;'
-            'All files (*)')
+            self,
+            "Save preset",
+            osp.join(get_configdir(), "presets"),
+            "YAML files (*.yml *.yaml);;" "All files (*)",
+        )
         if not ok:
             return None
         save_func(fname)
@@ -929,18 +974,25 @@ class DatasetWidget(QtWidgets.QSplitter):
         self._save_preset_actions = []
 
         self._load_preset_action = menu.addAction(
-            "Load preset", self._load_preset)
+            "Load preset", self._load_preset
+        )
         self._unset_preset_action = menu.addAction(
-            "Unset preset", self.unset_preset)
+            "Unset preset", self.unset_preset
+        )
 
         menu.addSeparator()
 
         self._save_preset_actions.append(
-            menu.addAction('Save format of current plot as preset',
-                           self.save_current_preset))
+            menu.addAction(
+                "Save format of current plot as preset",
+                self.save_current_preset,
+            )
+        )
         self._save_preset_actions.append(
-            menu.addAction('Save format of all plots as preset',
-                           self.save_full_preset))
+            menu.addAction(
+                "Save format of all plots as preset", self.save_full_preset
+            )
+        )
 
         for action in self._save_preset_actions:
             action.setEnabled(False)
@@ -950,13 +1002,14 @@ class DatasetWidget(QtWidgets.QSplitter):
     def setup_export_menu(self) -> QtWidgets.QMenu:
         """Set up the menu to export the current plot."""
         self.export_menu = menu = QtWidgets.QMenu()
-        menu.addAction('image (PDF, PNG, etc.)', self.export_image)
-        menu.addAction('all images (PDF, PNG, etc.)', self.export_all_images)
-        menu.addAction('animation (GIF, MP4, etc.', self.export_animation)
-        menu.addAction('psyplot project (.pkl file)', self.export_project)
-        menu.addAction('psyplot project with data',
-                       self.export_project_with_data)
-        py_action = menu.addAction('python script (.py)', self.export_python)
+        menu.addAction("image (PDF, PNG, etc.)", self.export_image)
+        menu.addAction("all images (PDF, PNG, etc.)", self.export_all_images)
+        menu.addAction("animation (GIF, MP4, etc.", self.export_animation)
+        menu.addAction("psyplot project (.pkl file)", self.export_project)
+        menu.addAction(
+            "psyplot project with data", self.export_project_with_data
+        )
+        py_action = menu.addAction("python script (.py)", self.export_python)
         py_action.setEnabled(False)  # psyplot does not yet export to python
         return menu
 
@@ -964,36 +1017,46 @@ class DatasetWidget(QtWidgets.QSplitter):
         """Ask for a filename and export the current plot to a file."""
         if self.sp is not None:
             fname, ok = QtWidgets.QFileDialog.getSaveFileName(
-                self, "Export image", os.getcwd(),
-                "Images (*.png *.pdf *.jpg *.svg)")
+                self,
+                "Export image",
+                os.getcwd(),
+                "Images (*.png *.pdf *.jpg *.svg)",
+            )
             if ok:
-                self.sp.export(fname, **rcParams['savefig_kws'])
+                self.sp.export(fname, **rcParams["savefig_kws"])
 
     def export_all_images(self) -> None:
         """Ask for a filename and export all plots to one (or more) files."""
         fname, ok = QtWidgets.QFileDialog.getSaveFileName(
-            self, "Export image", os.getcwd(),
-            "Images (*.png *.pdf *.jpg *.svg)")
+            self,
+            "Export image",
+            os.getcwd(),
+            "Images (*.png *.pdf *.jpg *.svg)",
+        )
         if ok and self._sp:
             # test filenames
-            if not osp.splitext(fname)[-1].lower() == '.pdf':
+            if not osp.splitext(fname)[-1].lower() == ".pdf":
                 fnames = [
                     sp.format_string(fname, False, i)
-                    for i, sp in enumerate(self._sp.figs.values())]
+                    for i, sp in enumerate(self._sp.figs.values())
+                ]
                 if len(fnames) != len(set(fnames)):
                     answer = QtWidgets.QMessageBox.question(
-                        self, "Too many figures",
+                        self,
+                        "Too many figures",
                         TOO_MANY_FIGURES_WARNING.format(
-                            len(set(fnames)), ', '.join(set(fnames))))
+                            len(set(fnames)), ", ".join(set(fnames))
+                        ),
+                    )
                     if answer == QtWidgets.QMessageBox.No:
                         return
-            self._sp.export(fname, **rcParams['savefig_kws'])
+            self._sp.export(fname, **rcParams["savefig_kws"])
 
     def export_animation(self) -> None:
         """Ask for a filename and export the animation."""
         fname, ok = QtWidgets.QFileDialog.getSaveFileName(
-            self, "Export animation", os.getcwd(),
-            "Movie (*.mp4 *.mov *.gif)")
+            self, "Export animation", os.getcwd(), "Movie (*.mp4 *.mov *.gif)"
+        )
         if ok:
             dim = self.combo_dims.currentText()
             nframes: int = self.ds.dims[dim]  # type: ignore
@@ -1002,8 +1065,10 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.animate_forward(nframes)
             if self.animation is not None:
                 self.animation.save(
-                    fname, **rcParams['animations.export_kws'],
-                    fps=round(1000. / self.sl_interval.value()))
+                    fname,
+                    **rcParams["animations.export_kws"],
+                    fps=round(1000.0 / self.sl_interval.value()),
+                )
             self.animate_forward()
             self.animation = None
 
@@ -1011,8 +1076,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         """Ask for a filename and export the psyplot project as .pkl file."""
         if self.sp is not None:
             fname, ok = QtWidgets.QFileDialog.getSaveFileName(
-                self, "Export project", os.getcwd(),
-                "Psyplot projects (*.pkl)")
+                self, "Export project", os.getcwd(), "Psyplot projects (*.pkl)"
+            )
             if ok:
                 self.sp.save_project(fname)
 
@@ -1023,8 +1088,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         """
         if self.sp is not None:
             fname, ok = QtWidgets.QFileDialog.getSaveFileName(
-                self, "Export project", os.getcwd(),
-                "Psyplot projects (*.pkl)")
+                self, "Export project", os.getcwd(), "Psyplot projects (*.pkl)"
+            )
             if ok:
                 self.sp.save_project(fname, ds_description={"ds"})
 
@@ -1105,19 +1170,23 @@ class DatasetWidget(QtWidgets.QSplitter):
             return getattr(self.ds.psy.plot, self.plotmethod)
         else:
             raise ValueError(
-                "No dataset has yet been selected, so no plot method!")
+                "No dataset has yet been selected, so no plot method!"
+            )
 
     @property
     def plot_options(self) -> Dict[str, Any]:
         """Get further keyword arguments for the :attr:`plot` function."""
         if self.ds is not None:
             ret: Dict[str, Any] = self.plotmethod_widget.get_fmts(  # type: ignore
-                self.ds.psy[self.variable], True)
+                self.ds.psy[self.variable], True
+            )
             preset = self.preset
             if preset:
                 import psyplot.project as psy
+
                 preset = psy.Project.extract_fmts_from_preset(
-                    preset, self.plotmethod)
+                    preset, self.plotmethod
+                )
                 ret.update(dict(preset))
             return ret
         return {}
@@ -1129,8 +1198,14 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     @plotmethod.setter
     def plotmethod(self, label: str):
-        i = next((i for i in range(self.plot_tabs.count())
-                  if self.plot_tabs.tabText(i) == label), None)
+        i = next(
+            (
+                i
+                for i in range(self.plot_tabs.count())
+                if self.plot_tabs.tabText(i) == label
+            ),
+            None,
+        )
         if i is not None:
             self.plot_tabs.setCurrentIndex(i)
 
@@ -1143,15 +1218,25 @@ class DatasetWidget(QtWidgets.QSplitter):
     def plotmethod_widget(self) -> PlotMethodWidget:
         """Get widget of the current plotmethod."""
         label = self.plotmethod
-        i = next((i for i in range(self.plot_tabs.count())
-                  if self.plot_tabs.tabText(i) == label), None)
+        i = next(
+            (
+                i
+                for i in range(self.plot_tabs.count())
+                if self.plot_tabs.tabText(i) == label
+            ),
+            None,
+        )
         return self.plot_tabs.widget(i)
 
     @property
     def plotmethod_widgets(self) -> Dict[str, PlotMethodWidget]:
         """Get a list of available plotmethod widgets."""
-        return dict(zip(self.plotmethods, map(self.plot_tabs.widget,
-                                              range(self.plot_tabs.count()))))
+        return dict(
+            zip(
+                self.plotmethods,
+                map(self.plot_tabs.widget, range(self.plot_tabs.count())),
+            )
+        )
 
     _sp = None
 
@@ -1162,8 +1247,7 @@ class DatasetWidget(QtWidgets.QSplitter):
         return self.filter_sp(sp)
 
     def filter_sp(self, sp: Project, ds_only: bool = False) -> Project:
-        """Filter the psyplot project to only include the arrays of :attr:`ds`
-        """
+        """Filter the psyplot project to only include the arrays of :attr:`ds`"""
         if self._new_plot:
             return None
         if self.ds is None:
@@ -1171,8 +1255,8 @@ class DatasetWidget(QtWidgets.QSplitter):
         num = self.ds.psy.num
         ret = sp[:0]
         for i in range(len(sp)):
-            if list(sp[i:i+1].datasets) == [num]:
-                ret += sp[i:i+1]
+            if list(sp[i : i + 1].datasets) == [num]:
+                ret += sp[i : i + 1]
         if ds_only:
             return ret
         arr_name = self.arr_name
@@ -1192,8 +1276,11 @@ class DatasetWidget(QtWidgets.QSplitter):
         """
         if self.ds is not None:
             name, ok = QtWidgets.QInputDialog.getItem(
-                self, 'New plot', 'Select a variable',
-                self.plotmethod_widget.valid_variables(self.ds))
+                self,
+                "New plot",
+                "Select a variable",
+                self.plotmethod_widget.valid_variables(self.ds),
+            )
             if not ok:
                 return
             with self.silence_variable_buttons():
@@ -1218,8 +1305,9 @@ class DatasetWidget(QtWidgets.QSplitter):
 
     @sp.setter
     def sp(self, sp: Optional[Project]):
-        if sp is None and (not self._sp or not getattr(
-                self._sp, self.plotmethod)):
+        if sp is None and (
+            not self._sp or not getattr(self._sp, self.plotmethod)
+        ):
             pass
         else:
             # first remove the current arrays
@@ -1278,11 +1366,14 @@ class DatasetWidget(QtWidgets.QSplitter):
         if plotmethod not in plotmethods:
             if not plotmethods:
                 QtWidgets.QMessageBox.critical(
-                    self, "Visualization impossible",
-                    f"Found no plotmethod for variable {self.variable}")
+                    self,
+                    "Visualization impossible",
+                    f"Found no plotmethod for variable {self.variable}",
+                )
                 return
             plotmethod, ok = QtWidgets.QInputDialog.getItem(
-                self, "Choose a plot method", "Plot method:", plotmethods)
+                self, "Choose a plot method", "Plot method:", plotmethods
+            )
             if not ok:
                 return
             self.plotmethod = plotmethod
@@ -1311,7 +1402,8 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.sp = sp = self.plot(name=self.variable, **self.plot_options)
             self._preset = None
             cid = sp.plotters[0].ax.figure.canvas.mpl_connect(
-                'button_press_event', self.display_line)
+                "button_press_event", self.display_line
+            )
             self.cids[self.plotmethod] = cid
             self.show_fig(sp)
             descr = sp[0].psy._short_info()
@@ -1336,31 +1428,37 @@ class DatasetWidget(QtWidgets.QSplitter):
             return
         else:
             sl = None
-            for widget in map(self.plot_tabs.widget,
-                              range(self.plot_tabs.count())):
+            for widget in map(
+                self.plot_tabs.widget, range(self.plot_tabs.count())
+            ):
                 if widget.sp and event.inaxes == widget.plotter.ax:
                     sl = widget.get_slice(event.xdata, event.ydata)
                     break
             variable = widget.data.name
             raw_data = widget.data.psy.base.psy[variable]
-            if (sl is None or widget.plotmethod not in ['mapplot', 'plot2d'] or
-                raw_data.ndim == 2 or
-                widget.plotter.ax.figure.canvas.manager.toolbar.mode != ''):
+            if (
+                sl is None
+                or widget.plotmethod not in ["mapplot", "plot2d"]
+                or raw_data.ndim == 2
+                or widget.plotter.ax.figure.canvas.manager.toolbar.mode != ""
+            ):
                 return
             # check if the mappable contains the event
             if not self.plotter.plot.mappable.contains(event)[0] and (
-                    not hasattr(self.plotter.plot, '_wrapped_plot') or
-                    not self.plotter.plot._wrapped_plot.contains(event)[0]):
+                not hasattr(self.plotter.plot, "_wrapped_plot")
+                or not self.plotter.plot._wrapped_plot.contains(event)[0]
+            ):
                 return
             current_pm = self.plotmethod
-            self.plotmethod = 'lineplot'
+            self.plotmethod = "lineplot"
             linewidget = self.plotmethod_widget
             xdim = linewidget.xdim
             if xdim is None:
                 xdim = self.combo_dims.currentText()
 
-            if not linewidget.sp or (linewidget.xdim and
-                                     linewidget.xdim not in raw_data.dims):
+            if not linewidget.sp or (
+                linewidget.xdim and linewidget.xdim not in raw_data.dims
+            ):
                 with self.silence_variable_buttons():
                     for v, btn in self.variable_buttons.items():
                         btn.setChecked(v == variable)
@@ -1370,7 +1468,6 @@ class DatasetWidget(QtWidgets.QSplitter):
                 linewidget.xdim = xdim
                 linewidget.add_line(variable, **sl)
             self.plotmethod = current_pm
-
 
     def close_sp(self) -> None:
         """Close the current subproject."""
@@ -1442,7 +1539,8 @@ class DatasetWidget(QtWidgets.QSplitter):
                     else:
                         idx_arr = 0
                     self.ds = list(
-                        all_arrays[idx_arr:idx_arr+1].datasets.values())[0]
+                        all_arrays[idx_arr : idx_arr + 1].datasets.values()
+                    )[0]
                     if self.ds is not current_ds:
                         with self.block_tree():
                             self.expand_ds_item(self.ds_item)
@@ -1477,7 +1575,6 @@ class DatasetWidget(QtWidgets.QSplitter):
             self.btn_del.setEnabled(False)
             self.btn_export.setEnabled(False)
 
-
         # refresh variable buttons
         with self.silence_variable_buttons():
             for v, btn in self.variable_buttons.items():
@@ -1508,18 +1605,21 @@ class DatasetWidget(QtWidgets.QSplitter):
             table.setVerticalHeaderLabels(ds_data.dims)
 
             # set time, z, x, y info
-            for c in 'XYTZ':
+            for c in "XYTZ":
                 cname = ds_data.psy.get_dim(c)
                 if cname and cname in dims:
                     table.setItem(
-                        dims.index(cname), 0, QtWidgets.QTableWidgetItem(c))
+                        dims.index(cname), 0, QtWidgets.QTableWidgetItem(c)
+                    )
 
             for i, dim in enumerate(dims):
                 coord = self.ds[dim]
-                if 'units' in coord.attrs:
+                if "units" in coord.attrs:
                     table.setItem(
-                        i, 4, QtWidgets.QTableWidgetItem(
-                            str(coord.attrs['units'])))
+                        i,
+                        4,
+                        QtWidgets.QTableWidgetItem(str(coord.attrs["units"])),
+                    )
                 try:
                     coord = list(map("{:1.4f}".format, coord.values))  # type: ignore
                 except (ValueError, TypeError):
@@ -1531,22 +1631,21 @@ class DatasetWidget(QtWidgets.QSplitter):
                         coord = [t.isoformat() for t in coord]  # type: ignore
                 first = coord[0]
                 last = coord[-1]
-                table.setItem(
-                    i, 1, QtWidgets.QTableWidgetItem(first))
-                table.setItem(
-                    i, 3, QtWidgets.QTableWidgetItem(last))
+                table.setItem(i, 1, QtWidgets.QTableWidgetItem(first))
+                table.setItem(i, 3, QtWidgets.QTableWidgetItem(last))
 
                 current = data.psy.idims.get(dim)
                 if current is not None and isinstance(current, int):
                     table.setCellWidget(
-                        i, 2, self.new_dimension_button(dim, coord[current]))
+                        i, 2, self.new_dimension_button(dim, coord[current])
+                    )
 
             # update animation checkbox
             dims_to_animate = get_dims_to_iterate(data)
 
-            current_dims_to_animate = list(map(
-                self.combo_dims.itemText,
-                range(self.combo_dims.count())))
+            current_dims_to_animate = list(
+                map(self.combo_dims.itemText, range(self.combo_dims.count()))
+            )
             if dims_to_animate != current_dims_to_animate:
                 self.combo_dims.clear()
                 self.combo_dims.addItems(dims_to_animate)
@@ -1560,16 +1659,20 @@ class DatasetWidget(QtWidgets.QSplitter):
                     if DatasetTree.is_variable(child):
                         plots_item = ds_item.get_plots_item(child)
                         ds_item.refresh_plots_item(
-                            plots_item, child.text(0), self._sp, self.sp)
+                            plots_item, child.text(0), self._sp, self.sp
+                        )
 
     def new_dimension_button(
-            self, dim: Hashable, label: Any) -> utils.QRightPushButton:
+        self, dim: Hashable, label: Any
+    ) -> utils.QRightPushButton:
         """Generate a new button to increase of decrease a dimension."""
         btn = utils.QRightPushButton(label)
         btn.clicked.connect(self.increase_dim(str(dim)))
         btn.rightclicked.connect(self.increase_dim(str(dim), -1))
-        btn.setToolTip(f"Increase dimension {dim} with left-click, and "
-                       "decrease with right-click.")
+        btn.setToolTip(
+            f"Increase dimension {dim} with left-click, and "
+            "decrease with right-click."
+        )
         return btn
 
     def update_project(self, *args, **kwargs) -> None:
@@ -1589,12 +1692,16 @@ class DatasetWidget(QtWidgets.QSplitter):
         increase: int
             The number of steps to increase (or decrease) the given `dim`.
         """
+
         def update():
             i = self.data.psy.idims[dim]
-            self.data.psy.update(dims={dim: (i+increase) % self.ds.dims[dim]})
+            self.data.psy.update(
+                dims={dim: (i + increase) % self.ds.dims[dim]}
+            )
             if self.data.psy.plotter is None:
                 self.sp.update(replot=True)
             self.refresh()
+
         return update
 
 
@@ -1617,19 +1724,21 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
     """
 
     #: The title of the widget
-    title = 'psy-view Dataset viewer'
+    title = "psy-view Dataset viewer"
 
     #: Display the dock widget at the right side of the GUI
     dock_position = Qt.RightDockWidgetArea
 
     def __init__(self, *args, **kwargs):
         import psyplot.project as psy
+
         super().__init__(*args, **kwargs)
         psy.Project.oncpchange.connect(self.oncpchange)
 
     @property  # type: ignore
     def _sp(self) -> Project:  # type: ignore
         import psyplot.project as psy
+
         return psy.gcp(True)
 
     @_sp.setter
@@ -1647,7 +1756,6 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
         if sp is None or not current:
             return
         elif getattr(current, self.plotmethod, []):
-
             if len(current) == 1 and len(sp) == 1:
                 pass
             # first remove the current arrays
@@ -1685,10 +1793,12 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
         if not all(self._sp.dsnames_map.values()):
             # we have datasets that only exist in memory, so better ask
             answer = QtWidgets.QMessageBox.question(
-                self, "Shall I close this?",
+                self,
+                "Shall I close this?",
                 "Reloading the data closes all open plots. Any data in the memory "
                 "is lost and open files are reloaded from disk! "
-                "Shall I really continue?")
+                "Shall I really continue?",
+            )
             if answer != QtWidgets.QMessageBox.Yes:
                 return
 
@@ -1722,6 +1832,7 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
     def show_fig(self, sp: Optional[Project]) -> None:
         """Show the figure of the the current subproject."""
         from psyplot_gui.main import mainwindow
+
         super().show_fig(sp)
         if mainwindow.figures and sp:
             try:
@@ -1738,11 +1849,14 @@ class DatasetWidgetPlugin(DatasetWidget, DockMixin):
         """
         self.ds_tree = tree = DatasetTree()
         tree.setColumnCount(len(self.ds_attr_columns) + 1)
-        tree.setHeaderLabels([''] + self.ds_attr_columns)
+        tree.setHeaderLabels([""] + self.ds_attr_columns)
 
     def position_dock(self, main: MainWindow, *args, **kwargs) -> None:
         height = main.help_explorer.dock.size().height()
         main.splitDockWidget(main.help_explorer.dock, self.dock, Qt.Vertical)
-        if hasattr(main, 'resizeDocks'):  # qt >= 5.6
-            main.resizeDocks([main.help_explorer.dock, self.dock],
-                             [height // 2, height // 2], Qt.Vertical)
+        if hasattr(main, "resizeDocks"):  # qt >= 5.6
+            main.resizeDocks(
+                [main.help_explorer.dock, self.dock],
+                [height // 2, height // 2],
+                Qt.Vertical,
+            )
