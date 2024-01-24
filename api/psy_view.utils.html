@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psy_view.utils module &mdash; psy-view 0.1.0+6.gb2a6869 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <title>&lt;no title&gt; &mdash; psy-view  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nc-table-styles.css?v=d585f46f" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=a4552690" />
+      <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/design-tabs.js?v=36754332"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ToDos" href="../todo.html" />
-    <link rel="prev" title="psy_view.rcsetup module" href="psy_view.rcsetup.html" /> 
+    <link rel="next" title="Contribution and development hints" href="../contributing.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="psy_view.rcsetup.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -28,14 +34,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> psy-view
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            psy-view
           </a>
-              <div class="version">
-                0.1.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -43,22 +50,100 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#how-to-install">How to install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-using-conda">Installation using conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-using-pip">Installation using pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-from-source">Installation from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#required-dependencies">Required dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#running-the-tests">Running the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#building-the-docs">Building the docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#uninstallation-via-conda">Uninstallation via conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#uninstallation-via-pip">Uninstallation via pip</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#binder-examples">Binder examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started.html#uploading-your-own-data">Uploading your own data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#run-it-locally">Run it locally</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#starting-the-gui">Starting the GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#the-gui">The GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#resizing-the-gui-elements">Resizing the GUI elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#open-a-netcdf-file">Open a netCDF file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#view-the-dataset">View the dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#navigate-and-export">Navigate and export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-active-plot">Select the active plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-plot-method">Select the plot method</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../user-guide.html#mapplot">mapplot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-guide.html#plot2d">plot2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-guide.html#lineplot">lineplot</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-variables">Select the variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-dimensions">Select the dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#navigation-inside-the-plot">Navigation inside the plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#using-psy-view-within-the-psyplot-gui">Using psy-view within the psyplot GUI</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../ncview.html">psy-view vs. ncview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="psy_view.html">API Reference</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="psy_view.html#submodules">Submodules</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="psy_view.dialogs.html">psy_view.dialogs module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="psy_view.ds_widget.html">psy_view.ds_widget module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="psy_view.plotmethods.html">psy_view.plotmethods module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="psy_view.rcsetup.html">psy_view.rcsetup module</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">psy_view.utils module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#named-arguments">Named Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="psy_view.html">psy_view package</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="psy_view.html#psy_view.get_parser"><code class="docutils literal notranslate"><span class="pre">get_parser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.html#psy_view.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="psy_view.html#psy_view.start_app"><code class="docutils literal notranslate"><span class="pre">start_app()</span></code></a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="psy_view.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="psy_view.dialogs.html"><code class="docutils literal notranslate"><span class="pre">BasemapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.dialogs.html#psy_view.dialogs.CmapDialog"><code class="docutils literal notranslate"><span class="pre">CmapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.dialogs.html#psy_view.dialogs.Color"><code class="docutils literal notranslate"><span class="pre">Color</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.dialogs.html#psy_view.dialogs.FakePlotter"><code class="docutils literal notranslate"><span class="pre">FakePlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.dialogs.html#psy_view.dialogs.LSM_T"><code class="docutils literal notranslate"><span class="pre">LSM_T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.dialogs.html#psy_view.dialogs.LabelDialog"><code class="docutils literal notranslate"><span class="pre">LabelDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.dialogs.html#psy_view.dialogs.LabelWidgetLine"><code class="docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.ds_widget.html"><code class="docutils literal notranslate"><span class="pre">DatasetWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.ds_widget.html#psy_view.ds_widget.get_dims_to_iterate"><code class="docutils literal notranslate"><span class="pre">get_dims_to_iterate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.plotmethods.html"><code class="docutils literal notranslate"><span class="pre">GridCell</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.plotmethods.html#psy_view.plotmethods.PlotType"><code class="docutils literal notranslate"><span class="pre">PlotType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.plotmethods.html#psy_view.plotmethods.QHLine"><code class="docutils literal notranslate"><span class="pre">QHLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.plotmethods.html#psy_view.plotmethods.projection_map"><code class="docutils literal notranslate"><span class="pre">projection_map</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="psy_view.rcsetup.html"><code class="docutils literal notranslate"><span class="pre">PsyViewRcParams</span></code></a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">QRightPushButton</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#psy_view.utils.add_pushbutton"><code class="docutils literal notranslate"><span class="pre">add_pushbutton()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#psy_view.utils.get_icon"><code class="docutils literal notranslate"><span class="pre">get_icon()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution and development hints</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../todo.html">ToDos</a></li>
 </ul>
 
@@ -75,9 +160,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="psy_view.html">API Reference</a> &raquo;</li>
-      <li>psy_view.utils module</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="psy_view.html">psy_view package</a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/api/psy_view.utils.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,15 +173,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-psy_view.utils">
-<span id="psy-view-utils-module"></span><h1>psy_view.utils module<a class="headerlink" href="#module-psy_view.utils" title="Permalink to this headline"></a></h1>
-<p>Utility functions for psy-view.</p>
+  <p id="module-psy_view.utils">Utility functions for psy-view.</p>
 <p><strong>Classes:</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.utils.QRightPushButton" title="psy_view.utils.QRightPushButton"><code class="xref py py-obj docutils literal notranslate"><span class="pre">QRightPushButton</span></code></a></p></td>
 <td><p>A push button that acts differently when right-clicked</p></td>
@@ -103,11 +183,7 @@
 </tbody>
 </table>
 <p><strong>Functions:</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.utils.add_pushbutton" title="psy_view.utils.add_pushbutton"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_pushbutton</span></code></a>(label[, connections, ...])</p></td>
 <td><p></p></td>
@@ -119,27 +195,19 @@
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="psy_view.utils.QRightPushButton">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">psy_view.utils.</span></span><span class="sig-name descname"><span class="pre">QRightPushButton</span></span><a class="reference internal" href="../_modules/psy_view/utils.html#QRightPushButton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.QRightPushButton" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">PyQt5.QtWidgets.QPushButton</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">psy_view.utils.</span></span><span class="sig-name descname"><span class="pre">QRightPushButton</span></span><a class="reference internal" href="../_modules/psy_view/utils.html#QRightPushButton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.QRightPushButton" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QPushButton</span></code></p>
 <p>A push button that acts differently when right-clicked</p>
 <p><strong>Methods:</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.utils.QRightPushButton.mousePressEvent" title="psy_view.utils.QRightPushButton.mousePressEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mousePressEvent</span></code></a>(self, QMouseEvent)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.utils.QRightPushButton.mousePressEvent" title="psy_view.utils.QRightPushButton.mousePressEvent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mousePressEvent</span></code></a>(self, e)</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
 <p><strong>Attributes:</strong></p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
+<table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.utils.QRightPushButton.rightclicked" title="psy_view.utils.QRightPushButton.rightclicked"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rightclicked</span></code></a>(*args, **kwargs)</p></td>
 <td><p></p></td>
@@ -148,46 +216,65 @@
 </table>
 <dl class="py method">
 <dt class="sig sig-object py" id="psy_view.utils.QRightPushButton.mousePressEvent">
-<span class="sig-name descname"><span class="pre">mousePressEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QMouseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/utils.html#QRightPushButton.mousePressEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.QRightPushButton.mousePressEvent" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">mousePressEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QMouseEvent</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/utils.html#QRightPushButton.mousePressEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.QRightPushButton.mousePressEvent" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="psy_view.utils.QRightPushButton.rightclicked">
-<span class="sig-name descname"><span class="pre">rightclicked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#psy_view.utils.QRightPushButton.rightclicked" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rightclicked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#psy_view.utils.QRightPushButton.rightclicked" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="psy_view.utils.add_pushbutton">
-<span class="sig-prename descclassname"><span class="pre">psy_view.utils.</span></span><span class="sig-name descname"><span class="pre">add_pushbutton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">connections</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">Callable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tooltip</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">PyQt5.QtWidgets.QLayout</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icon</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolbutton</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">PyQt5.QtWidgets.QPushButton</span><span class="p"><span class="pre">,</span> </span><span class="pre">PyQt5.QtWidgets.QToolButton</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/psy_view/utils.html#add_pushbutton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.add_pushbutton" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">psy_view.utils.</span></span><span class="sig-name descname"><span class="pre">add_pushbutton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">connections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tooltip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">QLayout</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">icon</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toolbutton</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">QPushButton</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">QToolButton</span></span></span><a class="reference internal" href="../_modules/psy_view/utils.html#add_pushbutton"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.add_pushbutton" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="psy_view.utils.get_icon">
-<span class="sig-prename descclassname"><span class="pre">psy_view.utils.</span></span><span class="sig-name descname"><span class="pre">get_icon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'.png'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/psy_view/utils.html#get_icon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.get_icon" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">psy_view.utils.</span></span><span class="sig-name descname"><span class="pre">get_icon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ending</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'.png'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/psy_view/utils.html#get_icon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.utils.get_icon" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
-</section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="psy_view.rcsetup.html" class="btn btn-neutral float-left" title="psy_view.rcsetup module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../todo.html" class="btn btn-neutral float-right" title="ToDos" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <!--
+SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+<footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="psy_view.rcsetup.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contribution and development hints" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum Geesthacht.</p>
+    <p>&#169; Copyright 2021-2024 Helmholtz-Zentrum hereon GmbH.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  
+
+<div class="footer">
+    <span class="creativecommons">
+    <a href="https://creativecommons.org/licenses/by/4.0/" >
+    <img style="height: 1.5em;" src="../_static/license_logo.png" border="0" alt="Creative Commons License"/>
+    </a>
+    This documentation is licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/">
+    CC-BY-4.0
+    </a>
+    </span>
+</div>
+
+
 
 </footer>
         </div>

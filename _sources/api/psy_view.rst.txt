@@ -1,5 +1,4 @@
-.. _api:
-API Reference
+psy\_view package
 =================
 
 .. automodule:: psy_view

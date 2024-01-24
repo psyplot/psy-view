@@ -1,6 +1,3 @@
-psy\_view.utils module
-======================
-
 .. automodule:: psy_view.utils
    :members:
    :undoc-members:

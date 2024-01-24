@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psy_view.dialogs &mdash; psy-view 0.1.0+6.gb2a6869 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  <title>psy_view.dialogs &mdash; psy-view  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nc-table-styles.css?v=d585f46f" />
+      <link rel="stylesheet" type="text/css" href="../../_static/theme_overrides.css?v=a4552690" />
+      <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/design-tabs.js?v=36754332"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -25,14 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> psy-view
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            psy-view
           </a>
-              <div class="version">
-                0.1.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -40,12 +47,100 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installing.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installing.html#how-to-install">How to install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installing.html#installation-using-conda">Installation using conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installing.html#installation-using-pip">Installation using pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installing.html#installation-from-source">Installation from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../installing.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installing.html#required-dependencies">Required dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../installing.html#running-the-tests">Running the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installing.html#building-the-docs">Building the docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installing.html#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installing.html#uninstallation-via-conda">Uninstallation via conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installing.html#uninstallation-via-pip">Uninstallation via pip</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started.html#binder-examples">Binder examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../getting-started.html#uploading-your-own-data">Uploading your own data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../getting-started.html#run-it-locally">Run it locally</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide.html">User guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../user-guide.html#starting-the-gui">Starting the GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user-guide.html#the-gui">The GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../user-guide.html#resizing-the-gui-elements">Resizing the GUI elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-guide.html#open-a-netcdf-file">Open a netCDF file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-guide.html#view-the-dataset">View the dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-guide.html#navigate-and-export">Navigate and export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-guide.html#select-the-active-plot">Select the active plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-guide.html#select-the-plot-method">Select the plot method</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../user-guide.html#mapplot">mapplot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../user-guide.html#plot2d">plot2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../user-guide.html#lineplot">lineplot</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-guide.html#select-the-variables">Select the variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../user-guide.html#select-the-dimensions">Select the dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../user-guide.html#navigation-inside-the-plot">Navigation inside the plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../user-guide.html#using-psy-view-within-the-psyplot-gui">Using psy-view within the psyplot GUI</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../ncview.html">psy-view vs. ncview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../command_line.html">Command line usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/psy_view.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../command_line.html">Command line usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../command_line.html#positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../command_line.html#named-arguments">Named Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/psy_view.html">psy_view package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/psy_view.html#psy_view.get_parser"><code class="docutils literal notranslate"><span class="pre">get_parser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/psy_view.html#psy_view.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/psy_view.html#psy_view.start_app"><code class="docutils literal notranslate"><span class="pre">start_app()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/psy_view.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.dialogs.html"><code class="docutils literal notranslate"><span class="pre">BasemapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog"><code class="docutils literal notranslate"><span class="pre">CmapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.dialogs.html#psy_view.dialogs.Color"><code class="docutils literal notranslate"><span class="pre">Color</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter"><code class="docutils literal notranslate"><span class="pre">FakePlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.dialogs.html#psy_view.dialogs.LSM_T"><code class="docutils literal notranslate"><span class="pre">LSM_T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog"><code class="docutils literal notranslate"><span class="pre">LabelDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.dialogs.html#psy_view.dialogs.LabelWidgetLine"><code class="docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.ds_widget.html"><code class="docutils literal notranslate"><span class="pre">DatasetWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.ds_widget.html#psy_view.ds_widget.get_dims_to_iterate"><code class="docutils literal notranslate"><span class="pre">get_dims_to_iterate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.plotmethods.html"><code class="docutils literal notranslate"><span class="pre">GridCell</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.PlotType"><code class="docutils literal notranslate"><span class="pre">PlotType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.QHLine"><code class="docutils literal notranslate"><span class="pre">QHLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.projection_map"><code class="docutils literal notranslate"><span class="pre">projection_map</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.rcsetup.html"><code class="docutils literal notranslate"><span class="pre">PsyViewRcParams</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.utils.html"><code class="docutils literal notranslate"><span class="pre">QRightPushButton</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.utils.html#psy_view.utils.add_pushbutton"><code class="docutils literal notranslate"><span class="pre">add_pushbutton()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/psy_view.utils.html#psy_view.utils.get_icon"><code class="docutils literal notranslate"><span class="pre">get_icon()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contribution and development hints</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../todo.html">ToDos</a></li>
 </ul>
 
@@ -62,10 +157,10 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-          <li><a href="../psy_view.html">psy_view</a> &raquo;</li>
-      <li>psy_view.dialogs</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+          <li class="breadcrumb-item"><a href="../psy_view.html">psy_view</a></li>
+      <li class="breadcrumb-item active">psy_view.dialogs</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -77,46 +172,22 @@
   <h1>Source code for psy_view.dialogs</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Dialogs for manipulating formatoptions.&quot;&quot;&quot;</span>
 
-<span class="c1"># Disclaimer</span>
-<span class="c1"># ----------</span>
+<span class="c1"># SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht</span>
+<span class="c1"># SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH</span>
 <span class="c1">#</span>
-<span class="c1"># Copyright (C) 2021 Helmholtz-Zentrum Hereon</span>
-<span class="c1"># Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht</span>
-<span class="c1">#</span>
-<span class="c1"># This file is part of psy-view and is released under the GNU LGPL-3.O license.</span>
-<span class="c1"># See COPYING and COPYING.LESSER in the root of the repository for full</span>
-<span class="c1"># licensing details.</span>
-<span class="c1">#</span>
-<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
-<span class="c1"># it under the terms of the GNU Lesser General Public License version 3.0 as</span>
-<span class="c1"># published by the Free Software Foundation.</span>
-<span class="c1">#</span>
-<span class="c1"># This program is distributed in the hope that it will be useful,</span>
-<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="c1"># GNU LGPL-3.0 license for more details.</span>
-<span class="c1">#</span>
-<span class="c1"># You should have received a copy of the GNU LGPL-3.0 license</span>
-<span class="c1"># along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
+<span class="c1"># SPDX-License-Identifier: LGPL-3.0-only</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">TYPE_CHECKING</span><span class="p">,</span>
-    <span class="n">Dict</span><span class="p">,</span>
-    <span class="n">Any</span><span class="p">,</span>
-    <span class="n">Optional</span><span class="p">,</span>
-    <span class="n">Tuple</span><span class="p">,</span>
-    <span class="n">Union</span><span class="p">,</span>
-    <span class="n">Type</span><span class="p">,</span>
-<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">TYPE_CHECKING</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">import</span> <span class="nn">yaml</span>
-<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtWidgets</span><span class="p">,</span> <span class="n">QtGui</span>
 <span class="kn">from</span> <span class="nn">matplotlib.backends.backend_qt5agg</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">FigureCanvasQTAgg</span> <span class="k">as</span> <span class="n">FigureCanvas</span><span class="p">)</span>
+    <span class="n">FigureCanvasQTAgg</span> <span class="k">as</span> <span class="n">FigureCanvas</span><span class="p">,</span>
+<span class="p">)</span>
 <span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span>
-
-<span class="kn">from</span> <span class="nn">psyplot.plotter</span> <span class="kn">import</span> <span class="n">Plotter</span><span class="p">,</span> <span class="n">Formatoption</span>
+<span class="kn">from</span> <span class="nn">psyplot.plotter</span> <span class="kn">import</span> <span class="n">Formatoption</span><span class="p">,</span> <span class="n">Plotter</span>
+<span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWidgets</span>
 
 <span class="k">if</span> <span class="n">TYPE_CHECKING</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">psyplot.project</span> <span class="kn">import</span> <span class="n">Project</span>
@@ -130,26 +201,29 @@
 <span class="n">LSM_T</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="BasemapDialog"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog">[docs]</a><span class="k">class</span> <span class="nc">BasemapDialog</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A dialog to modify the basemap settings.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BasemapDialog">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog">[docs]</a>
+<span class="k">class</span> <span class="nc">BasemapDialog</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A dialog to modify the basemap settings.&quot;&quot;&quot;</span>
 
     <span class="n">xgrid_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span>
     <span class="n">ygrid_value</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        plotter: psy_maps.plotters.MapPlotter</span>
 <span class="sd">            The psyplot plotter to configure</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">import</span> <span class="nn">psy_simple.widgets.colors</span> <span class="k">as</span> <span class="nn">pswc</span>
         <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+        <span class="kn">import</span> <span class="nn">psy_simple.widgets.colors</span> <span class="k">as</span> <span class="nn">pswc</span>
+
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">vbox</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="c1">#: colors that affect the map background</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">,</span> <span class="s1">&#39;land&#39;</span><span class="p">,</span> <span class="s1">&#39;ocean&#39;</span><span class="p">,</span> <span class="s1">&#39;coast&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;background&quot;</span><span class="p">,</span> <span class="s2">&quot;land&quot;</span><span class="p">,</span> <span class="s2">&quot;ocean&quot;</span><span class="p">,</span> <span class="s2">&quot;coast&quot;</span><span class="p">]</span>
 
         <span class="c1">#: QGridLayout to display the various colors</span>
         <span class="n">grid</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGridLayout</span><span class="p">()</span>
@@ -158,7 +232,8 @@
 
         <span class="c1">#: :class:`pandas.DataFrame` of widgets to modifiy the :attr:`colors`</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span> <span class="o">=</span> <span class="n">widgets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-            <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;enable&#39;</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+            <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;enable&quot;</span><span class="p">,</span> <span class="s2">&quot;color&quot;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span>
+        <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colors</span><span class="p">):</span>
             <span class="n">widgets</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cb</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QCheckBox</span><span class="p">()</span>
@@ -177,7 +252,8 @@
         <span class="c1">#: Button box to cancel the operator or update the plotter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="p">(</span>
             <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span> <span class="o">|</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">,</span>
-            <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
@@ -187,23 +263,23 @@
 
         <span class="c1">#: text box for the central longitude (clon formatoption)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s1">&#39;Central longitude in degrees East&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Central longitude in degrees East&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="o">-</span><span class="mi">360</span><span class="p">,</span> <span class="mi">360</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s1">&#39;Central longitude: &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Central longitude: &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="p">)</span>
 
         <span class="c1">#: text box for the central latitude (clat formatoption)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s1">&#39;Central latitude in degrees North&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="o">.</span><span class="n">setPlaceholderText</span><span class="p">(</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Central latitude in degrees North&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="o">.</span><span class="n">setValidator</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDoubleValidator</span><span class="p">(</span><span class="o">-</span><span class="mi">90</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
-        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s1">&#39;Central latitude: &#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="p">)</span>
+        <span class="n">layout</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="s2">&quot;Central latitude: &quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="p">)</span>
 
         <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">proj_box</span><span class="p">)</span>
 
         <span class="c1">#: group box for modifying the resolution of the land-sea-mask, see</span>
         <span class="c1">#: :attr:`opt_110m`, :attr:`opt_50m`, :attr:`opt_10m`</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lsm_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s1">&#39;Coastlines&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lsm_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s2">&quot;Coastlines&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lsm_box</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">hbox</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lsm_box</span><span class="p">)</span>
         <span class="n">hbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Resolution:&quot;</span><span class="p">))</span>
@@ -223,9 +299,10 @@
         <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lsm_box</span><span class="p">)</span>
 
         <span class="c1">#: group box drawing grid lines and labels</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">grid_labels_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s1">&#39;Labels&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">grid_labels_box</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Draw labels of meridionals and &quot;</span>
-                                        <span class="s2">&quot;parallels&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_labels_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s2">&quot;Labels&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_labels_box</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span>
+            <span class="s2">&quot;Draw labels of meridionals and &quot;</span> <span class="s2">&quot;parallels&quot;</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">grid_labels_box</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1">#: text box for the fontsize of grid labels</span>
@@ -239,7 +316,7 @@
         <span class="c1">#: Group box for options specific to meridionals (see</span>
         <span class="c1">#: :attr:`opt_meri_auto`, :attr:`opt_meri_at` and</span>
         <span class="c1">#: :attr:`opt_meri_every`, :attr:`opt_meri_num`)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">meridionals_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s1">&#39;Meridionals&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meridionals_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s2">&quot;Meridionals&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">meridionals_box</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1">#: Radiobutton for automatic drawing of meridionals</span>
@@ -286,7 +363,7 @@
         <span class="c1">#: Group box for options specific to parallels (see</span>
         <span class="c1">#: :attr:`opt_para_auto`, :attr:`opt_para_at` and</span>
         <span class="c1">#: :attr:`opt_para_every`, :attr:`opt_para_num`)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parallels_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s1">&#39;Parallels&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parallels_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s2">&quot;Parallels&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parallels_box</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="c1">#: Radiobutton for automatic drawing of parallels</span>
@@ -334,26 +411,35 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">fill_from_plotter</span><span class="p">(</span><span class="n">plotter</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_at</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_auto</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_num</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_every</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_at</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_auto</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_num</span><span class="p">,</span>
-                       <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_every</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_at</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_auto</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_num</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_every</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_at</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_auto</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_num</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_every</span><span class="p">,</span>
+        <span class="p">]:</span>
             <span class="n">button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_forms</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">default_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Color</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Get default colors for the color labels in :attr:`widgets`.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get default colors for the color labels in :attr:`widgets`.&quot;&quot;&quot;</span>
         <span class="kn">import</span> <span class="nn">cartopy.feature</span> <span class="k">as</span> <span class="nn">cf</span>
         <span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s1">&#39;background&#39;</span><span class="p">:</span> <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.facecolor&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;land&#39;</span><span class="p">:</span> <span class="n">cf</span><span class="o">.</span><span class="n">LAND</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">[</span><span class="s1">&#39;facecolor&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;ocean&#39;</span><span class="p">:</span> <span class="n">cf</span><span class="o">.</span><span class="n">OCEAN</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">[</span><span class="s1">&#39;facecolor&#39;</span><span class="p">],</span>
-            <span class="s1">&#39;coast&#39;</span><span class="p">:</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span>
-            <span class="p">}</span>
 
-<div class="viewcode-block" id="BasemapDialog.get_colors"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.get_colors">[docs]</a>    <span class="k">def</span> <span class="nf">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Color</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Get the colors for :attr:`widgets` from the plotter formatoptions.</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;background&quot;</span><span class="p">:</span> <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;axes.facecolor&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;land&quot;</span><span class="p">:</span> <span class="n">cf</span><span class="o">.</span><span class="n">LAND</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">[</span><span class="s2">&quot;facecolor&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;ocean&quot;</span><span class="p">:</span> <span class="n">cf</span><span class="o">.</span><span class="n">OCEAN</span><span class="o">.</span><span class="n">_kwargs</span><span class="p">[</span><span class="s2">&quot;facecolor&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;coast&quot;</span><span class="p">:</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="BasemapDialog.get_colors">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.get_colors">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_colors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Color</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the colors for :attr:`widgets` from the plotter formatoptions.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -367,16 +453,19 @@
 <span class="sd">            color in the `plotter`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">if</span> <span class="n">plotter</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="s1">&#39;rc&#39;</span><span class="p">:</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">if</span> <span class="n">plotter</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="s2">&quot;rc&quot;</span><span class="p">:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;background&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">background</span><span class="o">.</span><span class="n">value</span>
         <span class="n">lsm</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">lsm</span><span class="o">.</span><span class="n">value</span>
-        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;land&#39;</span><span class="p">,</span> <span class="s1">&#39;ocean&#39;</span><span class="p">,</span> <span class="s1">&#39;coast&#39;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;land&quot;</span><span class="p">,</span> <span class="s2">&quot;ocean&quot;</span><span class="p">,</span> <span class="s2">&quot;coast&quot;</span><span class="p">]:</span>
             <span class="k">if</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">lsm</span><span class="p">:</span>
                 <span class="n">ret</span><span class="p">[</span><span class="n">part</span><span class="p">]</span> <span class="o">=</span> <span class="n">lsm</span><span class="p">[</span><span class="n">part</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">ret</span></div>
 
-<div class="viewcode-block" id="BasemapDialog.fill_from_plotter"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.fill_from_plotter">[docs]</a>    <span class="k">def</span> <span class="nf">fill_from_plotter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Fill the dialog from a given plotter.</span>
+
+<div class="viewcode-block" id="BasemapDialog.fill_from_plotter">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.fill_from_plotter">[docs]</a>
+    <span class="k">def</span> <span class="nf">fill_from_plotter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fill the dialog from a given plotter.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -403,8 +492,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">lsm</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">lsm_box</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">res</span> <span class="o">=</span> <span class="n">lsm</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span>
-            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;opt_&#39;</span> <span class="o">+</span> <span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">lsm</span><span class="p">[</span><span class="s2">&quot;res&quot;</span><span class="p">]</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;opt_&quot;</span> <span class="o">+</span> <span class="n">res</span><span class="p">)</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
 
         <span class="n">grid_labels</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">grid_labels</span><span class="o">.</span><span class="n">value</span>
         <span class="k">if</span> <span class="n">grid_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -429,7 +518,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_num</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">steps</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_at</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_at</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_at</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">)))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ygrid_value</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">ygrid</span><span class="o">.</span><span class="n">value</span>
@@ -448,11 +537,13 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">steps</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_at</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_at</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">)))</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_at</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">)))</span></div>
 
-<div class="viewcode-block" id="BasemapDialog.update_forms"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.update_forms">[docs]</a>    <span class="k">def</span> <span class="nf">update_forms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Update text widgets for the options to draw merdionals and parallels.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BasemapDialog.update_forms">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.update_forms">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_forms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update text widgets for the options to draw merdionals and parallels.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">meridionals_box</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_at</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_at</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_every</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_every</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
@@ -462,40 +553,48 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_every</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_para_every</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_para_num</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span></div>
 
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Get the formatoptions of this dialog to update a plotter.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the formatoptions of this dialog to update a plotter.&quot;&quot;&quot;</span>
         <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
         <span class="n">ret</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;clon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-        <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;clat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;clon&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="kc">None</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_clon</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="p">)</span>
+        <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;clat&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="kc">None</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_clat</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="p">)</span>
 
         <span class="n">lsm</span><span class="p">:</span> <span class="n">LSM_T</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;land&#39;</span><span class="p">,</span> <span class="s1">&#39;ocean&#39;</span><span class="p">,</span> <span class="s1">&#39;coast&#39;</span><span class="p">]:</span>
-            <span class="n">lbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;land&quot;</span><span class="p">,</span> <span class="s2">&quot;ocean&quot;</span><span class="p">,</span> <span class="s2">&quot;coast&quot;</span><span class="p">]:</span>
+            <span class="n">lbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">lbl</span><span class="o">.</span><span class="n">isEnabled</span><span class="p">():</span>
                 <span class="n">lsm</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">lbl</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">getRgbF</span><span class="p">())</span>
 
         <span class="k">if</span> <span class="n">lsm</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">lsm_box</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_110m</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-                <span class="n">lsm</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;110m&#39;</span>
+                <span class="n">lsm</span><span class="p">[</span><span class="s2">&quot;res&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;110m&quot;</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_50m</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-                <span class="n">lsm</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;50m&#39;</span>
+                <span class="n">lsm</span><span class="p">[</span><span class="s2">&quot;res&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;50m&quot;</span>
             <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_10m</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-                <span class="n">lsm</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;10m&#39;</span>
+                <span class="n">lsm</span><span class="p">[</span><span class="s2">&quot;res&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;10m&quot;</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">lsm</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;110m&#39;</span>
+                <span class="n">lsm</span><span class="p">[</span><span class="s2">&quot;res&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;110m&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">lsm</span><span class="p">[</span><span class="s1">&#39;res&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">lsm</span><span class="p">[</span><span class="s2">&quot;res&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="n">lsm</span><span class="p">:</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;lsm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lsm</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;lsm&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">lsm</span>
 
-        <span class="n">bc_lbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;background&#39;</span><span class="p">]</span>
+        <span class="n">bc_lbl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">widgets</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">,</span> <span class="s2">&quot;background&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">bc_lbl</span><span class="o">.</span><span class="n">isEnabled</span><span class="p">():</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">bc_lbl</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">getRgbF</span><span class="p">())</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;background&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">bc_lbl</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">getRgbF</span><span class="p">())</span>
 
         <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;grid_labels&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid_labels_box</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;grid_labels&quot;</span><span class="p">]:</span>
@@ -509,49 +608,61 @@
                 <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;grid_labelsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labelsize</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">meridionals_box</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;xgrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;xgrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_auto</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;xgrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;xgrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_every</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;xgrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span>
-                <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_every</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">30</span><span class="p">))</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;xgrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span>
+                <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_every</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">30</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_at</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;xgrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span>
-                <span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_at</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)))</span> <span class="ow">or</span> <span class="kc">False</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;xgrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_at</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)))</span> <span class="ow">or</span> <span class="kc">False</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_meri_num</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xgrid_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;xgrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rounded&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">)]</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;xgrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rounded&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">)]</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xgrid_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;xgrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">xgrid_value</span><span class="p">,</span>
-                                <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">)]</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;xgrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">xgrid_value</span><span class="p">,</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">),</span>
+                <span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;xgrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xgrid_value</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
-                    <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">),</span> <span class="p">)</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;xgrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">xgrid_value</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_meri_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">),</span>
+                <span class="p">)</span>
 
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallels_box</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;ygrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ygrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_auto</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;ygrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ygrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_every</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;ygrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span>
-                <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_para_every</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">30</span><span class="p">))</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ygrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span>
+                <span class="o">-</span><span class="mi">180</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_para_every</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">30</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_at</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
-            <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;ygrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span>
-                <span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_at</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)))</span> <span class="ow">or</span> <span class="kc">False</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ygrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_at</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)))</span> <span class="ow">or</span> <span class="kc">False</span>
+            <span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_num</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ygrid_value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;ygrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rounded&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">)]</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ygrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;rounded&quot;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">)]</span>
             <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ygrid_value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;ygrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ygrid_value</span><span class="p">,</span>
-                                <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">)]</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ygrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ygrid_value</span><span class="p">,</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">),</span>
+                <span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;ygrid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ygrid_value</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
-                    <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">),</span> <span class="p">)</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ygrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ygrid_value</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">),</span>
+                <span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span>
 
-<div class="viewcode-block" id="BasemapDialog.update_plotter"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.update_plotter">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="BasemapDialog.update_plotter">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.update_plotter">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">update_plotter</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Open a :class:`BasemapDialog` to update a plotter.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Open a :class:`BasemapDialog` to update a plotter.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -564,15 +675,18 @@
         <span class="n">dialog</span><span class="o">.</span><span class="n">activateWindow</span><span class="p">()</span>
         <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
-            <span class="n">plotter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-                <span class="o">**</span><span class="n">dialog</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div></div>
+            <span class="n">plotter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">dialog</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="CmapDialog"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog">[docs]</a><span class="k">class</span> <span class="nc">CmapDialog</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A dialog to modify color bounds and colormaps.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CmapDialog">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog">[docs]</a>
+<span class="k">class</span> <span class="nc">CmapDialog</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A dialog to modify color bounds and colormaps.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">:</span> <span class="n">Project</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        project: psyplot.project.Project</span>
@@ -580,46 +694,60 @@
 <span class="sd">            very first plotter in this project</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">import</span> <span class="nn">psy_simple.widgets.colors</span> <span class="k">as</span> <span class="nn">pswc</span>
+
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
         <span class="c1">#: Button box to accept or cancel this dialog</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="p">(</span>
             <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span> <span class="o">|</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">,</span>
-            <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
 
         <span class="c1">#: Mapping from formatoption key to :class:`LabelWidgetLine` widgets to</span>
         <span class="c1">#: controlling the formatoption</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">plotter</span> <span class="o">=</span> <span class="n">project</span><span class="p">(</span><span class="n">fmts</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;cmap&#39;</span><span class="p">,</span> <span class="s1">&#39;bounds&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plotters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">plotter</span> <span class="o">=</span> <span class="n">project</span><span class="p">(</span><span class="n">fmts</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;cmap&quot;</span><span class="p">,</span> <span class="s2">&quot;bounds&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">plotters</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
         <span class="c1">#: Widget for manipulating the color map</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmap_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span><span class="p">[</span><span class="s1">&#39;cmap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LabelWidgetLine</span><span class="p">(</span>
-            <span class="n">plotter</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">pswc</span><span class="o">.</span><span class="n">CMapFmtWidget</span><span class="p">,</span>
-            <span class="n">widget_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmap_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span><span class="p">[</span><span class="s2">&quot;cmap&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LabelWidgetLine</span><span class="p">(</span>
+            <span class="n">plotter</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span>
+            <span class="n">project</span><span class="p">,</span>
+            <span class="n">pswc</span><span class="o">.</span><span class="n">CMapFmtWidget</span><span class="p">,</span>
+            <span class="n">widget_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cmap_widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cmap_widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_preview</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_preview</span>
+        <span class="p">)</span>
 
         <span class="c1">#: tabs for switching between bounds (:attr:`bounds_widget`) and</span>
         <span class="c1">#: colorbar ticks (:attr:`cticks_widget`)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QTabWidget</span><span class="p">()</span>
 
         <span class="c1">#: :class:`LabelWidgetLine` to controll the colorbar bounds</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">bounds_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span><span class="p">[</span><span class="s1">&#39;bounds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LabelWidgetLine</span><span class="p">(</span>
-            <span class="n">plotter</span><span class="o">.</span><span class="n">bounds</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">pswc</span><span class="o">.</span><span class="n">BoundsFmtWidget</span><span class="p">,</span>
-            <span class="n">widget_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounds_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span><span class="p">[</span><span class="s2">&quot;bounds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LabelWidgetLine</span><span class="p">(</span>
+            <span class="n">plotter</span><span class="o">.</span><span class="n">bounds</span><span class="p">,</span>
+            <span class="n">project</span><span class="p">,</span>
+            <span class="n">pswc</span><span class="o">.</span><span class="n">BoundsFmtWidget</span><span class="p">,</span>
+            <span class="n">widget_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bounds_widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_preview</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_preview</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bounds_widget</span><span class="p">,</span> <span class="s2">&quot;Colormap boundaries&quot;</span><span class="p">)</span>
 
         <span class="c1">#: :class:`LabelWidgetLine` to controll the ctick positions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cticks_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span><span class="p">[</span><span class="s1">&#39;cticks&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LabelWidgetLine</span><span class="p">(</span>
-            <span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">pswc</span><span class="o">.</span><span class="n">CTicksFmtWidget</span><span class="p">,</span>
-            <span class="n">widget_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cticks_widget</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span><span class="p">[</span><span class="s2">&quot;cticks&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">LabelWidgetLine</span><span class="p">(</span>
+            <span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="p">,</span>
+            <span class="n">project</span><span class="p">,</span>
+            <span class="n">pswc</span><span class="o">.</span><span class="n">CTicksFmtWidget</span><span class="p">,</span>
+            <span class="n">widget_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cticks_widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">textChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_preview</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_preview</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="o">.</span><span class="n">addTab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cticks_widget</span><span class="p">,</span> <span class="s2">&quot;Colorbar ticks&quot;</span><span class="p">)</span>
 
         <span class="c1">#: :class:`ColorbarPreview` to show a preview of the colorbar with</span>
@@ -635,12 +763,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">plotter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Plotter</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Get the plotter with the formatoptions we use to fill this dialog.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the plotter with the formatoptions we use to fill this dialog.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bounds_widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">fmto</span><span class="o">.</span><span class="n">plotter</span>
 
-<div class="viewcode-block" id="CmapDialog.update_preview"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.update_preview">[docs]</a>    <span class="k">def</span> <span class="nf">update_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Update the :attr:`cbar_preview` from the various :attr:`fmt_widgets`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CmapDialog.update_preview">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.update_preview">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_preview</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the :attr:`cbar_preview` from the various :attr:`fmt_widgets`.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bounds_widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">value</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
@@ -654,26 +783,32 @@
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">cmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">cmap</span><span class="o">.</span><span class="n">value</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">cbar_preview</span><span class="o">.</span><span class="n">update_colorbar</span><span class="p">(</span>
-            <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">cticks</span><span class="o">=</span><span class="n">cticks</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span></div>
+            <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">cticks</span><span class="o">=</span><span class="n">cticks</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span>
+        <span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fmts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Map from formatoption in :attr:`fmt_widgets` to values.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Map from formatoption in :attr:`fmt_widgets` to values.&quot;&quot;&quot;</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">changed</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">value</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">value</span>
-                <span class="k">except</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fmt</span><span class="si">}</span><span class="s2">-value </span><span class="si">{</span><span class="n">widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2"> could &quot;</span>
-                                  <span class="s2">&quot;not be parsed to python!&quot;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fmt</span><span class="si">}</span><span class="s2">-value </span><span class="si">{</span><span class="n">widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2"> could &quot;</span>
+                        <span class="s2">&quot;not be parsed to python!&quot;</span>
+                    <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">ret</span><span class="p">[</span><span class="n">fmt</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">return</span> <span class="n">ret</span>
 
-<div class="viewcode-block" id="CmapDialog.update_project"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.update_project">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CmapDialog.update_project">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.update_project">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">update_project</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">project</span><span class="p">:</span> <span class="n">Project</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create a :class:`CmapDialog` to update a `project`</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a :class:`CmapDialog` to update a `project`</span>
 
 <span class="sd">        This classmethod creates a new :class:`CmapDialog` instance, fills it</span>
 <span class="sd">        with the formatoptions of the first plotter in `project`, enters the</span>
@@ -690,42 +825,53 @@
         <span class="n">dialog</span><span class="o">.</span><span class="n">activateWindow</span><span class="p">()</span>
         <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
-            <span class="n">project</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">dialog</span><span class="o">.</span><span class="n">fmts</span><span class="p">)</span></div></div>
+            <span class="n">project</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">dialog</span><span class="o">.</span><span class="n">fmts</span><span class="p">)</span></div>
+</div>
+
 
 
 <span class="k">class</span> <span class="nc">_DummyFormatOption</span><span class="p">(</span><span class="n">Formatoption</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Dummy formatoption for static type checking.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Dummy formatoption for static type checking.</span>
 
 <span class="sd">    This is just a workaround for the static type checker to be able to tell</span>
 <span class="sd">    what the :class:`FakePlotter` formatoptions are, used in</span>
 <span class="sd">    :attr:`ColorbarPreview.fake_plotter`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
+
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="k">pass</span>
 
 
-<div class="viewcode-block" id="FakePlotter"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter">[docs]</a><span class="k">class</span> <span class="nc">FakePlotter</span><span class="p">(</span><span class="n">Plotter</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A dummy plotter for the colorbar preview.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FakePlotter">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter">[docs]</a>
+<span class="k">class</span> <span class="nc">FakePlotter</span><span class="p">(</span><span class="n">Plotter</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A dummy plotter for the colorbar preview.&quot;&quot;&quot;</span>
 
-    <span class="n">bounds</span><span class="p">:</span> <span class="n">Formatoption</span> <span class="o">=</span> <span class="n">_DummyFormatOption</span><span class="p">(</span><span class="s1">&#39;bounds&#39;</span><span class="p">)</span>
-    <span class="n">cmap</span><span class="p">:</span> <span class="n">Formatoption</span> <span class="o">=</span> <span class="n">_DummyFormatOption</span><span class="p">(</span><span class="s1">&#39;cmap&#39;</span><span class="p">)</span>
-    <span class="n">cticks</span><span class="p">:</span> <span class="n">Formatoption</span> <span class="o">=</span> <span class="n">_DummyFormatOption</span><span class="p">(</span><span class="s1">&#39;cticks&#39;</span><span class="p">)</span>
-    <span class="n">cbar</span><span class="p">:</span> <span class="n">Formatoption</span> <span class="o">=</span> <span class="n">_DummyFormatOption</span><span class="p">(</span><span class="s1">&#39;cbar&#39;</span><span class="p">)</span></div>
+    <span class="n">bounds</span><span class="p">:</span> <span class="n">Formatoption</span> <span class="o">=</span> <span class="n">_DummyFormatOption</span><span class="p">(</span><span class="s2">&quot;bounds&quot;</span><span class="p">)</span>
+    <span class="n">cmap</span><span class="p">:</span> <span class="n">Formatoption</span> <span class="o">=</span> <span class="n">_DummyFormatOption</span><span class="p">(</span><span class="s2">&quot;cmap&quot;</span><span class="p">)</span>
+    <span class="n">cticks</span><span class="p">:</span> <span class="n">Formatoption</span> <span class="o">=</span> <span class="n">_DummyFormatOption</span><span class="p">(</span><span class="s2">&quot;cticks&quot;</span><span class="p">)</span>
+    <span class="n">cbar</span><span class="p">:</span> <span class="n">Formatoption</span> <span class="o">=</span> <span class="n">_DummyFormatOption</span><span class="p">(</span><span class="s2">&quot;cbar&quot;</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ColorbarPreview"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview">[docs]</a><span class="k">class</span> <span class="nc">ColorbarPreview</span><span class="p">(</span><span class="n">FigureCanvas</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A preview widget of a colorbar.</span>
+
+<div class="viewcode-block" id="ColorbarPreview">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview">[docs]</a>
+<span class="k">class</span> <span class="nc">ColorbarPreview</span><span class="p">(</span><span class="n">FigureCanvas</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A preview widget of a colorbar.</span>
 
 <span class="sd">    This matplotlib figure contains one single axes to display the colorbar</span>
 <span class="sd">    filled by the formatoptions of a given `plotter`.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
-            <span class="bp">self</span><span class="p">,</span>
-            <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">,</span>
-            <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-            <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
-        <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">,</span>
+        <span class="n">parent</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        plotter: psy_simple.plotters.Base2D</span>
@@ -738,9 +884,11 @@
         <span class="n">FigureCanvas</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fig</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setParent</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
 
-        <span class="n">FigureCanvas</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                   <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span>
-                                   <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">)</span>
+        <span class="n">FigureCanvas</span><span class="o">.</span><span class="n">setSizePolicy</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span>
+            <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSizePolicy</span><span class="o">.</span><span class="n">Expanding</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">FigureCanvas</span><span class="o">.</span><span class="n">updateGeometry</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">axes_counter</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -748,45 +896,53 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span> <span class="o">=</span> <span class="n">plotter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_colorbar</span><span class="p">(</span><span class="n">plotter</span><span class="p">)</span>
 
-<div class="viewcode-block" id="ColorbarPreview.resizeEvent"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.resizeEvent">[docs]</a>    <span class="k">def</span> <span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">QEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Reimplemented to make sure we cannot get smaller than 0.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ColorbarPreview.resizeEvent">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.resizeEvent">[docs]</a>
+    <span class="k">def</span> <span class="nf">resizeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="n">QEvent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reimplemented to make sure we cannot get smaller than 0.&quot;&quot;&quot;</span>
         <span class="n">h</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">h</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">resizeEvent</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ColorbarPreview.init_colorbar"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.init_colorbar">[docs]</a>    <span class="k">def</span> <span class="nf">init_colorbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Initialize the colorbar.</span>
+
+<div class="viewcode-block" id="ColorbarPreview.init_colorbar">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.init_colorbar">[docs]</a>
+    <span class="k">def</span> <span class="nf">init_colorbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plotter</span><span class="p">:</span> <span class="n">Plotter</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the colorbar.</span>
 
 <span class="sd">        This method extracts the formatoptions of the given `plotter` and draws</span>
 <span class="sd">        the colorbar.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">matplotlib.cm</span> <span class="kn">import</span> <span class="n">ScalarMappable</span>
+
         <span class="n">norm</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">norm</span>
         <span class="n">cmap</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">cmap</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">mappable</span> <span class="o">=</span> <span class="n">sm</span> <span class="o">=</span> <span class="n">ScalarMappable</span><span class="p">(</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
         <span class="n">sm</span><span class="o">.</span><span class="n">set_array</span><span class="p">([])</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">cax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span>
-                                        <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axes_counter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">add_axes</span><span class="p">(</span>
+            <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">axes_counter</span>
+        <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">cbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span>
-            <span class="n">sm</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;horizontal&#39;</span><span class="p">)</span></div>
+            <span class="n">sm</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">cax</span><span class="p">,</span> <span class="n">orientation</span><span class="o">=</span><span class="s2">&quot;horizontal&quot;</span>
+        <span class="p">)</span></div>
+
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fake_plotter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FakePlotter</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create a plotter with the formatoptions of the real :attr:`plotter`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a plotter with the formatoptions of the real :attr:`plotter`.</span>
 
 <span class="sd">        We can update this plotter without impacting the origin :attr:`plotter`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="kn">from</span> <span class="nn">psyplot.plotter</span> <span class="kn">import</span> <span class="n">Plotter</span>
 
         <span class="k">class</span> <span class="nc">_FakePlotter</span><span class="p">(</span><span class="n">FakePlotter</span><span class="p">):</span>
-            <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="s1">&#39;bounds&#39;</span><span class="p">)</span>
-            <span class="n">cmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">cmap</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="s1">&#39;cmap&#39;</span><span class="p">)</span>
-            <span class="n">cticks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="s1">&#39;cticks&#39;</span><span class="p">)</span>
-            <span class="n">cbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">cbar</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="s1">&#39;cbar&#39;</span><span class="p">)</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="s2">&quot;bounds&quot;</span><span class="p">)</span>
+            <span class="n">cmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">cmap</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="s2">&quot;cmap&quot;</span><span class="p">)</span>
+            <span class="n">cticks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="s2">&quot;cticks&quot;</span><span class="p">)</span>
+            <span class="n">cbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">cbar</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="s2">&quot;cbar&quot;</span><span class="p">)</span>
 
             <span class="n">_rcparams_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">_get_rc_strings</span><span class="p">()</span>
 
@@ -795,16 +951,24 @@
         <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">()</span>
 
         <span class="n">plotter</span> <span class="o">=</span> <span class="n">_FakePlotter</span><span class="p">(</span>
-            <span class="n">ref</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">make_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">ref</span><span class="p">[</span><span class="s1">&#39;bounds&#39;</span><span class="p">],</span>
-            <span class="n">cmap</span><span class="o">=</span><span class="n">ref</span><span class="p">[</span><span class="s1">&#39;cmap&#39;</span><span class="p">],</span> <span class="n">cticks</span><span class="o">=</span><span class="n">ref</span><span class="p">[</span><span class="s1">&#39;cticks&#39;</span><span class="p">],</span> <span class="n">cbar</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+            <span class="n">ref</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+            <span class="n">make_plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">bounds</span><span class="o">=</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;bounds&quot;</span><span class="p">],</span>
+            <span class="n">cmap</span><span class="o">=</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;cmap&quot;</span><span class="p">],</span>
+            <span class="n">cticks</span><span class="o">=</span><span class="n">ref</span><span class="p">[</span><span class="s2">&quot;cticks&quot;</span><span class="p">],</span>
+            <span class="n">cbar</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+        <span class="p">)</span>
 
         <span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="o">.</span><span class="n">_colorbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cbar</span>
 
         <span class="n">plotter</span><span class="o">.</span><span class="n">plot_data</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">plot_data</span>
         <span class="k">return</span> <span class="n">plotter</span>
 
-<div class="viewcode-block" id="ColorbarPreview.update_colorbar"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.update_colorbar">[docs]</a>    <span class="k">def</span> <span class="nf">update_colorbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Update the colorbar with new formatoptions.</span>
+<div class="viewcode-block" id="ColorbarPreview.update_colorbar">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.update_colorbar">[docs]</a>
+    <span class="k">def</span> <span class="nf">update_colorbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the colorbar with new formatoptions.</span>
 
 <span class="sd">        This method takes the :attr:`fake_plotter`, updates it from the given</span>
 <span class="sd">        `kwargs`, updates the colorbar preview.</span>
@@ -843,11 +1007,13 @@
             <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
                 <span class="k">pass</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mappable</span><span class="o">.</span><span class="n">set_norm</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">norm</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">mappable</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">cmap</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">array</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mappable</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span>
+                <span class="n">plotter</span><span class="o">.</span><span class="n">cmap</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="o">.</span><span class="n">colorbar</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cbar</span>
-            <span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="o">.</span><span class="n">default_locator</span> <span class="o">=</span> \
+            <span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="o">.</span><span class="n">default_locator</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="o">.</span><span class="n">default_locator</span>
+            <span class="p">)</span>
             <span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="o">.</span><span class="n">update_axis</span><span class="p">(</span><span class="n">plotter</span><span class="o">.</span><span class="n">cticks</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
 
@@ -855,11 +1021,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">mappable</span><span class="o">.</span><span class="n">set_norm</span><span class="p">(</span><span class="n">current_norm</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">mappable</span><span class="o">.</span><span class="n">set_cmap</span><span class="p">(</span><span class="n">current_cmap</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">cbar</span><span class="o">.</span><span class="n">locator</span> <span class="o">=</span> <span class="n">current_locator</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">cbar</span><span class="o">.</span><span class="n">update_ticks</span><span class="p">()</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cbar</span><span class="o">.</span><span class="n">update_ticks</span><span class="p">()</span></div>
+</div>
 
 
-<div class="viewcode-block" id="FormatoptionsEditor"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor">[docs]</a><span class="k">class</span> <span class="nc">FormatoptionsEditor</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A widget to update a formatoption.</span>
+
+<div class="viewcode-block" id="FormatoptionsEditor">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor">[docs]</a>
+<span class="k">class</span> <span class="nc">FormatoptionsEditor</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A widget to update a formatoption.</span>
 
 <span class="sd">    This widget is a light-weight version of the</span>
 <span class="sd">    :class:`psyplot_gui.fmt_widget.FormatoptionsWidget` class. It contains</span>
@@ -867,7 +1037,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmto</span><span class="p">:</span> <span class="n">Formatoption</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        fmto: psyplot.plotter.Formatoption</span>
@@ -893,7 +1063,7 @@
         <span class="c1">#: A tool button to switch from the single line editor :attr:`line_edit`</span>
         <span class="c1">#: to the multi-line editor :attr:`text_edit`</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">btn_multiline</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QToolButton</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">btn_multiline</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s1">&#39;⌵&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_multiline</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;⌵&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">btn_multiline</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">btn_multiline</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span><span class="s2">&quot;Toggle multiline editor&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">btn_multiline</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">toggle_multiline</span><span class="p">)</span>
@@ -908,12 +1078,13 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">changed</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Check if the value in this editor differs from the original `fmto`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if the value in this editor differs from the original `fmto`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmto</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fmto</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_obj</span><span class="p">()))</span>
 
-<div class="viewcode-block" id="FormatoptionsEditor.toggle_multiline"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.toggle_multiline">[docs]</a>    <span class="k">def</span> <span class="nf">toggle_multiline</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Switch from :attr:`line_edit` and :attr:`text_edit` or back.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FormatoptionsEditor.toggle_multiline">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.toggle_multiline">[docs]</a>
+    <span class="k">def</span> <span class="nf">toggle_multiline</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Switch from :attr:`line_edit` and :attr:`text_edit` or back.&quot;&quot;&quot;</span>
         <span class="n">multiline</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="n">multiline</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">setVisible</span><span class="p">(</span><span class="ow">not</span> <span class="n">multiline</span><span class="p">)</span>
@@ -922,16 +1093,20 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">())</span></div>
 
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">multiline</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;True if the :attr:`text_edit` should be visible.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;True if the :attr:`text_edit` should be visible.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">btn_multiline</span><span class="o">.</span><span class="n">isChecked</span><span class="p">()</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Text of the :attr:`text_edit` (or :attr:`line_edit`).&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span> <span class="k">else</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Text of the :attr:`text_edit` (or :attr:`line_edit`).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">toPlainText</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="p">)</span>
 
     <span class="nd">@text</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -943,28 +1118,39 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Load the value of :attr:`text` with yaml.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load the value of :attr:`text` with yaml.&quot;&quot;&quot;</span>
         <span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
         <span class="k">return</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">Loader</span><span class="p">)</span>
 
-<div class="viewcode-block" id="FormatoptionsEditor.clear_text"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.clear_text">[docs]</a>    <span class="k">def</span> <span class="nf">clear_text</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Clear the editor.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FormatoptionsEditor.clear_text">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.clear_text">[docs]</a>
+    <span class="k">def</span> <span class="nf">clear_text</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear the editor.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">multiline</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="FormatoptionsEditor.set_obj"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.set_obj">[docs]</a>    <span class="k">def</span> <span class="nf">set_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Clear the editor and set another object.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FormatoptionsEditor.set_obj">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.set_obj">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear the editor and set another object.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">clear_text</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">insert_obj</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="FormatoptionsEditor.get_obj"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.get_obj">[docs]</a>    <span class="k">def</span> <span class="nf">get_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Alias for :attr:`value`.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="FormatoptionsEditor.get_obj">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.get_obj">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Alias for :attr:`value`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span></div>
 
-<div class="viewcode-block" id="FormatoptionsEditor.insert_obj"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.insert_obj">[docs]</a>    <span class="k">def</span> <span class="nf">insert_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Add a string to the formatoption widget.</span>
+
+<div class="viewcode-block" id="FormatoptionsEditor.insert_obj">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.insert_obj">[docs]</a>
+    <span class="k">def</span> <span class="nf">insert_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add a string to the formatoption widget.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -992,21 +1178,25 @@
                     <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">obj</span> <span class="o">+</span> <span class="n">current</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">current</span> <span class="o">+</span> <span class="n">obj</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
-                <span class="n">current</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>  <span class="c1"># add quotation marks</span>
             <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">obj</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">s</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">...&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">...&quot;</span><span class="p">):</span>
                 <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">use_line_edit</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">line_edit</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">insertPlainText</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text_edit</span><span class="o">.</span><span class="n">insertPlainText</span><span class="p">(</span><span class="n">s</span><span class="p">)</span></div>
+</div>
 
 
-<div class="viewcode-block" id="LabelWidgetLine"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.LabelWidgetLine">[docs]</a><span class="k">class</span> <span class="nc">LabelWidgetLine</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A widget to change a formatoption.</span>
+
+<div class="viewcode-block" id="LabelWidgetLine">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.LabelWidgetLine">[docs]</a>
+<span class="k">class</span> <span class="nc">LabelWidgetLine</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A widget to change a formatoption.</span>
 
 <span class="sd">    This class holds a :class:`FormatoptionsEditor` to control the</span>
 <span class="sd">    appearance of a specific formatoption. Additionally it displays the</span>
@@ -1014,10 +1204,16 @@
 <span class="sd">    :meth:`psyplot.plotter.Formatoption.get_fmt_widget`) to contol it.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmto</span><span class="p">:</span> <span class="n">Formatoption</span><span class="p">,</span> <span class="n">project</span><span class="p">:</span> <span class="n">Project</span><span class="p">,</span>
-                 <span class="n">fmto_widget</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">],</span>
-                 <span class="n">widget_kws</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">fmto</span><span class="p">:</span> <span class="n">Formatoption</span><span class="p">,</span>
+        <span class="n">project</span><span class="p">:</span> <span class="n">Project</span><span class="p">,</span>
+        <span class="n">fmto_widget</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QWidget</span><span class="p">],</span>
+        <span class="n">widget_kws</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{},</span>
+        <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        fmto: psyplot.plotter.Formatoption</span>
@@ -1033,22 +1229,24 @@
 <span class="sd">            Further keywords that are passed to the creation of the</span>
 <span class="sd">            `fmto_widget` instance.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">fmto</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">fmto</span><span class="o">.</span><span class="n">key</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fmto</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">fmto</span><span class="o">.</span><span class="n">key</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">editor</span> <span class="o">=</span> <span class="n">FormatoptionsEditor</span><span class="p">(</span><span class="n">fmto</span><span class="p">)</span>
         <span class="n">vbox</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
-        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span>
-            <span class="n">fmto_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">,</span> <span class="n">fmto</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="o">**</span><span class="n">widget_kws</span><span class="p">))</span>
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">fmto_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">,</span> <span class="n">fmto</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="o">**</span><span class="n">widget_kws</span><span class="p">))</span>
         <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">editor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">vbox</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="LabelDialog"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog">[docs]</a><span class="k">class</span> <span class="nc">LabelDialog</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;A dialog to change labels.</span>
+
+<div class="viewcode-block" id="LabelDialog">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog">[docs]</a>
+<span class="k">class</span> <span class="nc">LabelDialog</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A dialog to change labels.</span>
 
 <span class="sd">    This class contains one :class:`LabelWidgetLine` per text formatoption.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">:</span> <span class="n">Project</span><span class="p">,</span> <span class="o">*</span><span class="n">fmts</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        project: psyplot.project.Project</span>
@@ -1059,6 +1257,7 @@
 <span class="sd">            subclass of :class:`psy_simple.base.TextBase`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">from</span> <span class="nn">psy_simple.widgets.texts</span> <span class="kn">import</span> <span class="n">LabelWidget</span>
+
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">project</span> <span class="o">=</span> <span class="n">project</span>
         <span class="n">layout</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QVBoxLayout</span><span class="p">()</span>
@@ -1067,13 +1266,15 @@
         <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">fmts</span><span class="p">:</span>
             <span class="n">fmto</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">plotter</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span>
             <span class="n">fmt_widget</span> <span class="o">=</span> <span class="n">LabelWidgetLine</span><span class="p">(</span>
-                <span class="n">fmto</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">LabelWidget</span><span class="p">,</span> <span class="n">widget_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+                <span class="n">fmto</span><span class="p">,</span> <span class="n">project</span><span class="p">,</span> <span class="n">LabelWidget</span><span class="p">,</span> <span class="n">widget_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">properties</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span><span class="p">[</span><span class="n">fmt</span><span class="p">]</span> <span class="o">=</span> <span class="n">fmt_widget</span>
             <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">fmt_widget</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="p">(</span>
             <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Ok</span> <span class="o">|</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialogButtonBox</span><span class="o">.</span><span class="n">Cancel</span><span class="p">,</span>
-            <span class="bp">self</span><span class="p">)</span>
+            <span class="bp">self</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="o">.</span><span class="n">accepted</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="o">.</span><span class="n">rejected</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reject</span><span class="p">)</span>
         <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="p">)</span>
@@ -1081,22 +1282,26 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fmts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Mapping from formatoption key to value in this dialog.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mapping from formatoption key to value in this dialog.&quot;&quot;&quot;</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">fmt</span><span class="p">,</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fmt_widgets</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">changed</span><span class="p">:</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="n">value</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">value</span>
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fmt</span><span class="si">}</span><span class="s2">-value </span><span class="si">{</span><span class="n">widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2"> could &quot;</span>
-                                  <span class="s2">&quot;not be parsed to python!&quot;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fmt</span><span class="si">}</span><span class="s2">-value </span><span class="si">{</span><span class="n">widget</span><span class="o">.</span><span class="n">editor</span><span class="o">.</span><span class="n">text</span><span class="si">}</span><span class="s2"> could &quot;</span>
+                        <span class="s2">&quot;not be parsed to python!&quot;</span>
+                    <span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">ret</span><span class="p">[</span><span class="n">fmt</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
         <span class="k">return</span> <span class="n">ret</span>
 
-<div class="viewcode-block" id="LabelDialog.update_project"><a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog.update_project">[docs]</a>    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="LabelDialog.update_project">
+<a class="viewcode-back" href="../../api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog.update_project">[docs]</a>
+    <span class="nd">@classmethod</span>
     <span class="k">def</span> <span class="nf">update_project</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">project</span><span class="p">:</span> <span class="n">Project</span><span class="p">,</span> <span class="o">*</span><span class="n">fmts</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;Create a :class:`LabelDialog` to update the labels in a `project`.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a :class:`LabelDialog` to update the labels in a `project`.</span>
 
 <span class="sd">        This classmethod creates a new :class:`LabelDialog` instance, fills it</span>
 <span class="sd">        with the formatoptions of the first plotter in `project`, enters the</span>
@@ -1117,24 +1322,45 @@
         <span class="n">dialog</span><span class="o">.</span><span class="n">activateWindow</span><span class="p">()</span>
         <span class="n">dialog</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">dialog</span><span class="o">.</span><span class="n">result</span><span class="p">()</span> <span class="o">==</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">Accepted</span><span class="p">:</span>
-            <span class="n">project</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-                <span class="o">**</span><span class="n">dialog</span><span class="o">.</span><span class="n">fmts</span><span class="p">)</span></div></div>
+            <span class="n">project</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">dialog</span><span class="o">.</span><span class="n">fmts</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>
           </div>
-          <footer>
+          <!--
+SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+<footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum Geesthacht.</p>
+    <p>&#169; Copyright 2021-2024 Helmholtz-Zentrum hereon GmbH.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  
+
+<div class="footer">
+    <span class="creativecommons">
+    <a href="https://creativecommons.org/licenses/by/4.0/" >
+    <img style="height: 1.5em;" src="../../_static/license_logo.png" border="0" alt="Creative Commons License"/>
+    </a>
+    This documentation is licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/">
+    CC-BY-4.0
+    </a>
+    </span>
+</div>
+
+
 
 </footer>
         </div>

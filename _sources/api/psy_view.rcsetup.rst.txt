@@ -1,6 +1,3 @@
-psy\_view.rcsetup module
-========================
-
 .. automodule:: psy_view.rcsetup
    :members:
    :undoc-members:

@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview: module code &mdash; psy-view 0.1.0+6.gb2a6869 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <title>Overview: module code &mdash; psy-view  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nc-table-styles.css?v=d585f46f" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=a4552690" />
+      <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/design-tabs.js?v=36754332"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -25,14 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> psy-view
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            psy-view
           </a>
-              <div class="version">
-                0.1.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -40,12 +47,100 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#how-to-install">How to install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-using-conda">Installation using conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-using-pip">Installation using pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-from-source">Installation from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#required-dependencies">Required dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#running-the-tests">Running the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#building-the-docs">Building the docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#uninstallation-via-conda">Uninstallation via conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#uninstallation-via-pip">Uninstallation via pip</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#binder-examples">Binder examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started.html#uploading-your-own-data">Uploading your own data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#run-it-locally">Run it locally</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#starting-the-gui">Starting the GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#the-gui">The GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#resizing-the-gui-elements">Resizing the GUI elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#open-a-netcdf-file">Open a netCDF file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#view-the-dataset">View the dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#navigate-and-export">Navigate and export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-active-plot">Select the active plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-plot-method">Select the plot method</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../user-guide.html#mapplot">mapplot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-guide.html#plot2d">plot2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-guide.html#lineplot">lineplot</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-variables">Select the variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-dimensions">Select the dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#navigation-inside-the-plot">Navigation inside the plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#using-psy-view-within-the-psyplot-gui">Using psy-view within the psyplot GUI</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../ncview.html">psy-view vs. ncview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api/psy_view.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#named-arguments">Named Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/psy_view.html">psy_view package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/psy_view.html#psy_view.get_parser"><code class="docutils literal notranslate"><span class="pre">get_parser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/psy_view.html#psy_view.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/psy_view.html#psy_view.start_app"><code class="docutils literal notranslate"><span class="pre">start_app()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/psy_view.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html"><code class="docutils literal notranslate"><span class="pre">BasemapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog"><code class="docutils literal notranslate"><span class="pre">CmapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.Color"><code class="docutils literal notranslate"><span class="pre">Color</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter"><code class="docutils literal notranslate"><span class="pre">FakePlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.LSM_T"><code class="docutils literal notranslate"><span class="pre">LSM_T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog"><code class="docutils literal notranslate"><span class="pre">LabelDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.LabelWidgetLine"><code class="docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.ds_widget.html"><code class="docutils literal notranslate"><span class="pre">DatasetWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.ds_widget.html#psy_view.ds_widget.get_dims_to_iterate"><code class="docutils literal notranslate"><span class="pre">get_dims_to_iterate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html"><code class="docutils literal notranslate"><span class="pre">GridCell</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.PlotType"><code class="docutils literal notranslate"><span class="pre">PlotType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.QHLine"><code class="docutils literal notranslate"><span class="pre">QHLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.projection_map"><code class="docutils literal notranslate"><span class="pre">projection_map</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.rcsetup.html"><code class="docutils literal notranslate"><span class="pre">PsyViewRcParams</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.utils.html"><code class="docutils literal notranslate"><span class="pre">QRightPushButton</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.utils.html#psy_view.utils.add_pushbutton"><code class="docutils literal notranslate"><span class="pre">add_pushbutton()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.utils.html#psy_view.utils.get_icon"><code class="docutils literal notranslate"><span class="pre">get_icon()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution and development hints</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../todo.html">ToDos</a></li>
 </ul>
 
@@ -62,8 +157,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Overview: module code</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Overview: module code</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -84,18 +179,38 @@
 
            </div>
           </div>
-          <footer>
+          <!--
+SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+<footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum Geesthacht.</p>
+    <p>&#169; Copyright 2021-2024 Helmholtz-Zentrum hereon GmbH.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  
+
+<div class="footer">
+    <span class="creativecommons">
+    <a href="https://creativecommons.org/licenses/by/4.0/" >
+    <img style="height: 1.5em;" src="../_static/license_logo.png" border="0" alt="Creative Commons License"/>
+    </a>
+    This documentation is licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/">
+    CC-BY-4.0
+    </a>
+    </span>
+</div>
+
+
 
 </footer>
         </div>

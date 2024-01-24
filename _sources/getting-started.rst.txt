@@ -1,3 +1,7 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 .. _getting-started:
 
 Getting started
@@ -56,10 +60,12 @@ like this:
     :suppress:
 
     In [1]: import psyplot.project as psy
+       ...:
        ...: with psy.plot.mapplot(
-       ...:         "demo.nc", name="t2m",
-       ...:         cmap="viridis",
-       ...:     ) as sp:
+       ...:     "demo.nc",
+       ...:     name="t2m",
+       ...:     cmap="viridis",
+       ...: ) as sp:
        ...:     sp.export("docs-getting-started-example.png")
 
 .. image:: docs-getting-started-example.png

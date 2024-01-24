@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>psy_view &mdash; psy-view 0.1.0+6.gb2a6869 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  <title>psy_view &mdash; psy-view  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/nc-table-styles.css?v=d585f46f" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=a4552690" />
+      <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../_static/design-tabs.js?v=36754332"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -25,14 +31,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> psy-view
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            psy-view
           </a>
-              <div class="version">
-                0.1.0
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -40,12 +47,100 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#how-to-install">How to install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-using-conda">Installation using conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-using-pip">Installation using pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#installation-from-source">Installation from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#required-dependencies">Required dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#running-the-tests">Running the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#building-the-docs">Building the docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installing.html#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#uninstallation-via-conda">Uninstallation via conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installing.html#uninstallation-via-pip">Uninstallation via pip</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#binder-examples">Binder examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../getting-started.html#uploading-your-own-data">Uploading your own data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../getting-started.html#run-it-locally">Run it locally</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#starting-the-gui">Starting the GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#the-gui">The GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#resizing-the-gui-elements">Resizing the GUI elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#open-a-netcdf-file">Open a netCDF file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#view-the-dataset">View the dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#navigate-and-export">Navigate and export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-active-plot">Select the active plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-plot-method">Select the plot method</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../user-guide.html#mapplot">mapplot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-guide.html#plot2d">plot2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../user-guide.html#lineplot">lineplot</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-variables">Select the variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user-guide.html#select-the-dimensions">Select the dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#navigation-inside-the-plot">Navigation inside the plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide.html#using-psy-view-within-the-psyplot-gui">Using psy-view within the psyplot GUI</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../ncview.html">psy-view vs. ncview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../api/psy_view.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../command_line.html">Command line usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../command_line.html#named-arguments">Named Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/psy_view.html">psy_view package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/psy_view.html#psy_view.get_parser"><code class="docutils literal notranslate"><span class="pre">get_parser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/psy_view.html#psy_view.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/psy_view.html#psy_view.start_app"><code class="docutils literal notranslate"><span class="pre">start_app()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/psy_view.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html"><code class="docutils literal notranslate"><span class="pre">BasemapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog"><code class="docutils literal notranslate"><span class="pre">CmapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.Color"><code class="docutils literal notranslate"><span class="pre">Color</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter"><code class="docutils literal notranslate"><span class="pre">FakePlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.LSM_T"><code class="docutils literal notranslate"><span class="pre">LSM_T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog"><code class="docutils literal notranslate"><span class="pre">LabelDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.dialogs.html#psy_view.dialogs.LabelWidgetLine"><code class="docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.ds_widget.html"><code class="docutils literal notranslate"><span class="pre">DatasetWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.ds_widget.html#psy_view.ds_widget.get_dims_to_iterate"><code class="docutils literal notranslate"><span class="pre">get_dims_to_iterate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html"><code class="docutils literal notranslate"><span class="pre">GridCell</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.PlotType"><code class="docutils literal notranslate"><span class="pre">PlotType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.QHLine"><code class="docutils literal notranslate"><span class="pre">QHLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.plotmethods.html#psy_view.plotmethods.projection_map"><code class="docutils literal notranslate"><span class="pre">projection_map</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.rcsetup.html"><code class="docutils literal notranslate"><span class="pre">PsyViewRcParams</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.utils.html"><code class="docutils literal notranslate"><span class="pre">QRightPushButton</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.utils.html#psy_view.utils.add_pushbutton"><code class="docutils literal notranslate"><span class="pre">add_pushbutton()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/psy_view.utils.html#psy_view.utils.get_icon"><code class="docutils literal notranslate"><span class="pre">get_icon()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution and development hints</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../todo.html">ToDos</a></li>
 </ul>
 
@@ -62,9 +157,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="index.html">Module code</a> &raquo;</li>
-      <li>psy_view</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">psy_view</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -74,52 +169,27 @@
            <div itemprop="articleBody">
              
   <h1>Source code for psy_view</h1><div class="highlight"><pre>
-<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
-<span class="sd">&quot;&quot;&quot;ncview-like GUI to the psyplot framework.&quot;&quot;&quot;</span>
+<span></span><span class="c1"># SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH</span>
+<span class="c1">#</span>
+<span class="c1"># SPDX-License-Identifier: LGPL-3.0-only</span>
 
-<span class="c1"># Disclaimer</span>
-<span class="c1"># ----------</span>
-<span class="c1">#</span>
-<span class="c1"># Copyright (C) 2021 Helmholtz-Zentrum Hereon</span>
-<span class="c1"># Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht</span>
-<span class="c1">#</span>
-<span class="c1"># This file is part of psy-view and is released under the GNU LGPL-3.O license.</span>
-<span class="c1"># See COPYING and COPYING.LESSER in the root of the repository for full</span>
-<span class="c1"># licensing details.</span>
-<span class="c1">#</span>
-<span class="c1"># This program is free software: you can redistribute it and/or modify</span>
-<span class="c1"># it under the terms of the GNU Lesser General Public License version 3.0 as</span>
-<span class="c1"># published by the Free Software Foundation.</span>
-<span class="c1">#</span>
-<span class="c1"># This program is distributed in the hope that it will be useful,</span>
-<span class="c1"># but WITHOUT ANY WARRANTY; without even the implied warranty of</span>
-<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
-<span class="c1"># GNU LGPL-3.0 license for more details.</span>
-<span class="c1">#</span>
-<span class="c1"># You should have received a copy of the GNU LGPL-3.0 license</span>
-<span class="c1"># along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;psy-view</span>
+
+<span class="sd">ncview-like interface to psyplot</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Dict</span><span class="p">,</span>
-    <span class="n">Any</span><span class="p">,</span>
-    <span class="n">Optional</span><span class="p">,</span>
-    <span class="n">Tuple</span><span class="p">,</span>
-    <span class="n">Union</span><span class="p">,</span>
-    <span class="n">Type</span><span class="p">,</span>
-<span class="p">)</span>
 
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
 <span class="c1"># importing xarray here for some reason speeds up starting the GUI...</span>
 <span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
 
-<span class="kn">from</span> <span class="nn">._version</span> <span class="kn">import</span> <span class="n">get_versions</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_version</span>
 
-<span class="n">__version__</span> <span class="o">=</span> <span class="n">get_versions</span><span class="p">()[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span>
-
-<span class="k">del</span> <span class="n">get_versions</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="n">_version</span><span class="o">.</span><span class="n">get_versions</span><span class="p">()[</span><span class="s2">&quot;version&quot;</span><span class="p">]</span>
 
 <span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Philipp S. Sommer&quot;</span>
 
@@ -132,16 +202,20 @@
 <span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;LGPL-3.0-only&quot;</span>
 
 <span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Philipp S. Sommer&quot;</span>
-<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;psyplot@hereon.de&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;philipp.sommer@hereon.de&quot;</span>
 
 <span class="n">__status__</span> <span class="o">=</span> <span class="s2">&quot;Production&quot;</span>
 
 
-<div class="viewcode-block" id="start_app"><a class="viewcode-back" href="../api/psy_view.html#psy_view.start_app">[docs]</a><span class="k">def</span> <span class="nf">start_app</span><span class="p">(</span>
-        <span class="n">ds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">plotmethod</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;mapplot&#39;</span><span class="p">,</span> <span class="n">preset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Start the standalone GUI application.</span>
+<div class="viewcode-block" id="start_app">
+<a class="viewcode-back" href="../api/psy_view.html#psy_view.start_app">[docs]</a>
+<span class="k">def</span> <span class="nf">start_app</span><span class="p">(</span>
+    <span class="n">ds</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">],</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">plotmethod</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;mapplot&quot;</span><span class="p">,</span>
+    <span class="n">preset</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Start the standalone GUI application.</span>
 
 <span class="sd">    This function creates a `QApplication` instance, an instance of the</span>
 <span class="sd">    :class:`psy_view.ds_widget.DatasetWidget` and enters the main event loop.</span>
@@ -158,18 +232,19 @@
 <span class="sd">    preset: str</span>
 <span class="sd">        The preset to apply</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">psyplot_gui</span> <span class="kn">import</span> <span class="n">rcParams</span>
     <span class="kn">from</span> <span class="nn">PyQt5</span> <span class="kn">import</span> <span class="n">QtWidgets</span>
     <span class="kn">from</span> <span class="nn">PyQt5.QtGui</span> <span class="kn">import</span> <span class="n">QIcon</span>  <span class="c1"># pylint: disable=no-name-in-module</span>
-    <span class="kn">from</span> <span class="nn">psyplot_gui</span> <span class="kn">import</span> <span class="n">rcParams</span>
 
-    <span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;help_explorer.use_webengineview&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;help_explorer.use_webengineview&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="kn">from</span> <span class="nn">psyplot_gui.common</span> <span class="kn">import</span> <span class="n">get_icon</span>
 
     <span class="kn">from</span> <span class="nn">psy_view.ds_widget</span> <span class="kn">import</span> <span class="n">DatasetWidgetStandAlone</span>
-    <span class="kn">from</span> <span class="nn">psyplot_gui.common</span> <span class="kn">import</span> <span class="n">get_icon</span>
 
     <span class="n">app</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
     <span class="n">ds_widget</span> <span class="o">=</span> <span class="n">DatasetWidgetStandAlone</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
-    <span class="n">ds_widget</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">get_icon</span><span class="p">(</span><span class="s1">&#39;logo.svg&#39;</span><span class="p">)))</span>
+    <span class="n">ds_widget</span><span class="o">.</span><span class="n">setWindowIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="n">get_icon</span><span class="p">(</span><span class="s2">&quot;logo.svg&quot;</span><span class="p">)))</span>
     <span class="k">if</span> <span class="n">preset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">ds_widget</span><span class="o">.</span><span class="n">load_preset</span><span class="p">(</span><span class="n">preset</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -177,8 +252,10 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Variable specified but without dataset&quot;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ds_widget</span><span class="o">.</span><span class="n">variable_buttons</span><span class="p">:</span>
             <span class="n">valid</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ds_widget</span><span class="o">.</span><span class="n">variable_buttons</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not part of the dataset. &quot;</span>
-                             <span class="sa">f</span><span class="s2">&quot;Possible variables are </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> is not part of the dataset. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Possible variables are </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">.&quot;</span>
+            <span class="p">)</span>
         <span class="n">ds_widget</span><span class="o">.</span><span class="n">plotmethod</span> <span class="o">=</span> <span class="n">plotmethod</span>
         <span class="n">ds_widget</span><span class="o">.</span><span class="n">variable</span> <span class="o">=</span> <span class="n">name</span>
         <span class="n">ds_widget</span><span class="o">.</span><span class="n">make_plot</span><span class="p">()</span>
@@ -189,50 +266,70 @@
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span></div>
 
 
-<div class="viewcode-block" id="get_parser"><a class="viewcode-back" href="../api/psy_view.html#psy_view.get_parser">[docs]</a><span class="k">def</span> <span class="nf">get_parser</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get the command line parser for psy-view.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="get_parser">
+<a class="viewcode-back" href="../api/psy_view.html#psy_view.get_parser">[docs]</a>
+<span class="k">def</span> <span class="nf">get_parser</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the command line parser for psy-view.&quot;&quot;&quot;</span>
     <span class="kn">from</span> <span class="nn">textwrap</span> <span class="kn">import</span> <span class="n">dedent</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="s1">&#39;psy-view&#39;</span><span class="p">)</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="s2">&quot;psy-view&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s1">&#39;input_file&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The file to visualize&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="s2">&quot;input_file&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The file to visualize&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="s1">&#39;--name&#39;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Variable name to display. Don&#39;t provide a variable to display &quot;</span>
-              <span class="s2">&quot;the first variable found in the dataset.&quot;</span><span class="p">),</span>
-        <span class="n">const</span><span class="o">=</span><span class="nb">object</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">)</span>
+        <span class="s2">&quot;-n&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--name&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Variable name to display. Don&#39;t provide a variable to display &quot;</span>
+            <span class="s2">&quot;the first variable found in the dataset.&quot;</span>
+        <span class="p">),</span>
+        <span class="n">const</span><span class="o">=</span><span class="nb">object</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s1">&#39;-pm&#39;</span><span class="p">,</span> <span class="s1">&#39;--plotmethod&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The plotmethod to use&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;mapplot&quot;</span><span class="p">,</span>
-        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mapplot&quot;</span><span class="p">,</span> <span class="s2">&quot;plot2d&quot;</span><span class="p">,</span> <span class="s2">&quot;lineplot&quot;</span><span class="p">])</span>
+        <span class="s2">&quot;-pm&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--plotmethod&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The plotmethod to use&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;mapplot&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;mapplot&quot;</span><span class="p">,</span> <span class="s2">&quot;plot2d&quot;</span><span class="p">,</span> <span class="s2">&quot;lineplot&quot;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--preset&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Apply a preset to the plot&quot;</span><span class="p">)</span>
 
     <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s1">&#39;--preset&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Apply a preset to the plot&quot;</span><span class="p">)</span>
+        <span class="s2">&quot;-V&quot;</span><span class="p">,</span> <span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span>
+    <span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
-        <span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">epilog</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    psy-view  Copyright (C) 2020  Philipp S. Sommer</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">epilog</span> <span class="o">=</span> <span class="n">dedent</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">    psy-view  Copyright (C) 2020  Philipp S. Sommer</span>
-
-<span class="s2">    This program comes with ABSOLUTELY NO WARRANTY.</span>
-<span class="s2">    This is free software, and you are welcome to redistribute it</span>
-<span class="s2">    under the conditions of the GNU GENERAL PUBLIC LICENSE, Version 3.&quot;&quot;&quot;</span><span class="p">)</span>
+<span class="sd">    This program comes with ABSOLUTELY NO WARRANTY.</span>
+<span class="sd">    This is free software, and you are welcome to redistribute it</span>
+<span class="sd">    under the conditions of the GNU GENERAL PUBLIC LICENSE, Version 3.&quot;&quot;&quot;</span>
+    <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">parser</span></div>
 
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../api/psy_view.html#psy_view.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Start the app with the provided command-line options.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../api/psy_view.html#psy_view.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Start the app with the provided command-line options.&quot;&quot;&quot;</span>
     <span class="kn">import</span> <span class="nn">psyplot.project</span> <span class="k">as</span> <span class="nn">psy</span>
+
     <span class="n">parser</span> <span class="o">=</span> <span class="n">get_parser</span><span class="p">()</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_known_args</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">input_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">ds</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="n">ds</span> <span class="o">=</span> <span class="n">psy</span><span class="o">.</span><span class="n">open_dataset</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">input_file</span><span class="p">,</span> <span class="n">decode_times</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">ds</span> <span class="o">=</span> <span class="kc">None</span>
@@ -243,24 +340,45 @@
     <span class="n">start_app</span><span class="p">(</span><span class="n">ds</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">plotmethod</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">preset</span><span class="p">)</span></div>
 
 
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
            </div>
           </div>
-          <footer>
+          <!--
+SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+<footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021 Helmholtz-Zentrum Hereon, 2020-2021 Helmholtz-Zentrum Geesthacht.</p>
+    <p>&#169; Copyright 2021-2024 Helmholtz-Zentrum hereon GmbH.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+  
+
+<div class="footer">
+    <span class="creativecommons">
+    <a href="https://creativecommons.org/licenses/by/4.0/" >
+    <img style="height: 1.5em;" src="../_static/license_logo.png" border="0" alt="Creative Commons License"/>
+    </a>
+    This documentation is licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/">
+    CC-BY-4.0
+    </a>
+    </span>
+</div>
+
+
 
 </footer>
         </div>

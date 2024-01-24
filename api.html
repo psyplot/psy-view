@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; psy-view  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/nc-table-styles.css?v=d585f46f" />
+      <link rel="stylesheet" type="text/css" href="_static/theme_overrides.css?v=a4552690" />
+      <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="psy_view package" href="api/psy_view.html" />
+    <link rel="prev" title="Command line usage" href="command_line.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            psy-view
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installing.html#how-to-install">How to install</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installing.html#installation-using-conda">Installation using conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installing.html#installation-using-pip">Installation using pip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installing.html#installation-from-source">Installation from source</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installing.html#dependencies">Dependencies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installing.html#required-dependencies">Required dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installing.html#running-the-tests">Running the tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing.html#building-the-docs">Building the docs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installing.html#uninstallation">Uninstallation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installing.html#uninstallation-via-conda">Uninstallation via conda</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installing.html#uninstallation-via-pip">Uninstallation via pip</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#binder-examples">Binder examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getting-started.html#uploading-your-own-data">Uploading your own data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="getting-started.html#run-it-locally">Run it locally</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">User guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user-guide.html#starting-the-gui">Starting the GUI</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user-guide.html#the-gui">The GUI</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user-guide.html#resizing-the-gui-elements">Resizing the GUI elements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-guide.html#open-a-netcdf-file">Open a netCDF file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-guide.html#view-the-dataset">View the dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-guide.html#navigate-and-export">Navigate and export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-guide.html#select-the-active-plot">Select the active plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-guide.html#select-the-plot-method">Select the plot method</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="user-guide.html#mapplot">mapplot</a></li>
+<li class="toctree-l4"><a class="reference internal" href="user-guide.html#plot2d">plot2d</a></li>
+<li class="toctree-l4"><a class="reference internal" href="user-guide.html#lineplot">lineplot</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="user-guide.html#select-the-variables">Select the variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user-guide.html#select-the-dimensions">Select the dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user-guide.html#navigation-inside-the-plot">Navigation inside the plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user-guide.html#using-psy-view-within-the-psyplot-gui">Using psy-view within the psyplot GUI</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ncview.html">psy-view vs. ncview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command_line.html">Command line usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html#positional-arguments">Positional Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="command_line.html#named-arguments">Named Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/psy_view.html">psy_view package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.html#psy_view.get_parser"><code class="docutils literal notranslate"><span class="pre">get_parser()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.html#psy_view.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.html#psy_view.start_app"><code class="docutils literal notranslate"><span class="pre">start_app()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html"><code class="docutils literal notranslate"><span class="pre">BasemapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog"><code class="docutils literal notranslate"><span class="pre">CmapDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.Color"><code class="docutils literal notranslate"><span class="pre">Color</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter"><code class="docutils literal notranslate"><span class="pre">FakePlotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.LSM_T"><code class="docutils literal notranslate"><span class="pre">LSM_T</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog"><code class="docutils literal notranslate"><span class="pre">LabelDialog</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.LabelWidgetLine"><code class="docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html"><code class="docutils literal notranslate"><span class="pre">DatasetWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.get_dims_to_iterate"><code class="docutils literal notranslate"><span class="pre">get_dims_to_iterate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html"><code class="docutils literal notranslate"><span class="pre">GridCell</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotType"><code class="docutils literal notranslate"><span class="pre">PlotType</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.QHLine"><code class="docutils literal notranslate"><span class="pre">QHLine</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.projection_map"><code class="docutils literal notranslate"><span class="pre">projection_map</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.rcsetup.html"><code class="docutils literal notranslate"><span class="pre">PsyViewRcParams</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.utils.html"><code class="docutils literal notranslate"><span class="pre">QRightPushButton</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.utils.html#psy_view.utils.add_pushbutton"><code class="docutils literal notranslate"><span class="pre">add_pushbutton()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.utils.html#psy_view.utils.get_icon"><code class="docutils literal notranslate"><span class="pre">get_icon()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contribution and development hints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="todo.html">ToDos</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">psy-view</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<span id="api"></span><h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/psy_view.html">psy_view package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/psy_view.html#psy_view.get_parser"><code class="docutils literal notranslate"><span class="pre">get_parser()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/psy_view.html#psy_view.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/psy_view.html#psy_view.start_app"><code class="docutils literal notranslate"><span class="pre">start_app()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/psy_view.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.dialogs.html"><code class="docutils literal notranslate"><span class="pre">BasemapDialog</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.button_box"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.button_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.colors"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.colors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.default_colors"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.default_colors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.fill_from_plotter"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.fill_from_plotter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.get_colors"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.get_colors()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.grid_labels_box"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.grid_labels_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.lsm_box"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.lsm_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.meridionals_box"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.meridionals_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_10m"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_10m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_110m"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_110m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_50m"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_50m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_meri_at"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_meri_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_meri_auto"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_meri_auto</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_meri_every"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_meri_every</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_meri_num"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_meri_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_para_at"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_para_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_para_auto"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_para_auto</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_para_every"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_para_every</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.opt_para_num"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.opt_para_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.parallels_box"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.parallels_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.txt_clat"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.txt_clat</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.txt_clon"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.txt_clon</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.txt_grid_fontsize"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.txt_grid_fontsize</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.txt_meri_at"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.txt_meri_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.txt_meri_every"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.txt_meri_every</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.txt_meri_num"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.txt_meri_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.txt_para_at"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.txt_para_at</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.txt_para_every"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.txt_para_every</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.txt_para_num"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.txt_para_num</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.update_forms"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.update_forms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.update_plotter"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.update_plotter()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.value"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.value</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.xgrid_value"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.xgrid_value</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.BasemapDialog.ygrid_value"><code class="docutils literal notranslate"><span class="pre">BasemapDialog.ygrid_value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog"><code class="docutils literal notranslate"><span class="pre">CmapDialog</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.button_box"><code class="docutils literal notranslate"><span class="pre">CmapDialog.button_box</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.cbar_preview"><code class="docutils literal notranslate"><span class="pre">CmapDialog.cbar_preview</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.fmt_widgets"><code class="docutils literal notranslate"><span class="pre">CmapDialog.fmt_widgets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.fmts"><code class="docutils literal notranslate"><span class="pre">CmapDialog.fmts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.plotter"><code class="docutils literal notranslate"><span class="pre">CmapDialog.plotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.tabs"><code class="docutils literal notranslate"><span class="pre">CmapDialog.tabs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.update_preview"><code class="docutils literal notranslate"><span class="pre">CmapDialog.update_preview()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.CmapDialog.update_project"><code class="docutils literal notranslate"><span class="pre">CmapDialog.update_project()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.Color"><code class="docutils literal notranslate"><span class="pre">Color</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.fake_plotter"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview.fake_plotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.init_colorbar"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview.init_colorbar()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.plotter"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview.plotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.resizeEvent"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview.resizeEvent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.ColorbarPreview.update_colorbar"><code class="docutils literal notranslate"><span class="pre">ColorbarPreview.update_colorbar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter"><code class="docutils literal notranslate"><span class="pre">FakePlotter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter.bounds"><code class="docutils literal notranslate"><span class="pre">FakePlotter.bounds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter.cbar"><code class="docutils literal notranslate"><span class="pre">FakePlotter.cbar</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter.cmap"><code class="docutils literal notranslate"><span class="pre">FakePlotter.cmap</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FakePlotter.cticks"><code class="docutils literal notranslate"><span class="pre">FakePlotter.cticks</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.btn_multiline"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.btn_multiline</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.changed"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.changed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.clear_text"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.clear_text()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.fmto"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.fmto</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.get_obj"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.get_obj()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.initial_value"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.initial_value</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.insert_obj"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.insert_obj()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.line_edit"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.line_edit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.multiline"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.multiline</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.set_obj"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.set_obj()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.text"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.text</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.text_edit"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.text_edit</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.toggle_multiline"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.toggle_multiline()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.FormatoptionsEditor.value"><code class="docutils literal notranslate"><span class="pre">FormatoptionsEditor.value</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.LSM_T"><code class="docutils literal notranslate"><span class="pre">LSM_T</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog"><code class="docutils literal notranslate"><span class="pre">LabelDialog</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog.fmts"><code class="docutils literal notranslate"><span class="pre">LabelDialog.fmts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.LabelDialog.update_project"><code class="docutils literal notranslate"><span class="pre">LabelDialog.update_project()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.dialogs.html#psy_view.dialogs.LabelWidgetLine"><code class="docutils literal notranslate"><span class="pre">LabelWidgetLine</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.ds_widget.html"><code class="docutils literal notranslate"><span class="pre">DatasetWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.addLayout"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.addLayout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.add_ds_item"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.add_ds_item()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.animate_backward"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.animate_backward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.animate_forward"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.animate_forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.animation"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.animation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.animation_frames"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.animation_frames()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.arr_name"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.arr_name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.available_plotmethods"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.available_plotmethods</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.block_tree"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.block_tree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.block_widgets"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.block_widgets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.change_combo_array"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.change_combo_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.change_ds"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.change_ds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.cids"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.cids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.clear_table"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.clear_table()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.close_current_plot"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.close_current_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.close_sp"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.close_sp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.creating_new_plot"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.creating_new_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.data"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.disable_navigation"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.disable_navigation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.disable_variables"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.disable_variables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.display_line"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.display_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.dock_position"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.dock_position</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.ds"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.ds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.ds_attr_columns"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.ds_attr_columns</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.ds_item"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.ds_item</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.ds_items"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.ds_items</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.enable_navigation"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.enable_navigation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.enable_variables"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.enable_variables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.excepthook"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.excepthook()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.expand_current_variable"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.expand_current_variable()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.expand_ds_item"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.expand_ds_item()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.export_all_images"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.export_all_images()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.export_animation"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.export_animation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.export_image"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.export_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.export_project"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.export_project()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.export_project_with_data"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.export_project_with_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.export_python"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.export_python()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.fig"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.fig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.filter_sp"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.filter_sp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.get_sp"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.get_sp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.go_to_next_step"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.go_to_next_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.go_to_previous_step"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.go_to_previous_step()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.increase_dim"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.increase_dim()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.load_preset"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.load_preset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.load_variable_desc"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.load_variable_desc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.make_plot"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.make_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.maybe_show_preset"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.maybe_show_preset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.new_dimension_button"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.new_dimension_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.new_plot"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.new_plot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.open_datasets"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.open_datasets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.plot"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.plot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.plot_options"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.plot_options</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.plotmethod"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.plotmethod</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.plotmethod_widget"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.plotmethod_widget</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.plotmethod_widgets"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.plotmethod_widgets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.plotmethods"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.plotmethods</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.plotter"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.plotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.preset"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.preset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.refresh"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.refresh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.reload"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.reload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.replot"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.replot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.reset"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.reset_combo_array"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.reset_combo_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.reset_timer_interval"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.reset_timer_interval()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.save_current_preset"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.save_current_preset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.save_full_preset"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.save_full_preset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.set_dataset"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.set_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.setup_ds_tree"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.setup_ds_tree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.setup_export_menu"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.setup_export_menu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.setup_plot_tabs"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.setup_plot_tabs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.setup_preset_menu"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.setup_preset_menu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.setup_variable_buttons"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.setup_variable_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.showEvent"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.showEvent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.show_current_figure"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.show_current_figure()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.show_fig"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.show_fig()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.silence_variable_buttons"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.silence_variable_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.sp"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.sp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.start_animation"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.start_animation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.stop_animation"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.stop_animation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.switch_tab"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.switch_tab()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.title"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.unset_preset"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.unset_preset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.update_dims"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.update_dims()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.update_project"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.update_project()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.variable"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.variable</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.variable_buttons"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.variable_buttons</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidget.variable_frame"><code class="docutils literal notranslate"><span class="pre">DatasetWidget.variable_frame</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.cids"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.cids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.close_sp"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.close_sp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.dock_position"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.dock_position</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.ds"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.ds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.oncpchange"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.oncpchange()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.open_datasets"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.open_datasets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.position_dock"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.position_dock()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.reload"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.reload()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.setup_ds_tree"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.setup_ds_tree()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.show_fig"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.show_fig()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.sp"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.sp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.title"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.title</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetPlugin.variable_buttons"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetPlugin.variable_buttons</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone.cids"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone.cids</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone.closeEvent"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone.closeEvent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone.ds"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone.ds</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.DatasetWidgetStandAlone.variable_buttons"><code class="docutils literal notranslate"><span class="pre">DatasetWidgetStandAlone.variable_buttons</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.ds_widget.html#psy_view.ds_widget.get_dims_to_iterate"><code class="docutils literal notranslate"><span class="pre">get_dims_to_iterate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.plotmethods.html"><code class="docutils literal notranslate"><span class="pre">GridCell</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.GridCell.colspan"><code class="docutils literal notranslate"><span class="pre">GridCell.colspan</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.GridCell.column"><code class="docutils literal notranslate"><span class="pre">GridCell.column</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.GridCell.from_alias"><code class="docutils literal notranslate"><span class="pre">GridCell.from_alias()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.GridCell.qobject"><code class="docutils literal notranslate"><span class="pre">GridCell.qobject</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.GridCell.stretch"><code class="docutils literal notranslate"><span class="pre">GridCell.stretch</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.add_line"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.add_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.block_combos"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.block_combos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.data"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.edit_labels"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.edit_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.fmt_setup_functions"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.fmt_setup_functions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.get_rows"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.get_rows()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.init_dims"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.init_dims()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.item_texts"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.item_texts</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.plotmethod"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.plotmethod</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.refresh"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.refresh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.remove_line"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.remove_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.setEnabled"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.setEnabled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.setup_dimension_combo"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.setup_dimension_combo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.setup_labels_button"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.setup_labels_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.setup_line_selection"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.setup_line_selection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.valid_variables"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.valid_variables()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.LinePlotWidget.xdim"><code class="docutils literal notranslate"><span class="pre">LinePlotWidget.xdim</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.block_combos"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.block_combos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.choose_next_projection"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.choose_next_projection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.coord_combos"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.coord_combos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.edit_basemap_settings"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.edit_basemap_settings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.edit_color_settings"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.edit_color_settings()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.edit_labels"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.edit_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.fmt_setup_functions"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.fmt_setup_functions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.get_fmts"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.get_fmts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.get_projection_label"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.get_projection_label()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.get_projection_value"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.get_projection_value()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.get_rows"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.get_rows()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.get_slice"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.get_slice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.init_dims"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.init_dims()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.open_cmap_dialog"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.open_cmap_dialog()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.plotmethod"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.plotmethod</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.refresh"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.refresh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.refresh_from_sp"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.refresh_from_sp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.setEnabled"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.setEnabled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.set_cmap"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.set_cmap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.set_combo_text"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.set_combo_text()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.set_plot_type"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.set_plot_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.set_projection"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.set_projection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.set_xcoord"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.set_xcoord()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.set_ycoord"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.set_ycoord()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.setup_cmap_menu"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.setup_cmap_menu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.setup_color_buttons"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.setup_color_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.setup_dimension_box"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.setup_dimension_box()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.setup_labels_button"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.setup_labels_button()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.setup_plot_buttons"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.setup_plot_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.setup_projection_buttons"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.setup_projection_buttons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.setup_projection_menu"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.setup_projection_menu()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.sp"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.sp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.toggle_datagrid"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.toggle_datagrid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.transform"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.transform()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.valid_variables"><code class="docutils literal notranslate"><span class="pre">MapPlotWidget.valid_variables()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget.edit_labels"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget.edit_labels()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget.fmt_setup_functions"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget.fmt_setup_functions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget.plotmethod"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget.plotmethod</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget.refresh_from_sp"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget.refresh_from_sp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget.setEnabled"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget.setEnabled()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.Plot2DWidget.transform"><code class="docutils literal notranslate"><span class="pre">Plot2DWidget.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.array_info"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.array_info</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.changed"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.changed</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.data"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.data</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.fmt_setup_functions"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.fmt_setup_functions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.formatoption_rows"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.formatoption_rows</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.formatoptions"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.formatoptions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.get_fmts"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.get_fmts()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.get_rows"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.get_rows()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.get_slice"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.get_slice()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.init_dims"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.init_dims()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.layout"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.layout</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.plotmethod"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.plotmethod</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.plotter"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.plotter</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.refresh"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.refresh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.replot"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.replot</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.reset"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.reset</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.setup"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.setup()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.setup_separation_line"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.setup_separation_line()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.setup_widget_grid"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.setup_widget_grid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.setup_widgets"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.setup_widgets()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.sp"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.sp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.trigger_refresh"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.trigger_refresh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.trigger_replot"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.trigger_replot()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.trigger_reset"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.trigger_reset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotMethodWidget.valid_variables"><code class="docutils literal notranslate"><span class="pre">PlotMethodWidget.valid_variables()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotType"><code class="docutils literal notranslate"><span class="pre">PlotType</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotType.contour"><code class="docutils literal notranslate"><span class="pre">PlotType.contour</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotType.contourf"><code class="docutils literal notranslate"><span class="pre">PlotType.contourf</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotType.mesh"><code class="docutils literal notranslate"><span class="pre">PlotType.mesh</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.PlotType.poly"><code class="docutils literal notranslate"><span class="pre">PlotType.poly</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.QHLine"><code class="docutils literal notranslate"><span class="pre">QHLine</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.plotmethods.html#psy_view.plotmethods.projection_map"><code class="docutils literal notranslate"><span class="pre">projection_map</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.rcsetup.html"><code class="docutils literal notranslate"><span class="pre">PsyViewRcParams</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.rcsetup.html#psy_view.rcsetup.PsyViewRcParams.HEADER"><code class="docutils literal notranslate"><span class="pre">PsyViewRcParams.HEADER</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.rcsetup.html#psy_view.rcsetup.PsyViewRcParams.load_from_file"><code class="docutils literal notranslate"><span class="pre">PsyViewRcParams.load_from_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.utils.html"><code class="docutils literal notranslate"><span class="pre">QRightPushButton</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.utils.html#psy_view.utils.QRightPushButton.mousePressEvent"><code class="docutils literal notranslate"><span class="pre">QRightPushButton.mousePressEvent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/psy_view.utils.html#psy_view.utils.QRightPushButton.rightclicked"><code class="docutils literal notranslate"><span class="pre">QRightPushButton.rightclicked</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.utils.html#psy_view.utils.add_pushbutton"><code class="docutils literal notranslate"><span class="pre">add_pushbutton()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/psy_view.utils.html#psy_view.utils.get_icon"><code class="docutils literal notranslate"><span class="pre">get_icon()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <!--
+SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+
+SPDX-License-Identifier: CC-BY-4.0
+-->
+
+<footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="command_line.html" class="btn btn-neutral float-left" title="Command line usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/psy_view.html" class="btn btn-neutral float-right" title="psy_view package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021-2024 Helmholtz-Zentrum hereon GmbH.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
+
+<div class="footer">
+    <span class="creativecommons">
+    <a href="https://creativecommons.org/licenses/by/4.0/" >
+    <img style="height: 1.5em;" src="_static/license_logo.png" border="0" alt="Creative Commons License"/>
+    </a>
+    This documentation is licensed under
+    <a href="https://creativecommons.org/licenses/by/4.0/">
+    CC-BY-4.0
+    </a>
+    </span>
+</div>
+
+
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,6 +1,3 @@
-psy\_view.ds\_widget module
-===========================
-
 .. automodule:: psy_view.ds_widget
    :members:
    :undoc-members:
