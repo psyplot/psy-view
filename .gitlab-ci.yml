@@ -56,6 +56,7 @@ test:
 test-docs:
   stage: test
   variables:
+    MPLBACKEND: "module://psyplot_gui.backend"
     # disable sandboxing, otherwise chrome reports errors when the
     # container runs as root
     # https://doc.qt.io/qt-5/qtwebengine-platform-notes.html#sandboxing-support
