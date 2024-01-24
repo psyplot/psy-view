@@ -109,5 +109,5 @@ creating a new issue at https://github.com/psyplot/psy-view/issues/
 .. _PyQt5: https://riverbankcomputing.com/software/pyqt
 .. _cartopy: https://scitools.org.uk/cartopy/docs/latest
 .. _psyplot GUI: https://psyplot.github.io/psyplot-gui/
-.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _ICON: https://code.mpimet.mpg.de/projects/iconpublic
 .. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/

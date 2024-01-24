@@ -42,7 +42,7 @@ Some of the most important features offered by psy-view are:
 
 Interested? Read more in the section :ref:`psy-view-vs-ncview`.
 
-.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _ICON: https://code.mpimet.mpg.de/projects/iconpublic
 .. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/
 .. _psyplot-gui: https://psyplot.github.io/psyplot-gui
 

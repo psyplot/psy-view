@@ -110,7 +110,7 @@ Some of the most important features offered by psy-view are:
 - different projections
 - implemented in psyplot-gui_ for full flexibility (if desired)
 
-.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _ICON: https://code.mpimet.mpg.de/projects/iconpublic
 .. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/
 .. _psyplot-gui: https://psyplot.github.io/psyplot-gui
 
