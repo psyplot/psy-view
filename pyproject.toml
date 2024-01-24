@@ -108,7 +108,8 @@ docs = [
     "sphinx-rtd-theme",
     "hereon-netcdf-sphinxext",
     "sphinx-design",
-
+    "dask",
+    "sphinx-argparse",
 ]
 dev = [
     "psy-view[testsite]",
