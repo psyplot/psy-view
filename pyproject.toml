@@ -126,7 +126,11 @@ zip-safe = false
 license-files = ["LICENSES/*"]
 
 [tool.setuptools.package-data]
-psy_view = ["py.typed"]
+psy_view = [
+    "py.typed",
+    "psy_view/icons/*.png",
+    "psy_view/icons/*.png.license",
+]
 
 [tool.setuptools.packages.find]
 namespaces = false

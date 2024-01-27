@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 include README.rst
-include LICENSE
+include LICENSES/*
 include psy_view/icons/*.png
-include versioneer.py
+include psy_view/icons/*.png.license
 include psy_view/_version.py
