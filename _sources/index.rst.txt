@@ -140,9 +140,8 @@ Indices and tables
    :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/graphs/main/charts
 .. |Latest Release| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/-/badges/release.svg
    :target: https://codebase.helmholtz.cloud/psyplot/psy-view
-.. .. TODO: uncomment the following line when the package is published at https://pypi.org
-.. .. |PyPI version| image:: https://img.shields.io/pypi/v/psy-view.svg
-..    :target: https://pypi.python.org/pypi/psy-view/
+.. |PyPI version| image:: https://img.shields.io/pypi/v/psy-view.svg
+   :target: https://pypi.python.org/pypi/psy-view/
 .. |Code style: black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
    :target: https://github.com/psf/black
 .. |Imports: isort| image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
