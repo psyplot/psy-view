@@ -1,0 +1,166 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: CC0-1.0
+
+[build-system]
+build-backend = 'setuptools.build_meta'
+requires = ['setuptools >= 61.0', 'versioneer[toml]']
+
+[project]
+name = "psy-view"
+dynamic = ["version"]
+description = "ncview-like interface to psyplot"
+
+readme = "README.md"
+keywords = [
+    "visualization",
+
+    "psyplot",
+
+    "netcdf",
+
+    "raster",
+
+    "cartopy",
+
+    "earth-sciences",
+
+    "pyqt",
+
+    "qt",
+
+    "ipython",
+
+    "jupyter",
+
+    "qtconsole",
+
+    "ncview",
+    ]
+
+authors = [
+    { name = 'Philipp S. Sommer', email = 'philipp.sommer@hereon.de' },
+]
+maintainers = [
+    { name = 'Philipp S. Sommer', email = 'philipp.sommer@hereon.de' },
+]
+license = { text = 'LGPL-3.0-only' }
+
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Scientific/Engineering",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Typing :: Typed",
+]
+
+requires-python = '>= 3.9'
+dependencies = [
+    "psyplot",
+    # add your dependencies here
+    "netCDF4",
+    "psyplot-gui>1.3.0",
+    "psy-maps>1.3.0",
+]
+
+[project.urls]
+Homepage = 'https://codebase.helmholtz.cloud/psyplot/psy-view'
+Documentation = "https://psyplot.github.io/psy-view"
+Source = "https://codebase.helmholtz.cloud/psyplot/psy-view"
+Tracker = "https://codebase.helmholtz.cloud/psyplot/psy-view/issues/"
+
+
+
+[project.scripts]
+psy-view = "psy_view:main"
+
+
+[project.entry-points."psyplot_gui"]
+psy-view = "psy_view.ds_widget:DatasetWidgetPlugin"
+
+[project.optional-dependencies]
+testsite = [
+    "tox",
+    "isort==5.12.0",
+    "black==23.1.0",
+    "blackdoc==0.3.8",
+    "flake8==6.0.0",
+    "pre-commit",
+    "mypy",
+    "pytest-cov",
+    "reuse",
+    "cffconvert",
+    "types-PyYAML",
+    "types-docutils",
+    "dask",
+    "pytest-qt",
+]
+docs = [
+    "autodocsumm",
+    "sphinx-rtd-theme",
+    "hereon-netcdf-sphinxext",
+    "sphinx-design",
+    "dask",
+    "sphinx-argparse",
+]
+dev = [
+    "psy-view[testsite]",
+    "psy-view[docs]",
+    "PyYAML",
+]
+
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.setuptools]
+zip-safe = false
+license-files = ["LICENSES/*"]
+
+[tool.setuptools.package-data]
+psy_view = [
+    "py.typed",
+    "psy_view/icons/*.png",
+    "psy_view/icons/*.png.license",
+]
+
+[tool.setuptools.packages.find]
+namespaces = false
+exclude = [
+    'docs',
+    'tests*',
+    'examples'
+]
+
+[tool.pytest.ini_options]
+addopts = '-v'
+
+[tool.versioneer]
+VCS = 'git'
+style = 'pep440'
+versionfile_source = 'psy_view/_version.py'
+versionfile_build = 'psy_view/_version.py'
+tag_prefix = 'v'
+parentdir_prefix = 'psy-view-'
+
+[tool.isort]
+profile = "black"
+line_length = 79
+src_paths = ["psy_view"]
+float_to_top = true
+known_first_party = "psy_view"
+
+[tool.black]
+line-length = 79
+target-version = ['py39']
+
+[tool.coverage.run]
+omit = ["psy_view/_version.py"]

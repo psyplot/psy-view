@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -10,66 +14,62 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-
-# Disclaimer
-# ----------
-#
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-#
-# This file is part of psy-view and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
 import os
 import os.path as osp
-import shutil
-import re
+import sys
 import warnings
-
-import subprocess as spr
+from pathlib import Path
+from typing import Optional
 
 # note: we need to import pyplot here, because otherwise it might fail to load
 # the ipython extension
-import matplotlib.pyplot as plt
-
+import matplotlib.pyplot as plt  # noqa: F401
 from docutils import nodes
-from docutils.statemachine import StringList
 from docutils.parsers.rst import directives
 from docutils.parsers.rst.directives import images
-
+from docutils.statemachine import StringList
+from sphinx.ext import apidoc
 from sphinx.util.docutils import SphinxDirective
+
+sys.path.insert(0, os.path.abspath(".."))
 
 warnings.filterwarnings("ignore", message=r"\s*Downloading:")
 
-# -- Project information -----------------------------------------------------
+if not os.path.exists("_static"):
+    os.makedirs("_static")
+
+# isort: off
 
 import psy_view
 
-confdir = osp.dirname(__file__)
-
-project = 'psy-view'
-copyright = ", ".join(
-    psy_view.__copyright__.strip().replace("Copyright (C) ", "").splitlines()
-)
-author = psy_view.__author__
+# isort: on
 
 
-version = re.match(r'\d+\.\d+\.\d+', psy_view.__version__).group()  # type: ignore
-# The full version, including alpha/beta/rc tags.
-release = psy_view.__version__
+def generate_apidoc(app):
+    appdir = Path(app.__file__).parent
+    apidoc.main(
+        ["-fMEeTo", str(api), str(appdir), str(appdir / "migrations" / "*")]
+    )
+
+
+api = Path("api")
+
+if not api.exists():
+    generate_apidoc(psy_view)
+
+# -- Project information -----------------------------------------------------
+
+project = "psy-view"
+copyright = "2021-2024 Helmholtz-Zentrum hereon GmbH"
+author = "Philipp S. Sommer"
+
+
+linkcheck_ignore = [
+    # we do not check link of the psy-view as the
+    # badges might not yet work everywhere. Once psy-view
+    # is settled, the following link should be removed
+    r"https://.*psy-view"
+]
 
 
 # -- General configuration ---------------------------------------------------
@@ -78,107 +78,90 @@ release = psy_view.__version__
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.viewcode',
-    'IPython.sphinxext.ipython_console_highlighting',
-    'IPython.sphinxext.ipython_directive',
-    'sphinxarg.ext',
-    'psyplot.sphinxext.extended_napoleon',
-    'autodocsumm',
-    'sphinx.ext.todo',
+    "hereon_nc_sphinxext",
+    "sphinx.ext.intersphinx",
+    "sphinx_design",
+    "sphinx.ext.todo",
+    "autodocsumm",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.viewcode",
+    "IPython.sphinxext.ipython_console_highlighting",
+    "IPython.sphinxext.ipython_directive",
+    "sphinxarg.ext",
+    "psyplot.sphinxext.extended_napoleon",
 ]
 
 rebuild_screenshots = False
 
-todo_include_todos = True
+confdir = osp.dirname(__file__)
+
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
-
-# create the api documentation
-if not osp.exists(osp.join(osp.dirname(__file__), 'api')):
-    spr.check_call(['bash', 'apigen.bash'])
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+
+
+autodoc_default_options = {
+    "show_inheritance": True,
+    "members": True,
+    "autosummary": True,
+}
 
 
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
+
+html_theme_options = {
+    "collapse_navigation": False,
+    "includehidden": False,
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
 
-autodoc_default_options = {
-    'show_inheritance': True,
-    'autosummary': True,
-    }
 
-not_document_data = ['psy_view.rcsetup.defaultParams',
-                     'psy_view.rcsetup.rcParams']
-
-# -- Options for LaTeX output ---------------------------------------------
-
-latex_elements = {
-    # Additional stuff for the LaTeX preamble.
-    'preamble': r'\setcounter{tocdepth}{10}'
-}
-
-master_doc = 'index'
-
-# Grouping the document tree into LaTeX files. List of tuples
-# (source start file, target name, title,
-#  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-  (master_doc, 'psy-view.tex', u'psy-view Documentation',
-   u'Philipp S. Sommer', 'manual'),
-]
-
-# -- Options for Epub output ----------------------------------------------
-
-# Bibliographic Dublin Core info.
-epub_title = project
-epub_author = author
-epub_publisher = author
-epub_copyright = copyright
-
-# A list of files that should not be packed into the epub file.
-epub_exclude_files = ['search.html']
-
-# Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
-    'numpy': ('https://numpy.org/doc/stable/', None),
-    'matplotlib': ('https://matplotlib.org/stable/', None),
-    'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
-    'xarray': ('https://xarray.pydata.org/en/stable/', None),
-    'cartopy': ('https://scitools.org.uk/cartopy/docs/latest/', None),
-    'psyplot': ('https://psyplot.github.io/psyplot/', None),
-    'psy_simple': ('https://psyplot.github.io/psy-simple/', None),
-    'psy_maps': ('https://psyplot.github.io/psy-maps/', None),
-    'psyplot_gui': ('https://psyplot.github.io/psyplot-gui/', None),
+    "python": ("https://docs.python.org/3/", None),
+    "pandas": ("https://pandas.pydata.org/pandas-docs/stable/", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "matplotlib": ("https://matplotlib.org/stable/", None),
+    "sphinx": ("https://www.sphinx-doc.org/en/master/", None),
+    "xarray": ("https://xarray.pydata.org/en/stable/", None),
+    "cartopy": ("https://scitools.org.uk/cartopy/docs/latest/", None),
+    "psyplot": ("https://psyplot.github.io/psyplot/", None),
+    "psy_simple": ("https://psyplot.github.io/psy-simple/", None),
+    "psy_maps": ("https://psyplot.github.io/psy-maps/", None),
+    "psyplot_gui": ("https://psyplot.github.io/psyplot-gui/", None),
 }
 
 
 def create_screenshot(
-        code: str, output: str, make_plot: bool = False, enable: bool = None,
-        plotmethod: str = "mapplot", minwidth=None,
-        generate=rebuild_screenshots,
-    ) -> str:
+    code: str,
+    output: str,
+    make_plot: bool = False,
+    enable: Optional[bool] = None,
+    plotmethod: str = "mapplot",
+    minwidth=None,
+    generate=rebuild_screenshots,
+) -> str:
     """Generate a screenshot of the GUI."""
-    from PyQt5.QtWidgets import QApplication, QSizePolicy  # pylint: disable=no-name-in-module
-    from psy_view.ds_widget import DatasetWidget
     from psyplot.data import open_dataset
+    from PyQt5.QtWidgets import (  # pylint: disable=no-name-in-module
+        QApplication,
+        QSizePolicy,
+    )
+
+    from psy_view.ds_widget import DatasetWidget
 
     output = osp.join("_static", output)
 
@@ -200,7 +183,7 @@ def create_screenshot(
 
     options = {"ds_widget": ds_widget}
     exec("w = " + code, options)
-    w = options['w']
+    w = options["w"]
 
     if enable is not None:
         w.setEnabled(enable)
@@ -250,7 +233,7 @@ class ScreenshotDirective(SphinxDirective):
         if line.strip():  # not a blank line
             self.result.append(line, *source)
         else:
-            self.result.append('', *source)
+            self.result.append("", *source)
 
     def generate(self) -> None:
         """Generate the content."""
@@ -267,12 +250,14 @@ class ScreenshotDirective(SphinxDirective):
         enable = True if self.options.pop("enable", False) is None else None
 
         rebuild_screenshot = (
-            self.options.pop("generate", False) or
-            self.env.app.config.rebuild_screenshots
+            self.options.pop("generate", False)
+            or self.env.app.config.rebuild_screenshots
         )
 
         self.img_name = create_screenshot(
-            *self.arguments, make_plot=make_plot, enable=enable,
+            *self.arguments,
+            make_plot=make_plot,
+            enable=enable,
             plotmethod=self.options.pop("plotmethod", None) or "mapplot",
             minwidth=self.options.pop("minwidth", None),
             generate=rebuild_screenshot,
@@ -307,14 +292,14 @@ class ScreenshotFigureDirective(ScreenshotDirective):
         super().generate()
 
         if self.content:
-            self.add_line('')
+            self.add_line("")
             indent = "    "
             for line in self.content:
                 self.add_line(indent + line)
 
 
 def setup(app):
-    app.add_directive('screenshot', ScreenshotDirective)
+    app.add_directive("screenshot", ScreenshotDirective)
     app.add_directive("screenshot-figure", ScreenshotFigureDirective)
-    app.add_config_value('rebuild_screenshots', rebuild_screenshots, 'env')
+    app.add_config_value("rebuild_screenshots", rebuild_screenshots, "env")
     app.add_css_file("theme_overrides.css")

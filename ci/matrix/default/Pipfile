@@ -1,0 +1,27 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: CC0-1.0
+
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+psy-view = {extras = ["testsite"], file = "../../.."}
+psyplot = {ref = "develop", git = "git+https://codebase.helmholtz.cloud/psyplot/psyplot.git"}
+matplotlib = "3.7.*"
+psyplot-gui = {ref = "develop", git = "git+https://codebase.helmholtz.cloud/psyplot/psyplot-gui.git"}
+PyQt5 = {version="*"}
+PyQtWebEngine = {version="*"}
+psy-simple = {ref = "develop", git = "git+https://codebase.helmholtz.cloud/psyplot/psy-simple.git"}
+psy-maps = {ref = "develop", git = "git+https://codebase.helmholtz.cloud/psyplot/psy-maps.git"}
+
+
+[dev-packages]
+
+[pipenv]
+allow_prereleases = true
+
+[requires]
+python_version = "3.9"

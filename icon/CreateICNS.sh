@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: LGPL-3.0-only
+
 mkdir main.iconset
 sips -z 16 16     icon1024.png --out main.iconset/icon_16x16.png
 sips -z 32 32     icon1024.png --out main.iconset/icon_16x16@2x.png
