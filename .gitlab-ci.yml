@@ -87,10 +87,11 @@ deploy-package:
     - pip install twine
     - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
 
+
 deploy-docs:
   stage: deploy
   only:
-    - package-template
+    - master
   needs:
     - test-docs
   image: node:21
@@ -98,6 +99,12 @@ deploy-docs:
     - npm install -g gh-pages@6.1.1
     - mkdir .gh-pages-cache
   script:
+    # make sure, the DEPLOY_TOKEN is defined
+    - >-
+      [ ${CI_DEPLOY_TOKEN} ] ||
+      echo "The CI_DEPLOY_TOKEN variable is not set. Please create an access
+      token with scope 'read_repository' and 'write_repository'" &&
+      [ ${CI_DEPLOY_TOKEN} ]
     - >-
       CACHE_DIR=$(realpath .gh-pages-cache)
       gh-pages
@@ -105,6 +112,6 @@ deploy-docs:
       --nojekyll
       --branch gh-pages
       --repo https://ci-user:${CI_DEPLOY_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git
-      --user "ci-build <ci-build@psyplot.org>"
+      --user "${CI_COMMIT_AUTHOR}"
       --message "CI Pipeline ${CI_PIPELINE_ID}, commit ${CI_COMMIT_SHORT_SHA}"
       --dist docs/_build/html

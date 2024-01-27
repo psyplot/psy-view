@@ -1,6 +1,6 @@
 {
   "template": "https://codebase.helmholtz.cloud/psyplot/psyplot-plugin-template.git",
-  "commit": "6d0e2d762404a8f7e99e0bf2ef99df472322a688",
+  "commit": "62c628c674047d0d592f0abc10430a0426082609",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -29,7 +29,7 @@
       "ci_matrix": "pipenv",
       "requires_gui": "yes",
       "deploy_package_in_ci": "yes",
-      "deploy_pages_in_ci": "no",
+      "deploy_pages_in_ci": "git-push",
       "_extensions": [
         "local_extensions.UnderlinedExtension"
       ],
