@@ -1,109 +1,32 @@
-.. psy-view documentation master file, created by
-   sphinx-quickstart on Wed Jul  8 21:08:22 2020.
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
+.. psy-view documentation master file
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. _psy-view:
+Welcome to psy-view's documentation!
+====================================
 
-Welcome to psy-view!
-====================
+|CI|
+|Code coverage|
+|Latest Release|
+|PyPI version|
+|Code style: black|
+|Imports: isort|
+|PEP8|
+|Checked with mypy|
+|REUSE status|
 
-.. image:: _static/screenshot.png
-    :width: 50%
-    :alt: GUI screenshot
-    :align: center
-
-*psy-view* defines a viewer application for netCDF files, that is highly
-motivated by the ncview_ software but entirely built upon the psyplot framework.
-It supports strucutured and unstructured grids and provides an intuitive
-graphical user interface to quickly dive into the data inside a netCDF file.
-
-.. _ncview: http://meteora.ucsd.edu/~pierce/ncview_home_page.html
+.. rubric:: ncview-like interface to psyplot
 
 .. warning::
 
-    This package is currently under development and we highly appreciate your
-    feedback! Please try it out yourself and, if you would like to see more features,
-    find bugs or want to say anything else, please leave your comments and
-    experiences at https://github.com/psyplot/psy-view/issues or send a mail to
-    psyplot@hzg.de.
-
-.. start-badges
-
-.. only:: html and not epub
-
-    .. list-table::
-        :stub-columns: 1
-        :widths: 10 90
-
-        * - docs
-          - |docs| |mybinder|
-        * - tests
-          - |circleci| |appveyor| |codecov|
-        * - package
-          - |version| |conda| |github| |zenodo|
-        * - implementations
-          - |supported-versions| |supported-implementations|
-        * - get in touch
-          - |gitter| |mailing-list| |issues|
-
-    .. |docs| image:: https://img.shields.io/github/deployments/psyplot/psy-view/github-pages
-        :alt: Documentation
-        :target: http://psyplot.github.io/psy-view/
-
-    .. |mybinder| image:: https://mybinder.org/badge_logo.svg
-        :target: https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop
-        :alt: mybinder.org
-
-    .. |circleci| image:: https://circleci.com/gh/psyplot/psy-view/tree/master.svg?style=svg
-        :alt: CircleCI
-        :target: https://circleci.com/gh/psyplot/psy-view/tree/master
-
-    .. |appveyor| image:: https://ci.appveyor.com/api/projects/status/a7qxvvwt0e41j32h/branch/master?svg=true
-        :alt: AppVeyor
-        :target: https://ci.appveyor.com/project/psyplot/psy-view/branch/master
-
-    .. |codecov| image:: https://codecov.io/gh/psyplot/psy-view/branch/master/graph/badge.svg
-        :alt: Coverage
-        :target: https://codecov.io/gh/psyplot/psy-view
-
-    .. |conda| image:: https://anaconda.org/conda-forge/psy-view/badges/version.svg
-        :alt: conda
-        :target: https://anaconda.org/conda-forge/psy-view
-
-    .. |github| image:: https://img.shields.io/github/release/psyplot/psy-view.svg
-        :target: https://github.com/psyplot/psy-view/releases/latest
-        :alt: Latest github release
-
-    .. |version| image:: https://img.shields.io/pypi/v/psy-view.svg?style=flat
-        :alt: PyPI Package latest release
-        :target: https://pypi.python.org/pypi/psy-view
-
-    .. |supported-versions| image:: https://img.shields.io/pypi/pyversions/psy-view.svg?style=flat
-        :alt: Supported versions
-        :target: https://pypi.python.org/pypi/psy-view
-
-    .. |supported-implementations| image:: https://img.shields.io/pypi/implementation/psy-view.svg?style=flat
-        :alt: Supported implementations
-        :target: https://pypi.python.org/pypi/psy-view
-
-    .. |gitter| image:: https://img.shields.io/gitter/room/psyplot/community.svg?style=flat
-        :target: https://gitter.im/psyplot/community
-        :alt: Gitter
-
-    .. |mailing-list| image:: https://img.shields.io/badge/join-mailing%20list-brightgreen.svg?style=flat
-        :target: https://www.listserv.dfn.de/sympa/subscribe/psyplot
-        :alt: DFN mailing list
-
-    .. |issues| image:: https://img.shields.io/github/issues-raw/psyplot/psy-view.svg?style=flat
-        :target: https://github.com/psyplot/psy-view/issues
-        :alt: GitHub issues
-
-    .. |zenodo| image:: https://zenodo.org/badge/249615633.svg
-        :alt: Zenodo
-        :target: https://zenodo.org/badge/latestdoi/249615633
-
-.. end-badges
+    This page has been automatically generated as has not yet been reviewed by
+    the authors of psy-view!
+    Stay tuned for updates and discuss with us at
+    https://codebase.helmholtz.cloud/psyplot/psy-view
 
 Features
 --------
@@ -119,9 +42,12 @@ Some of the most important features offered by psy-view are:
 
 Interested? Read more in the section :ref:`psy-view-vs-ncview`.
 
-.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _ICON: https://code.mpimet.mpg.de/projects/iconpublic
 .. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/
 .. _psyplot-gui: https://psyplot.github.io/psyplot-gui
+
+
+
 
 .. toctree::
    :maxdepth: 2
@@ -132,7 +58,8 @@ Interested? Read more in the section :ref:`psy-view-vs-ncview`.
    user-guide
    ncview
    command_line
-   api/psy_view
+   api
+   contributing
    todo
 
 
@@ -155,6 +82,48 @@ information and a guide about good bug reports.
 .. _contribution guide: https://github.com/psyplot/psyplot/blob/master/CONTRIBUTING.md
 
 
+How to cite this software
+-------------------------
+
+.. card:: Please do cite this software!
+
+   .. tab-set::
+
+      .. tab-item:: APA
+
+         .. citation-info::
+            :format: apalike
+
+      .. tab-item:: BibTex
+
+         .. citation-info::
+            :format: bibtex
+
+      .. tab-item:: RIS
+
+         .. citation-info::
+            :format: ris
+
+      .. tab-item:: Endnote
+
+         .. citation-info::
+            :format: endnote
+
+      .. tab-item:: CFF
+
+         .. citation-info::
+            :format: cff
+
+
+License information
+-------------------
+Copyright © 2021-2024 Helmholtz-Zentrum hereon GmbH
+
+The source code of psy-view is licensed under
+LGPL-3.0-only.
+
+If not stated otherwise, the contents of this documentation is licensed under
+CC-BY-4.0.
 
 
 Indices and tables
@@ -163,3 +132,24 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
+.. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/main/pipeline.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/pipelines?page=1&scope=all&ref=main
+.. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/main/coverage.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/graphs/main/charts
+.. |Latest Release| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/-/badges/release.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view
+.. |PyPI version| image:: https://img.shields.io/pypi/v/psy-view.svg
+   :target: https://pypi.python.org/pypi/psy-view/
+.. |Code style: black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://github.com/psf/black
+.. |Imports: isort| image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
+   :target: https://pycqa.github.io/isort/
+.. |PEP8| image:: https://img.shields.io/badge/code%20style-pep8-orange.svg
+   :target: https://www.python.org/dev/peps/pep-0008/
+.. |Checked with mypy| image:: http://www.mypy-lang.org/static/mypy_badge.svg
+   :target: http://mypy-lang.org/
+.. TODO: uncomment the following line when the package is registered at https://api.reuse.software
+.. .. |REUSE status| image:: https://api.reuse.software/badge/codebase.helmholtz.cloud/psyplot/psy-view
+..    :target: https://api.reuse.software/info/codebase.helmholtz.cloud/psyplot/psy-view

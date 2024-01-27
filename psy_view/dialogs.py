@@ -1,45 +1,21 @@
 """Dialogs for manipulating formatoptions."""
 
-# Disclaimer
-# ----------
+# SPDX-FileCopyrightText: 2020-2021 Helmholtz-Zentrum Geesthacht
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
 #
-# Copyright (C) 2021 Helmholtz-Zentrum Hereon
-# Copyright (C) 2020-2021 Helmholtz-Zentrum Geesthacht
-#
-# This file is part of psy-view and is released under the GNU LGPL-3.O license.
-# See COPYING and COPYING.LESSER in the root of the repository for full
-# licensing details.
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License version 3.0 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU LGPL-3.0 license for more details.
-#
-# You should have received a copy of the GNU LGPL-3.0 license
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: LGPL-3.0-only
 
 from __future__ import annotations
-from typing import (
-    TYPE_CHECKING,
-    Dict,
-    Any,
-    Optional,
-    Tuple,
-    Union,
-    Type,
-)
+
+from typing import TYPE_CHECKING, Any, Dict, Optional, Tuple, Type, Union
 
 import yaml
-from PyQt5 import QtWidgets, QtGui
 from matplotlib.backends.backend_qt5agg import (
-    FigureCanvasQTAgg as FigureCanvas)
+    FigureCanvasQTAgg as FigureCanvas,
+)
 from matplotlib.figure import Figure
-
-from psyplot.plotter import Plotter, Formatoption
+from psyplot.plotter import Formatoption, Plotter
+from PyQt5 import QtGui, QtWidgets
 
 if TYPE_CHECKING:
     from psyplot.project import Project
@@ -66,13 +42,14 @@ class BasemapDialog(QtWidgets.QDialog):
         plotter: psy_maps.plotters.MapPlotter
             The psyplot plotter to configure
         """
-        import psy_simple.widgets.colors as pswc
         import pandas as pd
+        import psy_simple.widgets.colors as pswc
+
         super().__init__(*args, **kwargs)
         vbox = QtWidgets.QVBoxLayout(self)
 
         #: colors that affect the map background
-        self.colors = ['background', 'land', 'ocean', 'coast']
+        self.colors = ["background", "land", "ocean", "coast"]
 
         #: QGridLayout to display the various colors
         grid = QtWidgets.QGridLayout()
@@ -81,7 +58,8 @@ class BasemapDialog(QtWidgets.QDialog):
 
         #: :class:`pandas.DataFrame` of widgets to modifiy the :attr:`colors`
         self.widgets = widgets = pd.DataFrame(
-            index=['enable', 'color'], columns=self.colors, dtype=object)
+            index=["enable", "color"], columns=self.colors, dtype=object
+        )
 
         for i, col in enumerate(self.colors):
             widgets.iloc[0, i] = cb = QtWidgets.QCheckBox()
@@ -100,7 +78,8 @@ class BasemapDialog(QtWidgets.QDialog):
         #: Button box to cancel the operator or update the plotter
         self.button_box = QtWidgets.QDialogButtonBox(
             QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
-            self)
+            self,
+        )
 
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
@@ -110,23 +89,23 @@ class BasemapDialog(QtWidgets.QDialog):
 
         #: text box for the central longitude (clon formatoption)
         self.txt_clon = QtWidgets.QLineEdit()
-        self.txt_clon.setPlaceholderText('auto')
-        self.txt_clon.setToolTip('Central longitude in degrees East')
+        self.txt_clon.setPlaceholderText("auto")
+        self.txt_clon.setToolTip("Central longitude in degrees East")
         self.txt_clon.setValidator(QtGui.QDoubleValidator(-360, 360, 7))
-        layout.addRow('Central longitude: ', self.txt_clon)
+        layout.addRow("Central longitude: ", self.txt_clon)
 
         #: text box for the central latitude (clat formatoption)
         self.txt_clat = QtWidgets.QLineEdit()
-        self.txt_clat.setPlaceholderText('auto')
-        self.txt_clat.setToolTip('Central latitude in degrees North')
+        self.txt_clat.setPlaceholderText("auto")
+        self.txt_clat.setToolTip("Central latitude in degrees North")
         self.txt_clat.setValidator(QtGui.QDoubleValidator(-90, 90, 7))
-        layout.addRow('Central latitude: ', self.txt_clat)
+        layout.addRow("Central latitude: ", self.txt_clat)
 
         vbox.addWidget(proj_box)
 
         #: group box for modifying the resolution of the land-sea-mask, see
         #: :attr:`opt_110m`, :attr:`opt_50m`, :attr:`opt_10m`
-        self.lsm_box = QtWidgets.QGroupBox('Coastlines')
+        self.lsm_box = QtWidgets.QGroupBox("Coastlines")
         self.lsm_box.setCheckable(True)
         hbox = QtWidgets.QHBoxLayout(self.lsm_box)
         hbox.addWidget(QtWidgets.QLabel("Resolution:"))
@@ -146,9 +125,10 @@ class BasemapDialog(QtWidgets.QDialog):
         vbox.addWidget(self.lsm_box)
 
         #: group box drawing grid lines and labels
-        self.grid_labels_box = QtWidgets.QGroupBox('Labels')
-        self.grid_labels_box.setToolTip("Draw labels of meridionals and "
-                                        "parallels")
+        self.grid_labels_box = QtWidgets.QGroupBox("Labels")
+        self.grid_labels_box.setToolTip(
+            "Draw labels of meridionals and " "parallels"
+        )
         self.grid_labels_box.setCheckable(True)
 
         #: text box for the fontsize of grid labels
@@ -162,7 +142,7 @@ class BasemapDialog(QtWidgets.QDialog):
         #: Group box for options specific to meridionals (see
         #: :attr:`opt_meri_auto`, :attr:`opt_meri_at` and
         #: :attr:`opt_meri_every`, :attr:`opt_meri_num`)
-        self.meridionals_box = QtWidgets.QGroupBox('Meridionals')
+        self.meridionals_box = QtWidgets.QGroupBox("Meridionals")
         self.meridionals_box.setCheckable(True)
 
         #: Radiobutton for automatic drawing of meridionals
@@ -209,7 +189,7 @@ class BasemapDialog(QtWidgets.QDialog):
         #: Group box for options specific to parallels (see
         #: :attr:`opt_para_auto`, :attr:`opt_para_at` and
         #: :attr:`opt_para_every`, :attr:`opt_para_num`)
-        self.parallels_box = QtWidgets.QGroupBox('Parallels')
+        self.parallels_box = QtWidgets.QGroupBox("Parallels")
         self.parallels_box.setCheckable(True)
 
         #: Radiobutton for automatic drawing of parallels
@@ -257,10 +237,16 @@ class BasemapDialog(QtWidgets.QDialog):
 
         self.fill_from_plotter(plotter)
 
-        for button in [self.opt_meri_at, self.opt_meri_auto, self.opt_meri_num,
-                       self.opt_meri_every, self.opt_para_at,
-                       self.opt_para_auto, self.opt_para_num,
-                       self.opt_para_every]:
+        for button in [
+            self.opt_meri_at,
+            self.opt_meri_auto,
+            self.opt_meri_num,
+            self.opt_meri_every,
+            self.opt_para_at,
+            self.opt_para_auto,
+            self.opt_para_num,
+            self.opt_para_every,
+        ]:
             button.clicked.connect(self.update_forms)
 
     @property
@@ -268,12 +254,13 @@ class BasemapDialog(QtWidgets.QDialog):
         """Get default colors for the color labels in :attr:`widgets`."""
         import cartopy.feature as cf
         import matplotlib as mpl
+
         return {
-            'background': mpl.rcParams['axes.facecolor'],
-            'land': cf.LAND._kwargs['facecolor'],
-            'ocean': cf.OCEAN._kwargs['facecolor'],
-            'coast': 'k',
-            }
+            "background": mpl.rcParams["axes.facecolor"],
+            "land": cf.LAND._kwargs["facecolor"],
+            "ocean": cf.OCEAN._kwargs["facecolor"],
+            "coast": "k",
+        }
 
     def get_colors(self, plotter: Plotter) -> Dict[str, Color]:
         """Get the colors for :attr:`widgets` from the plotter formatoptions.
@@ -290,10 +277,10 @@ class BasemapDialog(QtWidgets.QDialog):
             color in the `plotter`.
         """
         ret = {}
-        if plotter.background.value != 'rc':
-            ret['background'] = plotter.background.value
+        if plotter.background.value != "rc":
+            ret["background"] = plotter.background.value
         lsm = plotter.lsm.value
-        for part in ['land', 'ocean', 'coast']:
+        for part in ["land", "ocean", "coast"]:
             if part in lsm:
                 ret[part] = lsm[part]
         return ret
@@ -326,8 +313,8 @@ class BasemapDialog(QtWidgets.QDialog):
         if not lsm:
             self.lsm_box.setChecked(False)
         else:
-            res = lsm['res']
-            getattr(self, 'opt_' + res).setChecked(True)
+            res = lsm["res"]
+            getattr(self, "opt_" + res).setChecked(True)
 
         grid_labels = plotter.grid_labels.value
         if grid_labels is None:
@@ -352,7 +339,7 @@ class BasemapDialog(QtWidgets.QDialog):
             self.txt_meri_num.setText(str(steps))
         else:
             self.opt_meri_at.setChecked(True)
-            self.txt_meri_at.setText(', '.join(map(str, value)))
+            self.txt_meri_at.setText(", ".join(map(str, value)))
 
         self.ygrid_value = None
         value = plotter.ygrid.value
@@ -371,11 +358,10 @@ class BasemapDialog(QtWidgets.QDialog):
             self.txt_para_num.setText(str(steps))
         else:
             self.opt_para_at.setChecked(True)
-            self.txt_para_at.setText(', '.join(map(str, value)))
+            self.txt_para_at.setText(", ".join(map(str, value)))
 
     def update_forms(self) -> None:
-        """Update text widgets for the options to draw merdionals and parallels.
-        """
+        """Update text widgets for the options to draw merdionals and parallels."""
         if self.meridionals_box.isChecked():
             self.txt_meri_at.setEnabled(self.opt_meri_at.isChecked())
             self.txt_meri_every.setEnabled(self.opt_meri_every.isChecked())
@@ -389,36 +375,43 @@ class BasemapDialog(QtWidgets.QDialog):
     def value(self) -> Dict[str, Any]:
         """Get the formatoptions of this dialog to update a plotter."""
         import numpy as np
+
         ret: Dict[str, Any] = {}
-        ret['clon'] = None if not self.txt_clon.text().strip() else float(
-            self.txt_clon.text().strip())
-        ret['clat'] = None if not self.txt_clat.text().strip() else float(
-            self.txt_clat.text().strip())
+        ret["clon"] = (
+            None
+            if not self.txt_clon.text().strip()
+            else float(self.txt_clon.text().strip())
+        )
+        ret["clat"] = (
+            None
+            if not self.txt_clat.text().strip()
+            else float(self.txt_clat.text().strip())
+        )
 
         lsm: LSM_T = {}
 
-        for col in ['land', 'ocean', 'coast']:
-            lbl = self.widgets.loc['color', col]
+        for col in ["land", "ocean", "coast"]:
+            lbl = self.widgets.loc["color", col]
             if lbl.isEnabled():
                 lsm[col] = list(lbl.color.getRgbF())
 
         if lsm or self.lsm_box.isChecked():
             if self.opt_110m.isChecked():
-                lsm['res'] = '110m'
+                lsm["res"] = "110m"
             elif self.opt_50m.isChecked():
-                lsm['res'] = '50m'
+                lsm["res"] = "50m"
             elif self.opt_10m.isChecked():
-                lsm['res'] = '10m'
+                lsm["res"] = "10m"
             else:
-                lsm['res'] = '110m'
+                lsm["res"] = "110m"
         else:
-            lsm['res'] = False
+            lsm["res"] = False
         if lsm:
-            ret['lsm'] = lsm
+            ret["lsm"] = lsm
 
-        bc_lbl = self.widgets.loc['color', 'background']
+        bc_lbl = self.widgets.loc["color", "background"]
         if bc_lbl.isEnabled():
-            ret['background'] = list(bc_lbl.color.getRgbF())
+            ret["background"] = list(bc_lbl.color.getRgbF())
 
         ret["grid_labels"] = self.grid_labels_box.isChecked()
         if ret["grid_labels"]:
@@ -432,44 +425,54 @@ class BasemapDialog(QtWidgets.QDialog):
                 ret["grid_labelsize"] = labelsize
 
         if not self.meridionals_box.isChecked():
-            ret['xgrid'] = False
+            ret["xgrid"] = False
         elif self.opt_meri_auto.isChecked():
-            ret['xgrid'] = True
+            ret["xgrid"] = True
         elif self.opt_meri_every.isChecked():
-            ret['xgrid'] = np.arange(
-                -180, 180, float(self.txt_meri_every.text().strip() or 30))
+            ret["xgrid"] = np.arange(
+                -180, 180, float(self.txt_meri_every.text().strip() or 30)
+            )
         elif self.opt_meri_at.isChecked():
-            ret['xgrid'] = list(map(
-                float, self.txt_meri_at.text().split(','))) or False
+            ret["xgrid"] = (
+                list(map(float, self.txt_meri_at.text().split(","))) or False
+            )
         elif self.opt_meri_num.isChecked():
             if self.xgrid_value is None:
-                ret['xgrid'] = ['rounded', int(self.txt_meri_num.text() or 5)]
+                ret["xgrid"] = ["rounded", int(self.txt_meri_num.text() or 5)]
             elif isinstance(self.xgrid_value, str):
-                ret['xgrid'] = [self.xgrid_value,
-                                int(self.txt_meri_num.text() or 5)]
+                ret["xgrid"] = [
+                    self.xgrid_value,
+                    int(self.txt_meri_num.text() or 5),
+                ]
             else:
-                ret['xgrid'] = tuple(self.xgrid_value) + (
-                    int(self.txt_meri_num.text() or 5), )
+                ret["xgrid"] = tuple(self.xgrid_value) + (
+                    int(self.txt_meri_num.text() or 5),
+                )
 
         if not self.parallels_box.isChecked():
-            ret['ygrid'] = False
+            ret["ygrid"] = False
         elif self.opt_para_auto.isChecked():
-            ret['ygrid'] = True
+            ret["ygrid"] = True
         elif self.opt_para_every.isChecked():
-            ret['ygrid'] = np.arange(
-                -180, 180, float(self.txt_para_every.text().strip() or 30))
+            ret["ygrid"] = np.arange(
+                -180, 180, float(self.txt_para_every.text().strip() or 30)
+            )
         elif self.opt_para_at.isChecked():
-            ret['ygrid'] = list(map(
-                float, self.txt_para_at.text().split(','))) or False
+            ret["ygrid"] = (
+                list(map(float, self.txt_para_at.text().split(","))) or False
+            )
         elif self.opt_para_num.isChecked():
             if self.ygrid_value is None:
-                ret['ygrid'] = ['rounded', int(self.txt_para_num.text() or 5)]
+                ret["ygrid"] = ["rounded", int(self.txt_para_num.text() or 5)]
             elif isinstance(self.ygrid_value, str):
-                ret['ygrid'] = [self.ygrid_value,
-                                int(self.txt_para_num.text() or 5)]
+                ret["ygrid"] = [
+                    self.ygrid_value,
+                    int(self.txt_para_num.text() or 5),
+                ]
             else:
-                ret['ygrid'] = tuple(self.ygrid_value) + (
-                    int(self.txt_para_num.text() or 5), )
+                ret["ygrid"] = tuple(self.ygrid_value) + (
+                    int(self.txt_para_num.text() or 5),
+                )
         return ret
 
     @classmethod
@@ -487,8 +490,7 @@ class BasemapDialog(QtWidgets.QDialog):
         dialog.activateWindow()
         dialog.exec_()
         if dialog.result() == QtWidgets.QDialog.Accepted:
-            plotter.update(
-                **dialog.value)
+            plotter.update(**dialog.value)
 
 
 class CmapDialog(QtWidgets.QDialog):
@@ -503,46 +505,60 @@ class CmapDialog(QtWidgets.QDialog):
             very first plotter in this project
         """
         import psy_simple.widgets.colors as pswc
+
         super().__init__(*args, **kwargs)
 
         #: Button box to accept or cancel this dialog
         self.button_box = QtWidgets.QDialogButtonBox(
             QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
-            self)
+            self,
+        )
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
 
         #: Mapping from formatoption key to :class:`LabelWidgetLine` widgets to
         #: controlling the formatoption
         self.fmt_widgets = {}
-        plotter = project(fmts=['cmap', 'bounds']).plotters[0]
+        plotter = project(fmts=["cmap", "bounds"]).plotters[0]
 
         #: Widget for manipulating the color map
-        self.cmap_widget = self.fmt_widgets['cmap'] = LabelWidgetLine(
-            plotter.cmap, project, pswc.CMapFmtWidget,
-            widget_kws=dict(properties=False))
+        self.cmap_widget = self.fmt_widgets["cmap"] = LabelWidgetLine(
+            plotter.cmap,
+            project,
+            pswc.CMapFmtWidget,
+            widget_kws=dict(properties=False),
+        )
         self.cmap_widget.editor.setVisible(False)
         self.cmap_widget.editor.line_edit.textChanged.connect(
-            self.update_preview)
+            self.update_preview
+        )
 
         #: tabs for switching between bounds (:attr:`bounds_widget`) and
         #: colorbar ticks (:attr:`cticks_widget`)
         self.tabs = QtWidgets.QTabWidget()
 
         #: :class:`LabelWidgetLine` to controll the colorbar bounds
-        self.bounds_widget = self.fmt_widgets['bounds'] = LabelWidgetLine(
-            plotter.bounds, project, pswc.BoundsFmtWidget,
-            widget_kws=dict(properties=False))
+        self.bounds_widget = self.fmt_widgets["bounds"] = LabelWidgetLine(
+            plotter.bounds,
+            project,
+            pswc.BoundsFmtWidget,
+            widget_kws=dict(properties=False),
+        )
         self.bounds_widget.editor.line_edit.textChanged.connect(
-            self.update_preview)
+            self.update_preview
+        )
         self.tabs.addTab(self.bounds_widget, "Colormap boundaries")
 
         #: :class:`LabelWidgetLine` to controll the ctick positions
-        self.cticks_widget = self.fmt_widgets['cticks'] = LabelWidgetLine(
-            plotter.cticks, project, pswc.CTicksFmtWidget,
-            widget_kws=dict(properties=False))
+        self.cticks_widget = self.fmt_widgets["cticks"] = LabelWidgetLine(
+            plotter.cticks,
+            project,
+            pswc.CTicksFmtWidget,
+            widget_kws=dict(properties=False),
+        )
         self.cticks_widget.editor.line_edit.textChanged.connect(
-            self.update_preview)
+            self.update_preview
+        )
         self.tabs.addTab(self.cticks_widget, "Colorbar ticks")
 
         #: :class:`ColorbarPreview` to show a preview of the colorbar with
@@ -562,8 +578,7 @@ class CmapDialog(QtWidgets.QDialog):
         return self.bounds_widget.editor.fmto.plotter
 
     def update_preview(self) -> None:
-        """Update the :attr:`cbar_preview` from the various :attr:`fmt_widgets`.
-        """
+        """Update the :attr:`cbar_preview` from the various :attr:`fmt_widgets`."""
         try:
             bounds = self.bounds_widget.editor.value
         except Exception:
@@ -577,7 +592,8 @@ class CmapDialog(QtWidgets.QDialog):
         except Exception:
             cmap = self.plotter.cmap.value
         self.cbar_preview.update_colorbar(
-            bounds=bounds, cticks=cticks, cmap=cmap)
+            bounds=bounds, cticks=cticks, cmap=cmap
+        )
 
     @property
     def fmts(self) -> Dict[str, Any]:
@@ -587,9 +603,11 @@ class CmapDialog(QtWidgets.QDialog):
             if widget.editor.changed:
                 try:
                     value = widget.editor.value
-                except:
-                    raise IOError(f"{fmt}-value {widget.editor.text} could "
-                                  "not be parsed to python!")
+                except Exception:
+                    raise IOError(
+                        f"{fmt}-value {widget.editor.text} could "
+                        "not be parsed to python!"
+                    )
                 else:
                     ret[fmt] = value
         return ret
@@ -623,17 +641,20 @@ class _DummyFormatOption(Formatoption):
     what the :class:`FakePlotter` formatoptions are, used in
     :attr:`ColorbarPreview.fake_plotter`
     """
-    def update(self,):
+
+    def update(
+        self,
+    ):
         pass
 
 
 class FakePlotter(Plotter):
     """A dummy plotter for the colorbar preview."""
 
-    bounds: Formatoption = _DummyFormatOption('bounds')
-    cmap: Formatoption = _DummyFormatOption('cmap')
-    cticks: Formatoption = _DummyFormatOption('cticks')
-    cbar: Formatoption = _DummyFormatOption('cbar')
+    bounds: Formatoption = _DummyFormatOption("bounds")
+    cmap: Formatoption = _DummyFormatOption("cmap")
+    cticks: Formatoption = _DummyFormatOption("cticks")
+    cbar: Formatoption = _DummyFormatOption("cbar")
 
 
 class ColorbarPreview(FigureCanvas):
@@ -643,11 +664,12 @@ class ColorbarPreview(FigureCanvas):
     filled by the formatoptions of a given `plotter`."""
 
     def __init__(
-            self,
-            plotter: Plotter,
-            parent: Optional[QtWidgets.QWidget] = None,
-            *args, **kwargs
-        ) -> None:
+        self,
+        plotter: Plotter,
+        parent: Optional[QtWidgets.QWidget] = None,
+        *args,
+        **kwargs,
+    ) -> None:
         """
         Parameters
         ----------
@@ -661,9 +683,11 @@ class ColorbarPreview(FigureCanvas):
         FigureCanvas.__init__(self, fig)
         self.setParent(parent)
 
-        FigureCanvas.setSizePolicy(self,
-                                   QtWidgets.QSizePolicy.Expanding,
-                                   QtWidgets.QSizePolicy.Expanding)
+        FigureCanvas.setSizePolicy(
+            self,
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Expanding,
+        )
         FigureCanvas.updateGeometry(self)
         self.axes_counter = 0
 
@@ -685,17 +709,20 @@ class ColorbarPreview(FigureCanvas):
         the colorbar.
         """
         from matplotlib.cm import ScalarMappable
+
         norm = plotter.bounds.norm
         cmap = plotter.cmap.get_cmap(self.plotter.plot.array)
 
         self.mappable = sm = ScalarMappable(cmap=cmap, norm=norm)
         sm.set_array([])
 
-        self.cax = self.figure.add_axes([0.1, 0.5, 0.8, 0.5],
-                                        label=self.axes_counter)
+        self.cax = self.figure.add_axes(
+            [0.1, 0.5, 0.8, 0.5], label=self.axes_counter
+        )
 
         self.cbar = self.figure.colorbar(
-            sm, norm=norm, cmap=cmap, cax=self.cax, orientation='horizontal')
+            sm, norm=norm, cmap=cmap, cax=self.cax, orientation="horizontal"
+        )
 
     @property
     def fake_plotter(self) -> FakePlotter:
@@ -703,13 +730,12 @@ class ColorbarPreview(FigureCanvas):
 
         We can update this plotter without impacting the origin :attr:`plotter`
         """
-        from psyplot.plotter import Plotter
 
         class _FakePlotter(FakePlotter):
-            bounds = self.plotter.bounds.__class__('bounds')
-            cmap = self.plotter.cmap.__class__('cmap')
-            cticks = self.plotter.cticks.__class__('cticks')
-            cbar = self.plotter.cbar.__class__('cbar')
+            bounds = self.plotter.bounds.__class__("bounds")
+            cmap = self.plotter.cmap.__class__("cmap")
+            cticks = self.plotter.cticks.__class__("cticks")
+            cbar = self.plotter.cbar.__class__("cbar")
 
             _rcparams_string = self.plotter._get_rc_strings()
 
@@ -718,8 +744,14 @@ class ColorbarPreview(FigureCanvas):
         ax = fig.add_subplot()
 
         plotter = _FakePlotter(
-            ref.data.copy(), make_plot=False, bounds=ref['bounds'],
-            cmap=ref['cmap'], cticks=ref['cticks'], cbar='', ax=ax)
+            ref.data.copy(),
+            make_plot=False,
+            bounds=ref["bounds"],
+            cmap=ref["cmap"],
+            cticks=ref["cticks"],
+            cbar="",
+            ax=ax,
+        )
 
         plotter.cticks._colorbar = self.cbar
 
@@ -766,11 +798,13 @@ class ColorbarPreview(FigureCanvas):
             except AttributeError:
                 pass
             self.mappable.set_norm(plotter.bounds.norm)
-            self.mappable.set_cmap(plotter.cmap.get_cmap(
-                self.plotter.plot.array))
+            self.mappable.set_cmap(
+                plotter.cmap.get_cmap(self.plotter.plot.array)
+            )
             plotter.cticks.colorbar = self.cbar
-            plotter.cticks.default_locator = \
+            plotter.cticks.default_locator = (
                 self.plotter.cticks.default_locator
+            )
             plotter.cticks.update_axis(plotter.cticks.value)
             self.draw()
 
@@ -816,7 +850,7 @@ class FormatoptionsEditor(QtWidgets.QWidget):
         #: A tool button to switch from the single line editor :attr:`line_edit`
         #: to the multi-line editor :attr:`text_edit`
         self.btn_multiline = QtWidgets.QToolButton()
-        self.btn_multiline.setText('⌵')
+        self.btn_multiline.setText("⌵")
         self.btn_multiline.setCheckable(True)
         self.btn_multiline.setToolTip("Toggle multiline editor")
         self.btn_multiline.clicked.connect(self.toggle_multiline)
@@ -831,8 +865,7 @@ class FormatoptionsEditor(QtWidgets.QWidget):
 
     @property
     def changed(self) -> bool:
-        """Check if the value in this editor differs from the original `fmto`.
-        """
+        """Check if the value in this editor differs from the original `fmto`."""
         return self.fmto.diff(self.fmto.validate(self.get_obj()))
 
     def toggle_multiline(self) -> None:
@@ -853,8 +886,11 @@ class FormatoptionsEditor(QtWidgets.QWidget):
     @property
     def text(self) -> str:
         """Text of the :attr:`text_edit` (or :attr:`line_edit`)."""
-        return (self.text_edit.toPlainText() if self.multiline else
-                self.line_edit.text())
+        return (
+            self.text_edit.toPlainText()
+            if self.multiline
+            else self.line_edit.text()
+        )
 
     @text.setter
     def text(self, s: str) -> None:
@@ -915,12 +951,12 @@ class FormatoptionsEditor(QtWidgets.QWidget):
                     s = '"' + obj + current + '"'
                 else:
                     s = '"' + current + obj + '"'
-                current = ''
+                current = ""
         elif isinstance(obj, str):  # add quotation marks
             s = '"' + obj + '"'
         else:
             s = yaml.dump(obj, default_flow_style=True).strip()
-            if s.endswith('\n...'):
+            if s.endswith("\n..."):
                 s = s[:-4]
         if use_line_edit:
             self.line_edit.insert(s)
@@ -937,9 +973,15 @@ class LabelWidgetLine(QtWidgets.QGroupBox):
     :meth:`psyplot.plotter.Formatoption.get_fmt_widget`) to contol it.
     """
 
-    def __init__(self, fmto: Formatoption, project: Project,
-                 fmto_widget: Type[QtWidgets.QWidget],
-                 widget_kws: Dict[str, Any] = {}, *args, **kwargs) -> None:
+    def __init__(
+        self,
+        fmto: Formatoption,
+        project: Project,
+        fmto_widget: Type[QtWidgets.QWidget],
+        widget_kws: Dict[str, Any] = {},
+        *args,
+        **kwargs,
+    ) -> None:
         """
         Parameters
         ----------
@@ -956,11 +998,10 @@ class LabelWidgetLine(QtWidgets.QGroupBox):
             Further keywords that are passed to the creation of the
             `fmto_widget` instance.
         """
-        super().__init__(f'{fmto.name} ({fmto.key})', *args, **kwargs)
+        super().__init__(f"{fmto.name} ({fmto.key})", *args, **kwargs)
         self.editor = FormatoptionsEditor(fmto)
         vbox = QtWidgets.QVBoxLayout()
-        vbox.addWidget(
-            fmto_widget(self.editor, fmto, project, **widget_kws))
+        vbox.addWidget(fmto_widget(self.editor, fmto, project, **widget_kws))
         vbox.addWidget(self.editor)
         self.setLayout(vbox)
 
@@ -982,6 +1023,7 @@ class LabelDialog(QtWidgets.QDialog):
             subclass of :class:`psy_simple.base.TextBase`
         """
         from psy_simple.widgets.texts import LabelWidget
+
         super().__init__()
         self.project = project
         layout = QtWidgets.QVBoxLayout()
@@ -990,13 +1032,15 @@ class LabelDialog(QtWidgets.QDialog):
         for fmt in fmts:
             fmto = getattr(plotter, fmt)
             fmt_widget = LabelWidgetLine(
-                fmto, project, LabelWidget, widget_kws=dict(properties=False))
+                fmto, project, LabelWidget, widget_kws=dict(properties=False)
+            )
             self.fmt_widgets[fmt] = fmt_widget
             layout.addWidget(fmt_widget)
 
         self.button_box = QtWidgets.QDialogButtonBox(
             QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel,
-            self)
+            self,
+        )
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
         layout.addWidget(self.button_box)
@@ -1011,8 +1055,10 @@ class LabelDialog(QtWidgets.QDialog):
                 try:
                     value = widget.editor.value
                 except Exception:
-                    raise IOError(f"{fmt}-value {widget.editor.text} could "
-                                  "not be parsed to python!")
+                    raise IOError(
+                        f"{fmt}-value {widget.editor.text} could "
+                        "not be parsed to python!"
+                    )
                 else:
                     ret[fmt] = value
         return ret
@@ -1040,5 +1086,4 @@ class LabelDialog(QtWidgets.QDialog):
         dialog.activateWindow()
         dialog.exec_()
         if dialog.result() == QtWidgets.QDialog.Accepted:
-            project.update(
-                **dialog.fmts)
+            project.update(**dialog.fmts)

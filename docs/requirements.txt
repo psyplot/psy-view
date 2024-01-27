@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+#
+# SPDX-License-Identifier: CC0-1.0
+
+sphinx-design
+git+https://codebase.helmholtz.cloud/hcdc/hereon-netcdf/sphinxext.git
+git+https://codebase.helmholtz.cloud/psyplot/psyplot.git@develop
+git+https://codebase.helmholtz.cloud/psyplot/psy-simple.git@develop
+git+https://codebase.helmholtz.cloud/psyplot/psy-maps.git@develop
+git+https://codebase.helmholtz.cloud/psyplot/psyplot-gui.git@develop

@@ -1,79 +1,22 @@
+.. SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
+..
+.. SPDX-License-Identifier: CC-BY-4.0
+
 =========================================
 psy-view: An ncview-like GUI with psyplot
 =========================================
 
 .. start-badges
 
-.. list-table::
-    :stub-columns: 1
-    :widths: 10 90
-
-    * - docs
-      - |docs| |mybinder|
-    * - tests
-      - |circleci| |appveyor| |codecov|
-    * - package
-      - |version| |conda| |github| |zenodo|
-    * - implementations
-      - |supported-versions| |supported-implementations|
-    * - get in touch
-      - |gitter| |mailing-list| |issues|
-
-.. |docs| image:: https://img.shields.io/github/deployments/psyplot/psy-view/github-pages
-    :alt: Documentation
-    :target: http://psyplot.github.io/psy-view/
-
-.. |mybinder| image:: https://mybinder.org/badge_logo.svg
-    :target: https://mybinder.org/v2/gh/psyplot/psy-view/master?urlpath=%2Fdesktop
-    :alt: mybinder.org
-
-.. |circleci| image:: https://circleci.com/gh/psyplot/psy-view/tree/master.svg?style=svg
-    :alt: CircleCI
-    :target: https://circleci.com/gh/psyplot/psy-view/tree/master
-
-.. |appveyor| image:: https://ci.appveyor.com/api/projects/status/a7qxvvwt0e41j32h/branch/master?svg=true
-    :alt: AppVeyor
-    :target: https://ci.appveyor.com/project/psyplot/psy-view/branch/master
-
-.. |codecov| image:: https://codecov.io/gh/psyplot/psy-view/branch/master/graph/badge.svg
-    :alt: Coverage
-    :target: https://codecov.io/gh/psyplot/psy-view
-
-.. |conda| image:: https://anaconda.org/conda-forge/psy-view/badges/version.svg
-    :alt: conda
-    :target: https://anaconda.org/conda-forge/psy-view
-
-.. |github| image:: https://img.shields.io/github/release/psyplot/psy-view.svg
-    :target: https://github.com/psyplot/psy-view/releases/latest
-    :alt: Latest github release
-
-.. |version| image:: https://img.shields.io/pypi/v/psy-view.svg?style=flat
-    :alt: PyPI Package latest release
-    :target: https://pypi.python.org/pypi/psy-view
-
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/psy-view.svg?style=flat
-    :alt: Supported versions
-    :target: https://pypi.python.org/pypi/psy-view
-
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/psy-view.svg?style=flat
-    :alt: Supported implementations
-    :target: https://pypi.python.org/pypi/psy-view
-
-.. |gitter| image:: https://img.shields.io/gitter/room/psyplot/community.svg?style=flat
-    :target: https://gitter.im/psyplot/community
-    :alt: Gitter
-
-.. |mailing-list| image:: https://img.shields.io/badge/join-mailing%20list-brightgreen.svg?style=flat
-    :target: https://www.listserv.dfn.de/sympa/subscribe/psyplot
-    :alt: DFN mailing list
-
-.. |issues| image:: https://img.shields.io/github/issues-raw/psyplot/psy-view.svg?style=flat
-    :target: https://github.com/psyplot/psy-view/issues
-    :alt: GitHub issues
-
-.. |zenodo| image:: https://zenodo.org/badge/249615633.svg
-    :alt: Zenodo
-    :target: https://zenodo.org/badge/latestdoi/249615633
+|CI|
+|Code coverage|
+|Latest Release|
+|PyPI version|
+|Code style: black|
+|Imports: isort|
+|PEP8|
+|Checked with mypy|
+|REUSE status|
 
 .. end-badges
 
@@ -106,7 +49,7 @@ Some of the most important features offered by psy-view are:
 - different projections
 - implemented in psyplot-gui_ for full flexibility (if desired)
 
-.. _ICON: https://mpimet.mpg.de/en/science/modeling-with-icon/icon-configurations
+.. _ICON: https://code.mpimet.mpg.de/projects/iconpublic
 .. _UGRID: http://ugrid-conventions.github.io/ugrid-conventions/
 .. _psyplot-gui: https://psyplot.github.io/psyplot-gui
 
@@ -198,3 +141,23 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/.
+
+
+.. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/main/pipeline.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/pipelines?page=1&scope=all&ref=main
+.. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/main/coverage.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/graphs/main/charts
+.. |Latest Release| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/-/badges/release.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view
+.. |PyPI version| image:: https://img.shields.io/pypi/v/psy-view.svg
+   :target: https://pypi.python.org/pypi/psy-view/
+.. |Code style: black| image:: https://img.shields.io/badge/code%20style-black-000000.svg
+   :target: https://github.com/psf/black
+.. |Imports: isort| image:: https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336
+   :target: https://pycqa.github.io/isort/
+.. |PEP8| image:: https://img.shields.io/badge/code%20style-pep8-orange.svg
+   :target: https://www.python.org/dev/peps/pep-0008/
+.. |Checked with mypy| image:: http://www.mypy-lang.org/static/mypy_badge.svg
+   :target: http://mypy-lang.org/
+.. |REUSE status| image:: https://api.reuse.software/badge/codebase.helmholtz.cloud/psyplot/psy-view
+   :target: https://api.reuse.software/info/codebase.helmholtz.cloud/psyplot/psy-view
