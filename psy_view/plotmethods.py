@@ -860,6 +860,9 @@ class MapPlotWidget(PlotMethodWidget):
         self.color_settings_action.setEnabled(b)
         self.btn_cmap_settings.setEnabled(b)
         self.btn_labels.setEnabled(b)
+        self.btn_fix_extent.setEnabled(b)
+        self.btn_fix_lonlatbox.setEnabled(b)
+        self.btn_reset_extent.setEnabled(b)
 
     def set_cmap(self, cmap: str) -> None:
         """Update the plotter with the given colormap.
@@ -1181,6 +1184,10 @@ class Plot2DWidget(MapPlotWidget):
         """
         ret = super().fmt_setup_functions
         ret.remove(self.setup_projection_buttons)
+        idx_extent = ret.index(self.setup_fix_extent_buttons)
+        # remove the separator and the function
+        del ret[idx_extent - 1]
+        del ret[idx_extent - 1]
         return ret
 
     def setEnabled(self, b: bool) -> None:
