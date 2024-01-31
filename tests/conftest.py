@@ -6,16 +6,17 @@
 # SPDX-License-Identifier: LGPL-3.0-only
 
 import os.path as osp
+from pathlib import Path
 
 # import psyplot_gui.compat to make sure, qt settings are set
 import psyplot_gui.compat.qtcompat  # noqa: F401
 import pytest
 
-_test_dir = osp.dirname(__file__)
+_test_dir = Path(__file__).parent
 
 
 @pytest.fixture
-def test_dir() -> str:
+def test_dir() -> Path:
     return _test_dir
 
 
@@ -27,8 +28,8 @@ def test_dir() -> str:
         "icon-test.nc",
     ]
 )
-def test_file(test_dir, request):
-    return osp.join(test_dir, request.param)
+def test_file(test_dir, request) -> Path:
+    return test_dir / request.param
 
 
 @pytest.fixture
