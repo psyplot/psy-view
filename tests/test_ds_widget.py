@@ -30,6 +30,93 @@ def test_mapplot(qtbot, ds_widget):
     assert not ds_widget.sp
 
 
+def test_mapplot_fix_extent(qtbot, ds_widget, test_file):
+    """Test restricting the extent of the data."""
+    import cartopy.crs as ccrs
+
+    if test_file.name == "rotated-pole-test.nc":
+        return pytest.skip("Does not work for the rotated pole CRS")
+
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
+
+    plotter = ds_widget.sp.plotters[0]
+    x0, x1, y0, y1 = map(round, plotter.ax.get_extent(ccrs.PlateCarree()))
+    extent = [x0 + 2, x1 - 2, y0 + 2, y1 - 2]
+    plotter.ax.set_extent(extent, ccrs.PlateCarree())
+
+    qtbot.mouseClick(ds_widget.plotmethod_widget.btn_fix_extent, Qt.LeftButton)
+
+    rounded = list(map(round, plotter.map_extent.value))
+    assert rounded == list(extent)
+
+
+def test_mapplot_fix_lonlatbox(qtbot, ds_widget, test_file):
+    """Test restricting the extent of the data."""
+    import cartopy.crs as ccrs
+
+    if test_file.name == "rotated-pole-test.nc":
+        return pytest.skip("Does not work for the rotated pole CRS")
+
+    qtbot.mouseClick(ds_widget.variable_buttons["t2m"], Qt.LeftButton)
+
+    plotter = ds_widget.sp.plotters[0]
+    x0, x1, y0, y1 = map(round, plotter.ax.get_extent(ccrs.PlateCarree()))
+    extent = [x0 + 2, x1 - 2, y0 + 2, y1 - 2]
+    plotter.ax.set_extent(extent, ccrs.PlateCarree())
+
+    qtbot.mouseClick(
+        ds_widget.plotmethod_widget.btn_fix_lonlatbox, Qt.LeftButton
+    )
+
+    rounded = list(map(round, plotter.lonlatbox.value))
+    assert rounded == list(extent)
+
+
+def test_mapplot_map_extent_reset(qtbot, ds_widget, test_file):
+    """Test resetting the view."""
+    test_mapplot_fix_extent(qtbot, ds_widget, test_file)
+
+    qtbot.mouseClick(
+        ds_widget.plotmethod_widget.btn_reset_extent, Qt.LeftButton
+    )
+
+    plotter = ds_widget.sp.plotters[0]
+
+    assert plotter.map_extent.value is None
+
+
+def test_mapplot_lonlatbox_reset(qtbot, ds_widget, test_file):
+    """Test resetting the view."""
+    test_mapplot_fix_lonlatbox(qtbot, ds_widget, test_file)
+
+    qtbot.mouseClick(
+        ds_widget.plotmethod_widget.btn_reset_extent, Qt.LeftButton
+    )
+
+    plotter = ds_widget.sp.plotters[0]
+
+    assert plotter.lonlatbox.value is None
+
+
+def test_mapplot_view_reset(qtbot, ds_widget, test_file):
+    """Test resetting the view."""
+    test_mapplot_fix_extent(qtbot, ds_widget, test_file)
+
+    plotter = ds_widget.sp.plotters[0]
+
+    qtbot.mouseClick(
+        ds_widget.plotmethod_widget.btn_fix_lonlatbox, Qt.LeftButton
+    )
+    assert plotter.lonlatbox.value is not None
+
+    qtbot.mouseClick(
+        ds_widget.plotmethod_widget.btn_reset_extent, Qt.LeftButton
+    )
+
+    assert plotter.map_extent.value is None
+    assert plotter.lonlatbox.value is None
+
+
 @pytest.mark.parametrize("plotmethod", ["mapplot", "plot2d"])
 @pytest.mark.parametrize("i", list(range(5)))
 def test_change_plot_type(qtbot, ds_widget, plotmethod, i):
@@ -73,7 +160,7 @@ def test_plot2d(qtbot, ds_widget):
     assert not ds_widget.sp
 
 
-def test_plot2d_dim_switch(qtbot, ds_widget, test_ds, test_file):
+def test_plot2d_dim_switch(qtbot, ds_widget, test_ds):
     arr = test_ds["t2m"]
 
     ds_widget.plotmethod = "plot2d"
@@ -102,7 +189,7 @@ def test_plot2d_dim_switch(qtbot, ds_widget, test_ds, test_file):
 def test_plot2d_coord(qtbot, ds_widget, test_ds, test_file, plotmethod):
     arr = test_ds.psy["t2m"]
 
-    if osp.basename(test_file) != "rotated-pole-test.nc":
+    if test_file.name != "rotated-pole-test.nc":
         return pytest.skip("Testing rotated coords only")
 
     ydim, xdim = arr.dims[-2:]
@@ -453,7 +540,7 @@ def test_reload(qtbot, test_dir, tmp_path) -> None:
     from psy_view.ds_widget import DatasetWidget
 
     f1, f2 = "regular-test.nc", "regional-icon-test.nc"
-    shutil.copy(osp.join(test_dir, f1), str(tmp_path / f1))
+    shutil.copy(str(test_dir / f1), str(tmp_path / f1))
 
     ds_widget = DatasetWidget(psy.open_dataset(str(tmp_path / f1)))
     qtbot.addWidget(ds_widget)
@@ -464,7 +551,7 @@ def test_reload(qtbot, test_dir, tmp_path) -> None:
     assert ds_widget.ds["t2m"].ndim == 4
 
     # now copy the icon file to the same destination and reload everything
-    shutil.copy(osp.join(test_dir, f2), str(tmp_path / f1))
+    shutil.copy(str(test_dir / f2), str(tmp_path / f1))
     ds_widget.reload()
 
     assert ds_widget.ds_tree.topLevelItemCount() == 1
