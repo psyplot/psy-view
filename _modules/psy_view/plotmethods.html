@@ -655,6 +655,15 @@
             <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">GridCell</span><span class="p">(</span><span class="n">QHLine</span><span class="p">(),</span> <span class="n">colspan</span><span class="o">=</span><span class="mi">3</span><span class="p">)]</span>
         <span class="k">elif</span> <span class="n">func</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_dimension_box</span><span class="p">:</span>
             <span class="n">row</span> <span class="o">=</span> <span class="p">[</span><span class="n">GridCell</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimension_box</span><span class="p">,</span> <span class="n">colspan</span><span class="o">=</span><span class="mi">3</span><span class="p">)]</span>
+        <span class="k">elif</span> <span class="n">func</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">setup_fix_extent_buttons</span><span class="p">:</span>
+            <span class="n">hbox</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QHBoxLayout</span><span class="p">()</span>
+            <span class="n">hbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btn_fix_extent</span><span class="p">)</span>
+            <span class="n">hbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btn_fix_lonlatbox</span><span class="p">)</span>
+            <span class="n">hbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btn_reset_extent</span><span class="p">)</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">GridCell</span><span class="p">(</span><span class="n">QtWidgets</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Viewport&quot;</span><span class="p">)),</span>
+                <span class="n">GridCell</span><span class="p">(</span><span class="n">hbox</span><span class="p">,</span> <span class="n">colspan</span><span class="o">=</span><span class="mi">3</span><span class="p">),</span>
+            <span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown function </span><span class="si">{</span><span class="n">func</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">row</span><span class="p">]</span></div>
@@ -673,6 +682,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">setup_projection_buttons</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setup_labels_button</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setup_separation_line</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setup_fix_extent_buttons</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setup_separation_line</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setup_dimension_box</span><span class="p">,</span>
         <span class="p">]</span>
 
@@ -685,6 +696,68 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">edit_labels</span><span class="p">,</span>
             <span class="s2">&quot;Edit title, colorbar labels, etc.&quot;</span><span class="p">,</span>
         <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MapPlotWidget.setup_fix_extent_buttons">
+<a class="viewcode-back" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.setup_fix_extent_buttons">[docs]</a>
+    <span class="k">def</span> <span class="nf">setup_fix_extent_buttons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup the buttons for fixing the extent or data&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_fix_extent</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">add_pushbutton</span><span class="p">(</span>
+            <span class="s2">&quot;Fix view&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fix_extent</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;Fix the current view such that it is not update on redrawing &quot;</span>
+                <span class="s2">&quot;the plot.&quot;</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_fix_lonlatbox</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">add_pushbutton</span><span class="p">(</span>
+            <span class="s2">&quot;Restrict data&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fix_data</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;Extract the data for the plot, such that it matches the &quot;</span>
+                <span class="s2">&quot;current view.&quot;</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_reset_extent</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">add_pushbutton</span><span class="p">(</span>
+            <span class="s2">&quot;Reset&quot;</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">reset_extent_and_lonlatbox</span><span class="p">,</span>
+            <span class="p">(</span>
+                <span class="s2">&quot;Reset the view and the data selection to the default &quot;</span>
+                <span class="s2">&quot;(i.e. to the full data).&quot;</span>
+            <span class="p">),</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="MapPlotWidget.fix_extent">
+<a class="viewcode-back" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.fix_extent">[docs]</a>
+    <span class="k">def</span> <span class="nf">fix_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Call the fix_map_extent method of all map plotters.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">plotter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">plotters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">plotter</span><span class="p">,</span> <span class="s2">&quot;fix_map_extent&quot;</span><span class="p">):</span>
+                <span class="n">plotter</span><span class="o">.</span><span class="n">fix_map_extent</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="MapPlotWidget.fix_data">
+<a class="viewcode-back" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.fix_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">fix_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Call the fix_lonlatbox method of all map plotters.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">plotter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">plotters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">plotter</span><span class="p">,</span> <span class="s2">&quot;fix_lonlatbox&quot;</span><span class="p">):</span>
+                <span class="n">plotter</span><span class="o">.</span><span class="n">fix_lonlatbox</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="MapPlotWidget.reset_extent_and_lonlatbox">
+<a class="viewcode-back" href="../../api/psy_view.plotmethods.html#psy_view.plotmethods.MapPlotWidget.reset_extent_and_lonlatbox">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset_extent_and_lonlatbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset the extent and the lonlatbox to the defaults.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">plotter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">plotters</span><span class="p">:</span>
+            <span class="n">plotter</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="n">lonlatbox</span><span class="o">=</span><span class="n">plotter</span><span class="o">.</span><span class="n">lonlatbox</span><span class="o">.</span><span class="n">default</span><span class="p">,</span>
+                <span class="n">map_extent</span><span class="o">=</span><span class="n">plotter</span><span class="o">.</span><span class="n">map_extent</span><span class="o">.</span><span class="n">default</span><span class="p">,</span>
+                <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MapPlotWidget.setup_plot_buttons">
@@ -1079,7 +1152,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">btn_datagrid</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">color_settings_action</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">btn_cmap_settings</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">btn_labels</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_labels</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_fix_extent</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_fix_lonlatbox</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btn_reset_extent</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">b</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="MapPlotWidget.set_cmap">
@@ -1444,6 +1520,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">fmt_setup_functions</span>
         <span class="n">ret</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setup_projection_buttons</span><span class="p">)</span>
+        <span class="n">idx_extent</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">setup_fix_extent_buttons</span><span class="p">)</span>
+        <span class="c1"># remove the separator and the function</span>
+        <span class="k">del</span> <span class="n">ret</span><span class="p">[</span><span class="n">idx_extent</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">del</span> <span class="n">ret</span><span class="p">[</span><span class="n">idx_extent</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">ret</span>
 
 <div class="viewcode-block" id="Plot2DWidget.setEnabled">

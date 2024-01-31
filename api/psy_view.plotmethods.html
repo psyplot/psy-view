@@ -524,6 +524,12 @@ for the plotmethod.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.edit_labels" title="psy_view.plotmethods.MapPlotWidget.edit_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">edit_labels</span></code></a>()</p></td>
 <td><p>Open the dialog to edit the text labels in the plot.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.fix_data" title="psy_view.plotmethods.MapPlotWidget.fix_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_data</span></code></a>()</p></td>
+<td><p>Call the fix_lonlatbox method of all map plotters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.fix_extent" title="psy_view.plotmethods.MapPlotWidget.fix_extent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_extent</span></code></a>()</p></td>
+<td><p>Call the fix_map_extent method of all map plotters.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_fmts" title="psy_view.plotmethods.MapPlotWidget.get_fmts"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_fmts</span></code></a>(var[, init])</p></td>
 <td><p>Get the formatoptions for a new plot.</p></td>
 </tr>
@@ -551,35 +557,41 @@ for the plotmethod.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.refresh_from_sp" title="psy_view.plotmethods.MapPlotWidget.refresh_from_sp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">refresh_from_sp</span></code></a>()</p></td>
 <td><p>Refresh this widget from the plotters project.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setEnabled" title="psy_view.plotmethods.MapPlotWidget.setEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEnabled</span></code></a>(b)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.reset_extent_and_lonlatbox" title="psy_view.plotmethods.MapPlotWidget.reset_extent_and_lonlatbox"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reset_extent_and_lonlatbox</span></code></a>()</p></td>
+<td><p>Reset the extent and the lonlatbox to the defaults.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setEnabled" title="psy_view.plotmethods.MapPlotWidget.setEnabled"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setEnabled</span></code></a>(b)</p></td>
 <td><p>Enable or disable the projection and color buttons.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_cmap" title="psy_view.plotmethods.MapPlotWidget.set_cmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_cmap</span></code></a>(cmap)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_cmap" title="psy_view.plotmethods.MapPlotWidget.set_cmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_cmap</span></code></a>(cmap)</p></td>
 <td><p>Update the plotter with the given colormap.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_combo_text" title="psy_view.plotmethods.MapPlotWidget.set_combo_text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_combo_text</span></code></a>(combo, text)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_combo_text" title="psy_view.plotmethods.MapPlotWidget.set_combo_text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_combo_text</span></code></a>(combo, text)</p></td>
 <td><p>Convenience function to update set the current text of a combobox.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_plot_type" title="psy_view.plotmethods.MapPlotWidget.set_plot_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_plot_type</span></code></a>(plot_type)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_plot_type" title="psy_view.plotmethods.MapPlotWidget.set_plot_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_plot_type</span></code></a>(plot_type)</p></td>
 <td><p>Update the value for the <code class="docutils literal notranslate"><span class="pre">plot</span></code> formatoption</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_projection" title="psy_view.plotmethods.MapPlotWidget.set_projection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_projection</span></code></a>(proj)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_projection" title="psy_view.plotmethods.MapPlotWidget.set_projection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_projection</span></code></a>(proj)</p></td>
 <td><p>Update the projection of the plot with the given projection.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_xcoord" title="psy_view.plotmethods.MapPlotWidget.set_xcoord"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_xcoord</span></code></a>(text)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_xcoord" title="psy_view.plotmethods.MapPlotWidget.set_xcoord"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_xcoord</span></code></a>(text)</p></td>
 <td><p>Set the name of the x-coordinate.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_ycoord" title="psy_view.plotmethods.MapPlotWidget.set_ycoord"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ycoord</span></code></a>(text)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.set_ycoord" title="psy_view.plotmethods.MapPlotWidget.set_ycoord"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ycoord</span></code></a>(text)</p></td>
 <td><p>Set the name of the y-coordinate.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_cmap_menu" title="psy_view.plotmethods.MapPlotWidget.setup_cmap_menu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_cmap_menu</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_cmap_menu" title="psy_view.plotmethods.MapPlotWidget.setup_cmap_menu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_cmap_menu</span></code></a>()</p></td>
 <td><p>Set up the menu to change the colormaps.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_color_buttons" title="psy_view.plotmethods.MapPlotWidget.setup_color_buttons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_color_buttons</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_color_buttons" title="psy_view.plotmethods.MapPlotWidget.setup_color_buttons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_color_buttons</span></code></a>()</p></td>
 <td><p>Set up the buttons to change the colormap, etc.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_dimension_box" title="psy_view.plotmethods.MapPlotWidget.setup_dimension_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_dimension_box</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_dimension_box" title="psy_view.plotmethods.MapPlotWidget.setup_dimension_box"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_dimension_box</span></code></a>()</p></td>
 <td><p>Set up a box to control, what is the x and y-dimension.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_fix_extent_buttons" title="psy_view.plotmethods.MapPlotWidget.setup_fix_extent_buttons"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_fix_extent_buttons</span></code></a>()</p></td>
+<td><p>Setup the buttons for fixing the extent or data</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.setup_labels_button" title="psy_view.plotmethods.MapPlotWidget.setup_labels_button"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_labels_button</span></code></a>()</p></td>
 <td><p>Add a button to modify the text labels.</p></td>
@@ -655,6 +667,18 @@ for the plotmethod.</p>
 <dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.edit_labels">
 <span class="sig-name descname"><span class="pre">edit_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.edit_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.edit_labels" title="Link to this definition"></a></dt>
 <dd><p>Open the dialog to edit the text labels in the plot.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.fix_data">
+<span class="sig-name descname"><span class="pre">fix_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.fix_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.fix_data" title="Link to this definition"></a></dt>
+<dd><p>Call the fix_lonlatbox method of all map plotters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.fix_extent">
+<span class="sig-name descname"><span class="pre">fix_extent</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.fix_extent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.fix_extent" title="Link to this definition"></a></dt>
+<dd><p>Call the fix_map_extent method of all map plotters.</p>
 </dd></dl>
 
 <dl class="py property">
@@ -807,6 +831,12 @@ for the plotmethod.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.reset_extent_and_lonlatbox">
+<span class="sig-name descname"><span class="pre">reset_extent_and_lonlatbox</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.reset_extent_and_lonlatbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.reset_extent_and_lonlatbox" title="Link to this definition"></a></dt>
+<dd><p>Reset the extent and the lonlatbox to the defaults.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setEnabled">
 <span class="sig-name descname"><span class="pre">setEnabled</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setEnabled"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setEnabled" title="Link to this definition"></a></dt>
 <dd><p>Enable or disable the projection and color buttons.</p>
@@ -894,6 +924,12 @@ formatoption.</p>
 <dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setup_dimension_box">
 <span class="sig-name descname"><span class="pre">setup_dimension_box</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setup_dimension_box"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setup_dimension_box" title="Link to this definition"></a></dt>
 <dd><p>Set up a box to control, what is the x and y-dimension.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="psy_view.plotmethods.MapPlotWidget.setup_fix_extent_buttons">
+<span class="sig-name descname"><span class="pre">setup_fix_extent_buttons</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/psy_view/plotmethods.html#MapPlotWidget.setup_fix_extent_buttons"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#psy_view.plotmethods.MapPlotWidget.setup_fix_extent_buttons" title="Link to this definition"></a></dt>
+<dd><p>Setup the buttons for fixing the extent or data</p>
 </dd></dl>
 
 <dl class="py method">
