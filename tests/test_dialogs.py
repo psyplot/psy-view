@@ -4,8 +4,14 @@
 # SPDX-FileCopyrightText: 2021-2024 Helmholtz-Zentrum hereon GmbH
 #
 # SPDX-License-Identifier: LGPL-3.0-only
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 
 import pytest
+
+if TYPE_CHECKING:
+    from psy_view.dialogs import BasemapDialog
 
 
 @pytest.fixture
@@ -20,6 +26,15 @@ def cmap_dialog(qtbot, test_project):
     from psy_view.dialogs import CmapDialog
 
     dialog = CmapDialog(test_project)
+    qtbot.addWidget(dialog)
+    return dialog
+
+
+@pytest.fixture
+def basemap_dialog(qtbot, test_project):
+    from psy_view.dialogs import BasemapDialog
+
+    dialog = BasemapDialog(test_project.plotters[0])
     qtbot.addWidget(dialog)
     return dialog
 
@@ -85,3 +100,49 @@ def test_cmap_dialog_fmts(cmap_dialog):
     cmap_dialog.bounds_widget.editor.set_obj("minmax")
 
     assert cmap_dialog.fmts == {"bounds": "minmax"}
+
+
+def test_basemap_dialog_background_image_default(
+    basemap_dialog: BasemapDialog,
+):
+    """Test the updating of the basemap stock image"""
+    assert not basemap_dialog.background_img_box.isChecked()
+    fmts = basemap_dialog.value
+
+    assert "stock_img" in fmts
+    assert not fmts["stock_img"]
+
+    assert "google_map_detail" in fmts
+    assert fmts["google_map_detail"] is None
+
+
+def test_basemap_dialog_background_image_stock_img(
+    basemap_dialog: BasemapDialog,
+):
+    # test checking the stock img
+    basemap_dialog.background_img_box.setChecked(True)
+    basemap_dialog.opt_stock_img.setChecked(True)
+
+    fmts = basemap_dialog.value
+
+    assert "stock_img" in fmts
+    assert fmts["stock_img"]
+
+    assert "google_map_detail" in fmts
+    assert fmts["google_map_detail"] is None
+
+
+def test_basemap_dialog_background_image_google_image(
+    basemap_dialog: BasemapDialog,
+):
+    # test checking the stock img
+    basemap_dialog.background_img_box.setChecked(True)
+    basemap_dialog.opt_google_image.setChecked(True)
+
+    fmts = basemap_dialog.value
+
+    assert "stock_img" in fmts
+    assert not fmts["stock_img"]
+
+    assert "google_map_detail" in fmts
+    assert fmts["google_map_detail"] == basemap_dialog.sb_google_image.value()
