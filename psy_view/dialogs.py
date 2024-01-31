@@ -233,6 +233,32 @@ class BasemapDialog(QtWidgets.QDialog):
 
         vbox.addWidget(self.parallels_box)
 
+        #: A box for selecting the background image
+        self.background_img_box = QtWidgets.QGroupBox("Background image")
+        self.background_img_box.setCheckable(True)
+
+        #: Radio button for using the ``stock_image`` formatoption
+        self.opt_stock_img = QtWidgets.QRadioButton("Stock image")
+
+        #: Radio button for using the ``google_map_detail`` formatoption
+        self.opt_google_image = QtWidgets.QRadioButton("Google maps")
+
+        #: Test box for specifying the detail
+        self.sb_google_image = QtWidgets.QSpinBox()
+        self.sb_google_image.setMinimum(0)
+        self.sb_google_image.setValue(4)
+        self.sb_google_image.setToolTip(
+            "The detail level for the Google image. The higher this "
+            "number, the more details you'll see (and the slower it is)"
+        )
+
+        form = QtWidgets.QFormLayout(self.background_img_box)
+
+        form.addRow(self.opt_stock_img)
+        form.addRow(self.opt_google_image, self.sb_google_image)
+
+        vbox.addWidget(self.background_img_box)
+
         vbox.addWidget(self.button_box)
 
         self.fill_from_plotter(plotter)
@@ -246,6 +272,8 @@ class BasemapDialog(QtWidgets.QDialog):
             self.opt_para_auto,
             self.opt_para_num,
             self.opt_para_every,
+            self.opt_stock_img,
+            self.opt_google_image,
         ]:
             button.clicked.connect(self.update_forms)
 
@@ -360,6 +388,19 @@ class BasemapDialog(QtWidgets.QDialog):
             self.opt_para_at.setChecked(True)
             self.txt_para_at.setText(", ".join(map(str, value)))
 
+        stock_img = plotter.stock_img.value
+        google_img_detail = plotter.google_map_detail.value
+
+        if not stock_img and google_img_detail is None:
+            self.background_img_box.setChecked(False)
+        else:
+            self.background_img_box.setChecked(True)
+            if stock_img:
+                self.opt_stock_img.setChecked(True)
+            elif google_img_detail is not None:
+                self.opt_google_image.setChecked(True)
+                self.sb_google_image.setValue(google_img_detail)
+
     def update_forms(self) -> None:
         """Update text widgets for the options to draw merdionals and parallels."""
         if self.meridionals_box.isChecked():
@@ -370,6 +411,8 @@ class BasemapDialog(QtWidgets.QDialog):
             self.txt_para_at.setEnabled(self.opt_para_at.isChecked())
             self.txt_para_every.setEnabled(self.opt_para_every.isChecked())
             self.txt_para_num.setEnabled(self.opt_para_num.isChecked())
+        if self.background_img_box.isChecked():
+            self.sb_google_image.setEnabled(self.opt_google_image.isChecked())
 
     @property
     def value(self) -> Dict[str, Any]:
@@ -473,6 +516,17 @@ class BasemapDialog(QtWidgets.QDialog):
                 ret["ygrid"] = tuple(self.ygrid_value) + (
                     int(self.txt_para_num.text() or 5),
                 )
+
+        if self.background_img_box.isChecked():
+            if self.opt_stock_img.isChecked():
+                ret["stock_img"] = True
+                ret["google_map_detail"] = None
+            elif self.opt_google_image.isChecked():
+                ret["stock_img"] = False
+                ret["google_map_detail"] = self.sb_google_image.value() or 0
+        else:
+            ret["stock_img"] = False
+            ret["google_map_detail"] = None
         return ret
 
     @classmethod
