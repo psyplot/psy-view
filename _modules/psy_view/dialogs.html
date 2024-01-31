@@ -407,6 +407,32 @@
 
         <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parallels_box</span><span class="p">)</span>
 
+        <span class="c1">#: A box for selecting the background image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">background_img_box</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QGroupBox</span><span class="p">(</span><span class="s2">&quot;Background image&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">background_img_box</span><span class="o">.</span><span class="n">setCheckable</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1">#: Radio button for using the ``stock_image`` formatoption</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt_stock_img</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QRadioButton</span><span class="p">(</span><span class="s2">&quot;Stock image&quot;</span><span class="p">)</span>
+
+        <span class="c1">#: Radio button for using the ``google_map_detail`` formatoption</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">opt_google_image</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QRadioButton</span><span class="p">(</span><span class="s2">&quot;Google maps&quot;</span><span class="p">)</span>
+
+        <span class="c1">#: Test box for specifying the detail</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sb_google_image</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QSpinBox</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sb_google_image</span><span class="o">.</span><span class="n">setMinimum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sb_google_image</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sb_google_image</span><span class="o">.</span><span class="n">setToolTip</span><span class="p">(</span>
+            <span class="s2">&quot;The detail level for the Google image. The higher this &quot;</span>
+            <span class="s2">&quot;number, the more details you&#39;ll see (and the slower it is)&quot;</span>
+        <span class="p">)</span>
+
+        <span class="n">form</span> <span class="o">=</span> <span class="n">QtWidgets</span><span class="o">.</span><span class="n">QFormLayout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">background_img_box</span><span class="p">)</span>
+
+        <span class="n">form</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_stock_img</span><span class="p">)</span>
+        <span class="n">form</span><span class="o">.</span><span class="n">addRow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_google_image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sb_google_image</span><span class="p">)</span>
+
+        <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">background_img_box</span><span class="p">)</span>
+
         <span class="n">vbox</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">button_box</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">fill_from_plotter</span><span class="p">(</span><span class="n">plotter</span><span class="p">)</span>
@@ -420,6 +446,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_auto</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_num</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_every</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_stock_img</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">opt_google_image</span><span class="p">,</span>
         <span class="p">]:</span>
             <span class="n">button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_forms</span><span class="p">)</span>
 
@@ -537,7 +565,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">steps</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">opt_para_at</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_at</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">)))</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_at</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">)))</span>
+
+        <span class="n">stock_img</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">stock_img</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">google_img_detail</span> <span class="o">=</span> <span class="n">plotter</span><span class="o">.</span><span class="n">google_map_detail</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">stock_img</span> <span class="ow">and</span> <span class="n">google_img_detail</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">background_img_box</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">background_img_box</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">stock_img</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">opt_stock_img</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">google_img_detail</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">opt_google_image</span><span class="o">.</span><span class="n">setChecked</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sb_google_image</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">google_img_detail</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="BasemapDialog.update_forms">
@@ -551,7 +592,9 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallels_box</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_at</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_para_at</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_every</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_para_every</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_para_num</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_para_num</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_img_box</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sb_google_image</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opt_google_image</span><span class="o">.</span><span class="n">isChecked</span><span class="p">())</span></div>
 
 
     <span class="nd">@property</span>
@@ -656,6 +699,17 @@
                 <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;ygrid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ygrid_value</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span>
                     <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">txt_para_num</span><span class="o">.</span><span class="n">text</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">5</span><span class="p">),</span>
                 <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_img_box</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_stock_img</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;stock_img&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;google_map_detail&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">opt_google_image</span><span class="o">.</span><span class="n">isChecked</span><span class="p">():</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;stock_img&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;google_map_detail&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sb_google_image</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="ow">or</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;stock_img&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">ret</span><span class="p">[</span><span class="s2">&quot;google_map_detail&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="n">ret</span>
 
 <div class="viewcode-block" id="BasemapDialog.update_plotter">
