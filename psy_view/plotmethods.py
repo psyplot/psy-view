@@ -425,6 +425,15 @@ class MapPlotWidget(PlotMethodWidget):
             row = [GridCell(QHLine(), colspan=3)]
         elif func == self.setup_dimension_box:
             row = [GridCell(self.dimension_box, colspan=3)]
+        elif func == self.setup_fix_extent_buttons:
+            hbox = QtWidgets.QHBoxLayout()
+            hbox.addWidget(self.btn_fix_extent)
+            hbox.addWidget(self.btn_fix_lonlatbox)
+            hbox.addWidget(self.btn_reset_extent)
+            row = [
+                GridCell(QtWidgets.QLabel("Viewport")),
+                GridCell(hbox, colspan=3),
+            ]
         else:
             raise ValueError(f"Unknown function {func}")
         return [row]
@@ -442,6 +451,8 @@ class MapPlotWidget(PlotMethodWidget):
             self.setup_projection_buttons,
             self.setup_labels_button,
             self.setup_separation_line,
+            self.setup_fix_extent_buttons,
+            self.setup_separation_line,
             self.setup_dimension_box,
         ]
 
@@ -452,6 +463,56 @@ class MapPlotWidget(PlotMethodWidget):
             self.edit_labels,
             "Edit title, colorbar labels, etc.",
         )
+
+    def setup_fix_extent_buttons(self):
+        """Setup the buttons for fixing the extent or data"""
+        self.btn_fix_extent = utils.add_pushbutton(
+            "Fix view",
+            self.fix_extent,
+            (
+                "Fix the current view such that it is not update on redrawing "
+                "the plot."
+            ),
+        )
+
+        self.btn_fix_lonlatbox = utils.add_pushbutton(
+            "Restrict data",
+            self.fix_data,
+            (
+                "Extract the data for the plot, such that it matches the "
+                "current view."
+            ),
+        )
+
+        self.btn_reset_extent = utils.add_pushbutton(
+            "Reset",
+            self.reset_extent_and_lonlatbox,
+            (
+                "Reset the view and the data selection to the default "
+                "(i.e. to the full data)."
+            ),
+        )
+
+    def fix_extent(self):
+        """Call the fix_map_extent method of all map plotters."""
+        for plotter in self.sp.plotters:
+            if hasattr(plotter, "fix_map_extent"):
+                plotter.fix_map_extent()
+
+    def fix_data(self):
+        """Call the fix_lonlatbox method of all map plotters."""
+        for plotter in self.sp.plotters:
+            if hasattr(plotter, "fix_lonlatbox"):
+                plotter.fix_lonlatbox()
+
+    def reset_extent_and_lonlatbox(self):
+        """Reset the extent and the lonlatbox to the defaults."""
+        for plotter in self.sp.plotters:
+            plotter.update(
+                lonlatbox=plotter.lonlatbox.default,
+                map_extent=plotter.map_extent.default,
+                force=True,
+            )
 
     def setup_plot_buttons(self) -> None:
         """Setup the second row of formatoption widgets."""
