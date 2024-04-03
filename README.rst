@@ -143,10 +143,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-.. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/main/pipeline.svg
-   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/pipelines?page=1&scope=all&ref=main
-.. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/main/coverage.svg
-   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/graphs/main/charts
+.. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/master/pipeline.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/pipelines?page=1&scope=all&ref=master
+.. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/master/coverage.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/graphs/master/charts
 .. |Latest Release| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/-/badges/release.svg
    :target: https://codebase.helmholtz.cloud/psyplot/psy-view
 .. |PyPI version| image:: https://img.shields.io/pypi/v/psy-view.svg
