@@ -412,7 +412,7 @@ list and return the rows corresponding to <code class="xref py py-attr docutils 
 <dd><p>Get the formatoptions for a new plot.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.1.2.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p>
+<dd class="field-odd"><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.3.1.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A mapping from formatoption or dimension to the corresponding value
@@ -482,7 +482,7 @@ for the plotmethod.</p>
 <dd><p>Get a list of variables that can be visualized with this plotmethod.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.1.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset to use</p>
+<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.3.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset to use</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of variable names to plot</p>
@@ -696,7 +696,7 @@ a horizonal (or widget) that is added to the <code class="xref py py-attr docuti
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.1.2.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.3.1.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p></li>
 <li><p><strong>init</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, call the <a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.init_dims" title="psy_view.plotmethods.MapPlotWidget.init_dims"><code class="xref py py-meth docutils literal notranslate"><span class="pre">init_dims()</span></code></a> method to inject necessary
 formatoptions and dimensions for the initialization.</p></li>
 </ul>
@@ -718,7 +718,7 @@ for the plotmethod.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>proj</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The projection value for the
-<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.4.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> formatoption</p>
+<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> formatoption</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The label of the projection in the GUI</p>
@@ -729,7 +729,7 @@ for the plotmethod.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_projection_label" title="psy_view.plotmethods.MapPlotWidget.get_projection_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_projection_label</span></code></a>, <a class="reference internal" href="#psy_view.plotmethods.projection_map" title="psy_view.plotmethods.projection_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projection_map</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.4.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter.plot</span></code></a></p>
+<p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_projection_label" title="psy_view.plotmethods.MapPlotWidget.get_projection_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_projection_label</span></code></a>, <a class="reference internal" href="#psy_view.plotmethods.projection_map" title="psy_view.plotmethods.projection_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projection_map</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter.plot</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -741,7 +741,7 @@ for the plotmethod.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The projection label that is used in the GUI
-<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.4.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> formatoption</p>
+<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> formatoption</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The value to use for the <code class="docutils literal notranslate"><span class="pre">projection</span></code> formatoption</p>
@@ -752,7 +752,7 @@ for the plotmethod.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_projection_label" title="psy_view.plotmethods.MapPlotWidget.get_projection_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_projection_label</span></code></a>, <a class="reference internal" href="#psy_view.plotmethods.projection_map" title="psy_view.plotmethods.projection_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projection_map</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.4.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter.plot</span></code></a></p>
+<p><a class="reference internal" href="#psy_view.plotmethods.MapPlotWidget.get_projection_label" title="psy_view.plotmethods.MapPlotWidget.get_projection_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_projection_label</span></code></a>, <a class="reference internal" href="#psy_view.plotmethods.projection_map" title="psy_view.plotmethods.projection_map"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projection_map</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter.plot</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -786,7 +786,7 @@ plot.</p>
 x- and y-coordinate of the variable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.1.2.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p>
+<dd class="field-odd"><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.3.1.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A mapping from formatoption or dimension to the corresponding value
@@ -809,7 +809,7 @@ for the plotmethod.</p>
 </dl>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.widgets.colors.html#psy_simple.widgets.colors.CmapButton" title="(in psy-simple v1.4.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_simple.widgets.colors.CmapButton</span></code></a></p>
+<p><a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.widgets.colors.html#psy_simple.widgets.colors.CmapButton" title="(in psy-simple)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_simple.widgets.colors.CmapButton</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -878,7 +878,7 @@ for the plotmethod.</p>
 <dd><p>Update the value for the <code class="docutils literal notranslate"><span class="pre">plot</span></code> formatoption</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ploy_type</strong> (<a class="reference internal" href="#psy_view.plotmethods.PlotType" title="psy_view.plotmethods.PlotType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotType</span></code></a> or None) – The value for the <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.plot" title="(in psy-simple v1.4.0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a>
+<dd class="field-odd"><p><strong>ploy_type</strong> (<a class="reference internal" href="#psy_view.plotmethods.PlotType" title="psy_view.plotmethods.PlotType"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlotType</span></code></a> or None) – The value for the <a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.plot" title="(in psy-simple)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a>
 formatoption.</p>
 </dd>
 </dl>
@@ -891,7 +891,7 @@ formatoption.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>projection</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The projection name for the
-<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.projection" title="(in psy-maps v1.4.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">projection</span></code></a> formatoption.</p>
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">projection</span></code> formatoption.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -995,7 +995,7 @@ formatoption.</p>
 <dd><p>Get a list of variables that can be visualized with this plotmethod.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.1.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset to use</p>
+<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.3.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset to use</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of variable names to plot</p>
@@ -1091,7 +1091,7 @@ a horizonal (or widget) that is added to the <code class="xref py py-attr docuti
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
 <p>Base class for interfacing a psyplot plotmethod.</p>
 <p>This method serves as a base class for interfacing any of the psyplot
-plot methods registered via <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.project.html#psyplot.project.register_plotter" title="(in psyplot v1.4.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project.register_plotter()</span></code></a>.</p>
+plot methods registered via <a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.project.html#psyplot.project.register_plotter" title="(in psyplot)"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project.register_plotter()</span></code></a>.</p>
 <p>The name of the plotmethod should be implemented as the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.plotmethod" title="psy_view.plotmethods.PlotMethodWidget.plotmethod"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plotmethod</span></code></a>
 attribute.</p>
 <p><strong>Attributes:</strong></p>
@@ -1224,7 +1224,7 @@ a horizonal (or widget) that is added to the <a class="reference internal" href=
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.1.2.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p></li>
+<li><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.3.1.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p></li>
 <li><p><strong>init</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If True, call the <a class="reference internal" href="#psy_view.plotmethods.PlotMethodWidget.init_dims" title="psy_view.plotmethods.PlotMethodWidget.init_dims"><code class="xref py py-meth docutils literal notranslate"><span class="pre">init_dims()</span></code></a> method to inject necessary
 formatoptions and dimensions for the initialization.</p></li>
 </ul>
@@ -1267,7 +1267,7 @@ plot.</p>
 <dd><p>Get the formatoptions for a new plot.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.1.2.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p>
+<dd class="field-odd"><p><strong>var</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Variable.html#xarray.Variable" title="(in xarray v2024.3.1.dev0)"><em>xarray.Variable</em></a>) – The variable in the base dataset</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>A mapping from formatoption or dimension to the corresponding value
@@ -1371,7 +1371,7 @@ of <code class="xref py py-class docutils literal notranslate"><span class="pre"
 <dd><p>Get a list of variables that can be visualized with this plotmethod.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.1.2.dev0)"><em>xarray.Dataset</em></a>) – The dataset to use</p>
+<dd class="field-odd"><p><strong>ds</strong> (<a class="reference external" href="https://docs.xarray.dev/en/stable/generated/xarray.Dataset.html#xarray.Dataset" title="(in xarray v2024.3.1.dev0)"><em>xarray.Dataset</em></a>) – The dataset to use</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>List of variable names to plot</p>
@@ -1391,7 +1391,7 @@ of <code class="xref py py-class docutils literal notranslate"><span class="pre"
 <p>A value for the 2D <code class="docutils literal notranslate"><span class="pre">plot</span></code> formatoption.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.plot" title="(in psy-simple v1.4.0)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_simple.plotters.Simple2DPlotter.plot</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.4.1)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter.plot</span></code></a></p>
+<p><a class="reference external" href="https://psyplot.github.io/psy-simple/api/psy_simple.plotters.html#psy_simple.plotters.Simple2DPlotter.plot" title="(in psy-simple)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_simple.plotters.Simple2DPlotter.plot</span></code></a>, <a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">psy_maps.plotters.FieldPlotter.plot</span></code></a></p>
 </div>
 <p><strong>Attributes:</strong></p>
 <table class="autosummary longtable docutils align-default">

@@ -254,7 +254,7 @@ animation via the slider next to the control <a class="reference internal" href=
 <p>The <a class="reference internal" href="_images/docs-btn_export.png"><img alt="btn_export" src="_images/docs-btn_export.png" style="height: 1.3em;" /></a> menu allows you to export your plots as images files,
 animations or to export the plot settings for later usage. The <a class="reference internal" href="_images/docs-btn_preset.png"><img alt="btn_preset" src="_images/docs-btn_preset.png" style="height: 1.3em;" /></a>
 button lets you select custom presets for your plots (see the
-<a class="reference external" href="https://psyplot.github.io/psyplot/getting_started.html#presets" title="(in psyplot v1.4.2)"><span class="xref std std-ref">psyplot docs</span></a>).</p>
+<a class="reference external" href="https://psyplot.github.io/psyplot/getting_started.html#presets" title="(in psyplot)"><span class="xref std std-ref">psyplot docs</span></a>).</p>
 <p>The <a class="reference internal" href="_images/docs-btn_reload.png"><img alt="btn_reload" src="_images/docs-btn_reload.png" style="height: 1.3em;" /></a> button finally let’s you close all open figures and datasets
 and automatically recreates the figures with the same settings. This can be
 very useful when the file on your disk changed, and you just want to see the
@@ -279,11 +279,11 @@ to change the appearence of a different plot.</p></li>
 <img alt="_images/docs-plot_tabs.png" src="_images/docs-plot_tabs.png" />
 <p>psy-view (currently) supports three of the psyplot plot methods.</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.plot2d.html#psyplot.project.plot.plot2d" title="(in psy-simple v1.4.0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot2d</span></code></a> for 2D scalar fields
+<li><p><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.plot2d.html#psyplot.project.plot.plot2d" title="(in psy-simple)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot2d</span></code></a> for 2D scalar fields
 (rectilinear or unstructured, see the section <a class="reference internal" href="#user-guide-plot2d"><span class="std std-ref">plot2d</span></a>)</p></li>
-<li><p><a class="reference external" href="https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapplot.html#psyplot.project.plot.mapplot" title="(in psy-maps v1.4.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapplot</span></code></a> for <strong>georeferenced</strong> 2D scalar
+<li><p><a class="reference external" href="https://psyplot.github.io/psy-maps/generated/psyplot.project.plot.mapplot.html#psyplot.project.plot.mapplot" title="(in psy-maps)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mapplot</span></code></a> for <strong>georeferenced</strong> 2D scalar
 fields (rectilinear or unstructured, see the section <a class="reference internal" href="#user-guide-mapplot"><span class="std std-ref">mapplot</span></a>)</p></li>
-<li><p><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.lineplot.html#psyplot.project.plot.lineplot" title="(in psy-simple v1.4.0)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">lineplot</span></code></a> for 1D lines (see the
+<li><p><a class="reference external" href="https://psyplot.github.io/psy-simple/generated/psyplot.project.plot.lineplot.html#psyplot.project.plot.lineplot" title="(in psy-simple)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">lineplot</span></code></a> for 1D lines (see the
 section , see the section <a class="reference internal" href="#user-guide-lineplot"><span class="std std-ref">lineplot</span></a>)</p></li>
 </ul>
 <section id="mapplot">
@@ -305,7 +305,7 @@ dimension you chose in the navigation (see <a class="reference internal" href="#
 plotting. You can choose one of the following options</p>
 <dl class="simple">
 <dt>Default</dt><dd><p>This mode uses an efficient algorithm for regular lat-lon meshes (using
-matplotlibs <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.pcolormesh.html#matplotlib.pyplot.pcolormesh" title="(in Matplotlib v3.8.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pcolormesh()</span></code></a> function), or an
+matplotlibs <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.pcolormesh.html#matplotlib.pyplot.pcolormesh" title="(in Matplotlib v3.8.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pcolormesh()</span></code></a> function), or an
 explicit drawing of the individual grid cell polygons for unstructured
 grids (see <cite>Gridcell polygons</cite> below). These two methods draw each grid
 cells explicitly. Gridcell boundaries are thereby extracted following the
@@ -314,21 +314,21 @@ from the gridcell coordinates.</p>
 </dd>
 <dt>Filled contours</dt><dd><p>Different from the <cite>Default</cite> method this is not visualizing each cell
 individually, but instead plots the contours using matplotlibs
-<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contourf.html#matplotlib.pyplot.contourf" title="(in Matplotlib v3.8.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">contourf()</span></code></a> function.</p>
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contourf.html#matplotlib.pyplot.contourf" title="(in Matplotlib v3.8.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">contourf()</span></code></a> function.</p>
 </dd>
 <dt>Contours</dt><dd><p>Similar to <cite>Filled contours</cite>, but we only draw the outlines of the contour
-areas using matplotlibs <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contour.html#matplotlib.pyplot.contour" title="(in Matplotlib v3.8.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">contour()</span></code></a> function.</p>
+areas using matplotlibs <a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contour.html#matplotlib.pyplot.contour" title="(in Matplotlib v3.8.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">contour()</span></code></a> function.</p>
 </dd>
 <dt>Gridcell polygons</dt><dd><p>This mode (which is the default for unstructured grids (not curvilinear
 grids) draws each grid cell individually using a variant of matplotlibs
-<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.pcolor.html#matplotlib.pyplot.pcolor" title="(in Matplotlib v3.8.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pcolor()</span></code></a> function</p>
+<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.pcolor.html#matplotlib.pyplot.pcolor" title="(in Matplotlib v3.8.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pcolor()</span></code></a> function</p>
 </dd>
 <dt>Disable</dt><dd><p>Make no plotting at all. This can be useful if you want to display the
 datagrid only (see next point)</p>
 </dd>
 </dl>
 <p>More information on the plot options can be found in the docs of the
-<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps v1.4.1)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> formatoption.</p>
+<a class="reference external" href="https://psyplot.github.io/psy-maps/api/psy_maps.plotters.html#psy_maps.plotters.FieldPlotter.plot" title="(in psy-maps)"><code class="xref py py-attr docutils literal notranslate"><span class="pre">plot</span></code></a> formatoption.</p>
 </li>
 <li><p>the <a class="reference internal" href="_images/docs-mapplot-btn_datagrid.png"><img alt="btn_datagrid" src="_images/docs-mapplot-btn_datagrid.png" style="height: 1.3em;" /></a> toggles the visibility of grid cell boundaries</p></li>
 <li><p>the <a class="reference internal" href="_images/docs-mapplot-btn_labels.png"><img alt="btn_labels" src="_images/docs-mapplot-btn_labels.png" style="height: 1.3em;" /></a> button opens a dialog to edit colorbar labels, titles, etc.</p></li>
@@ -457,13 +457,13 @@ zoomed out, placing the original axes in the defined region.</p>
 <p>psy-view is also available from the psyplot GUI. Just type <code class="docutils literal notranslate"><span class="pre">psyplot</span></code> in the
 terminal to start it. The only difference is that the available plots (see
 <a class="reference internal" href="#user-guide-select-plot"><span class="std std-ref">Select the active plot</span></a>) are managed through the current main project
-(<a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.project.html#psyplot.project.gcp" title="(in psyplot v1.4.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project.gcp()</span></code></a>, see also the psyplot GUIs
-<a class="reference external" href="https://psyplot.github.io/psyplot-gui/getting_started.html#project-content" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">project content</span></a>), also accessible through
+(<a class="reference external" href="https://psyplot.github.io/psyplot/api/psyplot.project.html#psyplot.project.gcp" title="(in psyplot)"><code class="xref py py-func docutils literal notranslate"><span class="pre">psyplot.project.gcp()</span></code></a>, see also the psyplot GUIs
+<a class="reference external" href="https://psyplot.github.io/psyplot-gui/getting_started.html#project-content" title="(in psyplot-gui)"><span class="xref std std-ref">project content</span></a>), also accessible through
 the <code class="docutils literal notranslate"><span class="pre">mp</span></code> variable in the
-<a class="reference external" href="https://psyplot.github.io/psyplot-gui/getting_started.html#console" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">integrated IPython console</span></a>. This gives you extra
+<a class="reference external" href="https://psyplot.github.io/psyplot-gui/getting_started.html#console" title="(in psyplot-gui)"><span class="xref std std-ref">integrated IPython console</span></a>. This gives you extra
 power as you now cannot only change your plots through the intuitive psy-view
 interface, but also from the command line or through the more flexible
-<a class="reference external" href="https://psyplot.github.io/psyplot-gui/getting_started.html#formatoptions" title="(in psyplot-gui v1.3.0)"><span class="xref std std-ref">formatoptions widget</span></a>.</p>
+<a class="reference external" href="https://psyplot.github.io/psyplot-gui/getting_started.html#formatoptions" title="(in psyplot-gui)"><span class="xref std std-ref">formatoptions widget</span></a>.</p>
 </section>
 </section>
 
