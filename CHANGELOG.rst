@@ -2,6 +2,21 @@
 ..
 .. SPDX-License-Identifier: CC-BY-4.0
 
+v0.3.0
+======
+Formatting fixes, Background images and viewport control buttons
+
+Changed
+-------
+- migrate to psyplot-plugin-template, see `!64 <https://codebase.helmholtz.cloud/psyplot/psy-view/-/merge_requests/64`__
+- set minimum version for psyplot to 1.5.0
+
+Added
+-----
+- Background image options, see `!65 <https://codebase.helmholtz.cloud/psyplot/psy-view/-/merge_requests/65`__
+- add buttons to control the viewport, , see `!66 <https://codebase.helmholtz.cloud/psyplot/psy-view/-/merge_requests/66`__
+
+
 v0.2.0
 ======
 Compatibility fixes and LGPL license
