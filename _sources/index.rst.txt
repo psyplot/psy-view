@@ -134,10 +134,10 @@ Indices and tables
 * :ref:`search`
 
 
-.. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/main/pipeline.svg
-   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/pipelines?page=1&scope=all&ref=main
-.. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/main/coverage.svg
-   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/graphs/main/charts
+.. |CI| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/master/pipeline.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/pipelines?page=1&scope=all&ref=master
+.. |Code coverage| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/badges/master/coverage.svg
+   :target: https://codebase.helmholtz.cloud/psyplot/psy-view/-/graphs/master/charts
 .. |Latest Release| image:: https://codebase.helmholtz.cloud/psyplot/psy-view/-/badges/release.svg
    :target: https://codebase.helmholtz.cloud/psyplot/psy-view
 .. |PyPI version| image:: https://img.shields.io/pypi/v/psy-view.svg
@@ -150,6 +150,5 @@ Indices and tables
    :target: https://www.python.org/dev/peps/pep-0008/
 .. |Checked with mypy| image:: http://www.mypy-lang.org/static/mypy_badge.svg
    :target: http://mypy-lang.org/
-.. TODO: uncomment the following line when the package is registered at https://api.reuse.software
-.. .. |REUSE status| image:: https://api.reuse.software/badge/codebase.helmholtz.cloud/psyplot/psy-view
-..    :target: https://api.reuse.software/info/codebase.helmholtz.cloud/psyplot/psy-view
+.. |REUSE status| image:: https://api.reuse.software/badge/codebase.helmholtz.cloud/psyplot/psy-view
+   :target: https://api.reuse.software/info/codebase.helmholtz.cloud/psyplot/psy-view
